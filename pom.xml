@@ -61,7 +61,7 @@
             <version>2.0.0</version>
         </dependency>
 
-        <!--  Add SQL Server Dependency      -->
+        <!--  Add Microsoft SQL Server Dependency      -->
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
@@ -69,6 +69,13 @@
             <version>12.6.1.jre11</version>
         </dependency>
 
+        <!--  Add MySQL Server Dependency      -->
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
 
     </dependencies>
 
