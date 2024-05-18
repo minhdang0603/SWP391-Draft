@@ -7,12 +7,10 @@
         <welcome-file>home</welcome-file>
     </welcome-file-list>
     <!--404 error-->
-<<<<<<< HEAD
     <error-page>
         <error-code>404</error-code>
         <location>/page-error-404.jsp</location>l
     </error-page>
-=======
 <!--    <error-page>-->
 <!--        <error-code>404</error-code>-->
 <!--        <location>/page-error-404.jsp</location>-->
