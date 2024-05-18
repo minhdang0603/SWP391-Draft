@@ -1,4 +1,4 @@
-package com.web.laptoptg.servlet;
+package com.web.laptoptg.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

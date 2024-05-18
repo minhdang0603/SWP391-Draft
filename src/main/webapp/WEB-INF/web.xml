@@ -9,7 +9,7 @@
     <!--404 error-->
     <error-page>
         <error-code>404</error-code>
-        <location>/page-error-404.jsp</location>
+        <location>/page-error-404.jsp</location>l
     </error-page>
     <context-param>
         <param-name>salt</param-name>
@@ -22,7 +22,7 @@
     <filter-mapping>
         <filter-name>url-filter</filter-name>
         <url-pattern>*.jsp</url-pattern>
-        <url-pattern>*.</url-pattern>
+        <url-pattern>*.html</url-pattern>
         <url-pattern>/</url-pattern>
     </filter-mapping>
 </web-app>

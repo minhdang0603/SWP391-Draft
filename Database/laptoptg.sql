@@ -273,7 +273,7 @@ CREATE TABLE `product` (
   `operating_system` varchar(255) DEFAULT NULL,
   `monitor_scale` varchar(255) DEFAULT NULL,
   `ram` varchar(255) DEFAULT NULL,
-  `produc_name` varchar(255) DEFAULT NULL,
+  `product_name` varchar(255) DEFAULT NULL,
   `design` varchar(255) DEFAULT NULL,
   `maintainance` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
