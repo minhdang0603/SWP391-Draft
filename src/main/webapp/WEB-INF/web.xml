@@ -7,10 +7,17 @@
         <welcome-file>home</welcome-file>
     </welcome-file-list>
     <!--404 error-->
+<<<<<<< HEAD
     <error-page>
         <error-code>404</error-code>
         <location>/page-error-404.jsp</location>l
     </error-page>
+=======
+<!--    <error-page>-->
+<!--        <error-code>404</error-code>-->
+<!--        <location>/page-error-404.jsp</location>-->
+<!--    </error-page>-->
+>>>>>>> 618ab861c0754a8769273ea2641f45acb03aaa27
     <context-param>
         <param-name>salt</param-name>
         <param-value>4UGYpILSejCHw52lbkSGWg==</param-value>
