@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `cart`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cart` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `total_ammount` varchar(255) DEFAULT NULL,
+  `total_amount` varchar(255) DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKUser_Cart` (`user_id`),
@@ -209,7 +209,7 @@ CREATE TABLE `product` (
   `ram` varchar(255) DEFAULT NULL,
   `product_name` varchar(255) DEFAULT NULL,
   `design` varchar(255) DEFAULT NULL,
-  `maintainance` varchar(255) DEFAULT NULL,
+  `maintenance` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `category_id` bigint DEFAULT NULL,
   `brand_id` bigint DEFAULT NULL,
@@ -271,6 +271,7 @@ CREATE TABLE `user` (
   `password` varchar(255) DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
   `role_id` bigint DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UKEmail` (`email`),
   KEY `FKUser_Role` (`role_id`),
@@ -284,7 +285,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=','123456789',1),(2,NULL,'member@gmail.com',NULL,'FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=',NULL,3),(3,NULL,'saler@gmail.com',NULL,'FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=',NULL,2),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=','123456',3);
+INSERT INTO `user` VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=','123456789',1,'active'),(2,NULL,'member@gmail.com',NULL,'FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=',NULL,3,'active'),(3,NULL,'saler@gmail.com',NULL,'FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=',NULL,2,'active'),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=','123456',3,'active');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -297,4 +298,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-18 16:35:00
+-- Dump completed on 2024-05-21 16:16:01
