@@ -75,6 +75,15 @@
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
+                        <!-- Wishlist -->
+                        <div>
+                            <a href="Login.jsp">
+                                <i class="fa fa-heart-o"></i>
+                                <span>Login</span>
+                                <div class="qty">2</div>
+                            </a>
+                        </div>
+                        <!-- /Wishlist -->
 
                         <!-- Cart -->
                         <div class="dropdown">
@@ -112,7 +121,7 @@
                                     <h5>SUBTOTAL: $2940.00</h5>
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="#">View Cart</a>
+                                    <a href="Cart.jsp">View Cart</a>
                                     <a href="checkout.jsp">Checkout <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
