@@ -1,9 +1,15 @@
 package com.web.laptoptg.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "brand")
+@Data //toString()
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Brand {
 
     @Id
@@ -12,28 +18,4 @@ public class Brand {
 
     @Column(name = "brand_name")
     private String brandName;
-
-    public Brand() {
-    }
-
-    public Brand(int id, String brandName) {
-        this.id = id;
-        this.brandName = brandName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
 }

@@ -1,3 +1,5 @@
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,20 +14,20 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="assets/home/css/bootstrap.min.css"/>
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="home/css/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="home/css/slick-theme.css"/>
+    <link type="text/css" rel="stylesheet" href="assets/home/css/slick.css"/>
+    <link type="text/css" rel="stylesheet" href="assets/home/css/slick-theme.css"/>
 
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="home/css/nouislider.min.css"/>
+    <link type="text/css" rel="stylesheet" href="assets/home/css/nouislider.min.css"/>
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="home/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/home/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="home/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="assets/home/css/style.css"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,8 +51,8 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="home-index.jsp" class="logo">
-                            <img src="home/./img/logo.png" alt="">
+                        <a href="home" class="logo">
+                            <img src="assets/home/./img/logo.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -75,15 +77,59 @@
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
-                        <!-- Wishlist -->
-                        <div>
-                            <a href="Login.jsp">
-                                <i class="fa fa-heart-o"></i>
-                                <span>Login</span>
-                                <div class="qty">2</div>
-                            </a>
-                        </div>
-                        <!-- /Wishlist -->
+                        <!-- Login -->
+                        <c:if test="${account == null}">
+                            <div>
+                                <a href="login">
+                                    <i class="fa fa-sign-in"></i>
+                                    <span>Đăng nhập</span>
+                                </a>
+                            </div>
+                        </c:if>
+
+                        <c:if test="${account != null}">
+                            <div class="dropdown">
+                                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                    <i class="fa fa-user-circle"></i>
+                                    <span class="d-none d-md-block dropdown-toggle ps-2">${account.userName}</span>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                                    <li class="dropdown-header">
+                                        <h6>${account.userName}</h6>
+                                        <span>${account.email}</span>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+
+
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center" href="users-profile.jsp">
+                                            <i class="bi bi-gear"></i>
+                                            <span>User Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+
+
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span>Sign Out</span>
+                                        </a>
+                                    </li>
+
+                                </ul><!-- End Profile Dropdown Items -->
+                            </div>
+                        </c:if>
+                        <!-- /Login -->
 
                         <!-- Cart -->
                         <div class="dropdown">
@@ -96,7 +142,7 @@
                                 <div class="cart-list">
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="home/./img/product01.png" alt="">
+                                            <img src="assets/home/./img/product01.png" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">product name goes here</a></h3>
@@ -107,7 +153,7 @@
 
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="home/./img/product02.png" alt="">
+                                            <img src="assets/home/./img/product02.png" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">product name goes here</a></h3>
@@ -121,8 +167,8 @@
                                     <h5>SUBTOTAL: $2940.00</h5>
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="Cart.jsp">View Cart</a>
-                                    <a href="checkout.jsp">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="customer/cart.jsp">View Cart</a>
+                                    <a href="customer/checkout.jsp">Checkout <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +226,7 @@
             <div class="col-md-4 col-xs-6">
                 <div class="shop">
                     <div class="shop-img">
-                        <img src="home/./img/shop01.png" alt="">
+                        <img src="assets/home/./img/shop01.png" alt="">
                     </div>
                     <div class="shop-body">
                         <h3>Laptop<br>Collection</h3>
@@ -194,7 +240,7 @@
             <div class="col-md-4 col-xs-6">
                 <div class="shop">
                     <div class="shop-img">
-                        <img src="home/./img/shop03.png" alt="">
+                        <img src="assets/home/./img/shop03.png" alt="">
                     </div>
                     <div class="shop-body">
                         <h3>Accessories<br>Collection</h3>
@@ -208,7 +254,7 @@
             <div class="col-md-4 col-xs-6">
                 <div class="shop">
                     <div class="shop-img">
-                        <img src="home/./img/shop02.png" alt="">
+                        <img src="assets/home/./img/shop02.png" alt="">
                     </div>
                     <div class="shop-body">
                         <h3>Cameras<br>Collection</h3>
@@ -256,7 +302,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product01.png" alt="">
+                                        <img src="assets/home/./img/product01.png" alt="">
                                         <div class="product-label">
 
                                             <span class="new">NEW</span>
@@ -288,7 +334,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product02.png" alt="">
+                                        <img src="assets/home/./img/product02.png" alt="">
                                         <div class="product-label">
                                             <span class="new">NEW</span>
                                         </div>
@@ -319,7 +365,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product03.png" alt="">
+                                        <img src="assets/home/./img/product03.png" alt="">
                                         <div class="product-label">
 
                                         </div>
@@ -345,7 +391,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product04.png" alt="">
+                                        <img src="assets/home/./img/product04.png" alt="">
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
@@ -373,7 +419,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product05.png" alt="">
+                                        <img src="assets/home/./img/product05.png" alt="">
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
@@ -446,7 +492,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product06.png" alt="">
+                                        <img src="assets/home/./img/product06.png" alt="">
                                         <div class="product-label">
 
                                             <span class="new">NEW</span>
@@ -478,7 +524,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product07.png" alt="">
+                                        <img src="assets/home/./img/product07.png" alt="">
                                         <div class="product-label">
                                             <span class="new">NEW</span>
                                         </div>
@@ -509,7 +555,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product08.png" alt="">
+                                        <img src="assets/home/./img/product08.png" alt="">
                                         <div class="product-label">
 
                                         </div>
@@ -535,7 +581,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product09.png" alt="">
+                                        <img src="assets/home/./img/product09.png" alt="">
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
@@ -563,7 +609,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="home/./img/product01.png" alt="">
+                                        <img src="assets/home/./img/product01.png" alt="">
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
@@ -621,7 +667,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product07.png" alt="">
+                                <img src="assets/home/./img/product07.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -634,7 +680,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product08.png" alt="">
+                                <img src="assets/home/./img/product08.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -647,7 +693,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product09.png" alt="">
+                                <img src="assets/home/./img/product09.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -662,7 +708,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product01.png" alt="">
+                                <img src="assets/home/./img/product01.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -675,7 +721,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product02.png" alt="">
+                                <img src="assets/home/./img/product02.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -688,7 +734,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product03.png" alt="">
+                                <img src="assets/home/./img/product03.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -714,7 +760,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product04.png" alt="">
+                                <img src="assets/home/./img/product04.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -727,7 +773,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product05.png" alt="">
+                                <img src="assets/home/./img/product05.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -740,7 +786,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product06.png" alt="">
+                                <img src="assets/home/./img/product06.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -755,7 +801,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product07.png" alt="">
+                                <img src="assets/home/./img/product07.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -768,7 +814,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product08.png" alt="">
+                                <img src="assets/home/./img/product08.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -781,7 +827,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product09.png" alt="">
+                                <img src="assets/home/./img/product09.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -809,7 +855,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product01.png" alt="">
+                                <img src="assets/home/./img/product01.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -822,7 +868,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product02.png" alt="">
+                                <img src="assets/home/./img/product02.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -835,7 +881,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product03.png" alt="">
+                                <img src="assets/home/./img/product03.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -850,7 +896,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product04.png" alt="">
+                                <img src="assets/home/./img/product04.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -863,7 +909,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product05.png" alt="">
+                                <img src="assets/home/./img/product05.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -876,7 +922,7 @@
                         <!-- product widget -->
                         <div class="product-widget">
                             <div class="product-img">
-                                <img src="home/./img/product06.png" alt="">
+                                <img src="assets/home/./img/product06.png" alt="">
                             </div>
                             <div class="product-body">
                                 <p class="product-category">Category</p>
@@ -991,12 +1037,12 @@
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
-<script src="home/js/jquery.min.js"></script>
-<script src="home/js/bootstrap.min.js"></script>
-<script src="home/js/slick.min.js"></script>
-<script src="home/js/nouislider.min.js"></script>
-<script src="home/js/jquery.zoom.min.js"></script>
-<script src="home/js/main.js"></script>
-
+<script src="assets/home/js/jquery.min.js"></script>
+<script src="assets/home/js/bootstrap.min.js"></script>
+<script src="assets/home/js/slick.min.js"></script>
+<script src="assets/home/js/nouislider.min.js"></script>
+<script src="assets/home/js/jquery.zoom.min.js"></script>
+<script src="assets/home/js/main.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -1,16 +1,17 @@
 package com.web.laptoptg.service;
 
+import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.User;
 
 import java.util.List;
 
 public interface UserService {
-    void saveUser (User user);
-    void updateUser(User user);
-    User findUserByEmail(String email);
-    List<User> findUserByRole(String role);
-    User findUserById(int id);
-    void deleteById(int id);
-    void changePassword(User user, String newPassword);
+    boolean register (UserDTO user); // use for register
+    void updateUser(UserDTO user); // use for update user information
+    User findUserByEmail(String email); // find user by email
+    List<User> findUserByRole(String role); // find user by role
+    User findUserById(int id); // find user by id
+    void deleteById(int id); // delete user by id
+    void changePassword(UserDTO user, String newPassword); // use for
     User login(String email, String password);
 }

@@ -20,20 +20,20 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/bootstrap.min.css"/>
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="home/css/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="home/css/slick-theme.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick-theme.css"/>
 
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="home/css/nouislider.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/nouislider.min.css"/>
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="home/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/home/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="home/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/style.css"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -71,8 +71,8 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="home-index.jsp" class="logo">
-                            <img src="home/./img/logo.png" alt="">
+                        <a href="../home-index.jsp" class="logo">
+                            <img src="../assets/home/./img/logo.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                                 <div class="cart-list">
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="home/./img/product01.png" alt="">
+                                            <img src="../assets/home/./img/product01.png" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">product name goes here</a></h3>
@@ -121,7 +121,7 @@
 
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="home/./img/product02.png" alt="">
+                                            <img src="../assets/home/./img/product02.png" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">product name goes here</a></h3>
@@ -502,12 +502,12 @@
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
-<script src="home/js/jquery.min.js"></script>
-<script src="home/js/bootstrap.min.js"></script>
-<script src="home/js/slick.min.js"></script>
-<script src="home/js/nouislider.min.js"></script>
-<script src="home/js/jquery.zoom.min.js"></script>
-<script src="home/js/main.js"></script>
+<script src="../assets/home/js/jquery.min.js"></script>
+<script src="../assets/home/js/bootstrap.min.js"></script>
+<script src="../assets/home/js/slick.min.js"></script>
+<script src="../assets/home/js/nouislider.min.js"></script>
+<script src="../assets/home/js/jquery.zoom.min.js"></script>
+<script src="../assets/home/js/main.js"></script>
 
 </body>
 </html>
