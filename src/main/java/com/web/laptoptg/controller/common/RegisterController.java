@@ -45,7 +45,7 @@ public class RegisterController extends HttpServlet {
             req.setAttribute("alert", "Mã xác thực không chính xác. Vui lòng nhập lại!");
         } else if (error != null && error.equals("2")) {
             req.setAttribute("alert", "Mã xác thực đã hết hạn. Vui lòng chọn gửi lại!");
-        }
+        }`
 
         if (check != null && check.equals("1")) {
             try {
