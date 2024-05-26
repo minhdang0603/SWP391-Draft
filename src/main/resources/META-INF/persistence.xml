@@ -4,17 +4,7 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
     <persistence-unit name="jdbc">
-<<<<<<< HEAD
-        <class>com.web.laptoptg.model.Product</class>
-        <class>com.web.laptoptg.model.Brand</class>
-        <class>com.web.laptoptg.model.Cart</class>
-        <class>com.web.laptoptg.model.CartDetails</class>
-        <class>com.web.laptoptg.model.Category</class>
-        <class>com.web.laptoptg.model.Order</class>
-        <class>com.web.laptoptg.model.OrderDetails</class>
-        <class>com.web.laptoptg.model.Role</class>
-        <class>com.web.laptoptg.model.User</class>
-=======
+
         <class>com.web.laptoptg.model.User</class>
         <class>com.web.laptoptg.model.Cart</class>
         <class>com.web.laptoptg.model.Role</class>
@@ -24,7 +14,7 @@
         <class>com.web.laptoptg.model.Category</class>
         <class>com.web.laptoptg.model.Order</class>
         <class>com.web.laptoptg.model.OrderDetails</class>
->>>>>>> 0f8d74dfd9bd1a692cbda0f290ed1a161be557ec
+
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/laptop_tg"/>
