@@ -77,62 +77,8 @@
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
-                        <!-- Login -->
-                        <c:if test="${account == null}">
-                            <div>
-                                <a href="login">
-                                    <i class="fa fa-sign-in"></i>
-                                    <span>Đăng nhập</span>
-                                </a>
-                            </div>
-                        </c:if>
-
-                        <c:if test="${account != null}">
-                            <div class="dropdown">
-                                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                                    <i class="fa fa-user-circle"></i>
-                                    <span class="d-none d-md-block dropdown-toggle ps-2">${account.userName}</span>
-                                </a>
-
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                                    <li class="dropdown-header">
-                                        <h6>${account.userName}</h6>
-                                        <span>${account.email}</span>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-
-
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="users-profile.jsp">
-                                            <i class="bi bi-gear"></i>
-                                            <span>User Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-
-
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <i class="bi bi-box-arrow-right"></i>
-                                            <span>Sign Out</span>
-                                        </a>
-                                    </li>
-
-                                </ul><!-- End Profile Dropdown Items -->
-                            </div>
-                        </c:if>
-                        <!-- /Login -->
-
                         <!-- Cart -->
-                        <div class="dropdown">
+                        <div class="dropdown" style="cursor: pointer">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
@@ -182,6 +128,49 @@
                             </a>
                         </div>
                         <!-- /Menu Toogle -->
+
+                        <!-- Login -->
+                        <c:if test="${account == null}">
+                            <div>
+                                <a href="login">
+                                    <i class="fa fa-sign-in"></i>
+                                    <span>Đăng nhập</span>
+                                </a>
+                            </div>
+                        </c:if>
+
+                        <c:if test="${account != null}">
+                            <div class="dropdown" style="cursor: pointer">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-user-circle"></i>
+                                    ${account.userName}
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li class="dropdown-header">
+                                        <h5 class="text-center">${account.userName}</h5>
+                                        <span>${account.email}</span>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center" href="users-profile.jsp">
+                                            <i class="bi bi-gear"></i>
+                                            <span>User Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span class="text-center">Sign Out</span>
+                                        </a>
+                                    </li>
+                                </ul><!-- End Profile Dropdown Items -->
+                            </div>
+                        </c:if>
+                        <!-- /Login -->
                     </div>
                 </div>
                 <!-- /ACCOUNT -->
