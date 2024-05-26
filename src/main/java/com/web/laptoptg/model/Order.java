@@ -1,12 +1,11 @@
 package com.web.laptoptg.model;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "`order`")  // Thoát tên bảng
 public class Order {
 
     @Id
@@ -19,10 +18,10 @@ public class Order {
     @Column(name = "note")
     private String note;
 
-    @Column(name = "user_nam")
+    @Column(name = "user_name")  // Sửa lỗi chính tả
     private String userName;
 
-    @Column(name = "oder_date")
+    @Column(name = "order_date")  // Sửa lỗi chính tả
     private String orderDate;
 
     @Column(name = "deliver_date")
@@ -66,6 +65,7 @@ public class Order {
         this.saler = saler;
     }
 
+    // Getters và setters
     public int getId() {
         return id;
     }

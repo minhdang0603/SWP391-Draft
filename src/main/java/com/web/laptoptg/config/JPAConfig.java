@@ -10,7 +10,7 @@ public class JPAConfig {
     public static EntityManager em;
 
     public static EntityManager getEntityManager() {
-        emf = Persistence.createEntityManagerFactory("laptop-tg");
+        emf = Persistence.createEntityManagerFactory("jdbc");
         em = emf.createEntityManager();
         return em;
     }
