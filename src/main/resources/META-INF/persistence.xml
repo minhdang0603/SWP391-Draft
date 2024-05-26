@@ -4,20 +4,12 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
     <persistence-unit name="jdbc">
-        <class>com.web.laptoptg.model.Product</class>
-        <class>com.web.laptoptg.model.Brand</class>
-        <class>com.web.laptoptg.model.Cart</class>
-        <class>com.web.laptoptg.model.CartDetails</class>
-        <class>com.web.laptoptg.model.Category</class>
-        <class>com.web.laptoptg.model.Order</class>
-        <class>com.web.laptoptg.model.OrderDetails</class>
-        <class>com.web.laptoptg.model.Role</class>
-        <class>com.web.laptoptg.model.User</class>
+        <!--<class></class>-->
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/laptop_tg"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value="160203"/>
+            <property name="jakarta.persistence.jdbc.password" value="1163ruabin"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
             <property name="hibernate.show_sql" value="true"/>
