@@ -18,8 +18,7 @@ public class URLFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-//        System.out.println("a");
-//        request.getRequestDispatcher("page-error-404.jsp").forward(request, servletResponse);
+        request.getRequestDispatcher("page-error-404.jsp").forward(request, response);
         filterChain.doFilter(request, response);
     }
 

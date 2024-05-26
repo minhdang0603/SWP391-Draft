@@ -20,20 +20,20 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/bootstrap.min.css"/>
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="home/css/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="home/css/slick-theme.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick-theme.css"/>
 
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="home/css/nouislider.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/nouislider.min.css"/>
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="home/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/home/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="home/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/home/css/style.css"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -71,8 +71,8 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="home-index.jsp" class="logo">
-                            <img src="home/./img/logo.png" alt="">
+                        <a href="../home-index.jsp" class="logo">
+                            <img src="../assets/home/./img/logo.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -97,15 +97,7 @@
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
-                        <!-- Wishlist -->
-                        <div>
-                            <a href="#">
-                                <i class="fa fa-heart-o"></i>
-                                <span>Your Wishlist</span>
-                                <div class="qty">2</div>
-                            </a>
-                        </div>
-                        <!-- /Wishlist -->
+
 
                         <!-- Cart -->
                         <div class="dropdown">
@@ -118,7 +110,7 @@
                                 <div class="cart-list">
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="home/./img/product01.png" alt="">
+                                            <img src="../assets/home/./img/product01.png" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">product name goes here</a></h3>
@@ -129,7 +121,7 @@
 
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="home/./img/product02.png" alt="">
+                                            <img src="../assets/home/./img/product02.png" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">product name goes here</a></h3>
@@ -179,10 +171,8 @@
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Hot Deals</a></li>
                 <li><a href="#">Categories</a></li>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Smartphones</a></li>
+                <li><a href="#">Laptops</a></li>>
                 <li><a href="#">Cameras</a></li>
                 <li><a href="#">Accessories</a></li>
             </ul>
@@ -344,37 +334,25 @@
                         <div><strong class="order-total">$2940.00</strong></div>
                     </div>
                 </div>
+
                 <div class="payment-method">
                     <div class="input-radio">
                         <input type="radio" name="payment" id="payment-1">
                         <label for="payment-1">
                             <span></span>
-                            Direct Bank Transfer
+                            Online Payment
                         </label>
-                        <div class="caption">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
+
                     </div>
                     <div class="input-radio">
                         <input type="radio" name="payment" id="payment-2">
                         <label for="payment-2">
                             <span></span>
-                            Cheque Payment
+                            Cash on Delivery
                         </label>
-                        <div class="caption">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
+
                     </div>
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-3">
-                        <label for="payment-3">
-                            <span></span>
-                            Paypal System
-                        </label>
-                        <div class="caption">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="input-checkbox">
                     <input type="checkbox" id="terms">
@@ -453,9 +431,7 @@
                     <div class="footer">
                         <h3 class="footer-title">Categories</h3>
                         <ul class="footer-links">
-                            <li><a href="#">Hot deals</a></li>
                             <li><a href="#">Laptops</a></li>
-                            <li><a href="#">Smartphones</a></li>
                             <li><a href="#">Cameras</a></li>
                             <li><a href="#">Accessories</a></li>
                         </ul>
@@ -526,12 +502,12 @@
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
-<script src="home/js/jquery.min.js"></script>
-<script src="home/js/bootstrap.min.js"></script>
-<script src="home/js/slick.min.js"></script>
-<script src="home/js/nouislider.min.js"></script>
-<script src="home/js/jquery.zoom.min.js"></script>
-<script src="home/js/main.js"></script>
+<script src="../assets/home/js/jquery.min.js"></script>
+<script src="../assets/home/js/bootstrap.min.js"></script>
+<script src="../assets/home/js/slick.min.js"></script>
+<script src="../assets/home/js/nouislider.min.js"></script>
+<script src="../assets/home/js/jquery.zoom.min.js"></script>
+<script src="../assets/home/js/main.js"></script>
 
 </body>
 </html>

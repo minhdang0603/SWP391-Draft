@@ -5,6 +5,7 @@ import com.web.laptoptg.dao.UserDAO;
 import com.web.laptoptg.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -63,7 +64,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findUserByEmail(String email) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        return entityManager.find(User.class, email);
+        try {
+            TypedQuery<User> query = entityManager.createQuery("from User where email = :email", User.class);
+            query.setParameter("email", email);
+            return query.getSingleResult();
+        } catch (NoResultException e){
+            return null;
+        }
     }
 
     @Override

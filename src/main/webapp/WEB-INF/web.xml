@@ -9,17 +9,8 @@
     <!--404 error-->
     <error-page>
         <error-code>404</error-code>
-        <location>/page-error-404.jsp</location>l
+        <location>/page-error-404.jsp</location>
     </error-page>
-<!--    <error-page>-->
-<!--        <error-code>404</error-code>-->
-<!--        <location>/page-error-404.jsp</location>-->
-<!--    </error-page>-->
->>>>>>> 618ab861c0754a8769273ea2641f45acb03aaa27
-    <context-param>
-        <param-name>salt</param-name>
-        <param-value>4UGYpILSejCHw52lbkSGWg==</param-value>
-    </context-param>
     <filter>
         <filter-name>url-filter</filter-name>
         <filter-class>com.web.laptoptg.filter.URLFilter</filter-class>
@@ -28,6 +19,14 @@
         <filter-name>url-filter</filter-name>
         <url-pattern>*.jsp</url-pattern>
         <url-pattern>*.html</url-pattern>
-        <url-pattern>/</url-pattern>
+        <url-pattern>*.xml</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>authorization</filter-name>
+        <filter-class>com.web.laptoptg.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>authorization</filter-name>
+        <url-pattern>/waiting</url-pattern>
     </filter-mapping>
 </web-app>

@@ -6,6 +6,8 @@ import com.web.laptoptg.model.Cart;
 import com.web.laptoptg.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 
 public class CartDAOImpl implements CartDAO {
 
@@ -13,7 +15,15 @@ public class CartDAOImpl implements CartDAO {
     @Override
     public Cart getCartByUser(User user) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        Cart cart = entityManager.find(Cart.class, user);
+        TypedQuery<Cart> query = entityManager.createQuery("from Cart where user.id = :userId", Cart.class);
+        query.setParameter("userId", user.getId());
+        Cart cart = null;
+        try {
+            cart = query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
         return cart;
     }
 
