@@ -162,7 +162,7 @@
             </a>
         </li><!-- End Profile Page Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="../home-index.jsp">
+            <a class="nav-link " href="../common/home-index.jsp">
                 <i class="bi bi-person"></i>
                 <span>HomePage</span>
             </a>

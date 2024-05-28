@@ -7,7 +7,7 @@ import com.web.laptoptg.dao.impl.UserDAOImpl;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.User;
 import com.web.laptoptg.service.UserService;
-import com.web.laptoptg.util.PasswordUtil;
+import com.web.laptoptg.util.PasswordUtils;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(UserDTO user) {
         User temp = userDAO.findUserByEmail(user.getEmail());
-        temp.setStatus("active");
         userDAO.updateUser(temp);
     }
 
@@ -60,18 +59,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(UserDTO user, String newPassword) {
+        User temp = this.findUserByEmail(user.getEmail());
 
+        if (temp != null && temp.getPassword().equals(user.getPassword())) {
+            temp.setPassword(PasswordUtils.hash(newPassword));
+            userDAO.updateUser(temp);
+        }
     }
 
     @Override
     public User login(String email, String password) {
         User user = this.findUserByEmail(email);
-        try {
-            if (user != null && PasswordUtil.verify(password, user.getPassword())) {
-                return user;
-            }
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+        if (user != null && PasswordUtils.verify(password, user.getPassword())) {
+            return user;
         }
         return null;
     }

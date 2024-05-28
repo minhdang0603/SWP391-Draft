@@ -19,7 +19,6 @@
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
-<%--    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">--%>
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -50,7 +49,6 @@
 
 <main>
     <div class="container">
-
         <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
             <h1>404</h1>
             <h2>The page you are looking for doesn't exist.</h2>

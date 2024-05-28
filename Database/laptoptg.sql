@@ -276,7 +276,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `UKEmail` (`email`),
   KEY `FKUser_Role` (`role_id`),
   CONSTRAINT `FKUser_Role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,7 +285,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=','123456789',1,'active'),(2,NULL,'member@gmail.com',NULL,'FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=',NULL,3,'active'),(3,NULL,'saler@gmail.com',NULL,'FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=',NULL,2,'active'),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','FbrvagIC0cb4S6RBuFgJ6s0bEg2fEpFv5LVCHbHsHBM=','123456',3,'active');
+INSERT INTO `user` VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','$2a$10$kWZ/z/llhza3e7V675MiPebSuLnbUWy5.W15lBLAfAZkq6pjqio9K','123456789',1,'active'),(2,NULL,'member@gmail.com',NULL,'$2a$10$Zk9MSaYLQzuR3AduX8jM2.z3otHgBpkVeQPjSkvL/XfP3e1xD0h5S',NULL,3,'active'),(3,NULL,'saler@gmail.com',NULL,'$2a$10$1A2jZwaq02MViKmdEgSyou/1eBdLt9QdkJz10qUnApYDxqv3P5CKy',NULL,2,'active'),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$lHb9AJ4TSJpOMYmhsbpPKOF70JO.D0tuol8n0jMpy7qzAt842Xv/K','123456',3,'active');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -298,4 +298,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-21 16:16:01
+-- Dump completed on 2024-05-28 16:56:18

@@ -5,8 +5,8 @@
   Time: 5:31 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,7 +18,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
     <link href="assets/css/login.css" rel="stylesheet">
-
+    <title>Đăng ký</title>
 </head>
 <body>
 <!-- HEADER -->
@@ -34,42 +34,44 @@
                         <div class="logo">
                             <img src="assets/img/user.png">
                             <c:if test="${systemAlert != null}">
-                                <div class="alert alert-danger" role="alert">
-                                    ${systemAlert}
+                                <div class="alert alert-danger alert-dismissible ri-alert-line fade show" role="alert">
+                                    <span style="font-size: 14px">${systemAlert}</span>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                             </c:if>
                         </div>
                         <div class="form-group">
-                            <input name="first_name" class="form-control _ge_de_ol" type="text" placeholder="Nhập họ" value="${first_name}" required="" aria-required="true">
+                            <input name="first_name" class="form-control _ge_de_ol" type="text" placeholder="Nhập họ"
+                                   value="${first_name}" required="" aria-required="true">
                         </div>
 
                         <div class="form-group">
-                            <input name="last_name" class="form-control _ge_de_ol" type="text" placeholder="Nhập tên" value="${last_name}" required="" aria-required="true">
+                            <input name="last_name" class="form-control _ge_de_ol" type="text" placeholder="Nhập tên"
+                                   value="${last_name}" required="" aria-required="true">
                         </div>
 
                         <div class="form-group">
-                            <input name="email" class="form-control _ge_de_ol" type="text" placeholder="Nhập Email" value="${email}" required="" aria-required="true">
+                            <input name="email" class="form-control _ge_de_ol" type="text" placeholder="Nhập Email"
+                                   value="${email}" required="" aria-required="true">
                             <c:if test="${emailAlert != null}">
                                 <p class="text-danger font-italic" style="font-size: 14px">${emailAlert}</p>
                             </c:if>
                         </div>
 
                         <div class="form-group">
-                            <input name="password" class="form-control _ge_de_ol" type="password" placeholder="Nhập mật khẩu" required="" aria-required="true">
-                            <c:if test="${passwordAlert != null}">
-                                <p class="text-danger font-italic" style="font-size: 14px">${passwordAlert}</p>
-                            </c:if>
+                            <input name="password" class="password-1 form-control _ge_de_ol" type="password"
+                                   placeholder="Nhập mật khẩu" required="" aria-required="true">
+                            <p class="msg1 text-danger font-italic" style="font-size: 14px"></p>
                         </div>
 
                         <div class="form-group">
-                            <input name="confirm_password" class="form-control _ge_de_ol" type="password" placeholder="Xác nhận mật khẩu" required="" aria-required="true">
-                            <c:if test="${confirmPasswordAlert != null}">
-                                <p class="text-danger font-italic" style="font-size: 14px">${confirmPasswordAlert}</p>
-                            </c:if>
+                            <input name="confirm_password" class="password-2 form-control _ge_de_ol" type="password"
+                                   placeholder="Xác nhận mật khẩu" required="" aria-required="true">
+                            <p class="msg2 text-danger font-italic" style="font-size: 14px"></p>
                         </div>
 
                         <div class="form-group">
-                            <input type="submit" class="_btn_04" value="Đăng ký" style="border-color: transparent;">
+                            <input type="submit" class="_btn_04 btn" disabled value="Đăng ký" style="border-color: transparent;">
                         </div>
 
                         <div class="mb-3">
@@ -81,18 +83,23 @@
                             <div class="flex-grow-1">
                                 <hr class="bg-secondary">
                             </div>
-                            <p class="mx-2 mb-0">Hoặc tiếp tục bằng</p>
+                            <p class="mx-2 mb-0">Hoặc</p>
                             <div class="flex-grow-1">
                                 <hr class="bg-secondary">
                             </div>
                         </div>
 
-                        <div class="form-group pt-0">
-                            <div class="_social_04">
-                                <ol>
-                                    <li><i class="fa fa-google-plus"></i></li>
-                                </ol>
-                            </div>
+                        <div class="form-group">
+                            <a href=""
+                               class="btn bsb-btn-xl btn-outline-dark rounded-0 d-flex align-items-center col-md-10 offset-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                     class="bi bi-google text-danger" viewBox="0 0 16 16">
+                                    <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689
+                                                7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893
+                                                2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+                                </svg>
+                                <span class="ms-2 fs-6 flex-grow-1">Tiếp tục bằng Google</span>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -100,5 +107,7 @@
         </div>
     </div>
 </section>
+
+<script src="assets/js/register-password.js"></script>
 </body>
 </html>

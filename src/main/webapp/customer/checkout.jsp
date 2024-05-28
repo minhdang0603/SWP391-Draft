@@ -71,7 +71,7 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="../home-index.jsp" class="logo">
+                        <a href="../common/home-index.jsp" class="logo">
                             <img src="../assets/home/./img/logo.png" alt="">
                         </a>
                     </div>
