@@ -72,7 +72,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="../common/home-index.jsp" class="logo">
-                            <img src="../assets/home/./img/logo.png" alt="">
+                            <img src="../assets/home/./img/logo1.png" alt="">
                         </a>
                     </div>
                 </div>

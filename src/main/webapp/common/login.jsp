@@ -68,14 +68,22 @@
                             </div>
                         </c:if>
 
+                        <c:if test="${registerSuccess != null}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <span style="font-size: 14px">${registerSuccess}</span>
+                                <c:remove var="registerSuccess" scope="session"/>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                        </c:if>
+
                         <div class="form-group">
                             <input type="email" name="email" class="form-control _ge_de_ol"
-                                   placeholder="Nhập Email" required="" aria-required="true">
+                                   placeholder="* Nhập Email" required="" aria-required="true">
                         </div>
 
                         <div class="form-group">
                             <input type="password" name="password" class="password form-control _ge_de_ol"
-                                   placeholder="Nhập mật khẩu" required="" aria-required="true">
+                                   placeholder="* Nhập mật khẩu" required="" aria-required="true">
                             <p class="msg text-danger font-italic" style="font-size: 14px"></p>
                         </div>
 
@@ -117,7 +125,7 @@
                     <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
-                                <form action="forgot-password" method="post">
+                                <form action="forgot-password" id="myform" method="post">
                                     <input type="hidden" name="index" value="1">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="emailModalLabel">Quên mật khẩu</h5>
@@ -132,6 +140,8 @@
                                             <input type="email" name="email" class="form-control email" required id="inputEmail" aria-describedby="emailHelp" placeholder="Nhập địa chỉ email">
                                             <small class="form-text text-muted font-italic" id="emailHelp">* Vui lòng nhập địa chỉ email đã đăng ký!</small>
                                         </div>
+                                        <div class="g-recaptcha" data-sitekey="6LcUuewpAAAAACoUC5A46utS4D4YAOA1sJ9GB-Ja"></div>
+                                        <p class="msg3 text-danger font-italic" style="font-size: 14px"></p>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="submit" class="btn btn-outline-info btn" value="Xác nhận"/>
@@ -148,6 +158,8 @@
     </div>
 </section>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="assets/js/check-recaptcha.js"></script>
 <script src="assets/js/login-password.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

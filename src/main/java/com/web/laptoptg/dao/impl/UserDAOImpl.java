@@ -62,6 +62,19 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public List<User> findAllUsers() {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        List<User> users = null;
+        try {
+            TypedQuery<User> query = entityManager.createQuery("from User", User.class);
+            users = query.getResultList();
+        } catch (NoResultException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    @Override
     public User findUserByEmail(String email) {
         EntityManager entityManager = JPAConfig.getEntityManager();
         try {

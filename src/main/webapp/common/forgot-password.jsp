@@ -27,6 +27,7 @@
                 <div class="_lk_de">
                     <form class="form-03-main" action="forgot-password" method="post">
                         <input type="hidden" name="index" value="2">
+                        <input type="hidden" name="code" value="${code}">
                         <div class="form-group">
                             <input name="password" class="password-1 form-control _ge_de_ol" type="password"
                                    placeholder="Nhập mật khẩu mới" required="" aria-required="true">

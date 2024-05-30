@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/forgot-password")
 public class ForgotPasswordController extends HttpServlet {
@@ -40,6 +41,9 @@ public class ForgotPasswordController extends HttpServlet {
             return;
         }
 
+        // redirect to forgot password page
+        String code = req.getParameter("code");
+        req.setAttribute("code", code);
         req.getRequestDispatcher("common/forgot-password.jsp").forward(req, resp);
     }
 
@@ -47,19 +51,29 @@ public class ForgotPasswordController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String index = req.getParameter("index");
 
-        if (index.equals("1")) {
+        if (index.equals("1")) { // do send email
             sendEmail(req, resp);
-        } else {
+        } else { // do change password
             postChangePassword(req, resp);
         }
     }
 
     private void postChangePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("user-reset-password");
         String password = req.getParameter("password");
+        String code = req.getParameter("code");
+        List<User> users = userService.findAllUsers();
+        UserDTO userDTO = new UserDTO();
+        // check user that doing forgot password in database by using hash code
+        for (User user : users) {
+            if (PasswordUtils.verify(user.getEmail() + user.getPassword(), code)) {
+                userDTO.setEmail(user.getEmail());
+                userDTO.setPassword(user.getPassword());
+            }
+        }
+
+        // do change password function and redirect to login page with success message
         userService.changePassword(userDTO, password);
-        session.removeAttribute("user-reset-password");
         session.setAttribute("resetSuccess", "Đã thay đổi mật khẩu thành công!");
         resp.sendRedirect(req.getContextPath() + "/login");
     }
@@ -81,9 +95,10 @@ public class ForgotPasswordController extends HttpServlet {
         Email sm = new Email();
         HttpSession session = req.getSession();
         UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(email);
+        String code = PasswordUtils.hash(email + user.getPassword());
+        userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
-        String changePasswordUrl = "http://localhost:8080/laptop-tg/forgot-password?index=0";
+        String changePasswordUrl = "http://localhost:8080/laptop-tg/forgot-password?index=0&code=" + code;
         String title = "Email xác nhận thay đổi mật khẩu";
         String content = "<!DOCTYPE html>\n"
                 + "<html>\n"
@@ -105,7 +120,7 @@ public class ForgotPasswordController extends HttpServlet {
             return;
         }
 
-        session.setAttribute("user-reset-password", userDTO);
+        // send success message
         alert = "Xin vui lòng kiểm tra email!";
         session.setAttribute("emailSuccess", alert);
         resp.sendRedirect(req.getContextPath() + "/login");

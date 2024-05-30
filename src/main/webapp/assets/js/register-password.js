@@ -6,6 +6,7 @@ const btn = document.querySelector('.btn');
 let isValid1 = false;
 let isValid2 = false;
 
+
 p2.addEventListener('input', () => {
     const val1 = p1.value;
     const val2 = p2.value;
@@ -46,4 +47,5 @@ function verifyRegex(inputString, regexPattern) {
     // Test the input string against the regex
     return regex.test(inputString);
 }
+
 

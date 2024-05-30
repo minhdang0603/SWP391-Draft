@@ -14,11 +14,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <title>Đăng ký</title>
 
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
     <link href="assets/css/login.css" rel="stylesheet">
-    <title>Đăng ký</title>
+
 </head>
 <body>
 <!-- HEADER -->
@@ -30,7 +31,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="_lk_de">
-                    <form class="form-03-main" method="post" action="register">
+                    <form class="form-03-main" id="myform" method="post" action="register">
                         <div class="logo">
                             <img src="assets/img/user.png">
                             <c:if test="${systemAlert != null}">
@@ -41,17 +42,17 @@
                             </c:if>
                         </div>
                         <div class="form-group">
-                            <input name="first_name" class="form-control _ge_de_ol" type="text" placeholder="Nhập họ"
+                            <input name="first_name" class="form-control _ge_de_ol" type="text" placeholder="* Nhập họ"
                                    value="${first_name}" required="" aria-required="true">
                         </div>
 
                         <div class="form-group">
-                            <input name="last_name" class="form-control _ge_de_ol" type="text" placeholder="Nhập tên"
+                            <input name="last_name" class="form-control _ge_de_ol" type="text" placeholder="* Nhập tên"
                                    value="${last_name}" required="" aria-required="true">
                         </div>
 
                         <div class="form-group">
-                            <input name="email" class="form-control _ge_de_ol" type="text" placeholder="Nhập Email"
+                            <input name="email" class="form-control _ge_de_ol" type="text" placeholder="* Nhập Email"
                                    value="${email}" required="" aria-required="true">
                             <c:if test="${emailAlert != null}">
                                 <p class="text-danger font-italic" style="font-size: 14px">${emailAlert}</p>
@@ -60,16 +61,17 @@
 
                         <div class="form-group">
                             <input name="password" class="password-1 form-control _ge_de_ol" type="password"
-                                   placeholder="Nhập mật khẩu" required="" aria-required="true">
+                                   placeholder="* Nhập mật khẩu" required="" aria-required="true">
                             <p class="msg1 text-danger font-italic" style="font-size: 14px"></p>
                         </div>
 
                         <div class="form-group">
                             <input name="confirm_password" class="password-2 form-control _ge_de_ol" type="password"
-                                   placeholder="Xác nhận mật khẩu" required="" aria-required="true">
+                                   placeholder="* Xác nhận mật khẩu" required="" aria-required="true">
                             <p class="msg2 text-danger font-italic" style="font-size: 14px"></p>
                         </div>
-
+                        <div class="g-recaptcha" data-sitekey="6LcUuewpAAAAACoUC5A46utS4D4YAOA1sJ9GB-Ja"></div>
+                        <p class="msg3 text-danger font-italic" style="font-size: 14px"></p>
                         <div class="form-group">
                             <input type="submit" class="_btn_04 btn" disabled value="Đăng ký" style="border-color: transparent;">
                         </div>
@@ -108,6 +110,8 @@
     </div>
 </section>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="assets/js/check-recaptcha.js"></script>
 <script src="assets/js/register-password.js"></script>
 </body>
 </html>

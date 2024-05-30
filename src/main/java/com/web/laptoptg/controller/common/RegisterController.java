@@ -122,6 +122,7 @@ public class RegisterController extends HttpServlet {
         user.setStatus("active");
         userService.register(user);
         session.removeAttribute("user");
+        session.setAttribute("registerSuccess", "Đăng ký tài khoản thành công!");
         resp.sendRedirect(req.getContextPath() + "/login");
     }
 

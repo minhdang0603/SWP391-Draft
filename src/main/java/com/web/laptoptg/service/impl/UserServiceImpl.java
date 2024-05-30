@@ -75,4 +75,9 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userDAO.findAllUsers();
+    }
 }

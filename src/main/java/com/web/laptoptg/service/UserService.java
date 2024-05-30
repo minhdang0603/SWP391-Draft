@@ -14,4 +14,5 @@ public interface UserService {
     void deleteById(int id); // delete user by id
     void changePassword(UserDTO user, String newPassword); // use for
     User login(String email, String password);
+    List<User> findAllUsers();
 }

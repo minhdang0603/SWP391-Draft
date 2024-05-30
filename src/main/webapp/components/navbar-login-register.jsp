@@ -15,7 +15,7 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="home"><img src="assets/home/img/logo.png" alt=""></a>
+                        <a href="home"><img src="assets/home/img/logo1.png" alt=""></a>
                     </div>
                 </div>
                 <!-- /LOGO -->

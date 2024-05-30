@@ -11,4 +11,5 @@ public interface UserDAO {
     List<User> findUserByRole(String role);
     User findUserById(int id);
     void deleteById(int id);
+    List<User> findAllUsers();
 }
