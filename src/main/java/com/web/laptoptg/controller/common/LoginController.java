@@ -59,7 +59,8 @@ public class LoginController extends HttpServlet {
             userDTO.setStatus("active");
             userDTO.setRole("MEMBER");
             userDTO.setUserName(googleUserDTO.getName());
-            userDTO.setPassword(PasswordUtils.generatePassword());
+            String generatedPassword = PasswordUtils.generatePassword(8);
+            userDTO.setPassword(PasswordUtils.hash(generatedPassword));
             userService.register(userDTO);
             session.setAttribute("account", userDTO);
             resp.sendRedirect(req.getContextPath() + "/waiting");

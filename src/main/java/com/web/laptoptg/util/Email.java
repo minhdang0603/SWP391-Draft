@@ -8,18 +8,10 @@ import jakarta.mail.internet.MimeUtility;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
-import java.util.Random;
 
 public class Email {
     final String FROM_EMAIL = "laptoptg2024@gmail.com";
     final String PASSWORD = "vtbl xtlc shkw ksxf";
-
-    // hàm mã code ngẫu nhiên
-    public String getRandom(){
-        Random random = new Random();
-        int number = random.nextInt(999999);
-        return String.format("%06d", number);
-    }
 
     // send otp code
     public boolean sendEmail(UserDTO user, String title, String content){

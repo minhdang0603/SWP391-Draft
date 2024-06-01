@@ -41,6 +41,12 @@ public class RegisterController extends HttpServlet {
     private void getVerifyCode(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         UserDTO account = (UserDTO) session.getAttribute("account");
+        UserDTO user = (UserDTO) session.getAttribute("user");
+
+        if (user == null) {
+            resp.sendRedirect(req.getContextPath() + "/home");
+            return;
+        }
 
         // redirect to authorization if user already logged in
         if (account != null) {
@@ -52,7 +58,29 @@ public class RegisterController extends HttpServlet {
         String check = req.getParameter("index");
         String error = req.getParameter("error");
         if (error != null && error.equals("1")) {
-            req.setAttribute("alert", "Mã xác thực không chính xác. Vui lòng nhập lại!");
+            // check entries number
+            Integer entriesNumber = (Integer) session.getAttribute("entriesNumber");
+            // create entries number if do not exist
+            if (entriesNumber == null) {
+                entriesNumber = 1;
+                session.setAttribute("entriesNumber", entriesNumber);
+                req.setAttribute("alert", "Mã xác thực không chính xác. Bạn còn " + (5 - entriesNumber) + " lần nhập!");
+                req.getRequestDispatcher("customer/verify.jsp").forward(req, resp);
+                return;
+            }
+
+            entriesNumber++;
+            // if otp wrong 5 times system redirect to register page and show error message
+            if (entriesNumber >= 5) {
+                session.removeAttribute("entriesNumber");
+                session.removeAttribute("user");
+                session.setAttribute("verifyError", "Bạn đã nhập quá số lần cho phép!");
+                resp.sendRedirect(req.getContextPath() + "/register");
+                return;
+            }
+
+            session.setAttribute("entriesNumber", entriesNumber);
+            req.setAttribute("alert", "Mã xác thực không chính xác. Bạn còn " + (5 - entriesNumber) + " lần nhập!");
             req.getRequestDispatcher("customer/verify.jsp").forward(req, resp);
             return;
         }
@@ -60,8 +88,7 @@ public class RegisterController extends HttpServlet {
         // resend email when user click resend
         if (check != null && check.equals("1")) {
             Email sm = new Email();
-            UserDTO user = (UserDTO) session.getAttribute("user");
-            String code = sm.getRandom();
+            String code = PasswordUtils.generateOtp(6);
             user.setCode(PasswordUtils.hash(code));
             String title = "Email xác nhận đăng ký tài khoản";
             String content = getContent(code);
@@ -153,7 +180,7 @@ public class RegisterController extends HttpServlet {
         userDTO.setPassword(PasswordUtils.hash(password));
 
         // encrypt the code to sha-256
-        String code = sm.getRandom();
+        String code = PasswordUtils.generateOtp(6);
         userDTO.setCode(PasswordUtils.hash(code));
         userDTO.setStatus("inactive");
         userDTO.setRole("MEMBER");

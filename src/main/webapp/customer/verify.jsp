@@ -58,22 +58,22 @@
                     <p class="text-muted text-center">Chúng tôi đã gửi mã xác thự đến email ${user.email}</p>
                     <div class="row pt-4 pb-2">
                         <div class="col-2">
-                            <input class="otp-letter-input" name="opt" required type="text" maxlength="1" oninput="moveToNextInput(this, 1)" onkeyup="moveToPreviousInput(event, 0)">
+                            <input class="otp-letter-input" name="opt" type="text" minlength="1" maxlength="1" autocomplete="off" value oninput="handleInput(event, 0)" onkeydown="handleKeyDown(event, 0)">
                         </div>
                         <div class="col-2">
-                            <input class="otp-letter-input" name="opt" required type="text" maxlength="1" oninput="moveToNextInput(this, 2)" onkeyup="moveToPreviousInput(event, 1)">
+                            <input class="otp-letter-input" name="opt" type="text" minlength="1" maxlength="1" autocomplete="off" oninput="handleInput(event, 1)" onkeydown="handleKeyDown(event, 1)">
                         </div>
                         <div class="col-2">
-                            <input class="otp-letter-input" name="opt" required type="text" maxlength="1" oninput="moveToNextInput(this, 3)" onkeyup="moveToPreviousInput(event, 2)">
+                            <input class="otp-letter-input" name="opt" type="text" minlength="1" maxlength="1" autocomplete="off" oninput="handleInput(event, 2)" onkeydown="handleKeyDown(event, 2)">
                         </div>
                         <div class="col-2">
-                            <input class="otp-letter-input" name="opt" required type="text" maxlength="1" oninput="moveToNextInput(this, 4)" onkeyup="moveToPreviousInput(event, 3)">
+                            <input class="otp-letter-input" name="opt" type="text" minlength="1" maxlength="1" autocomplete="off" oninput="handleInput(event, 3)" onkeydown="handleKeyDown(event, 3)">
                         </div>
                         <div class="col-2">
-                            <input class="otp-letter-input" name="opt" required type="text" maxlength="1" oninput="moveToNextInput(this, 5)" onkeyup="moveToPreviousInput(event, 4)">
+                            <input class="otp-letter-input" name="opt" type="text" minlength="1" maxlength="1" autocomplete="off" oninput="handleInput(event, 4)" onkeydown="handleKeyDown(event, 4)">
                         </div>
                         <div class="col-2">
-                            <input class="otp-letter-input" name="opt" required type="text" maxlength="1" oninput="moveToNextInput(this, 6)" onkeyup="moveToPreviousInput(event, 5)">
+                            <input class="otp-letter-input" name="opt" type="text" minlength="1" maxlength="1" autocomplete="off" oninput="handleInput(event, 5)" onkeydown="handleKeyDown(event, 5)">
                         </div>
 
                     </div>
@@ -84,7 +84,7 @@
 
                     <div class="row pt-5">
                         <div class="col-6 offset-3">
-                            <button class="btn btn-success w-100" onclick="submitForm(event)">Xác nhận</button>
+                            <button class="btn btn-danger w-100" disabled onclick="submitForm(event)">Xác nhận</button>
                         </div>
                     </div>
                 </form>
@@ -95,7 +95,8 @@
 <script>
     function moveToNextInput(input, nextInputIndex) {
         if (input.value.length === 1) {
-            var nextInput = document.getElementsByClassName("otp-letter-input")[nextInputIndex];
+            var nextInput = document.getElementsByClassName("otp-letter-input")[nextInputIndex + 1];
+            console.log(nextInput);
             if (nextInput) {
                 nextInput.focus();
             }
@@ -103,14 +104,47 @@
     }
 
     function moveToPreviousInput(event, previousInputIndex) {
-        console.log("Pressed key:", event.key);
-        var inputFields = document.getElementsByClassName("otp-letter-input");
-        if (event.key === "Backspace") {
-            var previousInput = inputFields[previousInputIndex - 1];
-            if (previousInput) {
-                previousInput.focus();
+        if (event.key === "Backspace" && event.target.value === "") {
+            var inputFields = document.getElementsByClassName("otp-letter-input");
+            if (previousInputIndex - 1 >= 0) {
+                var previousInput = inputFields[previousInputIndex - 1];
+                if (previousInput) {
+                    previousInput.focus();
+                }
             }
         }
+    }
+
+    function removeSpaces(input) {
+        input.value = input.value.replace(/\s+/g, '');
+    }
+
+    function removeSpecialCharacters(input) {
+        input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
+    }
+
+    function handleInput(event, nextInputIndex) {
+        removeSpaces(event.target);
+        removeSpecialCharacters(event.target);
+        moveToNextInput(event.target, nextInputIndex);
+        event.target.value = event.target.value.toUpperCase();
+        checkAllInputsFilled();
+    }
+
+    function handleKeyDown(event, previousInputIndex) {
+        moveToPreviousInput(event, previousInputIndex);
+    }
+
+    function checkAllInputsFilled() {
+        var inputFields = document.getElementsByClassName("otp-letter-input");
+        var allFilled = true;
+        for (var i = 0; i < inputFields.length; i++) {
+            if (inputFields[i].value === "") {
+                allFilled = false;
+                break;
+            }
+        }
+        document.querySelector(".btn").disabled = !allFilled;
     }
 
     function submitForm(event) {

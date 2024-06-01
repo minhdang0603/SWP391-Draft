@@ -34,13 +34,26 @@
                     <form class="form-03-main" id="myform" method="post" action="register">
                         <div class="logo">
                             <img src="assets/img/user.png">
-                            <c:if test="${systemAlert != null}">
-                                <div class="alert alert-danger alert-dismissible ri-alert-line fade show" role="alert">
-                                    <span style="font-size: 14px">${systemAlert}</span>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                            </c:if>
                         </div>
+
+                        <%--Cannot add user to database error--%>
+                        <c:if test="${systemAlert != null}">
+                            <div class="alert alert-danger alert-dismissible ri-alert-line fade show" role="alert">
+                                <span style="font-size: 14px">${systemAlert}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            </div>
+                        </c:if>
+
+                        <%--Exceeded the limit for entering otp--%>
+                        <c:if test="${verifyError != null}">
+                            <div class="alert alert-danger alert-dismissible ri-alert-line fade show" role="alert">
+                                <span style="font-size: 14px">${verifyError}</span>
+                                <c:remove var="verifyError" scope="session"/>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            </div>
+                        </c:if>
                         <div class="form-group">
                             <input name="first_name" class="form-control _ge_de_ol" type="text" placeholder="* Nhập họ"
                                    value="${first_name}" required="" aria-required="true">
@@ -73,7 +86,8 @@
                         <div class="g-recaptcha" data-sitekey="6LcUuewpAAAAACoUC5A46utS4D4YAOA1sJ9GB-Ja"></div>
                         <p class="msg3 text-danger font-italic" style="font-size: 14px"></p>
                         <div class="form-group">
-                            <input type="submit" class="_btn_04 btn" disabled value="Đăng ký" style="border-color: transparent;">
+                            <input type="submit" class="_btn_04 btn" disabled value="Đăng ký"
+                                   style="border-color: transparent;">
                         </div>
 
                         <div class="mb-3">
@@ -113,5 +127,9 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="assets/js/check-recaptcha.js"></script>
 <script src="assets/js/register-password.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
