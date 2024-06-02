@@ -58,6 +58,10 @@
             <img src="${contextPath}/assets/home/img/logo1.png" alt="">
             <span class="d-none d-lg-block">LaptopTG</span>
         </a>
+        <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </c:if>
+
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
@@ -105,8 +109,16 @@
 <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">
     <jsp:include page="../components/sidebar.jsp"/>
 </c:if>
+<c:choose>
+    <c:when test="${account.role == 'ADMIN' || account.role == 'SALER'}">
+        <main id="main" class="main" >
+    </c:when>
+    <c:otherwise>
+        <main id="main" class="main" style="margin-left: 0px">
+    </c:otherwise>
+</c:choose>
 
-<main id="main" class="main" style="margin-left: 0px">
+
 
     <div class="pagetitle text-center">
         <h1>User Profile</h1>
