@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,20 +15,101 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="assets/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/bootstrap.min.css"/>
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="assets/home/css/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="assets/home/css/slick-theme.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick-theme.css"/>
 
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="assets/home/css/nouislider.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/nouislider.min.css"/>
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="assets/home/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextPath}/assets/home/css/font-awesome.min.css">
+
+    <!-- Box Icon -->
+    <link rel="stylesheet" href="${contextPath}/assets/vendor/boxicons/css/boxicons.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="assets/home/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
+
+    <style>
+        .dropdown-menu {
+            border-radius: 4px;
+            padding: 10px 0;
+            animation-name: dropdown-animate;
+            animation-duration: 0.2s;
+            animation-fill-mode: both;
+            border: 0;
+            box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+        }
+
+        .dropdown-menu .dropdown-header,
+        .dropdown-menu .dropdown-footer {
+            text-align: center;
+            font-size: 15px;
+            padding: 10px 25px;
+        }
+
+        .dropdown-menu .dropdown-footer a {
+            color: #444444;
+            text-decoration: underline;
+        }
+
+        .dropdown-menu .dropdown-footer a:hover {
+            text-decoration: none;
+        }
+
+        .dropdown-menu .dropdown-divider {
+            color: #a5c5fe;
+            margin: 0;
+        }
+
+        .dropdown-menu .dropdown-item {
+            font-size: 14px;
+            padding: 10px 15px;
+            transition: 0.3s;
+        }
+
+        .dropdown-menu .dropdown-item i {
+            margin-right: 10px;
+            font-size: 18px;
+            line-height: 0;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f6f9ff;
+        }
+
+        @media (min-width: 768px) {
+            .dropdown-menu-arrow::before {
+                content: "";
+                width: 13px;
+                height: 13px;
+                background: #fff;
+                position: absolute;
+                top: -7px;
+                right: 20px;
+                transform: rotate(45deg);
+                border-top: 1px solid #eaedf1;
+                border-left: 1px solid #eaedf1;
+            }
+        }
+
+        @keyframes dropdown-animate {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+
+            0% {
+                opacity: 0;
+            }
+        }
+    </style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,148 +121,7 @@
 </head>
 <body>
 <!-- HEADER -->
-<header>
-
-
-    <!-- MAIN HEADER -->
-    <div id="header">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <!-- LOGO -->
-                <div class="col-md-3">
-                    <div class="header-logo">
-                        <a href="home" class="logo">
-                            <img src="assets/home/img/logo1.png" alt="">
-                        </a>
-                    </div>
-                </div>
-                <!-- /LOGO -->
-
-                <!-- SEARCH BAR -->
-                <div class="col-md-6">
-                    <div class="header-search">
-                        <form>
-                            <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="1">Category 02</option>
-                            </select>
-                            <input class="input" placeholder="Search here">
-                            <button class="search-btn">Search</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- /SEARCH BAR -->
-
-                <!-- ACCOUNT -->
-                <div class="col-md-3 clearfix">
-                    <div class="header-ctn">
-                        <!-- Cart -->
-                        <div class="dropdown" style="cursor: pointer">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span>Your Cart</span>
-                                <div class="qty">3</div>
-                            </a>
-                            <div class="cart-dropdown">
-                                <div class="cart-list">
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="assets/home/img/product01.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
-
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="assets/home/img/product02.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
-                                </div>
-                                <div class="cart-summary">
-                                    <small>3 Item(s) selected</small>
-                                    <h5>SUBTOTAL: $2940.00</h5>
-                                </div>
-                                <div class="cart-btns">
-                                    <a href="customer/cart.jsp">View Cart</a>
-                                    <a href="customer/checkout.jsp">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Cart -->
-
-                        <!-- Menu Toogle -->
-                        <div class="menu-toggle">
-                            <a href="#">
-                                <i class="fa fa-bars"></i>
-                                <span>Menu</span>
-                            </a>
-                        </div>
-                        <!-- /Menu Toogle -->
-
-                        <!-- Login -->
-                        <c:if test="${account == null}">
-                            <div>
-                                <a href="login">
-                                    <i class="fa fa-sign-in"></i>
-                                    <span>Đăng nhập</span>
-                                </a>
-                            </div>
-                        </c:if>
-
-                        <c:if test="${account != null}">
-                            <div class="dropdown" style="cursor: pointer">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user-circle"></i>
-                                    ${account.userName}
-                                </a>
-
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li class="dropdown-header">
-                                        <h5 class="text-center">${account.userName}</h5>
-                                        <span>${account.email}</span>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="../users-profile.jsp">
-                                            <i class="bi bi-gear"></i>
-                                            <span>User Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="logout">
-                                            <i class="bi bi-box-arrow-right"></i>
-                                            <span class="text-center">Sign Out</span>
-                                        </a>
-                                    </li>
-                                </ul><!-- End Profile Dropdown Items -->
-                            </div>
-                        </c:if>
-                        <!-- /Login -->
-                    </div>
-                </div>
-                <!-- /ACCOUNT -->
-            </div>
-            <!-- row -->
-        </div>
-        <!-- container -->
-    </div>
-    <!-- /MAIN HEADER -->
-</header>
+<jsp:include page="../components/navbar-customer.jsp" flush="true"/>
 <!-- /HEADER -->
 
 <!-- NAVIGATION -->
@@ -983,7 +924,7 @@
                     <div class="footer">
                         <h3 class="footer-title">Service</h3>
                         <ul class="footer-links">
-                            <li><a href="#">My Account</a></li>
+                            <li><a href="${contextPath}/profile">My Account</a></li>
                             <li><a href="#">View Cart</a></li>
                             <li><a href="#">Wishlist</a></li>
                         </ul>
@@ -1026,12 +967,12 @@
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
-<script src="assets/home/js/jquery.min.js"></script>
-<script src="assets/home/js/bootstrap.min.js"></script>
-<script src="assets/home/js/slick.min.js"></script>
-<script src="assets/home/js/nouislider.min.js"></script>
-<script src="assets/home/js/jquery.zoom.min.js"></script>
-<script src="assets/home/js/main.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="${contextPath}/assets/home/js/jquery.min.js"></script>
+<script src="${contextPath}/assets/home/js/bootstrap.min.js"></script>
+<script src="${contextPath}/assets/home/js/slick.min.js"></script>
+<script src="${contextPath}/assets/home/js/nouislider.min.js"></script>
+<script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
+<script src="${contextPath}/assets/home/js/main.js"></script>
+<script src="${contextPath}/assets/js/main.js"></script>
 </body>
 </html>

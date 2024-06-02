@@ -3,14 +3,13 @@ package com.web.laptoptg.dao.impl;
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dao.ProductDAO;
 import com.web.laptoptg.model.Product;
-import com.web.laptoptg.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
-public class ProductDAOImp implements ProductDAO {
+public class ProductDAOImpl implements ProductDAO {
     @Override
     public void saveProduct(Product pro) {
         EntityManager entityManager = JPAConfig.getEntityManager();
@@ -49,7 +48,6 @@ public class ProductDAOImp implements ProductDAO {
             entityManager.close();
         }
     }
-
 
 
     @Override

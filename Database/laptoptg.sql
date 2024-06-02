@@ -233,6 +233,38 @@ INSERT INTO `product` VALUES (3,'Intel, Core i5, 1.8 Ghz',23990000,0,100,'5800mA
 UNLOCK TABLES;
 
 --
+-- Table structure for table `rating`
+--
+
+DROP TABLE IF EXISTS `rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rating` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `product_id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `content` varchar(500) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `rating_score` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKRating_Product` (`product_id`),
+  KEY `FKRating_User` (`user_id`),
+  CONSTRAINT `FKRating_Product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  CONSTRAINT `FKRating_User` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rating`
+--
+
+LOCK TABLES `rating` WRITE;
+/*!40000 ALTER TABLE `rating` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rating` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `role`
 --
 
@@ -276,7 +308,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `UKEmail` (`email`),
   KEY `FKUser_Role` (`role_id`),
   CONSTRAINT `FKUser_Role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,7 +317,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','$2a$10$kWZ/z/llhza3e7V675MiPebSuLnbUWy5.W15lBLAfAZkq6pjqio9K','123456789',1,'active'),(2,NULL,'member@gmail.com',NULL,'$2a$10$Zk9MSaYLQzuR3AduX8jM2.z3otHgBpkVeQPjSkvL/XfP3e1xD0h5S',NULL,3,'active'),(3,NULL,'saler@gmail.com',NULL,'$2a$10$1A2jZwaq02MViKmdEgSyou/1eBdLt9QdkJz10qUnApYDxqv3P5CKy',NULL,2,'active'),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$lHb9AJ4TSJpOMYmhsbpPKOF70JO.D0tuol8n0jMpy7qzAt842Xv/K','123456',3,'active');
+INSERT INTO `user` VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','$2a$10$kWZ/z/llhza3e7V675MiPebSuLnbUWy5.W15lBLAfAZkq6pjqio9K','123456789',1,'active'),(2,NULL,'member@gmail.com',NULL,'$2a$10$Zk9MSaYLQzuR3AduX8jM2.z3otHgBpkVeQPjSkvL/XfP3e1xD0h5S',NULL,3,'active'),(3,NULL,'saler@gmail.com',NULL,'$2a$10$1A2jZwaq02MViKmdEgSyou/1eBdLt9QdkJz10qUnApYDxqv3P5CKy',NULL,2,'active'),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$lHb9AJ4TSJpOMYmhsbpPKOF70JO.D0tuol8n0jMpy7qzAt842Xv/K','123456',3,'active'),(23,NULL,'dangtm1163@gmail.com','Minh Đăng','$2a$10$X4HjBeEX.xwIJyHmrMUuSupw85BeBDNWLrhD6N8Xdf2f/yvuEqNhK',NULL,3,'active');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -298,4 +330,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-28 16:56:18
+-- Dump completed on 2024-06-01 22:39:46

@@ -92,7 +92,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="../users-profile.jsp">
+                        <a class="dropdown-item d-flex align-items-center" href="../common/users-profile.jsp">
                             <i class="bi bi-gear"></i>
                             <span>Account Settings</span>
                         </a>
@@ -156,7 +156,7 @@
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link " href="../users-profile.jsp">
+            <a class="nav-link " href="../common/users-profile.jsp">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
             </a>

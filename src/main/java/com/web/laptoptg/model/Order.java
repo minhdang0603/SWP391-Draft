@@ -44,7 +44,7 @@ public class Order {
     private String orderStatus;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-    private List<OrderDetails> orderDetails = new ArrayList<>();
+    private List<OrderDetails> orderDetails;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
