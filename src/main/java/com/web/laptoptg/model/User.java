@@ -3,6 +3,9 @@ package com.web.laptoptg.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "user")
 @Data //toString()
@@ -38,4 +41,7 @@ public class User {
 
     @Column(name = "status")
     private String status;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Rating> ratings;
 }

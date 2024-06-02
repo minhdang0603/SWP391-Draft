@@ -5,6 +5,9 @@
   Time: 5:39 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <header>
     <!-- MAIN HEADER -->
     <div id="header">
@@ -15,7 +18,7 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="home"><img src="assets/home/img/logo1.png" alt=""></a>
+                        <a href="home"><img src="${contextPath}/assets/home/img/logo1.png" alt=""></a>
                     </div>
                 </div>
                 <!-- /LOGO -->

@@ -7,6 +7,7 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,9 +16,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/login.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/login.css" rel="stylesheet">
 
     <title>Đăng nhập</title>
 </head>
@@ -35,11 +36,12 @@
                 <div class="_lk_de">
                     <form class="form-03-main" action="login" method="post">
                         <div class="logo">
-                            <img src="assets/img/user.png">
+                            <img src="${contextPath}/assets/img/user.png">
                         </div>
                         <c:if test="${accountError != null}">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <span style="font-size: 14px">${accountError}</span>
+                                <c:remove var="accountError" scope="request"/>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                         </c:if>
@@ -93,7 +95,7 @@
 
                         <div class="">
                             <span class="text-primary" style="cursor: pointer" data-toggle="modal" data-target="#forgotPasswordModal">Quên mật khẩu?</span> <br>
-                            <span>Chưa có tài khoản? </span><a href="register" class="text-primary">Tạo tài khoản</a>
+                            <span>Chưa có tài khoản? </span><a href="${contextPath}/register" class="text-primary">Tạo tài khoản</a>
                         </div>
 
 
@@ -159,8 +161,8 @@
 </section>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="assets/js/check-recaptcha.js"></script>
-<script src="assets/js/login-password.js"></script>
+<script src="${contextPath}/assets/js/check-recaptcha.js"></script>
+<script src="${contextPath}/assets/js/login-password.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

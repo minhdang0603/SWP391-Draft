@@ -1,7 +1,7 @@
 package com.web.laptoptg.service.impl;
 
 import com.web.laptoptg.dao.ProductDAO;
-import com.web.laptoptg.dao.impl.ProductDAOImp;
+import com.web.laptoptg.dao.impl.ProductDAOImpl;
 import com.web.laptoptg.model.Product;
 import com.web.laptoptg.service.ProductService;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
 
-    private ProductDAO productDAO = new ProductDAOImp();
+    private ProductDAO productDAO = new ProductDAOImpl();
     @Override
     public void saveProduct(Product pro) {
         productDAO.saveProduct(pro);

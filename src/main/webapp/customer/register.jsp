@@ -7,6 +7,7 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,9 +17,9 @@
     <meta name="author" content="">
     <title>Đăng ký</title>
 
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/login.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/login.css" rel="stylesheet">
 
 </head>
 <body>
@@ -33,7 +34,7 @@
                 <div class="_lk_de">
                     <form class="form-03-main" id="myform" method="post" action="register">
                         <div class="logo">
-                            <img src="assets/img/user.png">
+                            <img src="${contextPath}/assets/img/user.png">
                         </div>
 
                         <%--Cannot add user to database error--%>
@@ -92,7 +93,7 @@
 
                         <div class="mb-3">
                             <span>Đã có tài khoản?</span>
-                            <a href="login" class="text-primary">Đăng nhập</a>
+                            <a href="${contextPath}/login" class="text-primary">Đăng nhập</a>
                         </div>
 
                         <div class="text-secondary d-flex align-items-center">
@@ -125,8 +126,8 @@
 </section>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="assets/js/check-recaptcha.js"></script>
-<script src="assets/js/register-password.js"></script>
+<script src="${contextPath}/assets/js/check-recaptcha.js"></script>
+<script src="${contextPath}/assets/js/register-password.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
