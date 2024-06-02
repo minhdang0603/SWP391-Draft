@@ -13,48 +13,57 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
+        <!-- Dashboard Nav -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="index.jsp">
+            <a class="nav-link collapsed" href="${contextPath}/admin/home">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="charts-chartjs.jsp">
-                        <i class="bi bi-circle"></i><span>Chart.js</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-apexcharts.jsp">
-                        <i class="bi bi-circle"></i><span>ApexCharts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-echarts.jsp">
-                        <i class="bi bi-circle"></i><span>ECharts</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Charts Nav -->
 
-        <li class="nav-heading">Pages</li>
+        <li class="nav-heading">Quản Lý</li>
 
+        <!-- Profile Nav -->
         <li class="nav-item">
             <a class="nav-link " href="${contextPath}/common/users-profile.jsp">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
             </a>
         </li><!-- End Profile Page Nav -->
+
+        <!-- Products Nav -->
+        <li class="nav-item">
+            <a class="nav-link " href="${contextPath}/#">
+                <i class="bi bi-laptop"></i>
+                <span>Sản Phẩm</span>
+            </a>
+        </li><!-- End Product Page Nav -->
+
+        <!-- Orders Nav -->
+        <li class="nav-item">
+            <a class="nav-link " href="${contextPath}/#">
+                <i class="bi bi-file-post"></i>
+                <span>Đơn hàng</span>
+            </a>
+        </li><!-- End Order Page Nav -->
+
+        <!-- Show Account Nav if it's ADMIN -->
+        <c:if test="${account.role == 'ADMIN'}">
+            <!-- Accounts Nav -->
+            <li class="nav-item">
+                <a class="nav-link " href="${contextPath}/#">
+                    <i class="bi bi-people"></i>
+                    <span>Tài Khoản</span>
+                </a>
+            </li><!-- End Account Page Nav -->
+        </c:if>
+
+        <!-- Homepage Nav -->
         <li class="nav-item">
             <a class="nav-link " href="${contextPath}/home">
-                <i class="bi bi-person"></i>
-                <span>HomePage</span>
+                <i class="bi bi-house"></i>
+                <span>Trang Chủ</span>
             </a>
         </li>
     </ul>
