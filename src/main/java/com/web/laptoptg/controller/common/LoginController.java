@@ -76,6 +76,7 @@ public class LoginController extends HttpServlet {
         }
 
         // get user in database and do log in function
+        userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
         userDTO.setStatus(user.getStatus());
         userDTO.setUserName(user.getUserName());

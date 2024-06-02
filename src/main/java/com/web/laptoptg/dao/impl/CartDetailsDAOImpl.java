@@ -5,6 +5,7 @@ import com.web.laptoptg.dao.CartDetailsDAO;
 import com.web.laptoptg.model.CartDetails;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -99,11 +100,16 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
     @Override
     public CartDetails getCartDetailsByCartAndProduct(int cartId, int productId) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        CartDetails cartDetails = entityManager
-                .createQuery("from CartDetails where cart.id = :cartId and product.id = :productId", CartDetails.class)
-                .setParameter("cartId", cartId)
-                .setParameter("productId", productId)
-                .getSingleResult();
+        CartDetails cartDetails = null;
+        TypedQuery<CartDetails> query = entityManager
+                .createQuery("from CartDetails where cart.id = :cartId and product.id = :productId", CartDetails.class);
+        query.setParameter("cartId", cartId);
+        query.setParameter("productId", productId);
+        try {
+            cartDetails = query.getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace();
+        }
         return cartDetails;
     }
 }

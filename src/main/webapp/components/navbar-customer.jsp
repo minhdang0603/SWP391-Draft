@@ -45,45 +45,14 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Cart -->
-                        <div class="dropdown" style="cursor: pointer">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <div class="" style="cursor: pointer">
+                            <a href="${contextPath}/cart">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
-                                <div class="qty">3</div>
+                                <c:if test="${checkCart > 0}">
+                                    <div class="qty">${checkCart}</div>
+                                </c:if>
                             </a>
-                            <div class="cart-dropdown">
-                                <div class="cart-list">
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="${contextPath}/assets/home/img/product01.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
-
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="${contextPath}/assets/home/img/product02.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
-                                </div>
-                                <div class="cart-summary">
-                                    <small>3 Item(s) selected</small>
-                                    <h5>SUBTOTAL: $2940.00</h5>
-                                </div>
-                                <div class="cart-btns">
-                                    <a href="customer/cart.jsp">View Cart</a>
-                                    <a href="customer/checkout.jsp">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
                         </div>
                         <!-- /Cart -->
 
@@ -101,7 +70,7 @@
                             <div class="dropdown" style="cursor: pointer">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-user-circle"></i>
-                                        My Account
+                                    My Account
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -109,13 +78,18 @@
                                         <h5 class="text-center">${account.userName}</h5>
                                         <span>${account.email}</span>
                                     </li>
-                                    <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="${contextPath}/profile">
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center"
+                                           href="${contextPath}/profile">
                                             <span>User Profile</span>
                                         </a>
                                     </li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center" href="${contextPath}/logout">
                                             <span class="text-center">Sign Out</span>

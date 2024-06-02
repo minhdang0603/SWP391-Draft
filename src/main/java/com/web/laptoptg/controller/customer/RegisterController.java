@@ -1,7 +1,11 @@
-package com.web.laptoptg.controller.common;
+package com.web.laptoptg.controller.customer;
 
 import com.web.laptoptg.dto.UserDTO;
+import com.web.laptoptg.model.Cart;
+import com.web.laptoptg.model.User;
+import com.web.laptoptg.service.CartService;
 import com.web.laptoptg.service.UserService;
+import com.web.laptoptg.service.impl.CartServiceImpl;
 import com.web.laptoptg.service.impl.UserServiceImpl;
 import com.web.laptoptg.util.Email;
 import com.web.laptoptg.util.PasswordUtils;
@@ -19,10 +23,12 @@ import java.security.NoSuchAlgorithmException;
 public class RegisterController extends HttpServlet {
 
     private UserService userService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {
         userService = new UserServiceImpl();
+        cartService = new CartServiceImpl();
     }
 
     @Override
@@ -148,6 +154,10 @@ public class RegisterController extends HttpServlet {
         user.setEmail(user.getEmail());
         user.setStatus("active");
         userService.register(user);
+        User temp = userService.findUserByEmail(user.getEmail());
+        Cart cart = new Cart();
+        cart.setUser(temp);
+        cartService.saveCart(cart);
         session.removeAttribute("user");
         session.setAttribute("registerSuccess", "Đăng ký tài khoản thành công!");
         resp.sendRedirect(req.getContextPath() + "/login");
