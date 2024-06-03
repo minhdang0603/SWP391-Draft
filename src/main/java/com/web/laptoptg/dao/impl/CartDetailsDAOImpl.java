@@ -12,11 +12,17 @@ import java.util.List;
 
 public class CartDetailsDAOImpl implements CartDetailsDAO {
 
+    private EntityManager entityManager;
+    private EntityTransaction transaction;
+
+    public CartDetailsDAOImpl() {
+        entityManager = JPAConfig.getEntityManager();
+        transaction = entityManager.getTransaction();
+    }
+
     // insert cart details to database
     @Override
     public void saveCartDetails(CartDetails cartDetails) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(cartDetails);
@@ -32,8 +38,6 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
     // delete cart details
     @Override
     public void deleteCartDetails(CartDetails cartDetails) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.remove(cartDetails);
@@ -49,8 +53,6 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
     // delete all cart details by cart id
     @Override
     public void deleteAll(int cartId) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager
@@ -69,7 +71,6 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
     // get all cart details by cart id
     @Override
     public List<CartDetails> getCartDetailsByCart(int cartId) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         // create query
         TypedQuery<CartDetails> query = entityManager.createQuery("from CartDetails where cart.id = :cartId", CartDetails.class);
 
@@ -82,8 +83,6 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
     // update cart details
     @Override
     public void updateCartDetails(CartDetails cartDetails) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(cartDetails);
@@ -99,7 +98,6 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
     // get cart details by cart id and product id
     @Override
     public CartDetails getCartDetailsByCartAndProduct(int cartId, int productId) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         CartDetails cartDetails = null;
         TypedQuery<CartDetails> query = entityManager
                 .createQuery("from CartDetails where cart.id = :cartId and product.id = :productId", CartDetails.class);

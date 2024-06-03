@@ -26,5 +26,5 @@ public interface ProductService {
 
     Product findProductById(int id);
 
-    //get 10
+    List<Product> getTop3ByCate(int cateID);
 }
