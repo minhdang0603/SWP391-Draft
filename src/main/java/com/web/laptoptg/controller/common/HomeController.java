@@ -2,6 +2,7 @@ package com.web.laptoptg.controller.common;
 
 import com.web.laptoptg.dto.CartDTO;
 import com.web.laptoptg.dto.ItemDTO;
+import com.web.laptoptg.model.Category;
 import com.web.laptoptg.model.Product;
 import com.web.laptoptg.service.CategoryService;
 import com.web.laptoptg.service.ProductService;
@@ -30,21 +31,22 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cookie[] cookies = req.getCookies();
-        List<ItemDTO> items = loadCookies(cookies);
+        List<Product> products = productService.getAllProducts();
+        List<Category> categories = categoryService.getAllCategory();
+        List<ItemDTO> items = loadCookies(cookies, products);
         ArrayList<List<Product>> list = new ArrayList<>();
-
-//        int cateID = Integer.parseInt(req.getParameter("cateID"));
-        for(int i = 1; i <= categoryService.getNumOfCategory(); i++){
-            list.add(productService.getTop3ByCate(i));
+        for (Category category : categories) {
+            if(category.getId() == 1 || category.getId() == 3 || category.getId() == 4) {
+                list.add(productService.getTop3ByCate(category.getId()));
+            }
         }
         req.setAttribute("list", list);
         req.setAttribute("checkCart", items.size());
         req.getRequestDispatcher("common/home-index.jsp").forward(req, resp);
     }
 
-    private List<ItemDTO> loadCookies(Cookie[] cookies) {
+    private List<ItemDTO> loadCookies(Cookie[] cookies, List<Product> products) {
         StringBuilder cartContent = new StringBuilder();
-        List<Product> products = productService.getAllProducts();
         if(cookies != null) {
             for(Cookie cookie : cookies) {
                 if(cookie.getName().equals("cart")) {

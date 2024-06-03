@@ -5,6 +5,8 @@ import com.web.laptoptg.dao.impl.CategoryDAOImpl;
 import com.web.laptoptg.model.Category;
 import com.web.laptoptg.service.CategoryService;
 
+import java.util.List;
+
 public class CategoryServiceImpl implements CategoryService {
     private CategoryDAO categoryDAO = new CategoryDAOImpl();
     @Override
@@ -30,5 +32,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public int getNumOfCategory() {
         return categoryDAO.getNumOfCategory();
+    }
+
+    @Override
+    public List<Category> getAllCategory() {
+        return categoryDAO.getAll();
     }
 }

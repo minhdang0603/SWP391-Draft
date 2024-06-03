@@ -7,6 +7,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
+import java.util.List;
+
 public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
@@ -64,6 +66,13 @@ public class CategoryDAOImpl implements CategoryDAO {
             entityManager.close();
         }
 
+    }
+
+    @Override
+    public List<Category> getAll(){
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        TypedQuery<Category> query = entityManager.createQuery("select c from Category c", Category.class);
+        return query.getResultList();
     }
 
     @Override

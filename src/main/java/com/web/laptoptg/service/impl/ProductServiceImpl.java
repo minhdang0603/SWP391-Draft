@@ -10,6 +10,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private ProductDAO productDAO = new ProductDAOImpl();
+
     @Override
     public void saveProduct(Product pro) {
         productDAO.saveProduct(pro);
