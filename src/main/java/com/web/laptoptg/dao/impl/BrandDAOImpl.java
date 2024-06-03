@@ -6,25 +6,19 @@ import com.web.laptoptg.config.JPAConfig;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-public class BrandDaoImpl implements BrandDAO {
-
-    private EntityManager entityManager;
-    private EntityTransaction transaction;
-
-    public BrandDaoImpl() {
-        entityManager = JPAConfig.getEntityManager();
-        transaction = entityManager.getTransaction();
-    }
+public class BrandDAOImpl implements BrandDAO {
 
     @Override
     public Brand getBrandById(int id) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
         Brand brand = entityManager.find(Brand.class, id);
-        entityManager.close();
         return brand;
     }
 
     @Override
     public void saveBrand(Brand brand) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(brand);
@@ -39,6 +33,8 @@ public class BrandDaoImpl implements BrandDAO {
 
     @Override
     public void updateBrand(Brand brand) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(brand);
@@ -53,6 +49,8 @@ public class BrandDaoImpl implements BrandDAO {
 
     @Override
     public void deleteBrand(Brand brand) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.remove(brand);

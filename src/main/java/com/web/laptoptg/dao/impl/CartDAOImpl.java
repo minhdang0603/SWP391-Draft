@@ -11,17 +11,10 @@ import jakarta.persistence.TypedQuery;
 
 public class CartDAOImpl implements CartDAO {
 
-    private EntityManager entityManager;
-    private EntityTransaction transaction;
-
-    public CartDAOImpl() {
-        entityManager = JPAConfig.getEntityManager();
-        transaction = entityManager.getTransaction();
-    }
-
     // get cart
     @Override
     public Cart getCartByUser(User user) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
         TypedQuery<Cart> query = entityManager.createQuery("from Cart where user.id = :userId", Cart.class);
         query.setParameter("userId", user.getId());
         Cart cart = null;
@@ -37,6 +30,8 @@ public class CartDAOImpl implements CartDAO {
     // add cart when new user is created
     @Override
     public void saveCart(Cart cart) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(cart);
@@ -52,6 +47,8 @@ public class CartDAOImpl implements CartDAO {
     // update cart total amount
     @Override
     public void updateCart(Cart cart) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(cart);

@@ -54,7 +54,7 @@ public class ProductDAOImpl implements ProductDAO {
     public List<Product> findProductByName(String name) {
         EntityManager entityManager = JPAConfig.getEntityManager();
         TypedQuery<Product> query = entityManager.createQuery("from Product where productName like :name", Product.class);
-        query.setParameter("name", "%"+name+"%");
+        query.setParameter("name", "%" + name + "%");
         return query.getResultList();
     }
 
@@ -82,6 +82,7 @@ public class ProductDAOImpl implements ProductDAO {
             entityManager.close();
         }
     }
+
     @Override
     public Product findProductById(int id) {
         EntityManager entityManager = JPAConfig.getEntityManager();
@@ -94,25 +95,20 @@ public class ProductDAOImpl implements ProductDAO {
         TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p where category.id = :cateID", Product.class);
         query.setMaxResults(4);
         query.setParameter("cateID", cateID);
-        entityManager.close();
         return query.getResultList();
     }
 
     @Override
     public List<Product> getNext3Product(int amount) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        try {
-            // JPQL query without OFFSET and FETCH NEXT
-            String jpql = "SELECT p FROM Product p ORDER BY p.id";
-            TypedQuery<Product> query = entityManager.createQuery(jpql, Product.class);
+        // JPQL query without OFFSET and FETCH NEXT
+        String jpql = "SELECT p FROM Product p ORDER BY p.id";
+        TypedQuery<Product> query = entityManager.createQuery(jpql, Product.class);
 
-            // Use setFirstResult for OFFSET and setMaxResults for FETCH NEXT
-            query.setFirstResult(amount);
-            query.setMaxResults(3);
+        // Use setFirstResult for OFFSET and setMaxResults for FETCH NEXT
+        query.setFirstResult(amount);
+        query.setMaxResults(3);
 
-            return query.getResultList();
-        } finally {
-            entityManager.close();
-        }
+        return query.getResultList();
     }
 }
