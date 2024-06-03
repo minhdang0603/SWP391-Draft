@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,23 +28,23 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/bootstrap.min.css"/>
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick-theme.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick-theme.css"/>
 
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/nouislider.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/nouislider.min.css"/>
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="../assets/home/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextPath}/assets/home/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
 
     <!-- custom cart -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/cart.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/cart.css"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,7 +69,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="home" class="logo">
-                            <img src="../assets/home/img/logo1.png" alt="">
+                            <img src="${contextPath}/assets/home/img/logo1.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -77,11 +79,6 @@
                 <div class="col-md-6">
                     <div class="header-search">
                         <form>
-                            <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="1">Category 02</option>
-                            </select>
                             <input class="input" placeholder="Search here">
                             <button class="search-btn">Search</button>
                         </form>
@@ -93,13 +90,47 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Login -->
-                        <div>
-                            <a href="login">
-                                <i class="fa fa-heart-o"></i>
-                                <span>Login</span>
-                                <div class="qty">2</div>
-                            </a>
-                        </div>
+                        <c:if test="${account == null}">
+                            <div>
+                                <a href="${contextPath}/login">
+                                    <i class="fa fa-sign-in"></i>
+                                    <span>Đăng nhập</span>
+                                </a>
+                            </div>
+                        </c:if>
+
+                        <c:if test="${account != null}">
+                            <div class="dropdown" style="cursor: pointer">
+                                <a class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-user-circle"></i>
+                                    My Account
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li class="dropdown-header">
+                                        <h5 class="text-center">${account.userName}</h5>
+                                        <span>${account.email}</span>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center"
+                                           href="${contextPath}/profile">
+                                            <span>User Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center" href="${contextPath}/logout">
+                                            <span class="text-center">Sign Out</span>
+                                        </a>
+                                    </li>
+                                </ul><!-- End Profile Dropdown Items -->
+                            </div>
+                        </c:if>
                         <!-- /Login -->
 
 
@@ -139,7 +170,7 @@
                             <div class="product">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <img class="img-fluid mx-auto d-block image" src="../assets/home/img/product01.png">
+                                        <img class="img-fluid mx-auto d-block image" src="${contextPath}/assets/home/img/product01.png">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="info">
@@ -169,7 +200,7 @@
                             <div class="product">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <img class="img-fluid mx-auto d-block image" src="../assets/home/img/product02.png">
+                                        <img class="img-fluid mx-auto d-block image" src="${contextPath}/assets/home/img/product02.png">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="info">
@@ -199,7 +230,7 @@
                             <div class="product">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <img class="img-fluid mx-auto d-block image" src="../assets/home/img/product03.png">
+                                        <img class="img-fluid mx-auto d-block image" src="${contextPath}/assets/home/img/product03.png">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="info">
@@ -342,12 +373,12 @@
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
-<script src="../assets/home/js/jquery.min.js"></script>
-<script src="../assets/home/js/bootstrap.min.js"></script>
-<script src="../assets/home/js/slick.min.js"></script>
-<script src="../assets/home/js/nouislider.min.js"></script>
-<script src="../assets/home/js/jquery.zoom.min.js"></script>
-<script src="../assets/home/js/main.js"></script>
+<script src="${contextPath}/assets/home/js/jquery.min.js"></script>
+<script src="${contextPath}/assets/home/js/bootstrap.min.js"></script>
+<script src="${contextPath}/assets/home/js/slick.min.js"></script>
+<script src="${contextPath}/assets/home/js/nouislider.min.js"></script>
+<script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
+<script src="${contextPath}/assets/home/js/main.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 

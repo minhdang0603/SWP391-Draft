@@ -87,4 +87,31 @@ public class ProductDAOImpl implements ProductDAO {
         EntityManager entityManager = JPAConfig.getEntityManager();
         return entityManager.find(Product.class, id);
     }
+
+    @Override
+    public List<Product> getTop3ByCate(int cateID) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p where category.id = :cateID", Product.class);
+        query.setMaxResults(4);
+        query.setParameter("cateID", cateID);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Product> getNext3Product(int amount) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        try {
+            // JPQL query without OFFSET and FETCH NEXT
+            String jpql = "SELECT p FROM Product p ORDER BY p.id";
+            TypedQuery<Product> query = entityManager.createQuery(jpql, Product.class);
+
+            // Use setFirstResult for OFFSET and setMaxResults for FETCH NEXT
+            query.setFirstResult(amount);
+            query.setMaxResults(3);
+
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
 }

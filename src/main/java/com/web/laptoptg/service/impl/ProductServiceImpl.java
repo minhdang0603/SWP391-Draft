@@ -44,4 +44,9 @@ public class ProductServiceImpl implements ProductService {
     public Product findProductById(int id) {
         return productDAO.findProductById(id);
     }
+
+    @Override
+    public List<Product> getTop3ByCate(int cateID) {
+        return productDAO.getTop3ByCate(cateID);
+    }
 }

@@ -5,8 +5,16 @@ import com.web.laptoptg.dao.CategoryDAO;
 import com.web.laptoptg.model.Category;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 public class CategoryDAOImpl implements CategoryDAO {
+    private EntityManager em;
+    private EntityTransaction transaction;
+
+    public CategoryDAOImpl() {
+        em = JPAConfig.getEntityManager();
+        transaction = em.getTransaction();
+    }
 
     @Override
     public Category getCategoryById(int id) {
@@ -16,52 +24,52 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public void saveCategory(Category category) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try{
             transaction.begin();
-            entityManager.persist(category);
+            em.persist(category);
             transaction.commit();
         } catch (Exception e){
             transaction.rollback();
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            em.close();
         }
 
     }
 
     @Override
     public void updateCategory(Category category) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try{
             transaction.begin();
-            entityManager.merge(category);
+            em.merge(category);
             transaction.commit();
         } catch (Exception e){
             transaction.rollback();
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            em.close();
         }
 
     }
 
     @Override
     public void deleteCategory(Category category) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try{
             transaction.begin();
-            entityManager.remove(category);
+            em.remove(category);
             transaction.commit();
         } catch (Exception e){
             transaction.rollback();
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            em.close();
         }
 
+    }
+
+    @Override
+    public int getNumOfCategory() {
+        TypedQuery<Category> query = em.createQuery("FROM Category c", Category.class);
+        return query.getResultList().size();
     }
 }

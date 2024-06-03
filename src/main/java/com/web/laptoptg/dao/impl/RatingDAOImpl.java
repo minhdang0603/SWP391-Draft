@@ -11,15 +11,21 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class RatingDAOImpl implements RatingDAO {
+
+    private EntityManager entityManager;
+    private EntityTransaction transaction;
+
+    public RatingDAOImpl() {
+        entityManager = JPAConfig.getEntityManager();
+        transaction = entityManager.getTransaction();
+    }
     @Override
     public Rating finbById(int id) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         return entityManager.find(Rating.class, id);
     }
 
     @Override
     public List<Rating> getRatingByProductIDAndCreateTimeDesc(int productID) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         List<Rating> ratings = null;
         TypedQuery<Rating> query = entityManager.createQuery("from Rating r where r.product.id = :productID order by r.createTime desc", Rating.class);
         query.setParameter("productID", productID);
@@ -33,7 +39,6 @@ public class RatingDAOImpl implements RatingDAO {
 
     @Override
     public List<Rating> getRatingByUserIDAndCreateTimeDesc(int userID) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         List<Rating> ratings = null;
         TypedQuery<Rating> query = entityManager.createQuery("from Rating r where r.user.id = :userID order by r.createTime desc", Rating.class);
         query.setParameter("userID", userID);
@@ -47,8 +52,6 @@ public class RatingDAOImpl implements RatingDAO {
 
     @Override
     public void addRating(Rating rating) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(rating);
@@ -63,8 +66,6 @@ public class RatingDAOImpl implements RatingDAO {
 
     @Override
     public void updateRating(Rating rating) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(rating);
@@ -79,8 +80,6 @@ public class RatingDAOImpl implements RatingDAO {
 
     @Override
     public void deleteRating(Rating rating) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.remove(rating);
