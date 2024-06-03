@@ -41,11 +41,11 @@
                     <div class="header-ctn">
                         <!-- Cart -->
                         <div class="" style="cursor: pointer">
-                            <a href="${contextPath}/cart">
+                            <a href="${contextPath}/cart?action=view">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
                                 <c:if test="${checkCart > 0}">
-                                    <div class="qty">${checkCart}</div>
+                                    <div class="qty check-cart">${checkCart}</div>
                                 </c:if>
                             </a>
                         </div>

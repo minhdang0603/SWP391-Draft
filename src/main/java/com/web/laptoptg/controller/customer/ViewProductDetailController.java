@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.customer;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Product;
 import com.web.laptoptg.service.ProductService;
 import com.web.laptoptg.service.impl.ProductServiceImpl;
@@ -42,5 +43,10 @@ public class ViewProductDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

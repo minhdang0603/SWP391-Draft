@@ -45,8 +45,8 @@ public class CartDTO {
         }
     }
 
-    public double getTotal(){
-        double total = 0;
+    public long getTotal(){
+        long total = 0;
         for (ItemDTO item : items) {
             total += item.getQuantity()*item.getProduct().getUnitPrice();
         }

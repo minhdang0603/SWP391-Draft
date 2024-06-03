@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.common;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.CartDTO;
 import com.web.laptoptg.dto.ItemDTO;
 import com.web.laptoptg.model.Category;
@@ -32,7 +33,6 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cookie[] cookies = req.getCookies();
         List<Product> products = productService.getAllProducts();
-
         List<Category> categories = categoryService.getAllCategory();
         List<ItemDTO> items = loadCookies(cookies, products);
         ArrayList<List<Product>> list = new ArrayList<>();
@@ -62,5 +62,10 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

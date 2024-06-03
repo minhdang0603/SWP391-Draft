@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.customer;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.Cart;
 import com.web.laptoptg.model.User;
@@ -222,5 +223,10 @@ public class RegisterController extends HttpServlet {
                 + "\n"
                 + "</body>\n"
                 + "</html>";
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

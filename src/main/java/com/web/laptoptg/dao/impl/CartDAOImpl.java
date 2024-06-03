@@ -11,21 +11,24 @@ import jakarta.persistence.TypedQuery;
 
 public class CartDAOImpl implements CartDAO {
 
+    EntityManager entityManager;
+    EntityTransaction transaction;
+
+    public CartDAOImpl() {
+        entityManager = JPAConfig.getEntityManager();
+        transaction = entityManager.getTransaction();
+    }
+
     // Get Cart by User
     @Override
     public Cart getCartByUser(User user) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<Cart> query = entityManager.createQuery("from Cart where user.id = :userId", Cart.class);
+        TypedQuery<Cart> query = entityManager.createQuery("from Cart c join fetch c.user where c.user.id = :userId", Cart.class);
         query.setParameter("userId", user.getId());
         Cart cart = null;
         try {
             cart = query.getSingleResult();
         } catch (NoResultException e) {
             return null;
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
         }
         return cart;
     }
@@ -33,8 +36,6 @@ public class CartDAOImpl implements CartDAO {
     // Save Cart when a new user is created
     @Override
     public void saveCart(Cart cart) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(cart);
@@ -44,19 +45,12 @@ public class CartDAOImpl implements CartDAO {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-                JPAConfig.shutdown();
-            }
         }
     }
 
     // Update Cart total amount
     @Override
     public void updateCart(Cart cart) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(cart);
@@ -66,11 +60,6 @@ public class CartDAOImpl implements CartDAO {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-                JPAConfig.shutdown();
-            }
         }
     }
 }

@@ -106,7 +106,7 @@ public class LoginFilter implements Filter {
         }
         // Create a new cookie with the updated cart content
         Cookie cartCookie = new Cookie("cart", cartContent.toString());
-        cartCookie.setMaxAge(60 * 60 * 24 * 7); // Set the cookie to expire in one week
+        cartCookie.setMaxAge(60 * 60 * 24); // Set the cookie to expire in one week
 
         // Add the cookie to the response
         response.addCookie(cartCookie);

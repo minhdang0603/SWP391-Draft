@@ -11,24 +11,21 @@ import java.util.List;
 
 public class CategoryDAOImpl implements CategoryDAO {
 
+    EntityManager entityManager;
+    EntityTransaction transaction;
+
+    public CategoryDAOImpl() {
+        entityManager = JPAConfig.getEntityManager();
+        transaction = entityManager.getTransaction();
+    }
+
     @Override
     public Category getCategoryById(int id) {
-
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        try {
-            return entityManager.find(Category.class, id);
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
-
-        }
+        return entityManager.find(Category.class, id);
     }
 
     @Override
     public void saveCategory(Category category) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(category);
@@ -38,18 +35,11 @@ public class CategoryDAOImpl implements CategoryDAO {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
-            JPAConfig.shutdown();
         }
     }
 
     @Override
     public void updateCategory(Category category) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(category);
@@ -59,18 +49,11 @@ public class CategoryDAOImpl implements CategoryDAO {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
-            JPAConfig.shutdown();
         }
     }
 
     @Override
     public void deleteCategory(Category category) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             // Ensure the entity is managed before removing
@@ -84,39 +67,19 @@ public class CategoryDAOImpl implements CategoryDAO {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
-            JPAConfig.shutdown();
         }
     }
 
     @Override
     public List<Category> getAll() {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        try {
-            TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c", Category.class);
-            return query.getResultList();
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
-            JPAConfig.shutdown();
-        }
+        TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c", Category.class);
+        return query.getResultList();
+
     }
 
     @Override
     public int getNumOfCategory() {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        try {
-            TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c", Category.class);
-            return query.getResultList().size();
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
-            JPAConfig.shutdown();
-        }
+        TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c", Category.class);
+        return query.getResultList().size();
     }
 }

@@ -3,6 +3,7 @@ package com.web.laptoptg.controller.common;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.web.laptoptg.config.Constrants;
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.GoogleUserDTO;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.User;
@@ -155,5 +156,10 @@ public class LoginController extends HttpServlet {
         userDTO.setPhoneNumber(user.getPhoneNumber());
         session.setAttribute("account", userDTO);
         resp.sendRedirect(req.getContextPath() + "/waiting");
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

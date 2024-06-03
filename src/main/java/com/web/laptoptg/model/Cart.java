@@ -2,6 +2,8 @@ package com.web.laptoptg.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -23,5 +25,6 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SELECT)
     private List<CartDetails> cartDetailsList;
 }
