@@ -26,7 +26,6 @@ public class CartDAOImpl implements CartDAO {
             if (entityManager.isOpen()) {
                 entityManager.close();
             }
-            JPAConfig.shutdown();
         }
         return cart;
     }

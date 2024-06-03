@@ -21,7 +21,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             if (entityManager.isOpen()) {
                 entityManager.close();
             }
-            JPAConfig.shutdown();
+
         }
     }
 

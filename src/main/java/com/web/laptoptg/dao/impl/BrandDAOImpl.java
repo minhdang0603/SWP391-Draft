@@ -14,14 +14,7 @@ public class BrandDAOImpl implements BrandDAO {
     @Override
     public Brand getBrandById(int id) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        try {
-            return entityManager.find(Brand.class, id);
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
-            JPAConfig.shutdown();
-        }
+        return entityManager.find(Brand.class, id);
     }
 
     @Override

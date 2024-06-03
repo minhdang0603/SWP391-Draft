@@ -307,7 +307,7 @@
                                     </div>
                                     <div class="product-body">
 
-                                        <h3 class="product-name"><a href="#">${product.productName}</a></h3>
+                                        <h3 class="product-name"><a href="product-detail?pid=${product.id}">${product.productName}</a></h3>
                                         <h4 class="product-price" id="price-${product.id}">${product.unitPrice}</h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
