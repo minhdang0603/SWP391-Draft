@@ -137,7 +137,7 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
             if (entityManager.isOpen()) {
                 entityManager.close();
             }
-            JPAConfig.shutdown();
+
         }
     }
 }

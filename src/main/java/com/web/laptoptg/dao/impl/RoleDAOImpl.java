@@ -39,7 +39,7 @@ public class RoleDAOImpl implements RoleDAO {
             if (entityManager.isOpen()) {
                 entityManager.close();
             }
-            JPAConfig.shutdown();
+
         }
     }
 }

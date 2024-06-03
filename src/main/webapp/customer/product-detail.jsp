@@ -41,144 +41,7 @@
 </head>
 <body>
 <!-- HEADER -->
-<header>
-    <!-- MAIN HEADER -->
-    <div id="header">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <!-- LOGO -->
-                <div class="col-md-3">
-                    <div class="header-logo">
-                        <a href="home" class="logo">
-                            <img src="${contextPath}/assets/home/img/logo1.png" alt="">
-                        </a>
-                    </div>
-                </div>
-                <!-- /LOGO -->
-
-                <!-- SEARCH BAR -->
-                <div class="col-md-6">
-                    <div class="header-search">
-                        <form>
-                            <input class="input" placeholder="Bạn cần tìm gì?">
-                            <button class="search-btn">Search</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- /SEARCH BAR -->
-
-                <!-- ACCOUNT -->
-                <div class="col-md-3 clearfix">
-                    <div class="header-ctn">
-
-
-                        <!-- Cart -->
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span>Giỏ hàng</span>
-                                <div class="qty">3</div>
-                            </a>
-                            <div class="cart-dropdown">
-                                <div class="cart-list">
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="${contextPath}/assets/home/img/product01.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
-
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="${contextPath}/assets/home/img/product02.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
-                                </div>
-                                <div class="cart-summary">
-                                    <small>3 Item(s) selected</small>
-                                    <h5>SUBTOTAL: $2940.00</h5>
-                                </div>
-                                <div class="cart-btns">
-                                    <a href="#">Xem giỏ hàng</a>
-                                    <a href="#">Mua luôn<i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Cart -->
-
-                        <!-- Menu Toogle -->
-                        <div class="menu-toggle">
-                            <a href="#">
-                                <i class="fa fa-bars"></i>
-                                <span>Menu</span>
-                            </a>
-                        </div>
-                        <!-- /Menu Toogle -->
-
-                        <!-- Login -->
-                        <c:if test="${account == null}">
-                            <div>
-                                <a href="login">
-                                    <i class="fa fa-sign-in"></i>
-                                    <span>Đăng nhập</span>
-                                </a>
-                            </div>
-                        </c:if>
-
-                        <c:if test="${account != null}">
-                            <div class="dropdown" style="cursor: pointer">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user-circle"></i>
-                                        ${account.userName}
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li class="dropdown-header">
-                                        <h5 class="text-center">${account.userName}</h5>
-                                        <span>${account.email}</span>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="../users-profile.jsp">
-                                            <i class="bi bi-gear"></i>
-                                            <span>Tài khoản của tôi</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="logout">
-                                            <i class="bi bi-box-arrow-right"></i>
-                                            <span class="text-center">Đăng xuất</span>
-                                        </a>
-                                    </li>
-                                   <div></div>
-                                </ul><!-- End Profile Dropdown Items -->
-                            </div>
-                        </c:if>
-                        <!-- /Login -->
-
-                    </div>
-                </div>
-                <!-- /ACCOUNT -->
-            </div>
-            <!-- row -->
-        </div>
-        <!-- container -->
-    </div>
-    <!-- /MAIN HEADER -->
-</header>
+<jsp:include page="../components/navbar-customer.jsp" flush="true"/>
 <!-- /HEADER -->
 
 <!-- NAVIGATION -->
@@ -256,7 +119,7 @@
                     </div>
                     <div >
                         <h3 class="product-price" id="formattedMoney"></h3>
-<%--                        <span class="product-available">In Stock</span>--%>
+                        <%--                        <span class="product-available">In Stock</span>--%>
                     </div>
                     <p>${proDetail.description}</p>
                     <div class="add-to-cart">

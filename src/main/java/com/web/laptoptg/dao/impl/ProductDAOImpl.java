@@ -123,14 +123,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public Product findProductById(int id) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        try {
-            return entityManager.find(Product.class, id);
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
-            JPAConfig.shutdown();
-        }
+        return entityManager.find(Product.class, id);
     }
 
     @Override

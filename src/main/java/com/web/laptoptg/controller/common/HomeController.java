@@ -32,6 +32,7 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cookie[] cookies = req.getCookies();
         List<Product> products = productService.getAllProducts();
+
         List<Category> categories = categoryService.getAllCategory();
         List<ItemDTO> items = loadCookies(cookies, products);
         ArrayList<List<Product>> list = new ArrayList<>();

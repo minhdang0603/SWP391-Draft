@@ -20,7 +20,7 @@ public class RatingDAOImpl implements RatingDAO {
             if (entityManager.isOpen()) {
                 entityManager.close();
             }
-            JPAConfig.shutdown();
+
         }
     }
 

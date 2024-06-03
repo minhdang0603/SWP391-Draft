@@ -20,7 +20,7 @@ public class OrderDAOImpl implements OrderDAO {
             if (entityManager.isOpen()) {
                 entityManager.close();
             }
-            JPAConfig.shutdown();
+
         }
     }
 

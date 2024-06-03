@@ -13,6 +13,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public Category getCategoryById(int id) {
+
         EntityManager entityManager = JPAConfig.getEntityManager();
         try {
             return entityManager.find(Category.class, id);
@@ -20,7 +21,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             if (entityManager.isOpen()) {
                 entityManager.close();
             }
-            JPAConfig.shutdown();
+
         }
     }
 

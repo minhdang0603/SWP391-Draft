@@ -258,7 +258,9 @@
                                             </form>
                                         </div>
                                     </div>
+
                                 </c:forEach>
+
                             </div>
                             <div id="slick-nav-2" class="products-slick-nav"></div>
                         </div>
@@ -293,6 +295,7 @@
                 </div>
                 <!-- /section title -->
 
+
                 <div class="col-md-12">
                     <div class="row">
                         <div class="products-slick" data-nav="#slick-nav-2">
@@ -304,7 +307,7 @@
                                     </div>
                                     <div class="product-body">
 
-                                        <h3 class="product-name"><a href="#">${product.productName}</a></h3>
+                                        <h3 class="product-name"><a href="product-detail?pid=${product.id}">${product.productName}</a></h3>
                                         <h4 class="product-price" id="price-${product.id}">${product.unitPrice}</h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
@@ -324,6 +327,7 @@
                         </div>
                         <div id="slick-nav-2" class="products-slick-nav"></div>
                             <%--                    <div class="clearfix visible-sm visible-xs"></div>--%>
+
                     </div>
                     <!-- /store products -->
                         <%--                <div class="btn-load">--%>
@@ -332,10 +336,13 @@
                 </div>
                 <!-- row -->
             </div>
+
             <!-- /container -->
+
         </div>
         <!-- /SECTION -->
     </div>
+
 </c:forEach>
 <!-- FOOTER -->
 <footer id="footer">
