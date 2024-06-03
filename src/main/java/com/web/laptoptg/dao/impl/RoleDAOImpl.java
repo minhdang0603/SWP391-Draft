@@ -15,21 +15,31 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public List<Role> getAllRoles() {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<Role> query = entityManager.createQuery("from Role", Role.class);
-        return query.getResultList();
+        try {
+            TypedQuery<Role> query = entityManager.createQuery("FROM Role", Role.class);
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
     public Role getRoleByRoleName(String roleName) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<Role> query = entityManager.createQuery("from Role where roleName = :roleName", Role.class);
-        query.setParameter("roleName", roleName);
-        Role role = null;
         try {
-            role = query.getSingleResult();
+            TypedQuery<Role> query = entityManager.createQuery("FROM Role WHERE roleName = :roleName", Role.class);
+            query.setParameter("roleName", roleName);
+            return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
-        return role;
     }
 }

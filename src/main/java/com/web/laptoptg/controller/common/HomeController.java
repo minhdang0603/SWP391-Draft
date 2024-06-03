@@ -37,7 +37,7 @@ public class HomeController extends HttpServlet {
         ArrayList<List<Product>> list = new ArrayList<>();
         for (Category category : categories) {
             if(category.getId() == 1 || category.getId() == 3 || category.getId() == 4) {
-                list.add(productService.getTop3ByCate(category.getId()));
+                list.add(productService.getTop4ByCate(category.getId()));
             }
         }
         req.setAttribute("list", list);

@@ -25,6 +25,7 @@ public interface ProductDAO {
 
     //find by id
     Product findProductById(int id);
-    List<Product> getTop3ByCate(int cateID);
+    List<Product> getTop4ByCate(int cateID);
+
     List<Product> getNext3Product(int amount);
 }

@@ -14,71 +14,108 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public Category getCategoryById(int id) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        return entityManager.find(Category.class, id);
+        try {
+            return entityManager.find(Category.class, id);
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
     public void saveCategory(Category category) {
         EntityManager entityManager = JPAConfig.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
-        try{
+        try {
             transaction.begin();
             entityManager.persist(category);
             transaction.commit();
-        } catch (Exception e){
-            transaction.rollback();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
-
     }
 
     @Override
     public void updateCategory(Category category) {
         EntityManager entityManager = JPAConfig.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
-        try{
+        try {
             transaction.begin();
             entityManager.merge(category);
             transaction.commit();
-        } catch (Exception e){
-            transaction.rollback();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
-
     }
 
     @Override
     public void deleteCategory(Category category) {
         EntityManager entityManager = JPAConfig.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
-        try{
+        try {
             transaction.begin();
+            // Ensure the entity is managed before removing
+            if (!entityManager.contains(category)) {
+                category = entityManager.merge(category);
+            }
             entityManager.remove(category);
             transaction.commit();
-        } catch (Exception e){
-            transaction.rollback();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
-
     }
 
     @Override
-    public List<Category> getAll(){
+    public List<Category> getAll() {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<Category> query = entityManager.createQuery("select c from Category c", Category.class);
-        return query.getResultList();
+        try {
+            TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c", Category.class);
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
     public int getNumOfCategory() {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<Category> query = entityManager.createQuery("FROM Category c", Category.class);
-        return query.getResultList().size();
+        try {
+            TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c", Category.class);
+            return query.getResultList().size();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 }

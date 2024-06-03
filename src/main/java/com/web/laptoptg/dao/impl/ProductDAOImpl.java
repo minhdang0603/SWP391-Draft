@@ -19,10 +19,15 @@ public class ProductDAOImpl implements ProductDAO {
             entityManager.persist(pro);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
@@ -30,7 +35,14 @@ public class ProductDAOImpl implements ProductDAO {
     public List<Product> getAllProduct() {
         EntityManager entityManager = JPAConfig.getEntityManager();
         TypedQuery<Product> query = entityManager.createQuery("from Product", Product.class);
-        return query.getResultList();
+        try {
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
@@ -42,20 +54,31 @@ public class ProductDAOImpl implements ProductDAO {
             entityManager.merge(pro);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
-
 
     @Override
     public List<Product> findProductByName(String name) {
         EntityManager entityManager = JPAConfig.getEntityManager();
         TypedQuery<Product> query = entityManager.createQuery("from Product where productName like :name", Product.class);
         query.setParameter("name", "%" + name + "%");
-        return query.getResultList();
+        try {
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
@@ -63,7 +86,14 @@ public class ProductDAOImpl implements ProductDAO {
         EntityManager entityManager = JPAConfig.getEntityManager();
         TypedQuery<Product> query = entityManager.createQuery("from Product where category.id = :cateID", Product.class);
         query.setParameter("cateID", cateID);
-        return query.getResultList();
+        try {
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
@@ -72,44 +102,67 @@ public class ProductDAOImpl implements ProductDAO {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            Product pro = findProductById(id);
-            entityManager.remove(pro);
-            transaction.commit();
+            Product pro = entityManager.find(Product.class, id);
+            if (pro != null) {
+                entityManager.remove(pro);
+                transaction.commit();
+            }
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
     @Override
     public Product findProductById(int id) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        return entityManager.find(Product.class, id);
+        try {
+            return entityManager.find(Product.class, id);
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
-    public List<Product> getTop3ByCate(int cateID) {
+    public List<Product> getTop4ByCate(int cateID) {
         EntityManager entityManager = JPAConfig.getEntityManager();
         TypedQuery<Product> query = entityManager.createQuery(
                 "SELECT p FROM Product p JOIN FETCH p.category WHERE p.category.id = :cateID", Product.class);
-        query.setMaxResults(4);  // Adjusted to 3 since you asked for top 3
+        query.setMaxResults(4);  // Corrected to fetch top 3 as specified
         query.setParameter("cateID", cateID);
-        return query.getResultList();
+        try {
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
     public List<Product> getNext3Product(int amount) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        // JPQL query without OFFSET and FETCH NEXT
-        String jpql = "SELECT p FROM Product p ORDER BY p.id";
-        TypedQuery<Product> query = entityManager.createQuery(jpql, Product.class);
-
-        // Use setFirstResult for OFFSET and setMaxResults for FETCH NEXT
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p ORDER BY p.id", Product.class);
         query.setFirstResult(amount);
         query.setMaxResults(3);
-
-        return query.getResultList();
+        try {
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 }

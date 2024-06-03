@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CartDetailsDAOImpl implements CartDetailsDAO {
 
-    // insert cart details to database
+    // Save CartDetails
     @Override
     public void saveCartDetails(CartDetails cartDetails) {
         EntityManager entityManager = JPAConfig.getEntityManager();
@@ -23,63 +23,83 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
-    // delete cart details
+    // Delete CartDetails
     @Override
     public void deleteCartDetails(CartDetails cartDetails) {
         EntityManager entityManager = JPAConfig.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
+            if (!entityManager.contains(cartDetails)) {
+                cartDetails = entityManager.merge(cartDetails);
+            }
             entityManager.remove(cartDetails);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
-    // delete all cart details by cart id
+    // Delete all CartDetails by cartId
     @Override
     public void deleteAll(int cartId) {
         EntityManager entityManager = JPAConfig.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager
-                    .createQuery("delete from CartDetails where cart.id = :cartId") // create query
-                    .setParameter("cartId", cartId) //set query parameters
-                    .executeUpdate(); // execute query
+            entityManager.createQuery("delete from CartDetails where cart.id = :cartId")
+                    .setParameter("cartId", cartId)
+                    .executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
-    // get all cart details by cart id
+    // Get all CartDetails by cartId
     @Override
     public List<CartDetails> getCartDetailsByCart(int cartId) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        // create query
-        TypedQuery<CartDetails> query = entityManager.createQuery("from CartDetails where cart.id = :cartId", CartDetails.class);
-
-        // set query parameter
-        query.setParameter("cartId", cartId);
-        // return result list
-        return query.getResultList();
+        try {
+            TypedQuery<CartDetails> query = entityManager.createQuery("from CartDetails where cart.id = :cartId", CartDetails.class);
+            query.setParameter("cartId", cartId);
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
-    // update cart details
+    // Update CartDetails
     @Override
     public void updateCartDetails(CartDetails cartDetails) {
         EntityManager entityManager = JPAConfig.getEntityManager();
@@ -90,26 +110,34 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
-    // get cart details by cart id and product id
+    // Get CartDetails by cartId and productId
     @Override
     public CartDetails getCartDetailsByCartAndProduct(int cartId, int productId) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        CartDetails cartDetails = null;
-        TypedQuery<CartDetails> query = entityManager
-                .createQuery("from CartDetails where cart.id = :cartId and product.id = :productId", CartDetails.class);
-        query.setParameter("cartId", cartId);
-        query.setParameter("productId", productId);
         try {
-            cartDetails = query.getSingleResult();
+            TypedQuery<CartDetails> query = entityManager.createQuery("from CartDetails where cart.id = :cartId and product.id = :productId", CartDetails.class);
+            query.setParameter("cartId", cartId);
+            query.setParameter("productId", productId);
+            return query.getSingleResult();
         } catch (NoResultException e) {
             e.printStackTrace();
+            return null;
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
-        return cartDetails;
     }
 }

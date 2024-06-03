@@ -14,16 +14,30 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     @Override
     public OrderDetails getOrderDetailById(int id) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        return entityManager.find(OrderDetails.class, id);
+        try {
+            return entityManager.find(OrderDetails.class, id);
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
     public List<OrderDetails> getOrderDetailsByOrderId(int orderId) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<OrderDetails> query = entityManager.createQuery(
-                "SELECT od FROM OrderDetails od WHERE od.order.id = :orderId", OrderDetails.class);
-        query.setParameter("orderId", orderId);
-        return query.getResultList();
+        try {
+            TypedQuery<OrderDetails> query = entityManager.createQuery(
+                    "SELECT od FROM OrderDetails od WHERE od.order.id = :orderId", OrderDetails.class);
+            query.setParameter("orderId", orderId);
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
@@ -35,10 +49,15 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
             entityManager.persist(orderDetail);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
@@ -51,10 +70,15 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
             entityManager.merge(orderDetail);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 }
