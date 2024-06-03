@@ -5,7 +5,9 @@
   Time: 9:04 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,23 +28,23 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/bootstrap.min.css"/>
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick-theme.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick-theme.css"/>
 
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/nouislider.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/nouislider.min.css"/>
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="../assets/home/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextPath}/assets/home/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
 
     <!-- custom cart -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/cart.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/cart.css"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,73 +56,7 @@
 </head>
 <body>
 <!-- HEADER -->
-<header>
-
-
-    <!-- MAIN HEADER -->
-    <div id="header">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <!-- LOGO -->
-                <div class="col-md-3">
-                    <div class="header-logo">
-                        <a href="home" class="logo">
-                            <img src="../assets/home/img/logo1.png" alt="">
-                        </a>
-                    </div>
-                </div>
-                <!-- /LOGO -->
-
-                <!-- SEARCH BAR -->
-                <div class="col-md-6">
-                    <div class="header-search">
-                        <form>
-                            <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="1">Category 02</option>
-                            </select>
-                            <input class="input" placeholder="Search here">
-                            <button class="search-btn">Search</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- /SEARCH BAR -->
-
-                <!-- ACCOUNT -->
-                <div class="col-md-3 clearfix">
-                    <div class="header-ctn">
-                        <!-- Login -->
-                        <div>
-                            <a href="login">
-                                <i class="fa fa-heart-o"></i>
-                                <span>Login</span>
-                                <div class="qty">2</div>
-                            </a>
-                        </div>
-                        <!-- /Login -->
-
-
-                        <!-- Menu Toogle -->
-                        <div class="menu-toggle">
-                            <a href="#">
-                                <i class="fa fa-bars"></i>
-                                <span>Menu</span>
-                            </a>
-                        </div>
-                        <!-- /Menu Toogle -->
-                    </div>
-                </div>
-                <!-- /ACCOUNT -->
-            </div>
-            <!-- row -->
-        </div>
-        <!-- container -->
-    </div>
-    <!-- /MAIN HEADER -->
-</header>
+<jsp:include page="../components/navbar-customer.jsp" flush="true"/>
 <!-- /HEADER -->
 
 
@@ -139,7 +75,7 @@
                             <div class="product">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <img class="img-fluid mx-auto d-block image" src="../assets/home/img/product01.png">
+                                        <img class="img-fluid mx-auto d-block image" src="${contextPath}/assets/home/img/product01.png">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="info">
@@ -169,7 +105,7 @@
                             <div class="product">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <img class="img-fluid mx-auto d-block image" src="../assets/home/img/product02.png">
+                                        <img class="img-fluid mx-auto d-block image" src="${contextPath}/assets/home/img/product02.png">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="info">
@@ -199,7 +135,7 @@
                             <div class="product">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <img class="img-fluid mx-auto d-block image" src="../assets/home/img/product03.png">
+                                        <img class="img-fluid mx-auto d-block image" src="${contextPath}/assets/home/img/product03.png">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="info">
@@ -328,8 +264,7 @@
                     </ul>
                     <span class="copyright">
 								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+								Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved LaptopTG
 							</span>
                 </div>
             </div>
@@ -342,12 +277,12 @@
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
-<script src="../assets/home/js/jquery.min.js"></script>
-<script src="../assets/home/js/bootstrap.min.js"></script>
-<script src="../assets/home/js/slick.min.js"></script>
-<script src="../assets/home/js/nouislider.min.js"></script>
-<script src="../assets/home/js/jquery.zoom.min.js"></script>
-<script src="../assets/home/js/main.js"></script>
+<script src="${contextPath}/assets/home/js/jquery.min.js"></script>
+<script src="${contextPath}/assets/home/js/bootstrap.min.js"></script>
+<script src="${contextPath}/assets/home/js/slick.min.js"></script>
+<script src="${contextPath}/assets/home/js/nouislider.min.js"></script>
+<script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
+<script src="${contextPath}/assets/home/js/main.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
