@@ -314,7 +314,7 @@
                                             <i class="fa fa-star"></i>
                                         </div>
                                     </div>
-                                    <a class="add-to-cart" href="${contextPath}/cart?id=${product.id}&num=1">
+                                    <a class="add-to-cart" href="${contextPath}/cart?id=${product.id}&num=1&action=add">
                                         <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart
                                         </button>
                                     </a>

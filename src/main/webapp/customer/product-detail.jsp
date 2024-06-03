@@ -42,9 +42,6 @@
 <body>
 <!-- HEADER -->
 <header>
-
-
-<<<<<<< HEAD
     <!-- MAIN HEADER -->
     <div id="header">
         <!-- container -->
@@ -56,52 +53,6 @@
                     <div class="header-logo">
                         <a href="home" class="logo">
                             <img src="${contextPath}/assets/home/img/logo1.png" alt="">
-=======
-    <div class="d-flex align-items-center justify-content-between">
-        <a href="../index.jsp" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">NiceAdmin</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
-
-    <div class="search-bar">
-        <form class="search-form d-flex align-items-center" method="POST" action="#">
-            <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-        </form>
-    </div><!-- End Search Bar -->
-
-    <nav class="header-nav ms-auto">
-        <ul class="d-flex align-items-center">
-
-            <li class="nav-item d-block d-lg-none">
-                <a class="nav-link nav-icon search-bar-toggle " href="#">
-                    <i class="bi bi-search"></i>
-                </a>
-            </li><!-- End Search Icon-->
-
-            <li class="nav-item dropdown pe-3">
-
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
-                </a><!-- End Profile Iamge Icon -->
-
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6>Kevin Anderson</h6>
-                        <span>Web Designer</span>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="../common/users-profile.jsp">
-                            <i class="bi bi-gear"></i>
-                            <span>Account Settings</span>
->>>>>>> a259e5b05ca3b691c56845ce79f8ea5bb8aa1700
                         </a>
                     </div>
                 </div>
@@ -191,8 +142,6 @@
                                     <i class="fa fa-user-circle"></i>
                                         ${account.userName}
                                 </a>
-
-<<<<<<< HEAD
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li class="dropdown-header">
                                         <h5 class="text-center">${account.userName}</h5>
@@ -219,83 +168,6 @@
                             </div>
                         </c:if>
                         <!-- /Login -->
-=======
-<!-- ======= Sidebar ======= -->
-<aside id="sidebar" class="sidebar">
-
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="../index.jsp">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="charts-chartjs.jsp">
-                        <i class="bi bi-circle"></i><span>Chart.js</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-apexcharts.jsp">
-                        <i class="bi bi-circle"></i><span>ApexCharts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-echarts.jsp">
-                        <i class="bi bi-circle"></i><span>ECharts</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Charts Nav -->
-
-        <li class="nav-heading">Pages</li>
-
-        <li class="nav-item">
-            <a class="nav-link " href="../common/users-profile.jsp">
-                <i class="bi bi-person"></i>
-                <span>Profile</span>
-            </a>
-        </li><!-- End Profile Page Nav -->
-        <li class="nav-item">
-            <a class="nav-link " href="../common/home-index.jsp">
-                <i class="bi bi-person"></i>
-                <span>HomePage</span>
-            </a>
-        </li>
-    </ul>
-
-</aside><!-- End Sidebar-->
-
-<main id="main" class="main">
-
-    <div class="pagetitle">
-        <h1>Profile</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="../index.jsp">Home</a></li>
-                <li class="breadcrumb-item active">Profile</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section profile">
-        <div class="row">
-            <div class="col-xl-4">
-
-                <div class="card">
-                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-                        <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                        <h2>Kevin Anderson</h2>
-                        <h3>Web Designer</h3>
->>>>>>> a259e5b05ca3b691c56845ce79f8ea5bb8aa1700
 
                     </div>
                 </div>

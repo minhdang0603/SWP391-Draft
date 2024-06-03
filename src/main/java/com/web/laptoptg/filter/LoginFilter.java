@@ -52,6 +52,7 @@ public class LoginFilter implements Filter {
             List<ItemDTO> itemList = loadCookies(cookies);
             User temp = userService.findUserByEmail(user.getEmail());
             Cart cart = cartService.getCartByUser(temp);
+            session.setAttribute("cart", cart);
             List<CartDetails> cartDetailsList = cart.getCartDetailsList();
             if (itemList.isEmpty()) {
                 addProductToCookie(cookies, cartDetailsList, response);
