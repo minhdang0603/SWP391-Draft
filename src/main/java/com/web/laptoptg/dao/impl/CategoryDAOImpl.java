@@ -8,23 +8,18 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 public class CategoryDAOImpl implements CategoryDAO {
-    private EntityManager entityManager;
-    private EntityTransaction transaction;
-
-    public CategoryDAOImpl() {
-        entityManager = JPAConfig.getEntityManager();
-        transaction = entityManager.getTransaction();
-    }
 
     @Override
     public Category getCategoryById(int id) {
-        Category category = entityManager.find(Category.class, id);
 
-        return category;
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        return entityManager.find(Category.class, id);
     }
 
     @Override
     public void saveCategory(Category category) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try{
             transaction.begin();
             entityManager.persist(category);
@@ -40,6 +35,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public void updateCategory(Category category) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try{
             transaction.begin();
             entityManager.merge(category);
@@ -55,6 +52,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public void deleteCategory(Category category) {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         try{
             transaction.begin();
             entityManager.remove(category);
@@ -70,6 +69,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public int getNumOfCategory() {
+        EntityManager entityManager = JPAConfig.getEntityManager();
         TypedQuery<Category> query = entityManager.createQuery("FROM Category c", Category.class);
         return query.getResultList().size();
     }
