@@ -8,31 +8,32 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 public class CategoryDAOImpl implements CategoryDAO {
-    private EntityManager em;
+    private EntityManager entityManager;
     private EntityTransaction transaction;
 
     public CategoryDAOImpl() {
-        em = JPAConfig.getEntityManager();
-        transaction = em.getTransaction();
+        entityManager = JPAConfig.getEntityManager();
+        transaction = entityManager.getTransaction();
     }
 
     @Override
     public Category getCategoryById(int id) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        return entityManager.find(Category.class, id);
+        Category category = entityManager.find(Category.class, id);
+        entityManager.close();
+        return category;
     }
 
     @Override
     public void saveCategory(Category category) {
         try{
             transaction.begin();
-            em.persist(category);
+            entityManager.persist(category);
             transaction.commit();
         } catch (Exception e){
             transaction.rollback();
             e.printStackTrace();
         } finally {
-            em.close();
+            entityManager.close();
         }
 
     }
@@ -41,13 +42,13 @@ public class CategoryDAOImpl implements CategoryDAO {
     public void updateCategory(Category category) {
         try{
             transaction.begin();
-            em.merge(category);
+            entityManager.merge(category);
             transaction.commit();
         } catch (Exception e){
             transaction.rollback();
             e.printStackTrace();
         } finally {
-            em.close();
+            entityManager.close();
         }
 
     }
@@ -56,20 +57,21 @@ public class CategoryDAOImpl implements CategoryDAO {
     public void deleteCategory(Category category) {
         try{
             transaction.begin();
-            em.remove(category);
+            entityManager.remove(category);
             transaction.commit();
         } catch (Exception e){
             transaction.rollback();
             e.printStackTrace();
         } finally {
-            em.close();
+            entityManager.close();
         }
 
     }
 
     @Override
     public int getNumOfCategory() {
-        TypedQuery<Category> query = em.createQuery("FROM Category c", Category.class);
+        TypedQuery<Category> query = entityManager.createQuery("FROM Category c", Category.class);
+        entityManager.close();
         return query.getResultList().size();
     }
 }

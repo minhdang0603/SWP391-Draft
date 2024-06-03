@@ -299,31 +299,27 @@
                             <c:forEach var="product" items="${listP}">
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="${pageContext.request.contextPath}/assets/img/product-img/${product.image}"
+                                        <img src="${contextPath}/assets/img/product-img/${product.image}"
                                              alt="">
                                     </div>
                                     <div class="product-body">
 
                                         <h3 class="product-name"><a href="#">${product.productName}</a></h3>
-                                        <h4 class="product-price">${product.unitPrice}
-
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                        class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span
-                                                        class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span
-                                                        class="tooltipp">quick view</span>
-                                                </button>
-                                            </div>
+                                        <h4 class="product-price" id="price-${product.id}">${product.unitPrice}</h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
                                     </div>
-                                    <div class="add-to-cart">
+                                    <a class="add-to-cart" href="${contextPath}/cart?id=${product.id}&num=1">
                                         <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart
                                         </button>
-                                    </div>
+                                    </a>
                                 </div>
                                 <!-- /product -->
-
                             </c:forEach>
                         </div>
                         <div id="slick-nav-2" class="products-slick-nav"></div>
@@ -443,6 +439,19 @@
 <script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
 <script src="${contextPath}/assets/home/js/main.js"></script>
 <script src="${contextPath}/assets/js/main.js"></script>
+<script>
+    // Hàm định dạng số tiền VND
+    function formatVND(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND';
+    }
+
+    // Iterate over each product to format the price
+    <c:forEach var="listP" items="${list}">
+    <c:forEach var="product" items="${listP}">
+    document.getElementById("price-${product.id}").innerText = formatVND(${product.unitPrice});
+    </c:forEach>
+    </c:forEach>
+</script>
 <script>
     function loadMore() {
         var amount = document.getElementsByClassName("product").length;

@@ -3,12 +3,8 @@ package com.web.laptoptg.controller.common;
 import com.web.laptoptg.dto.CartDTO;
 import com.web.laptoptg.dto.ItemDTO;
 import com.web.laptoptg.model.Product;
-import com.web.laptoptg.service.CartDetailsService;
-import com.web.laptoptg.service.CartService;
 import com.web.laptoptg.service.CategoryService;
 import com.web.laptoptg.service.ProductService;
-import com.web.laptoptg.service.impl.CartDetailsServiceImpl;
-import com.web.laptoptg.service.impl.CartServiceImpl;
 import com.web.laptoptg.service.impl.CategoryServiceImpl;
 import com.web.laptoptg.service.impl.ProductServiceImpl;
 import jakarta.servlet.ServletException;
@@ -22,15 +18,11 @@ import java.util.List;
 @WebServlet(urlPatterns = "/home")
 public class HomeController extends HttpServlet {
 
-    private CartService cartService;
-    private CartDetailsService cartDetailsService;
     private ProductService productService;
     private CategoryService categoryService;
 
     @Override
     public void init() throws ServletException {
-        cartService = new CartServiceImpl();
-        cartDetailsService = new CartDetailsServiceImpl();
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
     }

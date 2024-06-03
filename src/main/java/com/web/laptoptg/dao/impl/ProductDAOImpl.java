@@ -94,6 +94,7 @@ public class ProductDAOImpl implements ProductDAO {
         TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p where category.id = :cateID", Product.class);
         query.setMaxResults(4);
         query.setParameter("cateID", cateID);
+        entityManager.close();
         return query.getResultList();
     }
 
