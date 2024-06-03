@@ -14,14 +14,28 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public Order getOrderById(int id) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        return entityManager.find(Order.class, id);
+        try {
+            return entityManager.find(Order.class, id);
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
     public List<Order> getAllOrders() {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<Order> query = entityManager.createQuery("SELECT o FROM Order o", Order.class);
-        return query.getResultList();
+        try {
+            TypedQuery<Order> query = entityManager.createQuery("SELECT o FROM Order o", Order.class);
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
@@ -36,20 +50,32 @@ public class OrderDAOImpl implements OrderDAO {
             }
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
     @Override
     public List<Order> searchOrdersByPhone(String phoneNumber) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<Order> query = entityManager.createQuery(
-                "SELECT o FROM Order o WHERE o.phoneNumber = :phoneNumber", Order.class);
-        query.setParameter("phoneNumber", phoneNumber);
-        return query.getResultList();
+        try {
+            TypedQuery<Order> query = entityManager.createQuery(
+                    "SELECT o FROM Order o WHERE o.phoneNumber = :phoneNumber", Order.class);
+            query.setParameter("phoneNumber", phoneNumber);
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
@@ -61,10 +87,15 @@ public class OrderDAOImpl implements OrderDAO {
             entityManager.merge(order);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
@@ -77,10 +108,15 @@ public class OrderDAOImpl implements OrderDAO {
             entityManager.persist(order);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 }

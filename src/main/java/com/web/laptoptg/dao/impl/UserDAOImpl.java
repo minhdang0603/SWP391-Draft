@@ -25,6 +25,7 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
         } finally {
             entityManager.close();
+            JPAConfig.shutdown();
         }
     }
 
@@ -41,6 +42,7 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
         } finally {
             entityManager.close();
+            JPAConfig.shutdown();
         }
     }
 
@@ -58,6 +60,7 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
         } finally {
             entityManager.close();
+            JPAConfig.shutdown();
         }
     }
 

@@ -11,7 +11,7 @@ import jakarta.persistence.TypedQuery;
 
 public class CartDAOImpl implements CartDAO {
 
-    // get cart
+    // Get Cart by User
     @Override
     public Cart getCartByUser(User user) {
         EntityManager entityManager = JPAConfig.getEntityManager();
@@ -22,12 +22,16 @@ public class CartDAOImpl implements CartDAO {
             cart = query.getSingleResult();
         } catch (NoResultException e) {
             return null;
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
-
         return cart;
     }
 
-    // add cart when new user is created
+    // Save Cart when a new user is created
     @Override
     public void saveCart(Cart cart) {
         EntityManager entityManager = JPAConfig.getEntityManager();
@@ -37,14 +41,19 @@ public class CartDAOImpl implements CartDAO {
             entityManager.persist(cart);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+                JPAConfig.shutdown();
+            }
         }
     }
 
-    // update cart total amount
+    // Update Cart total amount
     @Override
     public void updateCart(Cart cart) {
         EntityManager entityManager = JPAConfig.getEntityManager();
@@ -54,10 +63,15 @@ public class CartDAOImpl implements CartDAO {
             entityManager.merge(cart);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+                JPAConfig.shutdown();
+            }
         }
     }
 }

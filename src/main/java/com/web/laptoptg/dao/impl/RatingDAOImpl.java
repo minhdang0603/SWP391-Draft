@@ -12,37 +12,54 @@ import java.util.List;
 
 public class RatingDAOImpl implements RatingDAO {
     @Override
-    public Rating finbById(int id) {
+    public Rating findById(int id) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        return entityManager.find(Rating.class, id);
+        try {
+            return entityManager.find(Rating.class, id);
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
     public List<Rating> getRatingByProductIDAndCreateTimeDesc(int productID) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        List<Rating> ratings = null;
-        TypedQuery<Rating> query = entityManager.createQuery("from Rating r where r.product.id = :productID order by r.createTime desc", Rating.class);
-        query.setParameter("productID", productID);
         try {
-            ratings = query.getResultList();
+            TypedQuery<Rating> query = entityManager.createQuery(
+                    "FROM Rating r WHERE r.product.id = :productID ORDER BY r.createTime DESC", Rating.class);
+            query.setParameter("productID", productID);
+            return query.getResultList();
         } catch (NoResultException e) {
             e.printStackTrace();
+            return null;
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
-        return ratings;
     }
 
     @Override
     public List<Rating> getRatingByUserIDAndCreateTimeDesc(int userID) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        List<Rating> ratings = null;
-        TypedQuery<Rating> query = entityManager.createQuery("from Rating r where r.user.id = :userID order by r.createTime desc", Rating.class);
-        query.setParameter("userID", userID);
         try {
-            ratings = query.getResultList();
+            TypedQuery<Rating> query = entityManager.createQuery(
+                    "FROM Rating r WHERE r.user.id = :userID ORDER BY r.createTime DESC", Rating.class);
+            query.setParameter("userID", userID);
+            return query.getResultList();
         } catch (NoResultException e) {
             e.printStackTrace();
+            return null;
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
-        return ratings;
     }
 
     @Override
@@ -54,10 +71,15 @@ public class RatingDAOImpl implements RatingDAO {
             entityManager.persist(rating);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
@@ -70,10 +92,15 @@ public class RatingDAOImpl implements RatingDAO {
             entityManager.merge(rating);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
@@ -83,13 +110,18 @@ public class RatingDAOImpl implements RatingDAO {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager.remove(rating);
+            entityManager.remove(entityManager.merge(rating));
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 }

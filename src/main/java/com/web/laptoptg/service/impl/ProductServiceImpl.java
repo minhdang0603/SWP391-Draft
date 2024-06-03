@@ -10,6 +10,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private ProductDAO productDAO = new ProductDAOImpl();
+
     @Override
     public void saveProduct(Product pro) {
         productDAO.saveProduct(pro);
@@ -46,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getTop3ByCate(int cateID) {
-        return productDAO.getTop3ByCate(cateID);
+    public List<Product> getTop4ByCate(int cateID) {
+        return productDAO.getTop4ByCate(cateID);
     }
 }

@@ -5,14 +5,23 @@ import com.web.laptoptg.model.Brand;
 import com.web.laptoptg.config.JPAConfig;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+
+import java.util.List;
 
 public class BrandDAOImpl implements BrandDAO {
 
     @Override
     public Brand getBrandById(int id) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        Brand brand = entityManager.find(Brand.class, id);
-        return brand;
+        try {
+            return entityManager.find(Brand.class, id);
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
     }
 
     @Override
@@ -24,10 +33,15 @@ public class BrandDAOImpl implements BrandDAO {
             entityManager.persist(brand);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
@@ -40,10 +54,15 @@ public class BrandDAOImpl implements BrandDAO {
             entityManager.merge(brand);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 
@@ -53,13 +72,36 @@ public class BrandDAOImpl implements BrandDAO {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
+            // Ensure the entity is managed before removing
+            if (!entityManager.contains(brand)) {
+                brand = entityManager.merge(brand);
+            }
             entityManager.remove(brand);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
+        }
+    }
+
+    // Additional method to list all Brands
+    public List<Brand> getAllBrands() {
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        try {
+            TypedQuery<Brand> query = entityManager.createQuery("SELECT b FROM Brand b", Brand.class);
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            JPAConfig.shutdown();
         }
     }
 }
