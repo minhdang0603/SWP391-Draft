@@ -137,11 +137,40 @@ public class CartController extends HttpServlet {
         }
     }
 
+    // update cart when user login
+    private void updateCart(List<ItemDTO> list, Cart cart) {
+        for (ItemDTO item : list) {
+            List<CartDetails> cartDetailsList = cart.getCartDetailsList();
+            for (CartDetails cartDetails : cartDetailsList) {
+                if (cartDetails.getProduct().getId() == item.getProduct().getId()) {
+                    cartDetails.setQuantity(item.getQuantity());
+                    cartDetailsService.updateCartDetails(cartDetails);
+                } else {
+                    CartDetails temp = new CartDetails();
+                    temp.setQuantity(item.getQuantity());
+                    temp.setProduct(item.getProduct());
+                    temp.setCart(cart);
+                    cartDetailsService.saveCartDetails(cartDetails);
+                }
+            }
+        }
+    }
+
     private void doDelete(HttpServletRequest req, HttpServletResponse resp, Cookie[] cookies, List<Product> products, String productId) {
         CartDTO cartDTO = loadCookies(cookies, products);
         List<ItemDTO> items = cartDTO.getItems();
+        Cart cart = (Cart) req.getSession().getAttribute("cart");
         try {
+            Product product = cartDTO.getProductByID(Integer.parseInt(productId), products);
             items.removeIf(item -> item.getProduct().getId() == Integer.parseInt(productId));
+
+            if(cart != null) {
+                CartDetails temp = new CartDetails();
+                temp.setCart(cart);
+                temp.setProduct(product);
+                cartDetailsService.deleteCartDetails(temp);
+            }
+
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -171,10 +200,15 @@ public class CartController extends HttpServlet {
 
     private void doProcessCart(HttpServletRequest req, HttpServletResponse resp, Cookie[] cookies, List<Product> products, String productId, String quantity) {
         CartDTO cartDTO = loadCookies(cookies, products);
+        Cart cart = (Cart) req.getSession().getAttribute("cart");
         for (ItemDTO item : cartDTO.getItems()) {
             if (item.getProduct().getId() == Integer.parseInt(productId)) {
                 item.setQuantity(Integer.parseInt(quantity));
             }
+        }
+
+        if(cart != null) {
+            updateCart(cartDTO.getItems(), cart);
         }
 
         StringBuilder cartContent = new StringBuilder();

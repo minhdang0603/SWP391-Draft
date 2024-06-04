@@ -43,7 +43,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.jsp" class="logo d-flex align-items-center">
+        <a href="admin-index.jsp" class="logo d-flex align-items-center">
             <img src="../assets/home/img/logo1.png" alt="">
             <span class="d-none d-lg-block">LaptopTG</span>
         </a>
@@ -124,7 +124,7 @@
         <h1>Dashboard</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+                <li class="breadcrumb-item"><a href="admin-index.jsp">Home</a></li>
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
         </nav>

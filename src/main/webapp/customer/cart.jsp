@@ -176,8 +176,10 @@
                     <c:if test="${requestScope.cart.isEmpty()}">
                         <div class="col-md-6 col-lg-8 col-md-offset-3 col-lg-offset-2">
                             <div class="text-center">
-                                <p style="font-size: 24px; padding: 10px; font-weight: bold; color: #D10024">Chưa có sản phẩm nào trong giỏ hàng</p>
-                                <p class="text-muted" style="font-size: 18px; padding: 10px;">Cùng mua sắm hàng ngàn sản phẩm với LaptopTG nhé</p>
+                                <p style="font-size: 24px; padding: 10px; font-weight: bold; color: #D10024">Chưa có sản
+                                    phẩm nào trong giỏ hàng</p>
+                                <p class="text-muted" style="font-size: 18px; padding: 10px;">Cùng mua sắm hàng ngàn sản
+                                    phẩm với LaptopTG nhé</p>
                                 <div class="col-md-3 col-md-offset-5" style="padding: 10px;">
                                     <a type="button" class="btn btn-primary btn-lg btn-block" href="${contextPath}/home"
                                        style="margin-top: 20px; background: #D10024;">
@@ -232,14 +234,16 @@
                                                                 <input id="quantity-${item.product.id}" type="text"
                                                                        name="quant[${item.product.id}]"
                                                                        class="text-center form-control input-number"
-                                                                       value="${item.quantity}" min="1" max="100"/>
+                                                                       value="${item.quantity}" min="1"
+                                                                       max="${item.product.stockUnit}"/>
                                                                 <span class="input-group-btn">
                                                                     <button class="btn btn-default btn-number"
                                                                             data-type="plus"
                                                                             data-field="quant[${item.product.id}]"
                                                                             data-product-id="${item.product.id}"
                                                                             data-servlet-url="cart"
-                                                                            data-action="process">
+                                                                            data-action="process"
+                                                                            data-max="${item.product.stockUnit}">
                                                                         <span class="glyphicon glyphicon-plus"></span>
                                                                     </button>
                                                                 </span>
@@ -331,6 +335,11 @@
             var servletUrl = $button.data('servlet-url');
             var action = $button.data('action');
             var productName = $button.closest('.product').find('.product-name-a').text();
+            var maxUnit = $button.data('max');
+            if(parseInt(oldValue) === maxUnit){
+                window.alert('Số lượng sản phẩm không đủ!')
+                return;
+            }
 
             if ($button.data('type') === "minus") {
                 newVal = parseInt(oldValue) - 1;
@@ -340,6 +349,9 @@
 
             if (newVal < 1) {
                 var confirm = window.confirm("Bạn có muốn xóa sản phẩm '" + productName + "' không?");
+                if (!confirm) {
+                    newVal += 1;
+                }
             }
 
             if (confirm) {

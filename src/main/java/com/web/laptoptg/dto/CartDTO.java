@@ -53,7 +53,7 @@ public class CartDTO {
         return total;
     }
 
-    private Product getProductByID(int id, List<Product> products) {
+    public Product getProductByID(int id, List<Product> products) {
         for (Product product : products) {
             if (product.getId() == id) {
                 return product;

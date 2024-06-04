@@ -1,5 +1,6 @@
 package com.web.laptoptg.filter;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.CartDTO;
 import com.web.laptoptg.dto.ItemDTO;
 import com.web.laptoptg.dto.UserDTO;
@@ -52,13 +53,14 @@ public class LoginFilter implements Filter {
             List<ItemDTO> itemList = loadCookies(cookies);
             User temp = userService.findUserByEmail(user.getEmail());
             Cart cart = cartService.getCartByUser(temp);
-            session.setAttribute("cart", cart);
-            List<CartDetails> cartDetailsList = cart.getCartDetailsList();
             if (itemList.isEmpty()) {
-                addProductToCookie(cookies, cartDetailsList, response);
+                addProductToCookie(cookies, cart.getCartDetailsList(), response);
             } else {
                 updateCart(itemList, cart);
+                cart = cartService.getCartByUser(temp);
+                addProductToCookie(cookies, cart.getCartDetailsList(), response);
             }
+            session.setAttribute("cart", cart);
             response.sendRedirect(request.getContextPath() + "/home");
             return;
         }
@@ -70,16 +72,18 @@ public class LoginFilter implements Filter {
     // update cart when user login
     private void updateCart(List<ItemDTO> list, Cart cart) {
         for (ItemDTO item : list) {
-            CartDetails cartDetails = cartDetailsService.getCartDetailsByCartAndProduct(cart.getId(), item.getProduct().getId());
-            if (cartDetails != null) {
-                cartDetails.setQuantity(item.getQuantity());
-                cartDetailsService.updateCartDetails(cartDetails);
-            } else {
-                cartDetails = new CartDetails();
-                cartDetails.setQuantity(item.getQuantity());
-                cartDetails.setProduct(item.getProduct());
-                cartDetails.setCart(cart);
-                cartDetailsService.saveCartDetails(cartDetails);
+            List<CartDetails> cartDetailsList = cart.getCartDetailsList();
+            for (CartDetails cartDetails : cartDetailsList) {
+                if (cartDetails.getProduct().getId() == item.getProduct().getId()) {
+                    cartDetails.setQuantity(item.getQuantity());
+                    cartDetailsService.updateCartDetails(cartDetails);
+                } else {
+                    CartDetails temp = new CartDetails();
+                    temp.setQuantity(item.getQuantity());
+                    temp.setProduct(item.getProduct());
+                    temp.setCart(cart);
+                    cartDetailsService.saveCartDetails(cartDetails);
+                }
             }
         }
     }
@@ -90,7 +94,7 @@ public class LoginFilter implements Filter {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("cart")) {
-                    cartContent.append(cookie.getValue());
+//                    cartContent.append(cookie.getValue());
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
                 }
@@ -129,6 +133,6 @@ public class LoginFilter implements Filter {
 
     @Override
     public void destroy() {
-        Filter.super.destroy();
+        JPAConfig.shutdown();
     }
 }

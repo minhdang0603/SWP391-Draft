@@ -12,10 +12,7 @@ import com.web.laptoptg.service.impl.UserServiceImpl;
 import com.web.laptoptg.util.PasswordUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 
@@ -42,7 +39,21 @@ public class LoginController extends HttpServlet {
             getLogin(req, resp, userDTO);
         } else if (url.contains("logout")) { // execute log out
             session.removeAttribute("account");
+            session.removeAttribute("cart");
+            Cookie[] cookies = req.getCookies();
+            deleteCookie(cookies, resp);
             resp.sendRedirect(req.getContextPath() + "/home");
+        }
+    }
+
+    private void deleteCookie(Cookie[] cookies, HttpServletResponse resp) {
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("cart")) {
+                    cookie.setMaxAge(0);
+                    resp.addCookie(cookie);
+                }
+            }
         }
     }
 

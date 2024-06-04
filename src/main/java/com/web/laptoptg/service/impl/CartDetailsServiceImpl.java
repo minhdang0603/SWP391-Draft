@@ -18,7 +18,8 @@ public class CartDetailsServiceImpl implements CartDetailsService {
 
     @Override
     public void deleteCartDetails(CartDetails cartDetails) {
-        cartDetailsDAO.deleteCartDetails(cartDetails);
+        CartDetails temp = getCartDetailsByCartAndProduct(cartDetails.getCart().getId(), cartDetails.getProduct().getId());
+        cartDetailsDAO.deleteCartDetails(temp);
     }
 
     @Override

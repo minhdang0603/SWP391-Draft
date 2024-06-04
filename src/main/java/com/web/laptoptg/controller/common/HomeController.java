@@ -14,8 +14,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/home")
 public class HomeController extends HttpServlet {
@@ -35,12 +36,19 @@ public class HomeController extends HttpServlet {
         List<Product> products = productService.getAllProducts();
         List<Category> categories = categoryService.getAllCategory();
         List<ItemDTO> items = loadCookies(cookies, products);
-        ArrayList<List<Product>> list = new ArrayList<>();
-        for (Category category : categories) {
-            if(category.getId() == 1 || category.getId() == 3 || category.getId() == 4) {
-                list.add(productService.getTop4ByCate(category.getId()));
-            }
-        }
+
+        List<Integer> targetCategoryIds = Arrays.asList(1, 3, 4);
+        List<Category> filteredCategories = categories.stream()
+                .filter(category -> targetCategoryIds.contains(category.getId()))
+                .collect(Collectors.toList());
+
+        List<List<Product>> list = filteredCategories.stream()
+                .map(category -> products.stream()
+                        .filter(product -> product.getCategory().equals(category))
+                        .limit(4)
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+
         req.setAttribute("list", list);
         req.setAttribute("checkCart", items.size());
         req.getRequestDispatcher("common/home-index.jsp").forward(req, resp);
