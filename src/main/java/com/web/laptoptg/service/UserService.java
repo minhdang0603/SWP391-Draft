@@ -6,7 +6,7 @@ import com.web.laptoptg.model.User;
 import java.util.List;
 
 public interface UserService {
-    boolean register (UserDTO user); // use for register
+    User register (UserDTO user); // use for register
     void updateUser(UserDTO user); // use for update user information
     User findUserByEmail(String email); // find user by email
     List<User> findUserByRole(String role); // find user by role

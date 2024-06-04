@@ -6,8 +6,11 @@ import com.web.laptoptg.config.Constrants;
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.GoogleUserDTO;
 import com.web.laptoptg.dto.UserDTO;
+import com.web.laptoptg.model.Cart;
 import com.web.laptoptg.model.User;
+import com.web.laptoptg.service.CartService;
 import com.web.laptoptg.service.UserService;
+import com.web.laptoptg.service.impl.CartServiceImpl;
 import com.web.laptoptg.service.impl.UserServiceImpl;
 import com.web.laptoptg.util.PasswordUtils;
 import jakarta.servlet.ServletException;
@@ -22,10 +25,12 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
 
     private UserService userService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {
         userService = new UserServiceImpl();
+        cartService = new CartServiceImpl();
     }
 
     @Override
@@ -39,7 +44,6 @@ public class LoginController extends HttpServlet {
             getLogin(req, resp, userDTO);
         } else if (url.contains("logout")) { // execute log out
             session.removeAttribute("account");
-            session.removeAttribute("cart");
             Cookie[] cookies = req.getCookies();
             deleteCookie(cookies, resp);
             resp.sendRedirect(req.getContextPath() + "/home");
@@ -58,6 +62,12 @@ public class LoginController extends HttpServlet {
     }
 
     public void googleLoginHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        String error = req.getParameter("error");
+        if (error != null && error.equals("access_denied")) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
         String code = req.getParameter("code");
         String accessToken = getToken(code);
         GoogleUserDTO googleUserDTO = getUserInfo(accessToken);
@@ -73,7 +83,11 @@ public class LoginController extends HttpServlet {
             userDTO.setUserName(googleUserDTO.getName());
             String generatedPassword = PasswordUtils.generatePassword(8);
             userDTO.setPassword(PasswordUtils.hash(generatedPassword));
-            userService.register(userDTO);
+            User temp = userService.register(userDTO);
+            userDTO.setId(temp.getId());
+            Cart cart = new Cart();
+            cart.setUser(temp);
+            cartService.saveCart(cart);
             session.setAttribute("account", userDTO);
             resp.sendRedirect(req.getContextPath() + "/waiting");
             return;

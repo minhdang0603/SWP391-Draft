@@ -8,14 +8,17 @@ import com.web.laptoptg.model.Cart;
 import com.web.laptoptg.model.CartDetails;
 import com.web.laptoptg.model.Product;
 import com.web.laptoptg.service.CartDetailsService;
+import com.web.laptoptg.service.CartService;
 import com.web.laptoptg.service.ProductService;
 import com.web.laptoptg.service.impl.CartDetailsServiceImpl;
+import com.web.laptoptg.service.impl.CartServiceImpl;
 import com.web.laptoptg.service.impl.ProductServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/cart")
@@ -23,19 +26,19 @@ public class CartController extends HttpServlet {
 
     private ProductService productService;
     private CartDetailsService cartDetailsService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {
         productService = new ProductServiceImpl();
         cartDetailsService = new CartDetailsServiceImpl();
+        cartService = new CartServiceImpl();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        if (action.equals("add")) {
-            addToCart(req, resp);
-        } else if (action.equals("view")) {
+        if (action.equals("view")) {
             Cookie[] cookies = req.getCookies();
             List<Product> products = productService.getAllProducts();
             CartDTO cartDTO = loadCookies(cookies, products);
@@ -47,12 +50,13 @@ public class CartController extends HttpServlet {
     }
 
     private void addToCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("text/plain; charset=UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         UserDTO account = (UserDTO) session.getAttribute("account");
         Cookie[] cookies = req.getCookies();
         String productId = req.getParameter("id");
-        String quantity = req.getParameter("num");
-
+        int quantity = 1;
         if (account == null) { // add to cookie if user is not log in
             addToCookie(cookies, productId, quantity, resp);
             resp.sendRedirect(req.getContextPath() + "/home");
@@ -61,14 +65,16 @@ public class CartController extends HttpServlet {
 
         // add to cookie and database
         addToCookie(cookies, productId, quantity, resp);
-        Cart cart = (Cart) session.getAttribute("cart");
+        Cart cart = cartService.getCartByUserId(account.getId());
+        List<CartDetails> listCD = cartDetailsService.getCartDetailsByCart(cart.getId());
+        String productName = "";
         try {
             Product product = productService.findProductById(Integer.parseInt(productId));
-
+            productName = product.getProductName();
             // update database if it has product
-            for (CartDetails cartDetails : cart.getCartDetailsList()) {
+            for (CartDetails cartDetails : listCD) {
                 if (cartDetails.getProduct().getId() == product.getId()) {
-                    cartDetails.setQuantity(Integer.parseInt(quantity) + cartDetails.getQuantity());
+                    cartDetails.setQuantity(quantity + cartDetails.getQuantity());
                     cartDetailsService.updateCartDetails(cartDetails);
                     resp.sendRedirect(req.getContextPath() + "/home");
                     return;
@@ -77,18 +83,17 @@ public class CartController extends HttpServlet {
 
             // add new to database if it does not have product in it
             CartDetails cartDetails = new CartDetails();
-            cartDetails.setQuantity(Integer.parseInt(quantity));
+            cartDetails.setQuantity(quantity);
             cartDetails.setProduct(product);
             cartDetails.setCart(cart);
             cartDetailsService.saveCartDetails(cartDetails);
-            resp.sendRedirect(req.getContextPath() + "/home");
-
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+        resp.getWriter().println("Thêm sản phẩm " + productName + "thành công");
     }
 
-    private void addToCookie(Cookie[] cookies, String productId, String quantity, HttpServletResponse resp) {
+    private void addToCookie(Cookie[] cookies, String productId, int quantity, HttpServletResponse resp) {
         StringBuilder cartContent = new StringBuilder();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -134,23 +139,18 @@ public class CartController extends HttpServlet {
             doProcessCart(req, resp, cookies, products, productId, quantity);
         } else if (action.equals("delete")) {
             doDelete(req, resp, cookies, products, productId);
+        } else if (action.equals("add")) {
+            addToCart(req, resp);
         }
     }
 
     // update cart when user login
-    private void updateCart(List<ItemDTO> list, Cart cart) {
+    private void updateCart(List<ItemDTO> list, List<CartDetails> cartDetailsList, Cart cart) {
         for (ItemDTO item : list) {
-            List<CartDetails> cartDetailsList = cart.getCartDetailsList();
             for (CartDetails cartDetails : cartDetailsList) {
                 if (cartDetails.getProduct().getId() == item.getProduct().getId()) {
                     cartDetails.setQuantity(item.getQuantity());
                     cartDetailsService.updateCartDetails(cartDetails);
-                } else {
-                    CartDetails temp = new CartDetails();
-                    temp.setQuantity(item.getQuantity());
-                    temp.setProduct(item.getProduct());
-                    temp.setCart(cart);
-                    cartDetailsService.saveCartDetails(cartDetails);
                 }
             }
         }
@@ -159,12 +159,13 @@ public class CartController extends HttpServlet {
     private void doDelete(HttpServletRequest req, HttpServletResponse resp, Cookie[] cookies, List<Product> products, String productId) {
         CartDTO cartDTO = loadCookies(cookies, products);
         List<ItemDTO> items = cartDTO.getItems();
-        Cart cart = (Cart) req.getSession().getAttribute("cart");
+        UserDTO account = (UserDTO) req.getSession().getAttribute("account");
         try {
             Product product = cartDTO.getProductByID(Integer.parseInt(productId), products);
             items.removeIf(item -> item.getProduct().getId() == Integer.parseInt(productId));
 
-            if(cart != null) {
+            if(account != null) {
+                Cart cart = cartService.getCartByUserId(account.getId());
                 CartDetails temp = new CartDetails();
                 temp.setCart(cart);
                 temp.setProduct(product);
@@ -185,7 +186,7 @@ public class CartController extends HttpServlet {
             }
         }
 
-        for (ItemDTO itemDTO : cartDTO.getItems()) {
+        for (ItemDTO itemDTO : items) {
             if (cartContent.length() == 0) {
                 cartContent = new StringBuilder(itemDTO.getProduct().getId() + ":" + itemDTO.getQuantity()); // Use a separator to distinguish different products
             } else {
@@ -200,15 +201,18 @@ public class CartController extends HttpServlet {
 
     private void doProcessCart(HttpServletRequest req, HttpServletResponse resp, Cookie[] cookies, List<Product> products, String productId, String quantity) {
         CartDTO cartDTO = loadCookies(cookies, products);
-        Cart cart = (Cart) req.getSession().getAttribute("cart");
-        for (ItemDTO item : cartDTO.getItems()) {
+        UserDTO account = (UserDTO) req.getSession().getAttribute("account");
+        List<ItemDTO> items = cartDTO.getItems();
+        for (ItemDTO item : items) {
             if (item.getProduct().getId() == Integer.parseInt(productId)) {
                 item.setQuantity(Integer.parseInt(quantity));
             }
         }
 
-        if(cart != null) {
-            updateCart(cartDTO.getItems(), cart);
+        if(account != null) {
+            Cart cart = cartService.getCartByUserId(account.getId());
+            List<CartDetails> listCD = cartDetailsService.getCartDetailsByCart(cart.getId());
+            updateCart(items, listCD, cart);
         }
 
         StringBuilder cartContent = new StringBuilder();

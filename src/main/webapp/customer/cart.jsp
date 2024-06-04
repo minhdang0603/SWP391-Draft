@@ -232,6 +232,7 @@
                                                                     </button>
                                                                 </span>
                                                                 <input id="quantity-${item.product.id}" type="text"
+                                                                       readonly
                                                                        name="quant[${item.product.id}]"
                                                                        class="text-center form-control input-number"
                                                                        value="${item.quantity}" min="1"

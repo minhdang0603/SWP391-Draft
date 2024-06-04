@@ -17,10 +17,8 @@ public class ViewProductDetailController extends HttpServlet {
 
     private ProductService productService;
 
-
     @Override
     public void init() throws ServletException {
-        super.init();
         productService = new ProductServiceImpl();
 
     }
@@ -31,11 +29,10 @@ public class ViewProductDetailController extends HttpServlet {
         try {
             int id = Integer.parseInt(req.getParameter("pid"));
             Product pro = productService.findProductById(id);
-            System.out.println(pro.getCategory().getCategoryName());
             req.setAttribute("proDetail", pro);
             req.getRequestDispatcher("customer/product-detail.jsp").forward(req, resp);
         } catch(Exception e){
-            resp.sendRedirect("home");
+            e.printStackTrace();
         }
 
     }

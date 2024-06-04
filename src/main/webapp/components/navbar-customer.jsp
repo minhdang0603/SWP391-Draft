@@ -40,7 +40,7 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Cart -->
-                        <div class="" style="cursor: pointer">
+                        <div class="cart" style="cursor: pointer">
                             <a href="${contextPath}/cart?action=view">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>

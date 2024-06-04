@@ -21,9 +21,9 @@ public class CartDAOImpl implements CartDAO {
 
     // Get Cart by User
     @Override
-    public Cart getCartByUser(User user) {
+    public Cart getCartByUserId(int userId) {
         TypedQuery<Cart> query = entityManager.createQuery("from Cart c join fetch c.user where c.user.id = :userId", Cart.class);
-        query.setParameter("userId", user.getId());
+        query.setParameter("userId", userId);
         Cart cart = null;
         try {
             cart = query.getSingleResult();

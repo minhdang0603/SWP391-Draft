@@ -247,12 +247,14 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <form action="add-cart" method="post">
-                                                <input type="hidden" name="id" value=${product.id}>
-                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add
-                                                    to cart
+                                            <a href="${contextPath}/cart?id=${product.id}&action=add">
+                                                <button class="add-to-cart-btn"
+                                                        data-servlet-url="cart"
+                                                        data-product-id="${product.id}"
+                                                        data-action="add">
+                                                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                                 </button>
-                                            </form>
+                                            </a>
                                         </div>
                                     </div>
 
@@ -297,14 +299,16 @@
                     <div class="row">
                         <div class="products-slick" data-nav="#slick-nav-2">
                             <c:forEach var="product" items="${listP}">
-                                <div class="product">
+                                <div class="product product-cart">
                                     <div class="product-img">
                                         <img src="${contextPath}/assets/img/product-img/${product.image}"
                                              alt="">
                                     </div>
                                     <div class="product-body">
 
-                                        <h3 class="product-name"><a href="product-detail?pid=${product.id}">${product.productName}</a></h3>
+                                        <h3 class="product-name"><a
+                                                href="${contextPath}/product-detail?pid=${product.id}">${product.productName}</a>
+                                        </h3>
                                         <h4 class="product-price" id="price-${product.id}">${product.unitPrice}</h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
@@ -314,10 +318,16 @@
                                             <i class="fa fa-star"></i>
                                         </div>
                                     </div>
-                                    <a class="add-to-cart" href="${contextPath}/cart?id=${product.id}&num=1&action=add">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart
+                                    <div class="add-to-cart">
+                                            <%--                                        <a href="${contextPath}/cart?id=${product.id}&action=add">--%>
+                                        <button class="add-to-cart-btn"
+                                                data-servlet-url="cart"
+                                                data-product-id="${product.id}"
+                                                data-action="add">
+                                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                         </button>
-                                    </a>
+                                            <%--                                        </a>--%>
+                                    </div>
                                 </div>
                                 <!-- /product -->
                             </c:forEach>
@@ -353,6 +363,7 @@
 <script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
 <script src="${contextPath}/assets/home/js/main.js"></script>
 <script src="${contextPath}/assets/js/main.js"></script>
+<script src="${contextPath}/assets/js/add-to-cart.js"></script>
 <script>
     // Hàm định dạng số tiền VND
     function formatVND(n) {
@@ -366,24 +377,25 @@
     </c:forEach>
     </c:forEach>
 </script>
-<script>
-    function loadMore() {
-        var amount = document.getElementsByClassName("product").length;
-        $.ajax({
-            url: "/laptop_tg/load",
-            type: "get",
-            data: {
-                exits: amount
-            },
-            success: function (data) {
-                var row = document.getElementById("content");
-                row.innerHTML += data;
-            },
-            error: function (xhr) {
+<%--<script>--%>
+<%--    function loadMore() {--%>
+<%--        var amount = document.getElementsByClassName("product").length;--%>
+<%--        $.ajax({--%>
+<%--            url: "/laptop_tg/load",--%>
+<%--            type: "get",--%>
+<%--            data: {--%>
+<%--                exits: amount--%>
+<%--            },--%>
+<%--            success: function (data) {--%>
+<%--                var row = document.getElementById("content");--%>
+<%--                row.innerHTML += data;--%>
+<%--            },--%>
+<%--            error: function (xhr) {--%>
 
-            }
-        });
-    }
-</script>
+<%--            }--%>
+<%--        });--%>
+<%--    }--%>
+<%--</script>--%>
+
 </body>
 </html>

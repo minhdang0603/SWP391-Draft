@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private RoleDAO roleDAO = new RoleDAOImpl();
 
     @Override
-    public boolean register(UserDTO user) { // register user
+    public User register(UserDTO user) { // register user
         User temp = new User();
         temp.setAddress(user.getAddress());
         temp.setEmail(user.getEmail());
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         temp.setStatus(user.getStatus());
         temp.setPhoneNumber(user.getPhoneNumber());
         userDAO.saveUser(temp);
-        return userDAO.findUserByEmail(temp.getEmail()) != null;
+        return findUserByEmail(temp.getEmail());
     }
 
     @Override

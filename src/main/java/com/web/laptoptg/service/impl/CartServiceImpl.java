@@ -11,8 +11,8 @@ public class CartServiceImpl implements CartService {
     private CartDAO cartDAO = new CartDAOImpl();
 
     @Override
-    public Cart getCartByUser(User user) {
-        return cartDAO.getCartByUser(user);
+    public Cart getCartByUserId(int userId) {
+        return cartDAO.getCartByUserId(userId);
     }
 
     @Override

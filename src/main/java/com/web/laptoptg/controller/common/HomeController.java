@@ -50,15 +50,15 @@ public class HomeController extends HttpServlet {
                 .collect(Collectors.toList());
 
         req.setAttribute("list", list);
-        req.setAttribute("checkCart", items.size());
+        req.getSession().setAttribute("checkCart", items.size());
         req.getRequestDispatcher("common/home-index.jsp").forward(req, resp);
     }
 
     private List<ItemDTO> loadCookies(Cookie[] cookies, List<Product> products) {
         StringBuilder cartContent = new StringBuilder();
-        if(cookies != null) {
-            for(Cookie cookie : cookies) {
-                if(cookie.getName().equals("cart")) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("cart")) {
                     cartContent.append(cookie.getValue());
                 }
             }

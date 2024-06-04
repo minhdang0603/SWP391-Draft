@@ -154,8 +154,7 @@ public class RegisterController extends HttpServlet {
         // else redirect to home page and register successful
         user.setEmail(user.getEmail());
         user.setStatus("active");
-        userService.register(user);
-        User temp = userService.findUserByEmail(user.getEmail());
+        User temp = userService.register(user);
         Cart cart = new Cart();
         cart.setUser(temp);
         cartService.saveCart(cart);
