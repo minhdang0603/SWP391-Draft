@@ -58,10 +58,6 @@
             <img src="${contextPath}/assets/home/img/logo1.png" alt="">
             <span class="d-none d-lg-block">LaptopTG</span>
         </a>
-        <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">
-            <i class="bi bi-list toggle-sidebar-btn"></i>
-        </c:if>
-
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
@@ -109,16 +105,8 @@
 <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">
     <jsp:include page="../components/sidebar.jsp"/>
 </c:if>
-<c:choose>
-    <c:when test="${account.role == 'ADMIN' || account.role == 'SALER'}">
-        <main id="main" class="main" >
-    </c:when>
-    <c:otherwise>
-        <main id="main" class="main" style="margin-left: 0px">
-    </c:otherwise>
-</c:choose>
 
-
+<main id="main" class="main" style="margin-left: 0px">
 
     <div class="pagetitle text-center">
         <h1>User Profile</h1>
@@ -168,6 +156,9 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">User Name</div>
                                     <div class="col-lg-9 col-md-8">${account.userName}</div>
+                                    <c:if test="${not empty messName && messName eq 'Full Name cannot contain numbers.'}">
+                                        <small id="fullNameHelp" class="form-text text-danger">${messName}</small>
+                                    </c:if>
                                 </div>
 
                                 <div class="row">
@@ -179,7 +170,9 @@
                                     <div class="col-lg-3 col-md-4 label">Phone</div>
                                     <div class="col-lg-9 col-md-8">${account.phoneNumber}</div>
                                 </div>
-
+                                <c:if test="${not empty messPhone && messPhone eq 'Phone number must be 9 or 10 digits.'}">
+                                    <small id="phoneHelp" class="form-text text-danger">${messPhone}</small>
+                                </c:if>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Email</div>
                                     <div class="col-lg-9 col-md-8">${account.email}</div>
@@ -190,80 +183,91 @@
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                                 <!-- Profile Edit Form -->
-                                <form action="${contextPath}/profile">
+                                <form action="${contextPath}/profile" method="post">
+                                    <input type="hidden" name="formType" value="form1">
                                     <div class="row mb-3">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label">User Name</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="fullName" type="text" class="form-control" id="fullName"
-                                                   value="${account.userName}">
+                                            <input name="fullName" type="text" class="form-control" id="fullName" value="${account.userName}">
+                                            <small id="fullNameHelp" class="form-text text-danger"></small> <!-- Thông báo lỗi -->
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="address" type="text" class="form-control" id="Address"
-                                                   value="${account.address}">
+                                            <input name="address" type="text" class="form-control" id="Address" value="${account.address}">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="phone" type="text" class="form-control" id="Phone"
-                                                   value="${account.phoneNumber}">
+                                            <input name="phone" type="text" class="form-control" id="Phone" value="${account.phoneNumber}">
+                                            <small id="phoneHelp" class="form-text text-danger"></small> <!-- Thông báo lỗi -->
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="email" type="email" class="form-control" id="Email"
-                                                   value="${account.email}">
+                                            <input name="email" type="email" class="form-control" id="Email" value="${account.email}">
                                         </div>
                                     </div>
 
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        <button type="submit" class="btn btn-primary" id="saveChangesBtn" disabled>Save Changes</button>
                                     </div>
                                 </form><!-- End Profile Edit Form -->
 
                             </div>
-
+                            <!-- Change Password Form -->
                             <div class="tab-pane fade profile-change-password pt-3" id="profile-change-password">
-                                <!-- Change Password Form -->
-                                <form>
+                                <form id="changePasswordForm" action="${contextPath}/profile" method="post">
+                                    <input type="hidden" name="formType" value="form2">
+
+                                    <!-- Success and Failure Messages -->
+                                    <c:if test="${not empty sessionScope.resetSuccess}">
+                                        <div class="alert alert-success" role="alert">
+                                                ${sessionScope.resetSuccess}
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${not empty sessionScope.resetFail}">
+                                        <div class="alert alert-danger" role="alert">
+                                                ${sessionScope.resetFail}
+                                        </div>
+                                    </c:if>
 
                                     <div class="row mb-3">
-                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
-                                            Password</label>
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="password" type="password" class="form-control"
-                                                   id="currentPassword">
+                                            <input name="password" type="password" class="form-control" id="currentPassword">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
-                                            Password</label>
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                            <small id="newPasswordHelp" class="form-text text-danger" style="display: none;">New password cannot be the same as the current password.</small>
+                                            <small id="newPasswordValidation" class="form-text text-danger" style="display: none;">Password must be at least 8 characters long and contain at least one uppercase letter and one number.</small>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New
-                                            Password</label>
+                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="renewpassword" type="password" class="form-control"
-                                                   id="renewPassword">
+                                            <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                            <small id="renewPasswordHelp" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
                                         </div>
                                     </div>
 
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Change Password</button>
                                     </div>
-                                </form><!-- End Change Password Form -->
+                                </form>
+
+                                <!-- End change password Form -->
                             </div>
 
                             <div class="tab-pane fade pt-3 recent-sales overflow-auto" id="profile-orders">
@@ -363,6 +367,8 @@
 <!-- Template Main JS File -->
 <script src="${contextPath}/assets/js/main.js"></script>
 
+<script src="${contextPath}/assets/js/validation-profile.js"></script>
+<script src="${contextPath}/assets/js/validation-change-pass.js"></script>
 </body>
 
 </html>

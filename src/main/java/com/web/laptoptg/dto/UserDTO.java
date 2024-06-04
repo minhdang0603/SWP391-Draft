@@ -1,5 +1,6 @@
 package com.web.laptoptg.dto;
 
+import com.web.laptoptg.model.User;
 import lombok.*;
 
 @Data //toString()
@@ -26,4 +27,15 @@ public class UserDTO {
     private String code;
 
     private String password;
+
+
+    public User toUser() {
+        User user = new User();
+        user.setUserName(this.userName);
+        user.setAddress(this.address);
+        user.setPhoneNumber(this.phoneNumber);
+        user.setEmail(this.email);
+        user.setPassword(this.password);
+        return user;
+    }
 }

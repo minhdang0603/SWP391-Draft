@@ -2,7 +2,9 @@ package com.web.laptoptg.dao.impl;
 
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dao.UserDAO;
+import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.User;
+import com.web.laptoptg.service.impl.UserServiceImpl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
@@ -43,6 +45,21 @@ public class UserDAOImpl implements UserDAO {
             entityManager.close();
         }
     }
+
+//    public static void main(String[] args) {
+//        UserDAO u = new UserDAOImpl();
+//        // Tạo một đối tượng User mới
+//        User userToUpdate = new User();
+//        userToUpdate.setId(24); // Thay đổi id theo id của user cần cập nhật
+//        userToUpdate.setUserName("New Name");
+//        userToUpdate.setAddress("New Address");
+//        userToUpdate.setPhoneNumber("123456789");
+//        userToUpdate.setEmail("newemail123@example.com");
+//
+//        // Gọi phương thức updateUser để cập nhật thông tin của user
+//        u.updateUser(userToUpdate);
+//    }
+
 
     @Override
     public void deleteById(int id) {
