@@ -34,7 +34,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(UserDTO user) {
         User temp = userDAO.findUserByEmail(user.getEmail());
-        userDAO.updateUser(temp);
+        if (temp != null) {
+            temp.setUserName(user.getUserName());
+            temp.setAddress(user.getAddress());
+            temp.setPhoneNumber(user.getPhoneNumber());
+            temp.setEmail(user.getEmail());
+            temp.setPassword(user.getPassword());
+            userDAO.updateUser(temp);
+        }
     }
 
     @Override

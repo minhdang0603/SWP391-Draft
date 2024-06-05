@@ -30,6 +30,9 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
 
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/css/account-toast.css"/>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -42,6 +45,8 @@
 <!-- HEADER -->
 <jsp:include page="../components/navbar-customer.jsp"/>
 <!-- /HEADER -->
+
+<div id="toast-container" class="toast-container"></div>
 
 <!-- NAVIGATION -->
 <nav id="navigation">

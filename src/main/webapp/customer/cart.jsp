@@ -146,6 +146,7 @@
         .delete-item {
             font-size: 16px;
             cursor: pointer;
+            background: #D10024;
         }
 
     </style>
@@ -210,7 +211,7 @@
                                                                 <a href="#">${item.product.brand.brandName}</a>
                                                             </div>
                                                             <div class="product-info">
-                                                                <a class="delete-item" href=""
+                                                                <a class="delete-item btn-sm btn-danger"
                                                                    data-product-id="${item.product.id}"
                                                                    data-servlet-url="cart"
                                                                    data-action="delete">

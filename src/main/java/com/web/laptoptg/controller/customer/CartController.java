@@ -1,5 +1,7 @@
 package com.web.laptoptg.controller.customer;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.CartDTO;
 import com.web.laptoptg.dto.ItemDTO;
@@ -18,7 +20,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/cart")
@@ -49,17 +50,25 @@ public class CartController extends HttpServlet {
         }
     }
 
-    private void addToCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/plain; charset=UTF-8");
+    private void addToCart(HttpServletRequest req, HttpServletResponse resp, List<Product> products) throws IOException {
+        resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         UserDTO account = (UserDTO) session.getAttribute("account");
         Cookie[] cookies = req.getCookies();
         String productId = req.getParameter("id");
+        JsonObject jsonObject = new JsonObject();
+        Product product = productService.findProductById(Integer.parseInt(productId));
+        String productName = product.getProductName();
         int quantity = 1;
         if (account == null) { // add to cookie if user is not log in
-            addToCookie(cookies, productId, quantity, resp);
-            resp.sendRedirect(req.getContextPath() + "/home");
+            String cart = addToCookie(cookies, productId, quantity, resp);
+            CartDTO cartDTO = new CartDTO(cart, products);
+            System.out.println(cartDTO.getItems().size());
+            jsonObject.addProperty("checkCart", cartDTO.getItems().size());
+            jsonObject.addProperty("successMsg", "Thêm sản phẩm " + productName + " vào giỏ hàng thành công!");
+            String json = new Gson().toJson(jsonObject);
+            resp.getWriter().write(json);
             return;
         }
 
@@ -67,16 +76,16 @@ public class CartController extends HttpServlet {
         addToCookie(cookies, productId, quantity, resp);
         Cart cart = cartService.getCartByUserId(account.getId());
         List<CartDetails> listCD = cartDetailsService.getCartDetailsByCart(cart.getId());
-        String productName = "";
         try {
-            Product product = productService.findProductById(Integer.parseInt(productId));
             productName = product.getProductName();
             // update database if it has product
             for (CartDetails cartDetails : listCD) {
                 if (cartDetails.getProduct().getId() == product.getId()) {
                     cartDetails.setQuantity(quantity + cartDetails.getQuantity());
                     cartDetailsService.updateCartDetails(cartDetails);
-                    resp.sendRedirect(req.getContextPath() + "/home");
+                    jsonObject.addProperty("successMsg", "Thêm sản phẩm " + productName + " vào giỏ hàng thành công!");
+                    String json = new Gson().toJson(jsonObject);
+                    resp.getWriter().write(json);
                     return;
                 }
             }
@@ -87,13 +96,17 @@ public class CartController extends HttpServlet {
             cartDetails.setProduct(product);
             cartDetails.setCart(cart);
             cartDetailsService.saveCartDetails(cartDetails);
+
+            jsonObject.addProperty("checkCart", listCD.size());
+            jsonObject.addProperty("successMsg", "Thêm sản phẩm " + productName + " vào giỏ hàng thành công!");
+            String json = new Gson().toJson(jsonObject);
+            resp.getWriter().write(json);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        resp.getWriter().println("Thêm sản phẩm " + productName + "thành công");
     }
 
-    private void addToCookie(Cookie[] cookies, String productId, int quantity, HttpServletResponse resp) {
+    private String addToCookie(Cookie[] cookies, String productId, int quantity, HttpServletResponse resp) {
         StringBuilder cartContent = new StringBuilder();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -113,6 +126,7 @@ public class CartController extends HttpServlet {
         Cookie cookie = new Cookie("cart", cartContent.toString());
         cookie.setMaxAge(60 * 60 * 24);
         resp.addCookie(cookie);
+        return cartContent.toString();
     }
 
     private CartDTO loadCookies(Cookie[] cookies, List<Product> products) {
@@ -140,7 +154,7 @@ public class CartController extends HttpServlet {
         } else if (action.equals("delete")) {
             doDelete(req, resp, cookies, products, productId);
         } else if (action.equals("add")) {
-            addToCart(req, resp);
+            addToCart(req, resp, products);
         }
     }
 

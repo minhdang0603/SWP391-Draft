@@ -18,7 +18,7 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="home" class="logo">
+                        <a href="${contextPath}/home" class="logo">
                             <img src="${contextPath}/assets/home/img/logo1.png" alt="">
                         </a>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="header-ctn">
                         <!-- Cart -->
                         <div class="cart" style="cursor: pointer">
-                            <a href="${contextPath}/cart?action=view">
+                            <a href="${contextPath}/cart?action=view" class="cart-container">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
                                 <c:if test="${checkCart > 0}">
@@ -82,6 +82,17 @@
                                             <span>User Profile</span>
                                         </a>
                                     </li>
+                                    <c:if test="${account.role == 'SALER' || account.role == 'ADMIN'}">
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center"
+                                               href="${contextPath}/admin/home">
+                                                <span>Admin Dashboard</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>

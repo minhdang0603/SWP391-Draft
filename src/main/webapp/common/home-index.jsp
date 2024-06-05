@@ -30,83 +30,118 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
 
-    <style>
-        .dropdown-menu {
-            border-radius: 4px;
-            padding: 10px 0;
-            animation-name: dropdown-animate;
-            animation-duration: 0.2s;
-            animation-fill-mode: both;
-            border: 0;
-            box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
-        }
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/css/account-toast.css"/>
 
-        .dropdown-menu .dropdown-header,
-        .dropdown-menu .dropdown-footer {
-            text-align: center;
-            font-size: 15px;
-            padding: 10px 25px;
-        }
+<%--    <style>--%>
+<%--        .dropdown-menu {--%>
+<%--            border-radius: 4px;--%>
+<%--            padding: 10px 0;--%>
+<%--            animation-name: dropdown-animate;--%>
+<%--            animation-duration: 0.2s;--%>
+<%--            animation-fill-mode: both;--%>
+<%--            border: 0;--%>
+<%--            box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);--%>
+<%--        }--%>
 
-        .dropdown-menu .dropdown-footer a {
-            color: #444444;
-            text-decoration: underline;
-        }
+<%--        .dropdown-menu .dropdown-header,--%>
+<%--        .dropdown-menu .dropdown-footer {--%>
+<%--            text-align: center;--%>
+<%--            font-size: 15px;--%>
+<%--            padding: 10px 25px;--%>
+<%--        }--%>
 
-        .dropdown-menu .dropdown-footer a:hover {
-            text-decoration: none;
-        }
+<%--        .dropdown-menu .dropdown-footer a {--%>
+<%--            color: #444444;--%>
+<%--            text-decoration: underline;--%>
+<%--        }--%>
 
-        .dropdown-menu .dropdown-divider {
-            color: #a5c5fe;
-            margin: 0;
-        }
+<%--        .dropdown-menu .dropdown-footer a:hover {--%>
+<%--            text-decoration: none;--%>
+<%--        }--%>
 
-        .dropdown-menu .dropdown-item {
-            font-size: 14px;
-            padding: 10px 15px;
-            transition: 0.3s;
-        }
+<%--        .dropdown-menu .dropdown-divider {--%>
+<%--            color: #a5c5fe;--%>
+<%--            margin: 0;--%>
+<%--        }--%>
 
-        .dropdown-menu .dropdown-item i {
-            margin-right: 10px;
-            font-size: 18px;
-            line-height: 0;
-        }
+<%--        .dropdown-menu .dropdown-item {--%>
+<%--            font-size: 14px;--%>
+<%--            padding: 10px 15px;--%>
+<%--            transition: 0.3s;--%>
+<%--        }--%>
 
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #f6f9ff;
-        }
+<%--        .dropdown-menu .dropdown-item i {--%>
+<%--            margin-right: 10px;--%>
+<%--            font-size: 18px;--%>
+<%--            line-height: 0;--%>
+<%--        }--%>
 
-        @media (min-width: 768px) {
-            .dropdown-menu-arrow::before {
-                content: "";
-                width: 13px;
-                height: 13px;
-                background: #fff;
-                position: absolute;
-                top: -7px;
-                right: 20px;
-                transform: rotate(45deg);
-                border-top: 1px solid #eaedf1;
-                border-left: 1px solid #eaedf1;
-            }
-        }
+<%--        .dropdown-menu .dropdown-item:hover {--%>
+<%--            background-color: #f6f9ff;--%>
+<%--        }--%>
 
-        @keyframes dropdown-animate {
-            0% {
-                opacity: 0;
-            }
+<%--        @media (min-width: 768px) {--%>
+<%--            .dropdown-menu-arrow::before {--%>
+<%--                content: "";--%>
+<%--                width: 13px;--%>
+<%--                height: 13px;--%>
+<%--                background: #fff;--%>
+<%--                position: absolute;--%>
+<%--                top: -7px;--%>
+<%--                right: 20px;--%>
+<%--                transform: rotate(45deg);--%>
+<%--                border-top: 1px solid #eaedf1;--%>
+<%--                border-left: 1px solid #eaedf1;--%>
+<%--            }--%>
+<%--        }--%>
 
-            100% {
-                opacity: 1;
-            }
+<%--        @keyframes dropdown-animate {--%>
+<%--            0% {--%>
+<%--                opacity: 0;--%>
+<%--            }--%>
 
-            0% {
-                opacity: 0;
-            }
-        }
-    </style>
+<%--            100% {--%>
+<%--                opacity: 1;--%>
+<%--            }--%>
+
+<%--            0% {--%>
+<%--                opacity: 0;--%>
+<%--            }--%>
+<%--        }--%>
+
+<%--        .toast-container {--%>
+<%--            position: fixed;--%>
+<%--            top: 20px;--%>
+<%--            right: 20px;--%>
+<%--            z-index: 1000;--%>
+<%--        }--%>
+
+<%--        .toast {--%>
+<%--            min-width: 250px;--%>
+<%--            margin-bottom: 15px;--%>
+<%--            padding: 15px;--%>
+<%--            background-color: #333;--%>
+<%--            color: #fff;--%>
+<%--            text-align: center;--%>
+<%--            border-radius: 5px;--%>
+<%--            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);--%>
+<%--            opacity: 0;--%>
+<%--            transition: opacity 0.5s, transform 0.5s;--%>
+<%--            transform: translateY(-20px);--%>
+<%--        }--%>
+
+<%--        .toast.show {--%>
+<%--            opacity: 1;--%>
+<%--            transform: translateY(0);--%>
+<%--        }--%>
+
+<%--        .toast.hide {--%>
+<%--            opacity: 0;--%>
+<%--            transform: translateY(-20px);--%>
+<%--        }--%>
+
+<%--    </style>--%>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -350,6 +385,7 @@
         <!-- /SECTION -->
     </div>
 </c:forEach>
+<div id="toast-container" class="toast-container"></div>
 
 <!-- FOOTER -->
 <jsp:include page="../components/footer.jsp"/>

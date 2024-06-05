@@ -71,6 +71,7 @@ public class BrandDAOImpl implements BrandDAO {
     }
 
     // Additional method to list all Brands
+    @Override
     public List<Brand> getAllBrands() {
         TypedQuery<Brand> query = entityManager.createQuery("SELECT b FROM Brand b", Brand.class);
         return query.getResultList();

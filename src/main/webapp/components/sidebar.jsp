@@ -34,7 +34,7 @@
 
         <!-- Products Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/product-manage">
+            <a class="nav-link " href="${contextPath}/admin/product-manage">
                 <i class="bi bi-laptop"></i>
                 <span>Sản Phẩm</span>
             </a>

@@ -1,12 +1,15 @@
 package com.web.laptoptg.service.impl;
 
 import com.web.laptoptg.dao.BrandDAO;
+import com.web.laptoptg.dao.impl.BrandDAOImpl;
 import com.web.laptoptg.model.Brand;
 import com.web.laptoptg.service.BrandService;
 
+import java.util.List;
+
 public class BrandServiceImpl implements BrandService {
 
-    private BrandDAO brandDAO ;
+    private BrandDAO brandDAO = new BrandDAOImpl();
 
     @Override
     public Brand getBrandById(int id) {
@@ -26,5 +29,10 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public void deleteBrand(Brand brand) {
         brandDAO.deleteBrand(brand);
+    }
+
+    @Override
+    public List<Brand> getAllBrands() {
+        return brandDAO.getAllBrands();
     }
 }
