@@ -77,7 +77,7 @@ public class ProductAddController extends HttpServlet {
 //        resp.setContentType("application/json");
 //        resp.setCharacterEncoding("UTF-8");
 //        resp.getWriter().write("{\"success\": " + success + "}");
-        resp.sendRedirect("admin/product-manage");
+        resp.sendRedirect("../admin/product-manage");
     }
 
 }
