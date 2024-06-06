@@ -41,7 +41,7 @@
                     <div class="header-ctn">
                         <!-- Cart -->
                         <div class="cart" style="cursor: pointer">
-                            <a href="${contextPath}/cart?action=view" class="cart-container">
+                            <a href="${contextPath}/cart" class="cart-container">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
                                 <c:if test="${checkCart > 0}">
@@ -106,14 +106,14 @@
                         </c:if>
                         <!-- /Login -->
 
-                        <!-- Menu Toogle -->
+                        <!-- Menu Toggle -->
                         <div class="menu-toggle">
                             <a href="#">
                                 <i class="fa fa-bars"></i>
                                 <span>Menu</span>
                             </a>
                         </div>
-                        <!-- /Menu Toogle -->
+                        <!-- /Menu Toggle -->
 
                     </div>
                 </div>
@@ -125,3 +125,4 @@
     </div>
     <!-- /MAIN HEADER -->
 </header>
+

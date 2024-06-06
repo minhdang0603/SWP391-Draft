@@ -64,13 +64,16 @@ public class LoginFilter implements Filter {
             }
 
             if (itemList.isEmpty()) {
+                // add list product to cookie if cookie is not exist
                 addProductToCookie(cookies, listCD, response);
             } else {
                 updateCart(itemList, listCD, cart);
                 List<CartDetails> tempList = cartDetailsService.getCartDetailsByCart(cart.getId());
+                // add list product to cookie if cookie is not exist
                 addProductToCookie(cookies, tempList, response);
             }
-            session.setAttribute("cart", cart);
+
+            // redirect to home page
             response.sendRedirect(request.getContextPath() + "/home");
             return;
         }
@@ -108,20 +111,20 @@ public class LoginFilter implements Filter {
         }
     }
 
-    // add list product to cookie if cookie is not exist
     private void addProductToCookie(Cookie[] cookies, List<CartDetails> cartDetailsList, HttpServletResponse response) {
+        // add product to cookie
         StringBuilder cartContent = new StringBuilder();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("cart")) {
-//                    cartContent.append(cookie.getValue());
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
                 }
             }
         }
+
+        // Update cart content with new product ID and quantity
         for (CartDetails cartDetails : cartDetailsList) {
-            // Update cart content with new product ID and quantity
             if (cartContent.length() == 0) {
                 cartContent = new StringBuilder(cartDetails.getProduct().getId() + ":" + cartDetails.getQuantity()); // Use a separator to distinguish different products
             } else {

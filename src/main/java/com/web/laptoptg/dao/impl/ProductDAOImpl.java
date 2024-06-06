@@ -90,18 +90,27 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> getTop4ByCate(int cateID) {
-        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p WHERE p.category.id = :cateID", Product.class);
-        query.setMaxResults(4);  // Corrected to fetch top 3 as specified
+    public List<Product> getProductByCateOrderBySoldUnit(int cateID, int max) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category WHERE p.category.id = :cateID order by p.soldUnit desc", Product.class);
+        query.setMaxResults(max);  // Corrected to fetch top 3 as specified
         query.setParameter("cateID", cateID);
         return query.getResultList();
     }
 
     @Override
-    public List<Product> getNext3Product(int amount) {
-        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p ORDER BY p.id", Product.class);
+    public List<Product> getProductByCate(int cateID, int max) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category WHERE p.category.id = :cateID", Product.class);
+        query.setMaxResults(max);  // Corrected to fetch top 3 as specified
+        query.setParameter("cateID", cateID);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category where p.category.id = :cateID", Product.class);
         query.setFirstResult(amount);
-        query.setMaxResults(3);
+        query.setMaxResults(numberOfProduct);
+        query.setParameter("cateID", cateID);
         return query.getResultList();
     }
 }

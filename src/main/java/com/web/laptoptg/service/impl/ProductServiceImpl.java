@@ -47,7 +47,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getTop4ByCate(int cateID) {
-        return productDAO.getTop4ByCate(cateID);
+    public List<Product> getProductByCate(int cateID, int max) {
+        return productDAO.getProductByCate(cateID, max);
+    }
+
+    @Override
+    public List<Product> getProductByCateOrderBySoldUnit(int cateID, int max) {
+        return productDAO.getProductByCateOrderBySoldUnit(cateID, max);
+    }
+
+    @Override
+    public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID) {
+        return productDAO.getNextProductByCate(amount, numberOfProduct, cateID);
     }
 }

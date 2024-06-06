@@ -26,5 +26,9 @@ public interface ProductService {
 
     Product findProductById(int id);
 
-    List<Product> getTop4ByCate(int cateID);
+    List<Product> getProductByCate(int cateID, int max);
+
+    List<Product> getProductByCateOrderBySoldUnit(int cateID, int max);
+
+    List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID);
 }

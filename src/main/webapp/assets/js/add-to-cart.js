@@ -50,7 +50,6 @@ $(document).ready(function () {
             data: {id: productId, action: action},
             success: function (data) {
                 showToast(data.successMsg);
-                console.log(data);
                 updateCheckCart(data.checkCart);
             },
             error: function () {

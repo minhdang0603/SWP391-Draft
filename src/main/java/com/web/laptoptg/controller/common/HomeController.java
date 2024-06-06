@@ -32,23 +32,29 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie[] cookies = req.getCookies();
-        List<Product> products = productService.getAllProducts();
-        List<Category> categories = categoryService.getAllCategory();
-        List<ItemDTO> items = loadCookies(cookies, products);
+        Cookie[] cookies = req.getCookies(); // get cookie from request
+        List<Product> products = productService.getAllProducts(); // get all product from database
+        List<Category> categories = categoryService.getAllCategory(); // get all categories from database
+        List<ItemDTO> items = loadCookies(cookies, products); // load cart from cookie
 
+        // set target categories
         List<Integer> targetCategoryIds = Arrays.asList(1, 3, 4);
+
+        // filter all categories by target categories
         List<Category> filteredCategories = categories.stream()
                 .filter(category -> targetCategoryIds.contains(category.getId()))
                 .collect(Collectors.toList());
 
+        // filter products by filtered categories
         List<List<Product>> list = filteredCategories.stream()
                 .map(category -> products.stream()
                         .filter(product -> product.getCategory().equals(category))
-                        .limit(4)
+                        .limit(10)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
 
+        // send data to client and redirect to home page
+        req.setAttribute("categories", categories);
         req.setAttribute("list", list);
         req.getSession().setAttribute("checkCart", items.size());
         req.getRequestDispatcher("common/home-index.jsp").forward(req, resp);

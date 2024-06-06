@@ -38,14 +38,14 @@ public class LoginController extends HttpServlet {
         HttpSession session = req.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("account");
         String url = req.getRequestURL().toString();
-        if (url.contains("google_login_handler")) { // go to login page
+        if (url.contains("google_login_handler")) { // handle google login api
             googleLoginHandler(req, resp);
-        } else if (url.contains("login")) {
+        } else if (url.contains("login")) { // go to login page
             getLogin(req, resp, userDTO);
         } else if (url.contains("logout")) { // execute log out
-            session.removeAttribute("account");
+            session.removeAttribute("account"); // remove user's account in session
             Cookie[] cookies = req.getCookies();
-            deleteCookie(cookies, resp);
+            deleteCookie(cookies, resp); // remove user's cart in cookie
             resp.sendRedirect(req.getContextPath() + "/home");
         }
     }
@@ -172,6 +172,7 @@ public class LoginController extends HttpServlet {
             return;
         }
 
+        // add account to session and redirect to authorization filter
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());

@@ -30,125 +30,9 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
 
+
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/css/account-toast.css"/>
-
-<%--    <style>--%>
-<%--        .dropdown-menu {--%>
-<%--            border-radius: 4px;--%>
-<%--            padding: 10px 0;--%>
-<%--            animation-name: dropdown-animate;--%>
-<%--            animation-duration: 0.2s;--%>
-<%--            animation-fill-mode: both;--%>
-<%--            border: 0;--%>
-<%--            box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);--%>
-<%--        }--%>
-
-<%--        .dropdown-menu .dropdown-header,--%>
-<%--        .dropdown-menu .dropdown-footer {--%>
-<%--            text-align: center;--%>
-<%--            font-size: 15px;--%>
-<%--            padding: 10px 25px;--%>
-<%--        }--%>
-
-<%--        .dropdown-menu .dropdown-footer a {--%>
-<%--            color: #444444;--%>
-<%--            text-decoration: underline;--%>
-<%--        }--%>
-
-<%--        .dropdown-menu .dropdown-footer a:hover {--%>
-<%--            text-decoration: none;--%>
-<%--        }--%>
-
-<%--        .dropdown-menu .dropdown-divider {--%>
-<%--            color: #a5c5fe;--%>
-<%--            margin: 0;--%>
-<%--        }--%>
-
-<%--        .dropdown-menu .dropdown-item {--%>
-<%--            font-size: 14px;--%>
-<%--            padding: 10px 15px;--%>
-<%--            transition: 0.3s;--%>
-<%--        }--%>
-
-<%--        .dropdown-menu .dropdown-item i {--%>
-<%--            margin-right: 10px;--%>
-<%--            font-size: 18px;--%>
-<%--            line-height: 0;--%>
-<%--        }--%>
-
-<%--        .dropdown-menu .dropdown-item:hover {--%>
-<%--            background-color: #f6f9ff;--%>
-<%--        }--%>
-
-<%--        @media (min-width: 768px) {--%>
-<%--            .dropdown-menu-arrow::before {--%>
-<%--                content: "";--%>
-<%--                width: 13px;--%>
-<%--                height: 13px;--%>
-<%--                background: #fff;--%>
-<%--                position: absolute;--%>
-<%--                top: -7px;--%>
-<%--                right: 20px;--%>
-<%--                transform: rotate(45deg);--%>
-<%--                border-top: 1px solid #eaedf1;--%>
-<%--                border-left: 1px solid #eaedf1;--%>
-<%--            }--%>
-<%--        }--%>
-
-<%--        @keyframes dropdown-animate {--%>
-<%--            0% {--%>
-<%--                opacity: 0;--%>
-<%--            }--%>
-
-<%--            100% {--%>
-<%--                opacity: 1;--%>
-<%--            }--%>
-
-<%--            0% {--%>
-<%--                opacity: 0;--%>
-<%--            }--%>
-<%--        }--%>
-
-<%--        .toast-container {--%>
-<%--            position: fixed;--%>
-<%--            top: 20px;--%>
-<%--            right: 20px;--%>
-<%--            z-index: 1000;--%>
-<%--        }--%>
-
-<%--        .toast {--%>
-<%--            min-width: 250px;--%>
-<%--            margin-bottom: 15px;--%>
-<%--            padding: 15px;--%>
-<%--            background-color: #333;--%>
-<%--            color: #fff;--%>
-<%--            text-align: center;--%>
-<%--            border-radius: 5px;--%>
-<%--            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);--%>
-<%--            opacity: 0;--%>
-<%--            transition: opacity 0.5s, transform 0.5s;--%>
-<%--            transform: translateY(-20px);--%>
-<%--        }--%>
-
-<%--        .toast.show {--%>
-<%--            opacity: 1;--%>
-<%--            transform: translateY(0);--%>
-<%--        }--%>
-
-<%--        .toast.hide {--%>
-<%--            opacity: 0;--%>
-<%--            transform: translateY(-20px);--%>
-<%--        }--%>
-
-<%--    </style>--%>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 <body>
@@ -157,25 +41,7 @@
 <!-- /HEADER -->
 
 <!-- NAVIGATION -->
-<nav id="navigation">
-    <!-- container -->
-    <div class="container">
-        <!-- responsive-nav -->
-        <div id="responsive-nav">
-            <!-- NAV -->
-            <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Cameras</a></li>
-                <li><a href="#">Accessories</a></li>
-            </ul>
-            <!-- /NAV -->
-        </div>
-        <!-- /responsive-nav -->
-    </div>
-    <!-- /container -->
-</nav>
+<jsp:include page="../components/navigation.jsp"/>
 <!-- /NAVIGATION -->
 
 <!-- SECTION -->
@@ -332,7 +198,7 @@
 
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="products-slick" data-nav="#slick-nav-2">
+                        <div class="products-slick" data-nav="#slick-nav-${listP.get(0).category.id}">
                             <c:forEach var="product" items="${listP}">
                                 <div class="product product-cart">
                                     <div class="product-img">
@@ -354,27 +220,21 @@
                                         </div>
                                     </div>
                                     <div class="add-to-cart">
-                                            <%--                                        <a href="${contextPath}/cart?id=${product.id}&action=add">--%>
                                         <button class="add-to-cart-btn"
                                                 data-servlet-url="cart"
                                                 data-product-id="${product.id}"
                                                 data-action="add">
                                             <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                                         </button>
-                                            <%--                                        </a>--%>
                                     </div>
                                 </div>
                                 <!-- /product -->
                             </c:forEach>
                         </div>
-                        <div id="slick-nav-2" class="products-slick-nav"></div>
-                            <%--                    <div class="clearfix visible-sm visible-xs"></div>--%>
+                        <div class="clearfix visible-sm visible-xs"></div>
 
+                        <div id="slick-nav-${listP.get(0).category.id}" class="products-slick-nav"></div>
                     </div>
-                    <!-- /store products -->
-                        <%--                <div class="btn-load">--%>
-                        <%--                    <button onclick="loadMore()" class="btn btn-primary">Load More</button>--%>
-                        <%--                </div>--%>
                 </div>
                 <!-- row -->
             </div>
@@ -385,6 +245,11 @@
         <!-- /SECTION -->
     </div>
 </c:forEach>
+<!-- Back to Top Button -->
+<a href="javascript:void(0);" id="back-to-top" class="btn btn-lg back-to-top" role="button"
+   title="Click to return on the top page" data-toggle="tooltip" data-placement="right">
+    <span class="fa fa-chevron-up"></span>
+</a>
 <div id="toast-container" class="toast-container"></div>
 
 <!-- FOOTER -->
@@ -397,6 +262,7 @@
 <script src="${contextPath}/assets/home/js/slick.min.js"></script>
 <script src="${contextPath}/assets/home/js/nouislider.min.js"></script>
 <script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
+<script src="${contextPath}/assets/js/back-to-top-button.js"></script>
 <script src="${contextPath}/assets/home/js/main.js"></script>
 <script src="${contextPath}/assets/js/main.js"></script>
 <script src="${contextPath}/assets/js/add-to-cart.js"></script>
@@ -413,25 +279,6 @@
     </c:forEach>
     </c:forEach>
 </script>
-<%--<script>--%>
-<%--    function loadMore() {--%>
-<%--        var amount = document.getElementsByClassName("product").length;--%>
-<%--        $.ajax({--%>
-<%--            url: "/laptop_tg/load",--%>
-<%--            type: "get",--%>
-<%--            data: {--%>
-<%--                exits: amount--%>
-<%--            },--%>
-<%--            success: function (data) {--%>
-<%--                var row = document.getElementById("content");--%>
-<%--                row.innerHTML += data;--%>
-<%--            },--%>
-<%--            error: function (xhr) {--%>
-
-<%--            }--%>
-<%--        });--%>
-<%--    }--%>
-<%--</script>--%>
 
 </body>
 </html>
