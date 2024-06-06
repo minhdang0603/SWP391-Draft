@@ -11,6 +11,10 @@ public class RoleServiceImpl implements RoleService {
 
     private RoleDAO roleDAO = new RoleDAOImpl();
 
+    public RoleServiceImpl() {
+        roleDAO = new RoleDAOImpl();
+    }
+
     @Override
     public List<Role> getAllRoles() {
         return roleDAO.getAllRoles();

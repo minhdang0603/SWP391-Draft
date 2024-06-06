@@ -55,10 +55,6 @@
 <jsp:include page="../components/navbar-customer.jsp"/>
 <!-- /HEADER -->
 
-<!-- NAVIGATION -->
-<%--<jsp:include page="../components/navigation.jsp"/>--%>
-<!-- /NAVIGATION -->
-
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">
     <!-- container -->
@@ -68,8 +64,10 @@
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
                     <li><a href="home">TRANG CHỦ</a></li>
-                    <li><a href="#">DANH MỤC</a></li>
-                    <li><a href="${contextPath}/store?id=${thisCate.id}">${thisCate.categoryName}</a></li>
+                    <li><a href="${contextPath}/store?id=0">DANH MỤC</a></li>
+                    <c:if test="${thisCate != null}">
+                        <li><a href="${contextPath}/store?id=${thisCate.id}">${thisCate.categoryName}</a></li>
+                    </c:if>
                 </ul>
             </div>
         </div>
@@ -207,7 +205,20 @@
                 <c:if test="${cnt >= 9}">
                     <div class="store-filter clearfix">
                         <div class="text-center">
-                            <button id="load-more-btn" data-cate-id="${thisCate.id}" data-cate-name="${thisCate.categoryName}" class="btn-lg btn-outline-danger">Xem thêm</button>
+                            <c:choose>
+                                <c:when test="${thisCate != null}">
+                                    <button id="load-more-btn" data-cate-id="${thisCate.id}"
+                                            data-cate-name="${thisCate.categoryName}" class="btn-lg btn-outline-danger">
+                                        Xem thêm
+                                    </button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button id="load-more-btn" data-cate-id="0"
+                                            data-cate-name="" class="btn-lg btn-outline-danger">
+                                        Xem thêm
+                                    </button>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </c:if>
@@ -282,7 +293,7 @@
 
     // Hàm định dạng số tiền VND
     function formatVND(n) {
-        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' đ';
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
     }
 
     // Iterate over each product price element and format it to VND

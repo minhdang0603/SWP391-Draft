@@ -14,8 +14,13 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private UserDAO userDAO = new UserDAOImpl();
-    private RoleDAO roleDAO = new RoleDAOImpl();
+    private UserDAO userDAO;
+    private RoleDAO roleDAO;
+
+    public UserServiceImpl() {
+        roleDAO = new RoleDAOImpl();
+        userDAO = new UserDAOImpl();
+    }
 
     @Override
     public User register(UserDTO user) { // register user

@@ -299,7 +299,7 @@
 <script>
     // Hàm định dạng số tiền VND
     function formatVND(n) {
-        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' đ';
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
     }
 
     // Iterate over each product to format the price

@@ -9,7 +9,11 @@ import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
 
-    private ProductDAO productDAO = new ProductDAOImpl();
+    private ProductDAO productDAO;
+
+    public ProductServiceImpl() {
+        productDAO = new ProductDAOImpl();
+    }
 
     @Override
     public void saveProduct(Product pro) {
@@ -57,7 +61,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID) {
+    public List<Product> getNextProduct(int amount, int numberOfProduct) {
+        return productDAO.getNextProduct(amount, numberOfProduct);
+    }
+
+    @Override
+    public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID){
         return productDAO.getNextProductByCate(amount, numberOfProduct, cateID);
     }
 }

@@ -30,5 +30,7 @@ public interface ProductDAO {
 
     List<Product> getProductByCate(int cateID, int max);
 
+    List<Product> getNextProduct(int amount, int numberOfProduct);
+
     List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID);
 }

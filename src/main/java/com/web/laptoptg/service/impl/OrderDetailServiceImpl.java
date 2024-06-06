@@ -9,7 +9,11 @@ import java.util.List;
 
 public class OrderDetailServiceImpl implements OrderDetailService {
 
-    private OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
+    private OrderDetailDAO orderDetailDAO;
+
+    public OrderDetailServiceImpl() {
+        orderDetailDAO = new OrderDetailDAOImpl();
+    }
 
     @Override
     public OrderDetails getOrderDetailById(int id) {

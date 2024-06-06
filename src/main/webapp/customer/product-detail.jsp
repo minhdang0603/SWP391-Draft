@@ -48,26 +48,6 @@
 
 <div id="toast-container" class="toast-container"></div>
 
-<!-- NAVIGATION -->
-<nav id="navigation">
-    <!-- container -->
-    <div class="container">
-        <!-- responsive-nav -->
-        <div id="responsive-nav">
-            <!-- NAV -->
-            <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="home">Trang Chủ</a></li>
-                <li><a href="#">Danh Mục</a></li>
-
-            </ul>
-            <!-- /NAV -->
-        </div>
-        <!-- /responsive-nav -->
-    </div>
-    <!-- /container -->
-</nav>
-<!-- /NAVIGATION -->
-
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">
     <!-- container -->
@@ -77,8 +57,8 @@
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
                     <li><a href="home">TRANG CHỦ</a></li>
-                    <li><a href="#">DANH MỤC</a></li>
-                    <li><a href="#">${proDetail.category.categoryName}</a></li>
+                    <li><a href="${contextPath}/store?id=0">DANH MỤC</a></li>
+                    <li><a href="${contextPath}/store?id=${proDetail.category.id}">${proDetail.category.categoryName}</a></li>
                     <li class="active">${proDetail.productName}</li>
                 </ul>
             </div>
@@ -477,7 +457,7 @@
 <script>
     // Hàm định dạng số tiền VND
     function formatCurrency(amount) {
-        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     // Số tiền cần hiển thị, nhận từ JSP

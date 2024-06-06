@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/store")
 public class StoreController extends HttpServlet {
@@ -42,18 +43,20 @@ public class StoreController extends HttpServlet {
             List<Category> categories = categoryService.getAllCategory();
             List<Brand> brands = brandService.getAllBrands();
             // get the category
-            Category temp = new Category();
+            Category temp = null;
             for (Category category : categories) {
                 if(category.getId() == cateID) {
                     temp = category;
                 }
             }
 
-            if(cateID == 0) {
-
+            List<Product> products = null;
+            if(cateID == 0) { // load all product
+                List<Product> allProducts = productService.getAllProducts();
+                products = allProducts.stream().limit(9).collect(Collectors.toList());
             } else {
                 // get number of product by category
-                List<Product> products = productService.getProductByCate(cateID, 9);
+                products = productService.getProductByCate(cateID, 9);
             }
 
 

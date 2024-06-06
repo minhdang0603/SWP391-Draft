@@ -106,11 +106,19 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID) {
-        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category where p.category.id = :cateID", Product.class);
+    public List<Product> getNextProduct(int amount, int numberOfProduct) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category", Product.class);
         query.setFirstResult(amount);
         query.setMaxResults(numberOfProduct);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category where p.category.id = :cateID", Product.class);
         query.setParameter("cateID", cateID);
+        query.setFirstResult(amount);
+        query.setMaxResults(numberOfProduct);
         return query.getResultList();
     }
 }

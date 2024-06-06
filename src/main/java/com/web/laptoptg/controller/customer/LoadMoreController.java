@@ -31,8 +31,16 @@ public class LoadMoreController extends HttpServlet {
             // get number of product on page
             int existed = Integer.parseInt(req.getParameter("existedProduct"));
             int categoryId = Integer.parseInt(req.getParameter("cateId"));
-            // get next 6 product by category
-            List<Product> products = productService.getNextProduct(existed, 6, categoryId);
+
+            List<Product> products = null;
+
+            if (categoryId == 0) {
+                // get next 6 product
+                products = productService.getNextProduct(existed, 6);
+            } else {
+                // get next 6 product by category
+                products = productService.getNextProductByCate(existed, 6, categoryId);
+            }
 
             // response to client
             resp.setContentType("text/html");
