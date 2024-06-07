@@ -79,6 +79,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public void changePassFromProfile(UserDTO user) {
+        User temp = userDAO.findUserByEmail(user.getEmail());
+        if (temp != null) {
+            temp.setPassword(user.getPassword());
+            userDAO.updateUser(temp);
+        }
+    }
+
     @Override
     public User login(String email, String password) {
         User user = this.findUserByEmail(email);
