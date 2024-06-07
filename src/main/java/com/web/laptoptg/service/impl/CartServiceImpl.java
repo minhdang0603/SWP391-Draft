@@ -3,16 +3,19 @@ package com.web.laptoptg.service.impl;
 import com.web.laptoptg.dao.CartDAO;
 import com.web.laptoptg.dao.impl.CartDAOImpl;
 import com.web.laptoptg.model.Cart;
-import com.web.laptoptg.model.User;
 import com.web.laptoptg.service.CartService;
 
 public class CartServiceImpl implements CartService {
 
-    private CartDAO cartDAO = new CartDAOImpl();
+    private CartDAO cartDAO;
+
+    public CartServiceImpl() {
+        cartDAO = new CartDAOImpl();
+    }
 
     @Override
-    public Cart getCartByUser(User user) {
-        return cartDAO.getCartByUser(user);
+    public Cart getCartByUserId(int userId) {
+        return cartDAO.getCartByUserId(userId);
     }
 
     @Override

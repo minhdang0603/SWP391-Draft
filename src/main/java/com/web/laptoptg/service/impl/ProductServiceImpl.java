@@ -9,7 +9,12 @@ import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
 
-    private ProductDAO productDAO = new ProductDAOImpl();
+    private ProductDAO productDAO;
+
+    public ProductServiceImpl() {
+        productDAO = new ProductDAOImpl();
+    }
+
     @Override
     public void saveProduct(Product pro) {
         productDAO.saveProduct(pro);
@@ -43,5 +48,25 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findProductById(int id) {
         return productDAO.findProductById(id);
+    }
+
+    @Override
+    public List<Product> getProductByCate(int cateID, int max) {
+        return productDAO.getProductByCate(cateID, max);
+    }
+
+    @Override
+    public List<Product> getProductByCateOrderBySoldUnit(int cateID, int max) {
+        return productDAO.getProductByCateOrderBySoldUnit(cateID, max);
+    }
+
+    @Override
+    public List<Product> getNextProduct(int amount, int numberOfProduct) {
+        return productDAO.getNextProduct(amount, numberOfProduct);
+    }
+
+    @Override
+    public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID){
+        return productDAO.getNextProductByCate(amount, numberOfProduct, cateID);
     }
 }

@@ -11,6 +11,10 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderDAO orderDAO = new OrderDAOImpl();
 
+    public OrderServiceImpl() {
+        orderDAO = new OrderDAOImpl();
+    }
+
     @Override
     public Order getOrderById(int id) {
         return orderDAO.getOrderById(id);

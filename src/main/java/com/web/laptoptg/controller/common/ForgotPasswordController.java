@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.common;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.User;
 import com.web.laptoptg.service.UserService;
@@ -124,5 +125,10 @@ public class ForgotPasswordController extends HttpServlet {
         alert = "Xin vui lòng kiểm tra email!";
         session.setAttribute("emailSuccess", alert);
         resp.sendRedirect(req.getContextPath() + "/login");
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

@@ -115,7 +115,7 @@
 </header><!-- End Header -->
 
 <!-- ======= Sidebar ======= -->
-<jsp:include page="components/sidebar.jsp"/>
+<jsp:include page="../components/sidebar.jsp"/>
 <!-- End Sidebar-->
 
 <main id="main" class="main">

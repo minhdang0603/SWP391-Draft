@@ -2,6 +2,8 @@ package com.web.laptoptg.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -18,10 +20,10 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}
+    )
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
-    private List<CartDetails> cartDetailsList;
 }

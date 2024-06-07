@@ -14,11 +14,16 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private UserDAO userDAO = new UserDAOImpl();
-    private RoleDAO roleDAO = new RoleDAOImpl();
+    private UserDAO userDAO;
+    private RoleDAO roleDAO;
+
+    public UserServiceImpl() {
+        roleDAO = new RoleDAOImpl();
+        userDAO = new UserDAOImpl();
+    }
 
     @Override
-    public boolean register(UserDTO user) { // register user
+    public User register(UserDTO user) { // register user
         User temp = new User();
         temp.setAddress(user.getAddress());
         temp.setEmail(user.getEmail());
@@ -28,7 +33,7 @@ public class UserServiceImpl implements UserService {
         temp.setStatus(user.getStatus());
         temp.setPhoneNumber(user.getPhoneNumber());
         userDAO.saveUser(temp);
-        return userDAO.findUserByEmail(temp.getEmail()) != null;
+        return findUserByEmail(temp.getEmail());
     }
 
     @Override
@@ -80,6 +85,7 @@ public class UserServiceImpl implements UserService {
             userDAO.updateUser(temp);
         }
     }
+
 
     @Override
     public User login(String email, String password) {

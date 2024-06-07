@@ -14,10 +14,16 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
+    EntityManager entityManager;
+    EntityTransaction transaction;
+
+    public UserDAOImpl() {
+        entityManager = JPAConfig.getEntityManager();
+        transaction = entityManager.getTransaction();
+    }
+
     @Override
     public void saveUser(User user) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(user);
@@ -25,15 +31,11 @@ public class UserDAOImpl implements UserDAO {
         } catch (Exception e) {
             transaction.rollback();
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
     }
 
     @Override
     public void updateUser(User user) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(user);
@@ -41,8 +43,6 @@ public class UserDAOImpl implements UserDAO {
         } catch (Exception e) {
             transaction.rollback();
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
     }
 
@@ -63,8 +63,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteById(int id) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             User user = entityManager.find(User.class, id);
@@ -75,17 +73,14 @@ public class UserDAOImpl implements UserDAO {
         } catch (Exception e) {
             transaction.rollback();
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
     }
 
     @Override
     public List<User> findAllUsers() {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         List<User> users = null;
         try {
-            TypedQuery<User> query = entityManager.createQuery("from User", User.class);
+            TypedQuery<User> query = entityManager.createQuery("from User u join fetch u.role", User.class);
             users = query.getResultList();
         } catch (NoResultException e) {
             e.printStackTrace();
@@ -95,27 +90,24 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findUserByEmail(String email) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         try {
-            TypedQuery<User> query = entityManager.createQuery("from User where email = :email", User.class);
+            TypedQuery<User> query = entityManager.createQuery("from User u join fetch u.role where u.email = :email", User.class);
             query.setParameter("email", email);
             return query.getSingleResult();
-        } catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
     }
 
     @Override
     public List<User> findUserByRole(String role) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<User> query = entityManager.createQuery("from User where role = :role", User.class);
+        TypedQuery<User> query = entityManager.createQuery("from User u join fetch u.role where u.role = :role", User.class);
         query.setParameter("role", role);
         return query.getResultList();
     }
 
     @Override
     public User findUserById(int id) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         return entityManager.find(User.class, id);
     }
 }

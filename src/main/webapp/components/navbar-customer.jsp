@@ -18,7 +18,7 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="home" class="logo">
+                        <a href="${contextPath}/home" class="logo">
                             <img src="${contextPath}/assets/home/img/logo1.png" alt="">
                         </a>
                     </div>
@@ -29,7 +29,7 @@
                 <div class="col-md-6">
                     <div class="header-search">
                         <form>
-                            <input class="input" placeholder="Search here">
+                            <input class="input" placeholder="Search here" >
                             <button class="search-btn">Search</button>
                         </form>
                     </div>
@@ -40,12 +40,12 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Cart -->
-                        <div class="" style="cursor: pointer">
-                            <a href="${contextPath}/cart">
+                        <div class="cart" style="cursor: pointer">
+                            <a href="${contextPath}/cart" class="cart-container">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
                                 <c:if test="${checkCart > 0}">
-                                    <div class="qty">${checkCart}</div>
+                                    <div class="qty check-cart">${checkCart}</div>
                                 </c:if>
                             </a>
                         </div>
@@ -82,6 +82,17 @@
                                             <span>User Profile</span>
                                         </a>
                                     </li>
+                                    <c:if test="${account.role == 'SALER' || account.role == 'ADMIN'}">
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center"
+                                               href="${contextPath}/admin/home">
+                                                <span>Admin Dashboard</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -95,14 +106,14 @@
                         </c:if>
                         <!-- /Login -->
 
-                        <!-- Menu Toogle -->
+                        <!-- Menu Toggle -->
                         <div class="menu-toggle">
                             <a href="#">
                                 <i class="fa fa-bars"></i>
                                 <span>Menu</span>
                             </a>
                         </div>
-                        <!-- /Menu Toogle -->
+                        <!-- /Menu Toggle -->
 
                     </div>
                 </div>
@@ -114,3 +125,4 @@
     </div>
     <!-- /MAIN HEADER -->
 </header>
+

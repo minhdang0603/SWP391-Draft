@@ -12,104 +12,98 @@ import java.util.List;
 
 public class CartDetailsDAOImpl implements CartDetailsDAO {
 
-    // insert cart details to database
+    EntityManager entityManager;
+    EntityTransaction transaction;
+
+    public CartDetailsDAOImpl() {
+        entityManager = JPAConfig.getEntityManager();
+        transaction = entityManager.getTransaction();
+    }
+
+    // Save CartDetails
     @Override
     public void saveCartDetails(CartDetails cartDetails) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(cartDetails);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            transaction.rollback();
-        } finally {
-            entityManager.close();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
         }
     }
 
-    // delete cart details
+    // Delete CartDetails
     @Override
     public void deleteCartDetails(CartDetails cartDetails) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
+            if (!entityManager.contains(cartDetails)) {
+                cartDetails = entityManager.merge(cartDetails);
+            }
             entityManager.remove(cartDetails);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            transaction.rollback();
-        } finally {
-            entityManager.close();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
         }
     }
 
-    // delete all cart details by cart id
+    // Delete all CartDetails by cartId
     @Override
     public void deleteAll(int cartId) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            entityManager
-                    .createQuery("delete from CartDetails where cart.id = :cartId") // create query
-                    .setParameter("cartId", cartId) //set query parameters
-                    .executeUpdate(); // execute query
+            entityManager.createQuery("delete from CartDetails where cart.id = :cartId")
+                    .setParameter("cartId", cartId)
+                    .executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            transaction.rollback();
-        } finally {
-            entityManager.close();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
         }
     }
 
-    // get all cart details by cart id
+    // Get all CartDetails by cartId
     @Override
     public List<CartDetails> getCartDetailsByCart(int cartId) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        // create query
-        TypedQuery<CartDetails> query = entityManager.createQuery("from CartDetails where cart.id = :cartId", CartDetails.class);
-
-        // set query parameter
+        TypedQuery<CartDetails> query = entityManager.createQuery("from CartDetails cd join fetch cd.cart where cd.cart.id = :cartId", CartDetails.class);
         query.setParameter("cartId", cartId);
-        // return result list
         return query.getResultList();
     }
 
-    // update cart details
+    // Update CartDetails
     @Override
     public void updateCartDetails(CartDetails cartDetails) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(cartDetails);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            transaction.rollback();
-        } finally {
-            entityManager.close();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
         }
     }
 
-    // get cart details by cart id and product id
+    // Get CartDetails by cartId and productId
     @Override
     public CartDetails getCartDetailsByCartAndProduct(int cartId, int productId) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        CartDetails cartDetails = null;
-        TypedQuery<CartDetails> query = entityManager
-                .createQuery("from CartDetails where cart.id = :cartId and product.id = :productId", CartDetails.class);
-        query.setParameter("cartId", cartId);
-        query.setParameter("productId", productId);
         try {
-            cartDetails = query.getSingleResult();
+            TypedQuery<CartDetails> query = entityManager.createQuery("from CartDetails cd join fetch cd.product join fetch cd.cart where cd.cart.id = :cartId and cd.product.id = :productId", CartDetails.class);
+            query.setParameter("cartId", cartId);
+            query.setParameter("productId", productId);
+            return query.getSingleResult();
         } catch (NoResultException e) {
             e.printStackTrace();
+            return null;
         }
-        return cartDetails;
     }
 }

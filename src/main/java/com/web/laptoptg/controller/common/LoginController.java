@@ -3,18 +3,19 @@ package com.web.laptoptg.controller.common;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.web.laptoptg.config.Constrants;
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.GoogleUserDTO;
 import com.web.laptoptg.dto.UserDTO;
+import com.web.laptoptg.model.Cart;
 import com.web.laptoptg.model.User;
+import com.web.laptoptg.service.CartService;
 import com.web.laptoptg.service.UserService;
+import com.web.laptoptg.service.impl.CartServiceImpl;
 import com.web.laptoptg.service.impl.UserServiceImpl;
 import com.web.laptoptg.util.PasswordUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 
@@ -24,10 +25,12 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
 
     private UserService userService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {
         userService = new UserServiceImpl();
+        cartService = new CartServiceImpl();
     }
 
     @Override
@@ -35,17 +38,36 @@ public class LoginController extends HttpServlet {
         HttpSession session = req.getSession();
         UserDTO userDTO = (UserDTO) session.getAttribute("account");
         String url = req.getRequestURL().toString();
-        if (url.contains("google_login_handler")) { // go to login page
+        if (url.contains("google_login_handler")) { // handle google login api
             googleLoginHandler(req, resp);
-        } else if (url.contains("login")) {
+        } else if (url.contains("login")) { // go to login page
             getLogin(req, resp, userDTO);
         } else if (url.contains("logout")) { // execute log out
-            session.removeAttribute("account");
+            session.removeAttribute("account"); // remove user's account in session
+            Cookie[] cookies = req.getCookies();
+            deleteCookie(cookies, resp); // remove user's cart in cookie
             resp.sendRedirect(req.getContextPath() + "/home");
         }
     }
 
+    private void deleteCookie(Cookie[] cookies, HttpServletResponse resp) {
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("cart")) {
+                    cookie.setMaxAge(0);
+                    resp.addCookie(cookie);
+                }
+            }
+        }
+    }
+
     public void googleLoginHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        String error = req.getParameter("error");
+        if (error != null && error.equals("access_denied")) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
         String code = req.getParameter("code");
         String accessToken = getToken(code);
         GoogleUserDTO googleUserDTO = getUserInfo(accessToken);
@@ -61,7 +83,11 @@ public class LoginController extends HttpServlet {
             userDTO.setUserName(googleUserDTO.getName());
             String generatedPassword = PasswordUtils.generatePassword(8);
             userDTO.setPassword(PasswordUtils.hash(generatedPassword));
-            userService.register(userDTO);
+            User temp = userService.register(userDTO);
+            userDTO.setId(temp.getId());
+            Cart cart = new Cart();
+            cart.setUser(temp);
+            cartService.saveCart(cart);
             session.setAttribute("account", userDTO);
             resp.sendRedirect(req.getContextPath() + "/waiting");
             return;
@@ -146,6 +172,7 @@ public class LoginController extends HttpServlet {
             return;
         }
 
+        // add account to session and redirect to authorization filter
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
@@ -155,5 +182,10 @@ public class LoginController extends HttpServlet {
         userDTO.setPhoneNumber(user.getPhoneNumber());
         session.setAttribute("account", userDTO);
         resp.sendRedirect(req.getContextPath() + "/waiting");
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

@@ -2,6 +2,8 @@ package com.web.laptoptg.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,5 +45,6 @@ public class User {
     private String status;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SELECT)
     private List<Rating> ratings;
 }

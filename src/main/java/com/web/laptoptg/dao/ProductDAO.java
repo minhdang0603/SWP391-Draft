@@ -25,4 +25,12 @@ public interface ProductDAO {
 
     //find by id
     Product findProductById(int id);
+
+    List<Product> getProductByCateOrderBySoldUnit(int cateID, int max);
+
+    List<Product> getProductByCate(int cateID, int max);
+
+    List<Product> getNextProduct(int amount, int numberOfProduct);
+
+    List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID);
 }

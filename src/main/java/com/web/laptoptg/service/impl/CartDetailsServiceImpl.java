@@ -9,7 +9,11 @@ import java.util.List;
 
 public class CartDetailsServiceImpl implements CartDetailsService {
 
-    private CartDetailsDAO cartDetailsDAO = new CartDetailsDAOImpl();
+    private CartDetailsDAO cartDetailsDAO;
+
+    public CartDetailsServiceImpl() {
+        cartDetailsDAO = new CartDetailsDAOImpl();
+    }
 
     @Override
     public void saveCartDetails(CartDetails cartDetails) {
@@ -18,7 +22,8 @@ public class CartDetailsServiceImpl implements CartDetailsService {
 
     @Override
     public void deleteCartDetails(CartDetails cartDetails) {
-        cartDetailsDAO.deleteCartDetails(cartDetails);
+        CartDetails temp = getCartDetailsByCartAndProduct(cartDetails.getCart().getId(), cartDetails.getProduct().getId());
+        cartDetailsDAO.deleteCartDetails(temp);
     }
 
     @Override

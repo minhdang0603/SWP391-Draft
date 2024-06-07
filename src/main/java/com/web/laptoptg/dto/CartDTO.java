@@ -45,15 +45,15 @@ public class CartDTO {
         }
     }
 
-    public double getTotal(){
-        double total = 0;
+    public long getTotal(){
+        long total = 0;
         for (ItemDTO item : items) {
             total += item.getQuantity()*item.getProduct().getUnitPrice();
         }
         return total;
     }
 
-    private Product getProductByID(int id, List<Product> products) {
+    public Product getProductByID(int id, List<Product> products) {
         for (Product product : products) {
             if (product.getId() == id) {
                 return product;

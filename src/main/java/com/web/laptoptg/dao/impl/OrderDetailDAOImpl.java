@@ -11,50 +11,52 @@ import java.util.List;
 
 public class OrderDetailDAOImpl implements OrderDetailDAO {
 
+    EntityManager entityManager;
+    EntityTransaction transaction;
+
+    public OrderDetailDAOImpl() {
+        entityManager = JPAConfig.getEntityManager();
+        transaction = entityManager.getTransaction();
+    }
+
     @Override
     public OrderDetails getOrderDetailById(int id) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         return entityManager.find(OrderDetails.class, id);
     }
 
     @Override
     public List<OrderDetails> getOrderDetailsByOrderId(int orderId) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
         TypedQuery<OrderDetails> query = entityManager.createQuery(
-                "SELECT od FROM OrderDetails od WHERE od.order.id = :orderId", OrderDetails.class);
+                "SELECT od FROM OrderDetails od join fetch od.order WHERE od.order.id = :orderId", OrderDetails.class);
         query.setParameter("orderId", orderId);
         return query.getResultList();
     }
 
     @Override
     public void saveOrderDetail(OrderDetails orderDetail) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(orderDetail);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
     }
 
     @Override
     public void updateOrderDetail(OrderDetails orderDetail) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(orderDetail);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
     }
 }

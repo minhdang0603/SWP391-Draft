@@ -11,53 +11,55 @@ import jakarta.persistence.TypedQuery;
 
 public class CartDAOImpl implements CartDAO {
 
-    // get cart
+    EntityManager entityManager;
+    EntityTransaction transaction;
+
+    public CartDAOImpl() {
+        entityManager = JPAConfig.getEntityManager();
+        transaction = entityManager.getTransaction();
+    }
+
+    // Get Cart by User
     @Override
-    public Cart getCartByUser(User user) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        TypedQuery<Cart> query = entityManager.createQuery("from Cart where user.id = :userId", Cart.class);
-        query.setParameter("userId", user.getId());
+    public Cart getCartByUserId(int userId) {
+        TypedQuery<Cart> query = entityManager.createQuery("from Cart c join fetch c.user where c.user.id = :userId", Cart.class);
+        query.setParameter("userId", userId);
         Cart cart = null;
         try {
             cart = query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
-
         return cart;
     }
 
-    // add cart when new user is created
+    // Save Cart when a new user is created
     @Override
     public void saveCart(Cart cart) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.persist(cart);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
     }
 
-    // update cart total amount
+    // Update Cart total amount
     @Override
     public void updateCart(Cart cart) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             entityManager.merge(cart);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
-        } finally {
-            entityManager.close();
         }
     }
 }

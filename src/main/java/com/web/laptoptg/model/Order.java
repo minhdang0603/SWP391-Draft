@@ -2,6 +2,8 @@ package com.web.laptoptg.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,7 @@ public class Order {
     private String orderStatus;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SELECT)
     private List<OrderDetails> orderDetails;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
