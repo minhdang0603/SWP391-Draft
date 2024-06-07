@@ -33,4 +33,6 @@ public interface ProductService {
     List<Product> getNextProduct(int amount, int numberOfProduct);
 
     List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID);
+
+    List<Product> findProduct(String name);
 }

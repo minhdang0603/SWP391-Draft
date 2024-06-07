@@ -69,4 +69,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID){
         return productDAO.getNextProductByCate(amount, numberOfProduct, cateID);
     }
+
+    @Override
+    public List<Product> findProduct(String name) {
+        return productDAO.findProduct(name);
+    }
 }

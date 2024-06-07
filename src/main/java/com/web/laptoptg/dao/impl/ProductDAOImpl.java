@@ -61,6 +61,13 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
+    public List<Product> findProduct(String name){
+        TypedQuery<Product> query = entityManager.createQuery("from Product p join fetch p.category join fetch p.brand where p.productName like :name", Product.class);
+        query.setParameter("name", "%" + name + "%");
+        return query.getResultList();
+    }
+
+    @Override
     public List<Product> getProductByCategory(int cateID) {
         TypedQuery<Product> query = entityManager.createQuery("from Product p join fetch p.category join fetch p.brand where p.category.id = :cateID", Product.class);
         query.setParameter("cateID", cateID);
