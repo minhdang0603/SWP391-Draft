@@ -39,6 +39,13 @@ public class UserServiceImpl implements UserService {
             temp.setAddress(user.getAddress());
             temp.setPhoneNumber(user.getPhoneNumber());
             temp.setEmail(user.getEmail());
+            userDAO.updateUser(temp);
+        }
+    }
+
+    public void changePassFromProfile(UserDTO user) {
+        User temp = userDAO.findUserByEmail(user.getEmail());
+        if (temp != null) {
             temp.setPassword(user.getPassword());
             userDAO.updateUser(temp);
         }

@@ -39,6 +39,9 @@
     <!-- Template Main CSS File -->
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
 
+    <!--Toastr-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <!-- =======================================================
     * Template Name: NiceAdmin
     * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -211,7 +214,7 @@
                                     <div class="row mb-3">
                                         <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="email" type="email" class="form-control" id="Email" value="${account.email}">
+                                            <input name="email" type="email" class="form-control" id="Email" value="${account.email}" readonly>
                                         </div>
                                     </div>
 
@@ -226,22 +229,11 @@
                                 <form id="changePasswordForm" action="${contextPath}/profile" method="post">
                                     <input type="hidden" name="formType" value="form2">
 
-                                    <!-- Success and Failure Messages -->
-                                    <c:if test="${not empty sessionScope.resetSuccess}">
-                                        <div class="alert alert-success" role="alert">
-                                                ${sessionScope.resetSuccess}
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${not empty sessionScope.resetFail}">
-                                        <div class="alert alert-danger" role="alert">
-                                                ${sessionScope.resetFail}
-                                        </div>
-                                    </c:if>
-
                                     <div class="row mb-3">
                                         <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="password" type="password" class="form-control" id="currentPassword">
+                                            <input name="currentPassword" type="password" class="form-control" id="currentPassword">
+                                            <small id="currentPasswordHelp" class="form-text text-danger" style="display: none;">Không được để trống !!!</small>
                                         </div>
                                     </div>
 
@@ -249,8 +241,8 @@
                                         <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                            <small id="newPasswordHelp" class="form-text text-danger" style="display: none;">New password cannot be the same as the current password.</small>
-                                            <small id="newPasswordValidation" class="form-text text-danger" style="display: none;">Password must be at least 8 characters long and contain at least one uppercase letter and one number.</small>
+                                            <small id="newPasswordHelp" class="form-text text-danger" style="display: none;">Mật khẩu mới không được giống mật khẩu cũ.</small>
+                                            <small id="newPasswordValidation" class="form-text text-danger" style="display: none;">Mật khẩu phải có 8 ký tự trở lên, ít nhất 1 số và 1 chữ hoa.</small>
                                         </div>
                                     </div>
 
@@ -258,17 +250,19 @@
                                         <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                            <small id="renewPasswordHelp" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
+                                            <small id="renewPasswordHelp" class="form-text text-danger" style="display: none;">Nhập lại, không đúng với new password!!!.</small>
                                         </div>
                                     </div>
 
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Change Password</button>
+                                        <button type="submit" class="btn btn-primary" id="changePassbtn" disabled>Change Password</button>
                                     </div>
                                 </form>
-
-                                <!-- End change password Form -->
                             </div>
+
+
+                            <!-- End change password Form -->
+
 
                             <div class="tab-pane fade pt-3 recent-sales overflow-auto" id="profile-orders">
                                 <!-- Orders Table -->
@@ -369,6 +363,70 @@
 
 <script src="${contextPath}/assets/js/validation-profile.js"></script>
 <script src="${contextPath}/assets/js/validation-change-pass.js"></script>
+
+<!-- Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    <% if (request.getAttribute("updateSuccess") != null && (Boolean) request.getAttribute("updateSuccess")) { %>
+    toastr.success('Đã cập nhật thông tin thành công!', 'Thành công');
+    <% } %>
+
+    <% if (request.getAttribute("passwordChangeSuccess") != null && (Boolean) request.getAttribute("passwordChangeSuccess")) { %>
+    toastr.success('Đã thay đổi mật khẩu thành công!', 'Thành công');
+    <% } %>
+
+
+    <% if (request.getAttribute("passwordChangeFailure") != null && (Boolean) request.getAttribute("passwordChangeFailure")) { %>
+    toastr.error('Mật khẩu cũ không đúng!', 'Lỗi', {
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut",
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "closeButton": true,
+        "newestOnTop": false,
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "show": {
+            "duration": "300",
+            "easing": "swing"
+        },
+        "hide": {
+            "duration": "1000",
+            "easing": "linear"
+        },
+        "style": {
+            "color": "red"
+        }
+    });
+    <% } %>
+</script>
+
+
 </body>
 
 </html>

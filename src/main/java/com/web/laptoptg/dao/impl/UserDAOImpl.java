@@ -67,8 +67,10 @@ public class UserDAOImpl implements UserDAO {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            User user = findUserById(id);
-            entityManager.remove(user);
+            User user = entityManager.find(User.class, id);
+            if (user != null) {
+                entityManager.remove(user);
+            }
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();

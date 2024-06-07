@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/profile")
@@ -45,9 +46,9 @@ public class ProfileController extends HttpServlet {
         UserDTO userDTO = (UserDTO) session.getAttribute("account");
 
         if ("form1".equals(formType)) {
-            handleProfileEdit(req, resp, userDTO,session);
+            handleProfileEdit(req, resp, userDTO, session);
         } else if ("form2".equals(formType)) {
-            handleChangePassword(req, resp, userDTO,session);
+            handleChangePassword(req, resp, userDTO, session);
         }
     }
 
@@ -61,28 +62,27 @@ public class ProfileController extends HttpServlet {
         userDTO.setUserName(fullName);
         userDTO.setAddress(address);
         userDTO.setPhoneNumber(phone);
-        if(checkEmailExit(email)){
-            userDTO.setEmail(email);
-        }
+        userDTO.setEmail(email);
 
         userService.updateUser(userDTO);
-        session.setAttribute("updateSuccess", "Cập nhật thông tin thành công!");
-        resp.sendRedirect(req.getContextPath() + "/profile");
-    }
+        session.setAttribute("account", userDTO);
 
-    public boolean checkEmailExit(String email){
-        List<User> list = userService.findAllUsers();
-        for(User user : list){
-            if(user.getEmail().equals(email)){
-                return false;
-            }
-        }
-        return true;
+//        System.out.println(userDTO);
+//
+//        Enumeration<String> attributeNames = session.getAttributeNames();
+//        while (attributeNames.hasMoreElements()) {
+//            String attributeName = attributeNames.nextElement();
+//            Object attributeValue = session.getAttribute(attributeName);
+//            System.out.println(attributeName + ": " + attributeValue);
+//        }
+
+        req.setAttribute("updateSuccess", true);
+        req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
     }
 
 
     private void handleChangePassword(HttpServletRequest req, HttpServletResponse resp, UserDTO userDTO, HttpSession session) throws ServletException, IOException {
-        String password = req.getParameter("password");
+        String password = req.getParameter("currentPassword");
         String newPass = req.getParameter("newpassword");
         String reNewPass = req.getParameter("renewpassword");
 
@@ -90,28 +90,29 @@ public class ProfileController extends HttpServlet {
         // Lấy user từ db
         User raw = userService.findUserByEmail(account.getEmail());
 
+        //System.out.println(account);
+
         try {
             if (PasswordUtils.verify(password, raw.getPassword())) {
                 String hashPass = PasswordUtils.hash(newPass);
-
                 userDTO.setPassword(hashPass);
-                userService.changePassword(userDTO, hashPass);
-                userService.updateUser(userDTO);
 
+                userService.changePassFromProfile(userDTO);
                 session.setAttribute("account", userDTO);
-                session.setAttribute("resetSuccess", "Đã thay đổi mật khẩu thành công!");
-                session.removeAttribute("resetFail"); // Xóa thông báo lỗi nếu có
-                resp.sendRedirect(req.getContextPath() + "/profile");
-            } else {
-                session.setAttribute("resetFail", "Thay đổi mật khẩu không thành công!");
-                session.removeAttribute("resetSuccess"); // Xóa thông báo thành công nếu có
-                resp.sendRedirect(req.getContextPath() + "/profile");
+//              System.out.println(userDTO);
+//              System.out.println(raw);
+
+
+                req.setAttribute("passwordChangeSuccess", true);
+                req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
+            }
+
+            if(!PasswordUtils.verify(password, raw.getPassword()) && password!=null){
+                req.setAttribute("passwordChangeFailure", true);
+                req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
             }
         } catch (Exception e) {
             System.err.println("Error during password change: " + e.getMessage());
-            session.setAttribute("resetFail", "Thay đổi mật khẩu không thành công!");
-            session.removeAttribute("resetSuccess"); // Xóa thông báo thành công nếu có
-            resp.sendRedirect(req.getContextPath() + "/profile");
         }
     }
 }
