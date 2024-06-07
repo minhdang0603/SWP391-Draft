@@ -49,7 +49,7 @@ public class HomeController extends HttpServlet {
         List<List<Product>> list = filteredCategories.stream()
                 .map(category -> products.stream()
                         .filter(product -> product.getCategory().equals(category))
-                        .limit(10)
+                        .limit(6)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
 

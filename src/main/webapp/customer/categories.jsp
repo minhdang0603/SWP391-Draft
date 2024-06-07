@@ -173,7 +173,7 @@
                                     <h3 class="product-name"><a
                                             href="${contextPath}/product-detail?pid=${product.id}">${product.productName}</a>
                                     </h3>
-                                    <h4 class="product-price price-${product.id}">${product.unitPrice}</h4>
+                                    <h4 class="product-price">${product.unitPrice}</h4>
                                     <div class="product-rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -252,6 +252,18 @@
 <script src="${contextPath}/assets/js/main.js"></script>
 <script src="${contextPath}/assets/js/back-to-top-button.js"></script>
 <script>
+    // Hàm định dạng số tiền VND
+    function formatVND(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
+    }
+
+    // Iterate over each product price element and format it to VND
+    function formatAllPrices() {
+        document.querySelectorAll('.product-price').forEach(function (element) {
+            var price = parseFloat(element.textContent.replace(/[^\d.-]/g, '')); // Extract the numerical value from the price element
+            element.textContent = formatVND(price); // Format the price and set it back to the element
+        });
+    }
 
     function updateCheckCart(cartCount) {
         let checkCart = document.querySelector('.check-cart');
@@ -291,19 +303,8 @@
         }, 3000);
     }
 
-    // Hàm định dạng số tiền VND
-    function formatVND(n) {
-        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
-    }
-
-    // Iterate over each product price element and format it to VND
-    document.querySelectorAll('.product-price').forEach(function (element) {
-        var price = parseFloat(element.textContent.replace(/[^\d.-]/g, '')); // Extract the numerical value from the price element
-        element.textContent = formatVND(price); // Format the price and set it back to the element
-    });
-
     $(document).ready(function () {
-
+        formatAllPrices();
         // Event delegation for "Add to Cart" button
         $('.product-list').on('click', '.add-to-cart-btn', function (event) {
             event.preventDefault();
@@ -351,6 +352,7 @@
                         showToast('LaptopTG đã hết sản phẩm ' + cateName);
                     } else {
                         productList.append(data); // Append new products to the product list
+                        formatAllPrices();
                     }
                 },
                 error: function (error) {

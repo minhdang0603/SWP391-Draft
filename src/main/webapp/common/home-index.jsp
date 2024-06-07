@@ -36,6 +36,7 @@
 
 </head>
 <body>
+
 <!-- HEADER -->
 <jsp:include page="../components/navbar-customer.jsp"/>
 <!-- /HEADER -->
@@ -210,7 +211,7 @@
                                         <h3 class="product-name"><a
                                                 href="${contextPath}/product-detail?pid=${product.id}">${product.productName}</a>
                                         </h3>
-                                        <h4 class="product-price" id="price-${product.id}">${product.unitPrice}</h4>
+                                        <h4 class="product-price">${product.unitPrice}</h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -273,11 +274,10 @@
     }
 
     // Iterate over each product to format the price
-    <c:forEach var="listP" items="${list}">
-    <c:forEach var="product" items="${listP}">
-    document.getElementById("price-${product.id}").innerText = formatVND(${product.unitPrice});
-    </c:forEach>
-    </c:forEach>
+    document.querySelectorAll('.product-price').forEach(function (element) {
+        var price = parseFloat(element.textContent.replace(/[^\d.-]/g, '')); // Extract the numerical value from the price element
+        element.textContent = formatVND(price); // Format the price and set it back to the element
+    });
 </script>
 
 </body>

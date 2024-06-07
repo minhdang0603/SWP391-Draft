@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
 
 
-<%--    <link href="${contextPath}/assets/vendor/simple-datatables/style.css" rel="stylesheet">--%>
+    <%--    <link href="${contextPath}/assets/vendor/simple-datatables/style.css" rel="stylesheet">--%>
 
     <!-- Template Main CSS File -->
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
@@ -77,18 +77,7 @@
     <jsp:include page="../components/sidebar.jsp"/>
 </c:if>
 
-<%--<c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">--%>
-<%--    <jsp:include page="../components/sidebar.jsp"/>--%>
-<%--</c:if>--%>
-<%--<c:choose>--%>
-<%--<c:when test="${account.role == 'ADMIN' || account.role == 'SALER'}">--%>
 <main id="main" class="main">
-    <%--    </c:when>--%>
-    <%--    <c:otherwise>--%>
-    <%--    <main id="main" class="main" style="margin-left: 0px">--%>
-    <%--        </c:otherwise>--%>
-    <%--        </c:choose>--%>
-
 
     <div class="pagetitle text-center">
         <h1>Quản Lý Sản Phẩm</h1>
@@ -102,14 +91,13 @@
                     <div class="card-body pt-3">
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
-                            <%--                                <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">--%>
+
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">
                                     Danh Sách Sản Phẩm
                                 </button>
                             </li>
-                            <%--                                </c:if>--%>
 
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Tạo Mới
@@ -152,39 +140,41 @@
                                         <c:forEach var="pro" items="${list}">
                                             <tr>
                                                 <td class="align-middle text-center">${pro.id}</td>
-<%--                                                <td class="align-middle text-center"><img--%>
-<%--                                                        style="width: 100px; height: 100px"--%>
-<%--                                                        src="${contextPath}/assets/img/product-img/${pro.image}">--%>
-<%--                                                </td>--%>
+                                                    <%--                                                <td class="align-middle text-center"><img--%>
+                                                    <%--                                                        style="width: 100px; height: 100px"--%>
+                                                    <%--                                                        src="${contextPath}/assets/img/product-img/${pro.image}">--%>
+                                                    <%--                                                </td>--%>
                                                 <td class="align-middle text-center"
                                                     style="width: 50%">
-                                                                                                            <a href="#"
-                                                                                                               onclick="showProductDetails(
-                                                                                                                        '${pro.id}',
-                                                                                                                       '${pro.productName}',
-                                                                                                                       '${pro.category.categoryName}',
-                                                                                                                       '${pro.brand.brandName}',
-                                                                                                                       '${pro.description}',
-                                                                                                                       '${pro.unitPrice}',
-                                                                                                                       '${pro.stockUnit}',
-                                                                                                                       '${pro.operatingSystem}',
-                                                                                                                       '${pro.cpu}',
-                                                                                                                       '${pro.ram}',
-                                                                                                                       '${pro.monitorScale}',
-                                                                                                                       '${pro.batteryVol}',
-                                                                                                                       '${pro.design}',
-                                                                                                                       '${pro.maintenance}',
-                                                                                                                       '${pro.category.id}',
-                                                                                                                       '${pro.soldUnit}',
+                                                    <a href="#"
+                                                       onclick="showProductDetails(
+                                                               '${pro.id}',
+                                                               '${pro.productName}',
+                                                               '${pro.category.categoryName}',
+                                                               '${pro.brand.brandName}',
+                                                               '${pro.description}',
+                                                               '${pro.unitPrice}',
+                                                               '${pro.stockUnit}',
+                                                               '${pro.operatingSystem}',
+                                                               '${pro.cpu}',
+                                                               '${pro.ram}',
+                                                               '${pro.monitorScale}',
+                                                               '${pro.batteryVol}',
+                                                               '${pro.design}',
+                                                               '${pro.maintenance}',
+                                                               '${pro.category.id}',
+                                                               '${pro.soldUnit}',
 
-                                                                                                                       <%--'${pro.image}'--%>
-                                                                                                                       )">
-                                                        ${pro.productName}
-                                                                                                        </a>
+                                                           <%--'${pro.image}'--%>
+                                                               )">
+                                                            ${pro.productName}
+                                                    </a>
                                                 </td>
                                                 <td class="align-middle text-sm">${pro.category.categoryName}</td>
-                                                <td class="align-middle text-sm" style="padding-right: 30px">${pro.brand.brandName}</td>
-                                                <td class="align-middle text-sm" style="padding-right: 50px">${pro.stockUnit}</td>
+                                                <td class="align-middle text-sm"
+                                                    style="padding-right: 30px">${pro.brand.brandName}</td>
+                                                <td class="align-middle text-sm"
+                                                    style="padding-right: 50px">${pro.stockUnit}</td>
                                                 <td class="align-middle text-center text-sm mr-2"><i
                                                         class="bi bi-pencil-square"
                                                         style="font-size: 20px; color: deepskyblue"></i></td>
@@ -361,7 +351,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="productDetailsModalLabel">Chi Tiết Sản Phẩm</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -423,6 +412,7 @@
             ]
         });
     });
+
     function escapeHtml(unsafe) {
         return unsafe.replace(/[&<>"'\/]/g, function (m) {
             return {
@@ -435,6 +425,7 @@
             }[m];
         });
     }
+
     function validateForm() {
         const productName = document.getElementById('productName').value;
         const unitPrice = document.getElementById('unitPrice').value;
@@ -482,13 +473,16 @@
         document.getElementById('unitPriceError').textContent = '';
         document.getElementById('conditionalFields').style.display = 'none';
     }
+
     function removeControlCharacters(inputString) {
         // Sử dụng biểu thức chính quy để tìm và thay thế các ký tự điều khiển
         return inputString.replace(/[\x00-\x1F\x7F-\x9F]/g, '');
     }
+
     function removeSlash(input) {
         return input.replace(/\//g, "");
     }
+
     function showProductDetails(id, productName, categoryName, brandName, description, unitPrice, stockUnit, operatingSystem, cpu, ram, monitorScale, batteryVol, design, maintenance, categoryId, soldUnit) {
 
 // Sử dụng hàm removeControlCharacters() để loại bỏ các ký tự điều khiển
