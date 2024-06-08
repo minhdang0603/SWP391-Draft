@@ -294,7 +294,7 @@ public class CartController extends HttpServlet {
             cartDetailsService.saveCartDetails(cartDetails);
 
             // send success message and cart size to client
-            jsonObject.addProperty("checkCart", listCD.size());
+            jsonObject.addProperty("checkCart", listCD.size() + 1);
             jsonObject.addProperty("successMsg", "Thêm sản phẩm " + productName + " vào giỏ hàng thành công!");
             String json = new Gson().toJson(jsonObject);
             resp.getWriter().write(json);

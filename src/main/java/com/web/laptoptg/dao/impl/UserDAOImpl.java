@@ -3,10 +3,7 @@ package com.web.laptoptg.dao.impl;
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dao.UserDAO;
 import com.web.laptoptg.model.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -27,7 +24,9 @@ public class UserDAOImpl implements UserDAO {
             entityManager.persist(user);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
@@ -37,9 +36,13 @@ public class UserDAOImpl implements UserDAO {
         try {
             transaction.begin();
             entityManager.merge(user);
+            entityManager.flush();
+            entityManager.clear();
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
@@ -52,7 +55,9 @@ public class UserDAOImpl implements UserDAO {
             entityManager.remove(user);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
@@ -71,13 +76,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findUserByEmail(String email) {
+        entityManager.clear();
+        User user = null;
         try {
-            TypedQuery<User> query = entityManager.createQuery("from User u join fetch u.role where u.email = :email", User.class);
+            TypedQuery<User> query = entityManager.createQuery("select u from User u join fetch u.role where u.email = :email", User.class);
             query.setParameter("email", email);
-            return query.getSingleResult();
+            user = query.getSingleResult();
         } catch (NoResultException e) {
-            return null;
+            e.printStackTrace();
         }
+        return user;
     }
 
     @Override
