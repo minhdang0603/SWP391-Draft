@@ -1,129 +1,66 @@
-document.getElementById('changePasswordForm').addEventListener('input', function() {
-    var currentPassword = document.getElementById('currentPassword').value;
-    var newPassword = document.getElementById('newPassword').value;
-    var renewPassword = document.getElementById('renewPassword').value;
-    var isValid = true;
+const currentPassword = document.getElementById('currentPassword');
+const newPassword = document.getElementById('newPassword');
+const renewPassword = document.getElementById('renewPassword');
+const currentPassHelp = document.getElementById('currentPasswordHelp');
+const newPassHelp = document.getElementById('newPasswordHelp');
+const reNewPassHelp = document.getElementById('renewPasswordHelp');
+const changePassBtn = document.getElementById('changePassbtn');
+let isValid1 = false;
+let isValid2 = false;
+let isValid3 = false;
 
-    // Kiểm tra currentPassword không được để trống
-    if (currentPassword.trim() === '') {
-        document.getElementById('currentPasswordHelp').style.display = 'block';
-        isValid = false;
+currentPassword.addEventListener('input', () => {
+    const val = currentPassword.value;
+    if(val.length === 0) {
+        currentPassHelp.textContent = "Không được để trống!";
+        isValid3 = false;
     } else {
-        document.getElementById('currentPasswordHelp').style.display = 'none';
-    }
-
-    // Kiểm tra newPassword không giống currentPassword
-    if (newPassword === currentPassword) {
-        document.getElementById('newPasswordHelp').style.display = 'block';
-        isValid = false;
-    } else {
-        document.getElementById('newPasswordHelp').style.display = 'none';
-    }
-
-    // Kiểm tra độ dài mật khẩu và chứa ít nhất 1 chữ hoa và 1 số
-    var passwordValidation = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-    if (!passwordValidation.test(newPassword)) {
-        document.getElementById('newPasswordValidation').style.display = 'block';
-        isValid = false;
-    } else {
-        document.getElementById('newPasswordValidation').style.display = 'none';
-    }
-
-    // Kiểm tra xem newPassword và renewPassword có giống nhau không
-    // if (newPassword !== renewPassword) {
-    //     document.getElementById('renewPasswordHelp').style.display = 'block';
-    //     isValid = false;
-    // } else {
-    //     document.getElementById('renewPasswordHelp').style.display = 'none';
-    // }
-
-    // Vô hiệu hóa nút "Change Password" nếu không hợp lệ
-    document.getElementById('changePassbtn').disabled = !isValid;
-});
-
-document.getElementById('changePasswordForm').addEventListener('submit', function(event) {
-    var currentPassword = document.getElementById('currentPassword').value;
-    var newPassword = document.getElementById('newPassword').value;
-    var isValid = true;
-
-    // Kiểm tra currentPassword không được để trống
-    if (currentPassword.trim() === '') {
-        document.getElementById('currentPasswordHelp').style.display = 'block';
-        isValid = false;
-    } else {
-        document.getElementById('currentPasswordHelp').style.display = 'none';
-    }
-
-    // Kiểm tra newPassword không giống currentPassword
-    if (newPassword === currentPassword) {
-        document.getElementById('newPasswordHelp').style.display = 'block';
-        isValid = false;
-    } else {
-        document.getElementById('newPasswordHelp').style.display = 'none';
-    }
-
-    // Kiểm tra độ dài mật khẩu và chứa ít nhất 1 chữ hoa và 1 số
-    var passwordValidation = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-    if (!passwordValidation.test(newPassword)) {
-        document.getElementById('newPasswordValidation').style.display = 'block';
-        isValid = false;
-    } else {
-        document.getElementById('newPasswordValidation').style.display = 'none';
-    }
-
-
-    // Nếu không hợp lệ, ngăn chặn form gửi đi
-    if (!isValid) {
-        event.preventDefault();
+        currentPassHelp.textContent = "";
+        isValid3 = true;
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const currentPassword = document.getElementById('currentPassword');
-    const newPassword = document.getElementById('newPassword');
-    const renewPassword = document.getElementById('renewPassword');
-    const changePassbtn = document.getElementById('changePassbtn');
-
-    const currentPasswordHelp = document.getElementById('currentPasswordHelp');
-    const newPasswordHelp = document.getElementById('newPasswordHelp');
-    const newPasswordValidation = document.getElementById('newPasswordValidation');
-    const renewPasswordHelp = document.getElementById('renewPasswordHelp');
-
-    function validateForm() {
-        let isValid = true;
-
-        // Reset all help messages
-        currentPasswordHelp.style.display = 'none';
-        newPasswordHelp.style.display = 'none';
-        newPasswordValidation.style.display = 'none';
-        renewPasswordHelp.style.display = 'none';
-
-        if (!currentPassword.value) {
-            currentPasswordHelp.style.display = 'block';
-            isValid = false;
-        }
-
-        if (!newPassword.value) {
-            isValid = false;
-        } else if (newPassword.value === currentPassword.value) {
-            newPasswordHelp.style.display = 'block';
-            isValid = false;
-        } else if (!/^(?=.*[A-Z])(?=.*\d).{8,}$/.test(newPassword.value)) {
-            newPasswordValidation.style.display = 'block';
-            isValid = false;
-        }
-
-        if (!renewPassword.value) {
-            isValid = false;
-        } else if (renewPassword.value !== newPassword.value) {
-            renewPasswordHelp.style.display = 'block';
-            isValid = false;
-        }
-
-        changePassbtn.disabled = !isValid;
+renewPassword.addEventListener('input', () => {
+    const val1 = newPassword.value;
+    const val2 = renewPassword.value;
+    if (val1 !== val2) {
+        reNewPassHelp.textContent = "Xác nhận mật khẩu không chính xác!";
+        isValid2 = false;
+    } else {
+        reNewPassHelp.textContent = "";
+        isValid2 = true;
     }
-
-    currentPassword.addEventListener('input', validateForm);
-    newPassword.addEventListener('input', validateForm);
-    renewPassword.addEventListener('input', validateForm);
+    checkIsValid();
 });
+
+newPassword.addEventListener('input', () => {
+    const val1 = newPassword.value;
+    const val2 = currentPassword.value;
+    let regexPattern= '^(?=.*[A-Z])(?=.*\\d).{8,32}$';
+    if (!verifyRegex(val1, regexPattern)) {
+        newPassHelp.textContent = "* Mật khẩu phải từ 8 đến 32 ký tự. Bao gồm ít nhất một chữ cái viết hoa. Bao gồm ít nhất một ký tự số";
+        isValid1 = false;
+    } else if(val1 === val2){
+        newPassHelp.textContent = "Mật khẩu mới không được trùng với mật khẩu cũ!";
+        isValid1 = false;
+    } else {
+        newPassHelp.textContent = "";
+        isValid1 = true;
+    }
+});
+
+function checkIsValid() {
+    if (isValid1 === true && isValid2 === true && isValid3 === true){
+        changePassBtn.disabled = false;
+        return;
+    }
+    changePassBtn.disabled = true;
+}
+
+function verifyRegex(inputString, regexPattern) {
+    // Create a RegExp object from the provided pattern
+    let regex = new RegExp(regexPattern);
+
+    // Test the input string against the regex
+    return regex.test(inputString);
+}

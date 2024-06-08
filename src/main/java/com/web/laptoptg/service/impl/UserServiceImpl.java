@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService {
             temp.setAddress(user.getAddress());
             temp.setPhoneNumber(user.getPhoneNumber());
             temp.setEmail(user.getEmail());
-            temp.setPassword(user.getPassword());
             userDAO.updateUser(temp);
         }
     }

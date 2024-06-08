@@ -208,13 +208,13 @@
                             <c:choose>
                                 <c:when test="${thisCate != null}">
                                     <button id="load-more-btn" data-cate-id="${thisCate.id}"
-                                            data-cate-name="${thisCate.categoryName}" class="btn-lg btn-outline-danger">
+                                            data-cate-name="${thisCate.categoryName}" class="btn-lg btn-outline-danger btn">
                                         Xem thêm
                                     </button>
                                 </c:when>
                                 <c:otherwise>
                                     <button id="load-more-btn" data-cate-id="0"
-                                            data-cate-name="" class="btn-lg btn-outline-danger">
+                                            data-cate-name="" class="btn-lg btn-outline-danger btn">
                                         Xem thêm
                                     </button>
                                 </c:otherwise>

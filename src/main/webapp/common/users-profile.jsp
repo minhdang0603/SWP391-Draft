@@ -54,56 +54,8 @@
 <body>
 
 <!-- ======= Header ======= -->
-<header id="header" class="header fixed-top d-flex align-items-center">
-
-    <div class="d-flex align-items-center justify-content-between">
-        <a href="${contextPath}/home" class="logo d-flex align-items-center">
-            <img src="${contextPath}/assets/home/img/logo1.png" alt="">
-            <span class="d-none d-lg-block">LaptopTG</span>
-        </a>
-    </div><!-- End Logo -->
-
-    <nav class="header-nav ms-auto">
-        <ul class="d-flex align-items-center">
-
-            <li class="nav-item dropdown pe-3">
-
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">${account.userName}</span>
-                </a><!-- End Profile Iamge Icon -->
-
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6>${account.userName}</h6>
-                        <span>${account.email}</span>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center"
-                           href="${contextPath}/common/users-profile.jsp">
-                            <span>Account Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="${contextPath}/logout">
-                            <span>Sign Out</span>
-                        </a>
-                    </li>
-
-                </ul><!-- End Profile Dropdown Items -->
-            </li><!-- End Profile Nav -->
-
-        </ul>
-    </nav><!-- End Icons Navigation -->
-
-</header><!-- End Header -->
+<jsp:include page="../components/navbar-admin.jsp"/>
+<!-- End Header -->
 
 <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">
     <jsp:include page="../components/sidebar.jsp"/>
@@ -112,7 +64,7 @@
 <main id="main" class="main" style="margin-left: 0px">
 
     <div class="pagetitle text-center">
-        <h1>User Profile</h1>
+        <h1>Thông tin tài khoản</h1>
     </div><!-- End Page Title -->
 
     <section class="section profile">
@@ -126,26 +78,26 @@
 
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
-                                    Overview
+                                    Tổng quan
                                 </button>
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit
-                                    Profile
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">
+                                    Thay đổi thông tin
                                 </button>
                             </li>
 
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
-                                    Change Password
+                                    Thay đổi mật khẩu
                                 </button>
                             </li>
 
                             <c:if test="${account.role == 'MEMBER'}">
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-orders">
-                                        Orders
+                                        Đơn hàng
                                     </button>
                                 </li>
                             </c:if>
@@ -154,28 +106,22 @@
                         <div class="tab-content pt-2">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                <h5 class="card-title">Profile Details</h5>
+                                <h5 class="card-title">Thông tin chi tiết</h5>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">User Name</div>
+                                    <div class="col-lg-3 col-md-4 label ">Tên người dùng</div>
                                     <div class="col-lg-9 col-md-8">${account.userName}</div>
-                                    <c:if test="${not empty messName && messName eq 'Full Name cannot contain numbers.'}">
-                                        <small id="fullNameHelp" class="form-text text-danger">${messName}</small>
-                                    </c:if>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Address</div>
+                                    <div class="col-lg-3 col-md-4 label">Địa chỉ</div>
                                     <div class="col-lg-9 col-md-8">${account.address}</div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                                    <div class="col-lg-3 col-md-4 label">Số điện thoại</div>
                                     <div class="col-lg-9 col-md-8">${account.phoneNumber}</div>
                                 </div>
-                                <c:if test="${not empty messPhone && messPhone eq 'Phone number must be 9 or 10 digits.'}">
-                                    <small id="phoneHelp" class="form-text text-danger">${messPhone}</small>
-                                </c:if>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Email</div>
                                     <div class="col-lg-9 col-md-8">${account.email}</div>
@@ -189,7 +135,7 @@
                                 <form action="${contextPath}/profile" method="post">
                                     <input type="hidden" name="formType" value="form1">
                                     <div class="row mb-3">
-                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">User Name</label>
+                                        <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Tên người dùng</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="fullName" type="text" class="form-control" id="fullName" value="${account.userName}">
                                             <small id="fullNameHelp" class="form-text text-danger"></small> <!-- Thông báo lỗi -->
@@ -197,14 +143,14 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                                        <label for="Address" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="address" type="text" class="form-control" id="Address" value="${account.address}">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                        <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="phone" type="text" class="form-control" id="Phone" value="${account.phoneNumber}">
                                             <small id="phoneHelp" class="form-text text-danger"></small> <!-- Thông báo lỗi -->
@@ -219,7 +165,7 @@
                                     </div>
 
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary" id="saveChangesBtn" disabled>Save Changes</button>
+                                        <button type="submit" class="btn btn-primary" id="saveChangesBtn" disabled>Lưu thay đổi</button>
                                     </div>
                                 </form><!-- End Profile Edit Form -->
 
@@ -230,32 +176,31 @@
                                     <input type="hidden" name="formType" value="form2">
 
                                     <div class="row mb-3">
-                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu hiện tại</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="currentPassword" type="password" class="form-control" id="currentPassword">
-                                            <small id="currentPasswordHelp" class="form-text text-danger" style="display: none;">Không được để trống !!!</small>
+                                            <small id="currentPasswordHelp" class="form-text text-danger"></small>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu mới</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="newpassword" type="password" class="form-control" id="newPassword">
-                                            <small id="newPasswordHelp" class="form-text text-danger" style="display: none;">Mật khẩu mới không được giống mật khẩu cũ.</small>
-                                            <small id="newPasswordValidation" class="form-text text-danger" style="display: none;">Mật khẩu phải có 8 ký tự trở lên, ít nhất 1 số và 1 chữ hoa.</small>
+                                            <small id="newPasswordHelp" class="form-text text-danger"></small>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Nhập lại mật khẩu mới</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                                            <small id="renewPasswordHelp" class="form-text text-danger" style="display: none;">Nhập lại, không đúng với new password!!!.</small>
+                                            <small id="renewPasswordHelp" class="form-text text-danger"></small>
                                         </div>
                                     </div>
 
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary" id="changePassbtn" disabled>Change Password</button>
+                                        <button type="submit" class="btn btn-primary" id="changePassbtn" disabled>Lưu mật khẩu mới</button>
                                     </div>
                                 </form>
                             </div>
@@ -362,7 +307,7 @@
 <script src="${contextPath}/assets/js/main.js"></script>
 
 <script src="${contextPath}/assets/js/validation-profile.js"></script>
-<script src="${contextPath}/assets/js/validation-change-pass.js"></script>
+<script src="${contextPath}/assets/js/validation-change-password.js"></script>
 
 <!-- Toastr -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -388,11 +333,17 @@
 
     <% if (request.getAttribute("updateSuccess") != null && (Boolean) request.getAttribute("updateSuccess")) { %>
     toastr.success('Đã cập nhật thông tin thành công!', 'Thành công');
-    <% } %>
+    <%
+    request.removeAttribute("updateSuccess");
+    }
+    %>
 
     <% if (request.getAttribute("passwordChangeSuccess") != null && (Boolean) request.getAttribute("passwordChangeSuccess")) { %>
     toastr.success('Đã thay đổi mật khẩu thành công!', 'Thành công');
-    <% } %>
+    <%
+    request.removeAttribute("passwordChangeSuccess");
+    }
+    %>
 
 
     <% if (request.getAttribute("passwordChangeFailure") != null && (Boolean) request.getAttribute("passwordChangeFailure")) { %>
@@ -423,7 +374,10 @@
             "color": "red"
         }
     });
-    <% } %>
+    <%
+    request.removeAttribute("passwordChangeFailure");
+    }
+    %>
 </script>
 
 

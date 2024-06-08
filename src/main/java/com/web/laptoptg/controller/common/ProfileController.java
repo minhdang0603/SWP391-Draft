@@ -84,7 +84,8 @@ public class ProfileController extends HttpServlet {
     private void handleChangePassword(HttpServletRequest req, HttpServletResponse resp, UserDTO userDTO, HttpSession session) throws ServletException, IOException {
         String password = req.getParameter("currentPassword");
         String newPass = req.getParameter("newpassword");
-        String reNewPass = req.getParameter("renewpassword");
+        System.out.println("old pass: " + password);
+        System.out.println("new pass: " + newPass);
 
         UserDTO account = (UserDTO) session.getAttribute("account");
         // Lấy user từ db
