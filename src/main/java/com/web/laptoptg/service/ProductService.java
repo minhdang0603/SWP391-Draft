@@ -16,7 +16,7 @@ public interface ProductService {
     List<Product> getAllProducts();
 
     //find product by its name
-    List<Product> findProductByName(String name);
+    public boolean findProductByName(String name);
 
     //find product by its category
     List<Product> getProductByCategory(int cateID);

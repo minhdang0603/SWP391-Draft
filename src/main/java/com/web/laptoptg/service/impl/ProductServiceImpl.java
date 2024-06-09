@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findProductByName(String name) {
+    public boolean findProductByName(String name) {
         return productDAO.findProductByName(name);
     }
 

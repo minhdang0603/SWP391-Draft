@@ -15,7 +15,7 @@ public interface ProductDAO {
     void updateProduct(Product pro);
 
     //find product by its name
-    List<Product> findProductByName(String name);
+    public boolean findProductByName(String name);
 
     List<Product> findProduct(String name);
 

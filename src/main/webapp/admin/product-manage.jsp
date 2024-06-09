@@ -44,12 +44,6 @@
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
 
     <style>
-
-        .form-control-lg {
-            font-size: 1.25rem;
-            padding: .5rem 1rem;
-        }
-
         .large-textarea {
             min-height: 200px;
             font-size: 1.25rem;
@@ -65,6 +59,23 @@
             color: red;
             font-size: 0.875em;
         }
+
+
+        .notification {
+            background-color: rgba(76, 175, 80, 0.8); /* Màu nền với độ trong suốt */
+            color: white;
+            padding: 16px;
+            position: fixed;
+            top: 50px; /* Top sẽ giữ nguyên */
+            right: -300px; /* Ban đầu ẩn ngoài màn hình */
+            border-radius: 5px;
+            z-index: 1;
+            transition: right 0.5s ease-in-out; /* Hiệu ứng chuyển động */
+        }
+
+        .notification.show {
+            right: 20px; /* Hiển thị ở phía phải của màn hình */
+        }
     </style>
 </head>
 
@@ -77,11 +88,16 @@
     <jsp:include page="../components/sidebar.jsp"/>
 </c:if>
 
+
 <main id="main" class="main">
 
     <div class="pagetitle text-center">
         <h1>Quản Lý Sản Phẩm</h1>
-    </div><!-- End Page Title -->
+    </div>
+    <div id="msg" class="notification">
+        <h6 id="msgContent">${msg}</h6>
+    </div>
+    <!-- End Page Title -->
 
     <section class="section profile">
         <div class="row">
@@ -91,13 +107,14 @@
                     <div class="card-body pt-3">
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
-
+                            <%--                                <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">--%>
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">
                                     Danh Sách Sản Phẩm
                                 </button>
                             </li>
+                            <%--                                </c:if>--%>
 
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Tạo Mới
@@ -148,24 +165,7 @@
                                                     style="width: 50%">
                                                     <a href="#"
                                                        onclick="showProductDetails(
-                                                               '${pro.id}',
-                                                               '${pro.productName}',
-                                                               '${pro.category.categoryName}',
-                                                               '${pro.brand.brandName}',
-                                                               '${pro.description}',
-                                                               '${pro.unitPrice}',
-                                                               '${pro.stockUnit}',
-                                                               '${pro.operatingSystem}',
-                                                               '${pro.cpu}',
-                                                               '${pro.ram}',
-                                                               '${pro.monitorScale}',
-                                                               '${pro.batteryVol}',
-                                                               '${pro.design}',
-                                                               '${pro.maintenance}',
-                                                               '${pro.category.id}',
-                                                               '${pro.soldUnit}',
-
-                                                           <%--'${pro.image}'--%>
+                                                               '${pro.category.id}','${pro.id}'
                                                                )">
                                                             ${pro.productName}
                                                     </a>
@@ -175,13 +175,154 @@
                                                     style="padding-right: 30px">${pro.brand.brandName}</td>
                                                 <td class="align-middle text-sm"
                                                     style="padding-right: 50px">${pro.stockUnit}</td>
-                                                <td class="align-middle text-center text-sm mr-2"><i
+                                                <td class="align-middle text-center text-sm mr-2"><a href="#" onclick="editModal('${pro.category.id}','${pro.id}')"> <i
                                                         class="bi bi-pencil-square"
-                                                        style="font-size: 20px; color: deepskyblue"></i></td>
+                                                        style="font-size: 20px; color: deepskyblue"></i></a></td>
                                                 <td class="align-middle text-center text-sm mr-2"><i
                                                         class="bi bi-trash2-fill"
                                                         style="font-size: 20px;color: red"></i></td>
                                             </tr>
+                                            <!-- Product Details Modal -->
+                                            <div class="modal fade" id="productDetailsModal${pro.id}" tabindex="-1"
+                                                 aria-labelledby="productDetailsModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="productDetailsModalLabel">Chi
+                                                                Tiết Sản Phẩm</h5>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <img id="productImage"
+                                                                         src="${contextPath}/assets/img/product-img/${pro.image}"
+                                                                         class="img-fluid" alt="Product Image"/>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p><strong>Mã sản phẩm:</strong> <span
+                                                                            id="modalID">${pro.id}</span></p>
+                                                                    <p><strong>Tên sản phẩm:</strong> <span
+                                                                            id="modalProductName">${pro.productName}</span>
+                                                                    </p>
+                                                                    <p><strong>Danh mục:</strong> <span
+                                                                            id="modalCategoryName">${pro.category.categoryName}</span>
+                                                                    </p>
+                                                                    <p><strong>Hãng:</strong> <span
+                                                                            id="modalBrandName">${pro.brand.brandName}</span>
+                                                                    </p>
+                                                                    <p><strong>Mô tả:</strong> <span
+                                                                            id="modalDescription">${pro.description}</span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p><strong>Đơn giá:</strong> <span
+                                                                            id="modalUnitPrice">${pro.unitPrice}</span>
+                                                                        VND</p>
+                                                                    <p><strong>Tồn kho:</strong> <span
+                                                                            id="modalStockUnit">${pro.stockUnit}</span>
+                                                                    </p>
+                                                                    <p><strong>Đã bán:</strong> <span
+                                                                            id="modalSoldUnit">${pro.soldUnit}</span>
+                                                                    </p>
+                                                                    <div id="technicalDetails">
+                                                                        <p><strong>Hệ điều hành:</strong> <span
+                                                                                id="modalOS">${pro.operatingSystem}</span>
+                                                                        </p>
+                                                                        <p><strong>CPU:</strong> <span
+                                                                                id="modalCPU">${pro.cpu}</span></p>
+                                                                        <p><strong>RAM:</strong><span
+                                                                                id="modalRAM">${pro.ram}</span></p>
+                                                                        <p><strong>Màn hình:</strong> <span
+                                                                                id="modalScreen">${pro.monitorScale}</span>
+                                                                        </p>
+                                                                        <p><strong>Pin:</strong> <span
+                                                                                id="modalBattery">${pro.batteryVol}</span>
+                                                                        </p>
+                                                                        <p><strong>Thiết kế:</strong> <span
+                                                                                id="modalDesign">${pro.design}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                    <p><strong>Bảo hành:</strong> <span
+                                                                            id="modalWarranty">${pro.maintenance}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Product Update Modal -->
+                                            <div class="modal fade" id="productUpdateModal${pro.id}" tabindex="-1"
+                                                 aria-labelledby="productUpdatesModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="productUpdatesModalLabel">Chi
+                                                                Tiết Sản Phẩm</h5>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <img id="productImageUpdate"
+                                                                         src="${contextPath}/assets/img/product-img/${pro.image}"
+                                                                         class="img-fluid" alt="Product Image"/>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p><strong>Mã sản phẩm:</strong> <span
+                                                                            id="modalIDUpdate">${pro.id}</span></p>
+                                                                    <p><strong>Tên sản phẩm:</strong> <span
+                                                                            id="modalProductNameUpdate">${pro.productName}</span>
+                                                                    </p>
+                                                                    <p><strong>Danh mục:</strong> <span
+                                                                            id="modalCategoryNameUpdate">${pro.category.categoryName}</span>
+                                                                    </p>
+                                                                    <p><strong>Hãng:</strong> <span
+                                                                            id="modalBrandNameUpdate">${pro.brand.brandName}</span>
+                                                                    </p>
+                                                                    <p><strong>Mô tả:</strong> <span
+                                                                            id="modalDescriptionUpdate">${pro.description}</span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p><strong>Đơn giá:</strong> <span
+                                                                            id="modalUnitPriceUpdate">${pro.unitPrice}</span>
+                                                                        VND</p>
+                                                                    <p><strong>Tồn kho:</strong> <span
+                                                                            id="modalStockUnitUpdate">${pro.stockUnit}</span>
+                                                                    </p>
+                                                                    <p><strong>Đã bán:</strong> <span
+                                                                            id="modalSoldUnitUpdate">${pro.soldUnit}</span>
+                                                                    </p>
+                                                                    <div id="technicalDetailsUdate">
+                                                                        <p><strong>Hệ điều hành:</strong> <span
+                                                                                id="modalOSUpdate">${pro.operatingSystem}</span>
+                                                                        </p>
+                                                                        <p><strong>CPU:</strong> <span
+                                                                                id="modalCPUUpdate">${pro.cpu}</span></p>
+                                                                        <p><strong>RAM:</strong><span
+                                                                                id="modalRAMUpdate">${pro.ram}</span></p>
+                                                                        <p><strong>Màn hình:</strong> <span
+                                                                                id="modalScreenUpdate">${pro.monitorScale}</span>
+                                                                        </p>
+                                                                        <p><strong>Pin:</strong> <span
+                                                                                id="modalBatteryUpdate">${pro.batteryVol}</span>
+                                                                        </p>
+                                                                        <p><strong>Thiết kế:</strong> <span
+                                                                                id="modalDesignUpdate">${pro.design}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                    <p><strong>Bảo hành:</strong> <span
+                                                                            id="modalWarrantyUpdate">${pro.maintenance}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </c:forEach>
                                         </tbody>
                                     </table>
@@ -321,8 +462,8 @@
                                                     <label for="description" class="col-md-4 col-form-label">Mô tả sản
                                                         phẩm</label>
                                                     <div class="col-md-8">
-                                                        <textarea name="description" class="form-control large-textarea"
-                                                                  id="description"></textarea>
+        <textarea name="description" class="form-control large-textarea"
+                  id="description"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -344,47 +485,9 @@
     </section>
 </main><!-- End #main -->
 
-<!-- Product Details Modal -->
-<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productDetailsModalLabel">Chi Tiết Sản Phẩm</h5>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <img id="productImage" src="" class="img-fluid" alt="Product Image">
-                    </div>
-                    <div class="col-md-6">
-                        <p><strong>Mã sản phẩm:</strong> <span id="modalID"></span></p>
-                        <p><strong>Tên sản phẩm:</strong> <span id="modalProductName"></span></p>
-                        <p><strong>Danh mục:</strong> <span id="modalCategoryName"></span></p>
-                        <p><strong>Hãng:</strong> <span id="modalBrandName"></span></p>
-                        <p><strong>Mô tả:</strong> <span id="modalDescription"></span></p>
-                        <p><strong>Đơn giá:</strong> <span id="modalUnitPrice"></span> VND</p>
-                        <p><strong>Tồn kho:</strong> <span id="modalStockUnit"></span></p>
-                        <p><strong>Đã bán:</strong> <span id="modalSoldUnit"></span></p>
-                        <div id="technicalDetails">
-                            <p><strong>Hệ điều hành:</strong> <span id="modalOS"></span></p>
-                            <p><strong>CPU:</strong> <span id="modalCPU"></span></p>
-                            <p><strong>RAM:</strong> <span id="modalRAM"></span></p>
-                            <p><strong>Màn hình:</strong> <span id="modalScreen"></span></p>
-                            <p><strong>Pin:</strong> <span id="modalBattery"></span></p>
-                            <p><strong>Thiết kế:</strong> <span id="modalDesign"></span></p>
-                        </div>
-                        <p><strong>Bảo hành:</strong> <span id="modalWarranty"></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
+
 
 <!-- Vendor JS Files -->
 <%--<script src="${contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>--%>
@@ -405,6 +508,21 @@
 <!-- Template Main JS File -->
 <script src="${contextPath}/assets/js/main.js"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var msgDiv = document.getElementById('msg');
+        var msgContent = document.getElementById('msgContent');
+
+        // Kiểm tra nội dung của thẻ h1
+        if (msgContent.textContent.trim() !== "") {
+            msgDiv.classList.add('show');
+            setTimeout(function () {
+                msgDiv.classList.remove('show');
+                setTimeout(function () {
+                    msgDiv.style.display = 'none';
+                }, 600); // Chờ thời gian chuyển tiếp để hoàn thành
+            }, 3000); // Hiển thị thông báo trong 3 giây
+        }
+    });
     $(document).ready(function () {
         $('#myTable').DataTable({
             columnDefs: [
@@ -412,19 +530,6 @@
             ]
         });
     });
-
-    function escapeHtml(unsafe) {
-        return unsafe.replace(/[&<>"'\/]/g, function (m) {
-            return {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;',
-                '/': '&#x2F;'
-            }[m];
-        });
-    }
 
     function validateForm() {
         const productName = document.getElementById('productName').value;
@@ -474,36 +579,7 @@
         document.getElementById('conditionalFields').style.display = 'none';
     }
 
-    function removeControlCharacters(inputString) {
-        // Sử dụng biểu thức chính quy để tìm và thay thế các ký tự điều khiển
-        return inputString.replace(/[\x00-\x1F\x7F-\x9F]/g, '');
-    }
-
-    function removeSlash(input) {
-        return input.replace(/\//g, "");
-    }
-
-    function showProductDetails(id, productName, categoryName, brandName, description, unitPrice, stockUnit, operatingSystem, cpu, ram, monitorScale, batteryVol, design, maintenance, categoryId, soldUnit) {
-
-// Sử dụng hàm removeControlCharacters() để loại bỏ các ký tự điều khiển
-
-
-        document.getElementById('modalID').innerHTML = id;
-        document.getElementById('modalProductName').innerHTML = productName;
-        document.getElementById('modalCategoryName').innerHTML = categoryName;
-        document.getElementById('modalBrandName').innerHTML = brandName;
-        document.getElementById('modalDescription').innerHTML = description;
-        document.getElementById('modalUnitPrice').innerHTML = unitPrice;
-        document.getElementById('modalStockUnit').innerHTML = stockUnit;
-        document.getElementById('modalOS').innerHTML = operatingSystem;
-        document.getElementById('modalCPU').innerHTML = cpu;
-        document.getElementById('modalRAM').innerHTML = ram;
-        document.getElementById('modalScreen').innerHTML = monitorScale;
-        document.getElementById('modalBattery').innerHTML = batteryVol;
-        document.getElementById('modalDesign').innerHTML = design;
-        document.getElementById('modalWarranty').innerHTML = maintenance;
-        document.getElementById('modalSoldUnit').innerHTML = soldUnit;
-        console.log(description);
+    function showProductDetails(categoryId, producID) {
 
         // Hiển thị hoặc ẩn các trường kỹ thuật dựa trên categoryId
         const technicalDetails = document.getElementById('technicalDetails');
@@ -512,10 +588,11 @@
         } else {
             technicalDetails.style.display = 'none';
         }
-
-        var productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal'));
+        var productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal' + producID));
         productDetailsModal.show();
     }
+
+
 </script>
 
 </body>

@@ -30,6 +30,12 @@ public class ProductAddController extends HttpServlet {
         categoryService = new CategoryServiceImpl();
         brandService = new BrandServiceImpl();
     }
+
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("../admin/product-manage").forward(req,resp);
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pname = req.getParameter("productName");
@@ -47,37 +53,45 @@ public class ProductAddController extends HttpServlet {
         String description = req.getParameter("description");
         int stockUnit = Integer.parseInt(req.getParameter("stockUnit"));
         boolean success = true;
-//        Product proCheck = productService.findProductByName("pname");
-//        if(proCheck != null){
-//            success = false;
-//            System.out.println(proCheck.getId());
-//            resp.setContentType("application/json");
-//            resp.setCharacterEncoding("UTF-8");
-//            resp.getWriter().write("{\"success\": " + success + "}");
-//        }
-        Brand brand = brandService.getBrandById(brandID);
-        Category category = categoryService.getCategoryById(cateID);
-        Product pro = new Product();
-        pro.setCpu(cpu);
-        pro.setUnitPrice(price);
-        pro.setSoldUnit(0);
-        pro.setStockUnit(stockUnit);
-        pro.setBatteryVol(battery);
-        pro.setOperatingSystem(os);
-        pro.setDescription(description);
-        pro.setMonitorScale(screen);
-        pro.setBrand(brand);
-        pro.setCategory(category);
-        pro.setRam(ram);
-        pro.setProductName(pname);
-        pro.setDesign(design);
-        pro.setMaintenance(warranty);
-        productService.saveProduct(pro);
-//        System.out.print("Added!");
-//        resp.setContentType("application/json");
-//        resp.setCharacterEncoding("UTF-8");
-//        resp.getWriter().write("{\"success\": " + success + "}");
-        resp.sendRedirect("../admin/product-manage");
+       boolean proCheckExist = productService.findProductByName(pname);
+       String msg;
+        if(proCheckExist){
+            System.out.println(proCheckExist);
+           msg = "Sản phẩm đã tồn tại! Thêm mới không thành công";
+           req.setAttribute("msg", msg);
+//           req.getRequestDispatcher("../admin/product-manage").forward(req, resp);
+            doGet(req, resp);
+        }else{
+            Brand brand = brandService.getBrandById(brandID);
+            Category category = categoryService.getCategoryById(cateID);
+            Product pro = new Product();
+            pro.setCpu(cpu);
+            pro.setUnitPrice(price);
+            pro.setSoldUnit(0);
+            pro.setStockUnit(stockUnit);
+            pro.setBatteryVol(battery);
+            pro.setOperatingSystem(os);
+            pro.setDescription(description);
+            pro.setMonitorScale(screen);
+            pro.setBrand(brand);
+            pro.setCategory(category);
+            pro.setRam(ram);
+            pro.setProductName(pname);
+            pro.setDesign(design);
+            pro.setMaintenance(warranty);
+            productService.saveProduct(pro);
+
+            boolean list = productService.findProductByName(pname);
+            if(!list){
+                msg = "Có lỗi! Thêm Không Thành Công!";
+            }else{
+                msg = "Thêm Thành Công!";
+            }
+            req.setAttribute("msg", msg);
+//            req.getRequestDispatcher("../admin/product-manage").forward(req, resp);
+            doGet(req, resp);
+        }
+
     }
 
 }

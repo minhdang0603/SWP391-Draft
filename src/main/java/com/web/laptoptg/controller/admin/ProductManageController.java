@@ -34,19 +34,19 @@ public class ProductManageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Product> list = productService.getAllProducts();
-        for (Product pro : list
-             ) {
-            pro.setProductName(pro.getProductName().replaceAll("[\"\r\n\t]", ""));
-            pro.setDescription(pro.getDescription().replaceAll("[\"\r\n\t]", ""));
-
-        }
         List<Category> listCate = categoryService.getAllCategory();
         List<Brand> listBrand = brandService.getAllBrands();
+
         req.setAttribute("listCate", listCate);
         req.setAttribute("list", list);
         req.setAttribute("listBrand", listBrand);
+
         req.getRequestDispatcher("product-manage.jsp").forward(req, resp);
 
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
+    }
 }

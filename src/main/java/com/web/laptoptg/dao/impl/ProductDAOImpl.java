@@ -5,6 +5,7 @@ import com.web.laptoptg.dao.ProductDAO;
 import com.web.laptoptg.model.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -54,10 +55,22 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> findProductByName(String name) {
-        TypedQuery<Product> query = entityManager.createQuery("from Product p join fetch p.category join fetch p.brand where p.productName like :name", Product.class);
-        query.setParameter("name", "%" + name + "%");
-        return query.getResultList();
+    public boolean findProductByName(String name) {
+        boolean found = false;
+        try {
+            TypedQuery<Product> query = entityManager.createQuery(
+                    "SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.brand WHERE lower(p.productName)  = :name",
+                    Product.class
+            );
+            query.setParameter("name", name.toLowerCase());
+            List<Product> results = query.getResultList();
+            found = !results.isEmpty();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            found = false;
+        }
+
+        return found;
     }
 
     @Override
