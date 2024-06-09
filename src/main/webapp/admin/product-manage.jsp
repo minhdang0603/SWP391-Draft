@@ -44,9 +44,13 @@
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
 
     <style>
+        .readonly {
+            background-color: #e9ecef;
+            opacity: 1;
+        }
+
         .large-textarea {
             min-height: 200px;
-            font-size: 1.25rem;
             padding: .75rem;
         }
 
@@ -175,9 +179,11 @@
                                                     style="padding-right: 30px">${pro.brand.brandName}</td>
                                                 <td class="align-middle text-sm"
                                                     style="padding-right: 50px">${pro.stockUnit}</td>
-                                                <td class="align-middle text-center text-sm mr-2"><a href="#" onclick="editModal('${pro.category.id}','${pro.id}')"> <i
-                                                        class="bi bi-pencil-square"
-                                                        style="font-size: 20px; color: deepskyblue"></i></a></td>
+                                                <td class="align-middle text-center text-sm mr-2"><a href="#"
+                                                                                                     onclick="editModal('${pro.category.id}','${pro.id}')">
+                                                    <i
+                                                            class="bi bi-pencil-square"
+                                                            style="font-size: 20px; color: deepskyblue"></i></a></td>
                                                 <td class="align-middle text-center text-sm mr-2"><i
                                                         class="bi bi-trash2-fill"
                                                         style="font-size: 20px;color: red"></i></td>
@@ -186,11 +192,14 @@
                                             <div class="modal fade" id="productDetailsModal${pro.id}" tabindex="-1"
                                                  aria-labelledby="productDetailsModalLabel"
                                                  aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="productDetailsModalLabel">Chi
                                                                 Tiết Sản Phẩm</h5>
+                                                            <button type="button" class="btn-close" data-dismiss="modal"
+                                                                    aria-label="Close"></button>
+
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="row">
@@ -205,17 +214,6 @@
                                                                     <p><strong>Tên sản phẩm:</strong> <span
                                                                             id="modalProductName">${pro.productName}</span>
                                                                     </p>
-                                                                    <p><strong>Danh mục:</strong> <span
-                                                                            id="modalCategoryName">${pro.category.categoryName}</span>
-                                                                    </p>
-                                                                    <p><strong>Hãng:</strong> <span
-                                                                            id="modalBrandName">${pro.brand.brandName}</span>
-                                                                    </p>
-                                                                    <p><strong>Mô tả:</strong> <span
-                                                                            id="modalDescription">${pro.description}</span>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-md-4">
                                                                     <p><strong>Đơn giá:</strong> <span
                                                                             id="modalUnitPrice">${pro.unitPrice}</span>
                                                                         VND</p>
@@ -225,7 +223,20 @@
                                                                     <p><strong>Đã bán:</strong> <span
                                                                             id="modalSoldUnit">${pro.soldUnit}</span>
                                                                     </p>
-                                                                    <div id="technicalDetails">
+
+                                                                    <p><strong>Mô tả:</strong> <span
+                                                                            id="modalDescription">${pro.description}</span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p><strong>Danh mục:</strong> <span
+                                                                            id="modalCategoryName">${pro.category.categoryName}</span>
+                                                                    </p>
+                                                                    <p><strong>Hãng:</strong> <span
+                                                                            id="modalBrandName">${pro.brand.brandName}</span>
+                                                                    </p>
+                                                                    <div id="technicalDetails"
+                                                                         style="display: ${(pro.category.id == 1 || pro.category.id == 2) ? 'block' : 'none'}">
                                                                         <p><strong>Hệ điều hành:</strong> <span
                                                                                 id="modalOS">${pro.operatingSystem}</span>
                                                                         </p>
@@ -247,6 +258,11 @@
                                                                             id="modalWarranty">${pro.maintenance}</span>
                                                                     </p>
                                                                 </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Đóng
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -254,75 +270,208 @@
                                             </div>
 
                                             <!-- Product Update Modal -->
-                                            <div class="modal fade" id="productUpdateModal${pro.id}" tabindex="-1"
+                                            <div class="modal" id="productUpdateModal${pro.id}" tabindex="-1"
                                                  aria-labelledby="productUpdatesModalLabel"
                                                  aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered"
+                                                     style="display: block;" data-keyboard="false"
+                                                     data-backdrop="static">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="productUpdatesModalLabel">Chi
-                                                                Tiết Sản Phẩm</h5>
+                                                            <h5 class="modal-title" id="productUpdatesModalLabel">Chỉnh
+                                                                Sửa Chi Tiết Sản Phẩm</h5>
+                                                            <button type="button" class="btn-close" data-dismiss="modal"
+                                                                    aria-label="Close"></button>
+
                                                         </div>
                                                         <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <img id="productImageUpdate"
-                                                                         src="${contextPath}/assets/img/product-img/${pro.image}"
-                                                                         class="img-fluid" alt="Product Image"/>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <p><strong>Mã sản phẩm:</strong> <span
-                                                                            id="modalIDUpdate">${pro.id}</span></p>
-                                                                    <p><strong>Tên sản phẩm:</strong> <span
-                                                                            id="modalProductNameUpdate">${pro.productName}</span>
-                                                                    </p>
-                                                                    <p><strong>Danh mục:</strong> <span
-                                                                            id="modalCategoryNameUpdate">${pro.category.categoryName}</span>
-                                                                    </p>
-                                                                    <p><strong>Hãng:</strong> <span
-                                                                            id="modalBrandNameUpdate">${pro.brand.brandName}</span>
-                                                                    </p>
-                                                                    <p><strong>Mô tả:</strong> <span
-                                                                            id="modalDescriptionUpdate">${pro.description}</span>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <p><strong>Đơn giá:</strong> <span
-                                                                            id="modalUnitPriceUpdate">${pro.unitPrice}</span>
-                                                                        VND</p>
-                                                                    <p><strong>Tồn kho:</strong> <span
-                                                                            id="modalStockUnitUpdate">${pro.stockUnit}</span>
-                                                                    </p>
-                                                                    <p><strong>Đã bán:</strong> <span
-                                                                            id="modalSoldUnitUpdate">${pro.soldUnit}</span>
-                                                                    </p>
-                                                                    <div id="technicalDetailsUdate">
-                                                                        <p><strong>Hệ điều hành:</strong> <span
-                                                                                id="modalOSUpdate">${pro.operatingSystem}</span>
-                                                                        </p>
-                                                                        <p><strong>CPU:</strong> <span
-                                                                                id="modalCPUUpdate">${pro.cpu}</span></p>
-                                                                        <p><strong>RAM:</strong><span
-                                                                                id="modalRAMUpdate">${pro.ram}</span></p>
-                                                                        <p><strong>Màn hình:</strong> <span
-                                                                                id="modalScreenUpdate">${pro.monitorScale}</span>
-                                                                        </p>
-                                                                        <p><strong>Pin:</strong> <span
-                                                                                id="modalBatteryUpdate">${pro.batteryVol}</span>
-                                                                        </p>
-                                                                        <p><strong>Thiết kế:</strong> <span
-                                                                                id="modalDesignUpdate">${pro.design}</span>
-                                                                        </p>
+                                                            <form id="updateProductForm"
+                                                                  action="${contextPath}/admin/product-update"
+                                                                  method="post" enctype="multipart/form-data">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label for="productIDUpdate"><strong>Mã sản
+                                                                                phẩm:</strong></label>
+                                                                            <input type="text"
+                                                                                   class="form-control readonly"
+                                                                                   id="productIDUpdate" name="productID"
+                                                                                   value="${pro.id}" readonly>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="productNameUpdate"><strong>Tên
+                                                                                sản
+                                                                                phẩm:</strong></label>
+                                                                            <input type="text" class="form-control"
+                                                                                   id="productNameUpdate"
+                                                                                   name="productName"
+                                                                                   value="${pro.productName}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="unitPriceUpdate"><strong>Đơn
+                                                                                giá (VND):</strong></label>
+                                                                            <input type="number" class="form-control"
+                                                                                   id="unitPriceUpdate" min="0" step="1"
+                                                                                   name="unitPrice"
+                                                                                   value="${pro.unitPrice}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="stockUnitUpdate"><strong>Tồn
+                                                                                kho:</strong></label>
+                                                                            <input name="stockUnit" type="number"
+                                                                                   class="form-control"
+                                                                                   id="stockUnitUpdate" min="0" step="1"
+                                                                                   value="${pro.stockUnit}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="soldUnitUpdate"><strong>Đã
+                                                                                bán:</strong></label>
+                                                                            <input type="text" class="form-control"
+                                                                                   id="soldUnitUpdate" name="soldUnit"
+                                                                                   value="${pro.soldUnit}">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label for="descriptionUpdate"><strong>Mô
+                                                                                tả:</strong></label>
+                                                                            <textarea class="form-control"
+                                                                                      id="descriptionUpdate"
+                                                                                      name="description">${pro.description}</textarea>
+                                                                        </div>
+                                                                        <div class="form-group mt-1">
+                                                                            <label for="imageUpdate"><strong>Ảnh sản
+                                                                                phẩm:</strong></label>
+                                                                            <input type="file" class="form-control-file"
+                                                                                   id="imageUpdate" name="image">
+                                                                        </div>
                                                                     </div>
-                                                                    <p><strong>Bảo hành:</strong> <span
-                                                                            id="modalWarrantyUpdate">${pro.maintenance}</span>
-                                                                    </p>
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label for="categoryNameUpdate"><strong>Danh
+                                                                                mục:</strong></label>
+                                                                            <select name="productCategory"
+                                                                                    class="form-control"
+                                                                                    id="categoryNameUpdate"
+                                                                                    onchange="toggleFields()" required>
+                                                                                <c:forEach items="${listCate}"
+                                                                                           var="category">
+                                                                                    <option value="${category.id}" ${category.id == pro.category.id ? 'selected' : ''}>
+                                                                                            ${category.categoryName}</option>
+                                                                                </c:forEach>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="brandNameUpdate"><strong>Hãng:</strong></label>
+                                                                            <select name="productBrand"
+                                                                                    class="form-control"
+                                                                                    id="brandNameUpdate" required>
+                                                                                <c:forEach items="${listBrand}"
+                                                                                           var="brand">
+                                                                                    <option value="${brand.id}" ${brand.id == pro.brand.id ? 'selected' : ''}>
+                                                                                            ${brand.brandName}</option>
+                                                                                </c:forEach>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div id="technicalDetailsUpdate">
+                                                                            <div class="form-group">
+                                                                                <label for="osUpdate"><strong>Hệ điều
+                                                                                    hành:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="osUpdate"
+                                                                                       name="operatingSystem"
+                                                                                       value="${pro.operatingSystem}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="cpuUpdate"><strong>CPU:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="cpuUpdate" name="cpu"
+                                                                                       value="${pro.cpu}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="ramUpdate"><strong>RAM:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="ramUpdate" name="ram"
+                                                                                       value="${pro.ram}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="screenUpdate"><strong>Màn
+                                                                                    hình:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="screenUpdate"
+                                                                                       name="monitorScale"
+                                                                                       value="${pro.monitorScale}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="batteryUpdate"><strong>Pin:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="batteryUpdate"
+                                                                                       name="batteryVol"
+                                                                                       value="${pro.batteryVol}">
+                                                                            </div>
+                                                                            <div class="form-group h-50">
+                                                                                <label for="designUpdate"><strong>Thiết
+                                                                                    kế:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="designUpdate" name="design"
+                                                                                       value="${pro.design}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="warrantyUpdate"><strong>Bảo
+                                                                                hành:</strong></label>
+                                                                            <input type="text" class="form-control"
+                                                                                   id="warrantyUpdate"
+                                                                                   name="maintenance"
+                                                                                   value="${pro.maintenance}">
+                                                                        </div>
+
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Đóng
+                                                                    </button>
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary">Lưu
+                                                                    </button>
+<%--                                                                    <a data-toggle="modal" href="#myModal2${pro.id}"--%>
+<%--                                                                       class="btn btn-primary">Lưu</a>--%>
+
+                                                                </div>
+                                                                <!-- Modal Confirm -->
+                                                                <div class="modal alert-primary" tabindex="-1"
+                                                                     data-keyboard="false"
+                                                                     data-backdrop="static" id="myModal2${pro.id}">
+                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">Xác Nhận</h5>
+                                                                            </div>
+                                                                            <div class="container"></div>
+                                                                            <div class="modal-body">
+                                                                                <p>Bạn có chắc chắn muốn lưu các thay
+                                                                                    đổi không?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-dismiss="modal">Hủy
+                                                                                </button>
+                                                                                <button type="submit" id="confirmBtn"
+                                                                                        class="btn btn-primary">Xác nhận
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--end modal confirm-->
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!--end form update-->
                                         </c:forEach>
                                         </tbody>
                                     </table>
@@ -334,7 +483,7 @@
 
                                 <!-- Create New Product Form -->
                                 <div class="container">
-                                    <form id="productForm" action="${contextPath}/admin/product-add" method="post"
+                                    <form id="productForm" method="post" action="${contextPath}/admin/product-add"
                                           oninput="validateForm()">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -482,8 +631,11 @@
                 </div>
             </div>
         </div>
+
+
     </section>
 </main><!-- End #main -->
+
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
@@ -508,10 +660,10 @@
 <!-- Template Main JS File -->
 <script src="${contextPath}/assets/js/main.js"></script>
 <script>
+
     document.addEventListener("DOMContentLoaded", function () {
         var msgDiv = document.getElementById('msg');
         var msgContent = document.getElementById('msgContent');
-
         // Kiểm tra nội dung của thẻ h1
         if (msgContent.textContent.trim() !== "") {
             msgDiv.classList.add('show');
@@ -529,6 +681,9 @@
                 {width: "50%", targets: 1} // Set width of second column (index 1) to 50%
             ]
         });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        toggleFields();  // Initial check on page load
     });
 
     function validateForm() {
@@ -562,7 +717,6 @@
     function toggleFields() {
         const category = document.getElementById('productCategory').value;
         const conditionalFields = document.getElementById('conditionalFields');
-
         if (category === '1' || category === '2') {
             conditionalFields.style.display = 'block';
         } else {
@@ -580,18 +734,19 @@
     }
 
     function showProductDetails(categoryId, producID) {
-
-        // Hiển thị hoặc ẩn các trường kỹ thuật dựa trên categoryId
-        const technicalDetails = document.getElementById('technicalDetails');
-        if (categoryId === '1' || categoryId === '2') {
-            technicalDetails.style.display = 'block';
-        } else {
-            technicalDetails.style.display = 'none';
-        }
         var productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal' + producID));
         productDetailsModal.show();
     }
 
+    function editModal(categoryId, producID) {
+        var productUpdateModal = new bootstrap.Modal(document.getElementById('productUpdateModal' + producID));
+        productUpdateModal.show();
+    }
+
+    function confirmMod() {
+        var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        confirmModal.show();
+    }
 
 </script>
 
