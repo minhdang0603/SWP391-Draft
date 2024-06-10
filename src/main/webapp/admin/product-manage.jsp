@@ -161,10 +161,6 @@
                                         <c:forEach var="pro" items="${list}">
                                             <tr>
                                                 <td class="align-middle text-center">${pro.id}</td>
-                                                    <%--                                                <td class="align-middle text-center"><img--%>
-                                                    <%--                                                        style="width: 100px; height: 100px"--%>
-                                                    <%--                                                        src="${contextPath}/assets/img/product-img/${pro.image}">--%>
-                                                    <%--                                                </td>--%>
                                                 <td class="align-middle text-center"
                                                     style="width: 50%">
                                                     <a href="#"
@@ -184,10 +180,39 @@
                                                     <i
                                                             class="bi bi-pencil-square"
                                                             style="font-size: 20px; color: deepskyblue"></i></a></td>
-                                                <td class="align-middle text-center text-sm mr-2"><i
+                                                <td class="align-middle text-center text-sm mr-2"><a href="#"
+                                                                                                     onclick="deleteModal('${pro.id}')"><i
                                                         class="bi bi-trash2-fill"
-                                                        style="font-size: 20px;color: red"></i></td>
+                                                        style="font-size: 20px;color: red"></i></a></td>
                                             </tr>
+                                            <!--Confirm Delete Modal-->
+                                            <div class="modal fade alert-primary" tabindex="-1"
+                                                 data-keyboard="false"
+                                                 id="myModal${pro.id}">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Xác Nhận</h5>
+                                                        </div>
+                                                        <div class="container"></div>
+                                                        <div class="modal-body">
+                                                            <p>Bạn có chắc chắn muốn chuyển sản phẩm này sang trạng thái
+                                                                "Ngừng bán" không?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a type="button"
+                                                               class="btn btn-secondary"
+                                                               data-dismiss="modal">Hủy
+                                                            </a>
+                                                            <a href="${contextPath}/admin/product-delete?id=${pro.id}"
+                                                               type="button" id="confirmDeleteBtn"
+                                                               class="btn btn-primary">Xác nhận
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!--end confirm delete modal-->
+
                                             <!-- Product Details Modal -->
                                             <div class="modal fade" id="productDetailsModal${pro.id}" tabindex="-1"
                                                  aria-labelledby="productDetailsModalLabel"
@@ -199,10 +224,9 @@
                                                                 Tiết Sản Phẩm</h5>
                                                             <button type="button" class="btn-close" data-dismiss="modal"
                                                                     aria-label="Close"></button>
-
                                                         </div>
                                                         <div class="modal-body">
-                                                            <div class="row">
+                                                            <div class="row mb-2">
                                                                 <div class="col-md-4">
                                                                     <img id="productImage"
                                                                          src="${contextPath}/assets/img/product-img/${pro.image}"
@@ -213,6 +237,9 @@
                                                                             id="modalID">${pro.id}</span></p>
                                                                     <p><strong>Tên sản phẩm:</strong> <span
                                                                             id="modalProductName">${pro.productName}</span>
+                                                                    </p>
+                                                                    <p><strong>Trạng thái:</strong> <span
+                                                                            id="modalProductStatus">${pro.status}</span>
                                                                     </p>
                                                                     <p><strong>Đơn giá:</strong> <span
                                                                             id="modalUnitPrice">${pro.unitPrice}</span>
@@ -267,7 +294,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div><!--end detail modal-->
 
                                             <!-- Product Update Modal -->
                                             <div class="modal" id="productUpdateModal${pro.id}" tabindex="-1"
@@ -282,7 +309,6 @@
                                                                 Sửa Chi Tiết Sản Phẩm</h5>
                                                             <button type="button" class="btn-close" data-dismiss="modal"
                                                                     aria-label="Close"></button>
-
                                                         </div>
                                                         <div class="modal-body">
                                                             <form id="updateProductForm"
@@ -306,6 +332,18 @@
                                                                                    id="productNameUpdate"
                                                                                    name="productName"
                                                                                    value="${pro.productName}">
+                                                                        </div>
+                                                                        <div class="form-group mt-1">
+                                                                            <h6><strong>Trạng thái:</strong></h6>
+                                                                            <label for="activeProduct" class="mr-5">Active</label>
+                                                                            <input type="radio" name="productStatus"
+                                                                                   id="activeProduct"
+                                                                                   value="Active" ${(pro.status=="Active"?"checked":"")} >
+                                                                            <label for="inactiveProduct">Inactive</label>
+                                                                            <input type="radio" name="productStatus"
+                                                                                   id="inactiveProduct"
+                                                                                   value="Inactive" ${(pro.status=="Inactive"?"checked":"")} >
+
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="unitPriceUpdate"><strong>Đơn
@@ -435,37 +473,11 @@
                                                                     <button type="submit"
                                                                             class="btn btn-primary">Lưu
                                                                     </button>
-<%--                                                                    <a data-toggle="modal" href="#myModal2${pro.id}"--%>
-<%--                                                                       class="btn btn-primary">Lưu</a>--%>
+                                                                        <%--                                                                    <a data-toggle="modal" href="#myModal2${pro.id}"--%>
+                                                                        <%--                                                                       class="btn btn-primary">Lưu</a>--%>
 
-                                                                </div>
-                                                                <!-- Modal Confirm -->
-                                                                <div class="modal alert-primary" tabindex="-1"
-                                                                     data-keyboard="false"
-                                                                     data-backdrop="static" id="myModal2${pro.id}">
-                                                                    <div class="modal-dialog modal-dialog-centered">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title">Xác Nhận</h5>
-                                                                            </div>
-                                                                            <div class="container"></div>
-                                                                            <div class="modal-body">
-                                                                                <p>Bạn có chắc chắn muốn lưu các thay
-                                                                                    đổi không?</p>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button"
-                                                                                        class="btn btn-secondary"
-                                                                                        data-dismiss="modal">Hủy
-                                                                                </button>
-                                                                                <button type="submit" id="confirmBtn"
-                                                                                        class="btn btn-primary">Xác nhận
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!--end modal confirm-->
+                                                                </div><!--end update modal-->
+
                                                             </form>
                                                         </div>
                                                     </div>
@@ -484,7 +496,7 @@
                                 <!-- Create New Product Form -->
                                 <div class="container">
                                     <form id="productForm" method="post" action="${contextPath}/admin/product-add"
-                                          oninput="validateForm()">
+                                          oninput="validateForm()" enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row mb-3">
@@ -494,6 +506,23 @@
                                                         <input name="productName" type="text" class="form-control"
                                                                id="productName" required>
                                                         <div id="productNameError" class="error-message"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-form-label col-md-4">Trạng thái: </label>
+                                                    <div class="col-md-4">
+                                                        <label for="activeProductStatus"
+                                                               class="col-form-label">Active</label>
+                                                        <input type="radio" name="productStatus"
+                                                               id="activeProductStatus"
+                                                               value="Active" checked>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="inactiveProductStatus" class="col-form-label">Inactive</label>
+                                                        <input type="radio" name="productStatus"
+                                                               id="inactiveProductStatus"
+                                                               value="Inactive">
                                                     </div>
                                                 </div>
 
@@ -613,6 +642,14 @@
                                                     <div class="col-md-8">
         <textarea name="description" class="form-control large-textarea"
                   id="description"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label for="image" class="col-md-4 col-form-label">Ảnh minh
+                                                        họa:</label>
+                                                    <div class="col-md-8">
+                                                        <input type="file" class="form-control-file"
+                                                               id="image" name="image">
                                                     </div>
                                                 </div>
                                             </div>
@@ -746,6 +783,11 @@
     function confirmMod() {
         var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
         confirmModal.show();
+    }
+
+    function deleteModal(id) {
+        var deleteModal = new bootstrap.Modal(document.getElementById('myModal' + id));
+        deleteModal.show();
     }
 
 </script>

@@ -57,6 +57,8 @@ public class Product {
     @Column(name = "description")
     private String description;
 
+
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "category_id")
     private Category category;
@@ -67,6 +69,9 @@ public class Product {
 
     @Column(name = "image")
     private String image;
+
+    @Column(name = "status")
+    private String status;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @Fetch(FetchMode.SELECT)

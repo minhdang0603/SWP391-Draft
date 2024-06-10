@@ -213,6 +213,7 @@ CREATE TABLE `product` (
   `category_id` bigint DEFAULT NULL,
   `brand_id` bigint DEFAULT NULL,
   `image` varchar(100) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKCategory_Product` (`category_id`),
   KEY `FKBrand_Product` (`brand_id`),
