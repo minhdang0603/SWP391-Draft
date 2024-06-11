@@ -697,6 +697,21 @@
 <!-- Template Main JS File -->
 <script src="${contextPath}/assets/js/main.js"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof(Storage) !== "undefined") {
+            if (sessionStorage.getItem('reloaded') === 'true') {
+                sessionStorage.removeItem('reloaded');
+                document.getElementById('productForm').reset(); //  reset form
+                document.getElementById('updateProductForm').reset(); // reset form
+            } else {
+                sessionStorage.setItem('reloaded', 'true');
+            }
+        } else {
+            console.log("Sorry, your browser does not support Web Storage...");
+        }
+    });
+
+
 
     document.addEventListener("DOMContentLoaded", function () {
         var msgDiv = document.getElementById('msg');
