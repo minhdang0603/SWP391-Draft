@@ -312,6 +312,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <form id="updateProductForm"
+                                                                  onsubmit="return validateFileType()"
                                                                   action="${contextPath}/admin/product-update"
                                                                   method="post" enctype="multipart/form-data">
                                                                 <div class="row">
@@ -377,10 +378,10 @@
                                                                                       name="description">${pro.description}</textarea>
                                                                         </div>
                                                                         <div class="form-group mt-1">
-                                                                            <label for="imageUpdate"><strong>Ảnh sản
+                                                                            <label for="fileUpload"><strong>Ảnh sản
                                                                                 phẩm:</strong></label>
                                                                             <input type="file" class="form-control-file"
-                                                                                   id="imageUpdate" name="image">
+                                                                                   id="fileUpload" accept=".jpg, .jpeg, .png, .img" name="image">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
@@ -496,7 +497,7 @@
                                 <!-- Create New Product Form -->
                                 <div class="container">
                                     <form id="productForm" method="post" action="${contextPath}/admin/product-add"
-                                          oninput="validateForm()" enctype="multipart/form-data">
+                                          onsubmit="return validateFileType()" oninput="validateForm()" enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row mb-3">
@@ -697,19 +698,27 @@
 <!-- Template Main JS File -->
 <script src="${contextPath}/assets/js/main.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        if (typeof(Storage) !== "undefined") {
-            if (sessionStorage.getItem('reloaded') === 'true') {
-                sessionStorage.removeItem('reloaded');
-                document.getElementById('productForm').reset(); //  reset form
-                document.getElementById('updateProductForm').reset(); // reset form
-            } else {
-                sessionStorage.setItem('reloaded', 'true');
-            }
-        } else {
-            console.log("Sorry, your browser does not support Web Storage...");
+    function validateFileType() {
+        const fileInput = document.getElementById('fileUpload');
+        const fildAdd = document.getElementById('image');
+        const filePath = fileInput.value;
+        const addFile = fileAdd.value;
+        const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.img)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Vui lòng upload file có định dạng .jpg, .jpeg, .png, hoặc .img');
+            fileInput.value = '';
+            return false;
         }
-    });
+
+        // if (!allowedExtensions.exec(addFile)) {
+        //     alert('Vui lòng upload file có định dạng .jpg, .jpeg, .png, hoặc .img');
+        //     fileInput.value = '';
+        //     return false;
+        // }
+
+        return true;
+    }
 
 
 
