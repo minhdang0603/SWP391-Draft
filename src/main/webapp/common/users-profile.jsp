@@ -321,16 +321,19 @@
         <a class="visually-hidden" id="updateSuccess">
                 ${updateSuccess}
         </a>
+        <c:remove var="updateSuccess" scope="session"/>
     </c:if>
     <c:if test="${passwordChangeSuccess != null}">
         <a class="visually-hidden" id="passwordChangeSuccess">
                 ${passwordChangeSuccess}
         </a>
+        <c:remove var="passwordChangeSuccess" scope="session"/>
     </c:if>
     <c:if test="${passwordChangeFailure != null}">
         <a class="visually-hidden" id="passwordChangeFailure">
                 ${passwordChangeFailure}
         </a>
+        <c:remove var="passwordChangeFailure" scope="session"/>
     </c:if>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>

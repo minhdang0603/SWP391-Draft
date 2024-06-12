@@ -74,4 +74,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findProduct(String name) {
         return productDAO.findProduct(name);
     }
+
+    @Override
+    public List<Product> getProductByBrandIDs(List<Integer> brandIDs){
+        return productDAO.getProductByBrandIDs(brandIDs);
+    }
 }

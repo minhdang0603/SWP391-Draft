@@ -31,31 +31,14 @@ public class ProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         UserDTO account = (UserDTO) session.getAttribute("account");
+
         if (account == null) {
             resp.sendRedirect(req.getContextPath() + "/home");
             return;
         }
-        String passwordChangeSuccess = (String) session.getAttribute("passwordChangeSuccess");
-        String passwordChangeFailure = (String) session.getAttribute("passwordChangeFailure");
-        String updateSuccess = (String) session.getAttribute("updateSuccess");
 
-        if (passwordChangeSuccess != null) {
-            req.setAttribute("passwordChangeSuccess", passwordChangeSuccess);
-            session.removeAttribute("passwordChangeSuccess");
-        }
-
-        if (passwordChangeFailure != null) {
-            req.setAttribute("passwordChangeFailure", passwordChangeFailure);
-            session.removeAttribute("passwordChangeFailure");
-        }
-
-        if (updateSuccess != null) {
-            req.setAttribute("updateSuccess", updateSuccess);
-            session.removeAttribute("passwordChangeFailure");
-        }
         req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

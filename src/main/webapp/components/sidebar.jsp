@@ -26,7 +26,7 @@
 
         <!-- Profile Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/common/users-profile.jsp">
+            <a class="nav-link " href="${contextPath}/profile">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
             </a>

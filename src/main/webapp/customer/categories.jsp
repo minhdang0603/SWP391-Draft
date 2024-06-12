@@ -87,25 +87,32 @@
             <div id="aside" class="col-md-3">
                 <!-- aside Widget -->
                 <div class="aside">
-                    <h3 class="aside-title">Categories</h3>
-                    <div class="checkbox-filter">
+                    <h3 class="aside-title">Danh mục</h3>
+                    <form class="checkbox-filter category-form" action="${contextPath}/store" method="GET">
 
                         <c:forEach var="category" items="${categories}">
                             <div class="input-radio">
-                                <input type="checkbox" id="category-${category.id}">
-                                <label for="category-${category.id}">
+                                <c:choose>
+                                    <c:when test="${thisCate.id == category.id}">
+                                        <input type="radio" name="id" checked id="category-${category.id}" value="${category.id}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="radio" name="id" id="category-${category.id}" value="${category.id}" onclick="submitForm()">
+                                    </c:otherwise>
+                                </c:choose>
+                                <label for="category-${category.id}" class="d-flex align-items-center">
                                     <span></span>
                                         ${category.categoryName}
                                 </label>
                             </div>
                         </c:forEach>
-                    </div>
+                    </form>
                 </div>
                 <!-- /aside Widget -->
 
                 <!-- aside Widget -->
                 <div class="aside">
-                    <h3 class="aside-title">Price</h3>
+                    <h3 class="aside-title">Giá</h3>
                     <div class="price-filter">
                         <div id="price-slider"></div>
                         <div class="input-number price-min">
@@ -125,11 +132,11 @@
 
                 <!-- aside Widget -->
                 <div class="aside">
-                    <h3 class="aside-title">Brand</h3>
+                    <h3 class="aside-title">Thương hiệu</h3>
                     <div class="checkbox-filter">
                         <c:forEach var="brand" items="${brands}">
                             <div class="input-checkbox">
-                                <input type="checkbox" id="brand-${brand.id}">
+                                <input type="checkbox" id="brand-${brand.id}" class="brand-checkbox">
                                 <label for="brand-${brand.id}">
                                     <span></span>
                                         ${brand.brandName}
@@ -251,118 +258,7 @@
 <script src="${contextPath}/assets/home/js/main.js"></script>
 <script src="${contextPath}/assets/js/main.js"></script>
 <script src="${contextPath}/assets/js/back-to-top-button.js"></script>
-<script>
-    // Hàm định dạng số tiền VND
-    function formatVND(n) {
-        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
-    }
-
-    // Iterate over each product price element and format it to VND
-    function formatAllPrices() {
-        document.querySelectorAll('.product-price').forEach(function (element) {
-            var price = parseFloat(element.textContent.replace(/[^\d.-]/g, '')); // Extract the numerical value from the price element
-            element.textContent = formatVND(price); // Format the price and set it back to the element
-        });
-    }
-
-    function updateCheckCart(cartCount) {
-        let checkCart = document.querySelector('.check-cart');
-        if (!checkCart) {
-            // Create the check-cart element if it does not exist
-            checkCart = document.createElement('div');
-            checkCart.className = 'qty check-cart';
-            // Find the container where it should be appended, e.g., a parent div
-            let parentElement = document.querySelector('.cart-container'); // Adjust this selector as needed
-            parentElement.appendChild(checkCart);
-        }
-        checkCart.textContent = cartCount;
-    }
-
-    function showToast(message) {
-        const toastContainer = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.textContent = message;
-
-        toastContainer.appendChild(toast);
-
-        // Show the toast
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 100); // Delay to trigger the CSS transition
-
-        // Hide the toast after 3 seconds
-        setTimeout(() => {
-            toast.classList.remove('show');
-            toast.classList.add('hide');
-
-            // Remove the toast from DOM after the hide animation
-            setTimeout(() => {
-                toastContainer.removeChild(toast);
-            }, 500);
-        }, 3000);
-    }
-
-    $(document).ready(function () {
-        formatAllPrices();
-        // Event delegation for "Add to Cart" button
-        $('.product-list').on('click', '.add-to-cart-btn', function (event) {
-            event.preventDefault();
-            var $button = $(this);
-            var productId = $button.data('product-id');
-            var servletUrl = $button.data('servlet-url');
-            var action = $button.data('action');
-
-            $.ajax({
-                type: "POST",
-                url: servletUrl,
-                data: {id: productId, action: action},
-                success: function (data) {
-                    showToast(data.successMsg);
-                    updateCheckCart(data.checkCart);
-                },
-                error: function () {
-                    // Handle error
-                    alert("An error occurred while processing the request.");
-                }
-            });
-        });
-
-        $('#load-more-btn').click(function (event) {
-            event.preventDefault();
-
-            var ammout = document.getElementsByClassName('product').length;
-            var cateId = $(this).data('cate-id');
-            var cateName = $(this).data('cate-name');
-
-            // Add your AJAX request or other logic here to load more products
-            $.ajax({
-                url: 'load', // Replace with your URL
-                method: 'GET',
-                data: {
-                    existedProduct: ammout,
-                    cateId: cateId
-                },
-                success: function (data) {
-                    var productList = $('.product-list');
-
-                    if (data.trim() === '') {
-                        // Hide the Load More button and notify the user
-                        $('#load-more-btn').hide();
-                        showToast('LaptopTG đã hết sản phẩm ' + cateName);
-                    } else {
-                        productList.append(data); // Append new products to the product list
-                        formatAllPrices();
-                    }
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
-    });
-
-</script>
+<script src="${contextPath}/assets/js/category.js"></script>
 
 </body>
 </html>

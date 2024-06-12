@@ -35,4 +35,6 @@ public interface ProductDAO {
     List<Product> getNextProduct(int amount, int numberOfProduct);
 
     List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID);
+
+    List<Product> getProductByBrandIDs(List<Integer> brandIDs);
 }

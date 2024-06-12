@@ -35,4 +35,6 @@ public interface ProductService {
     List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID);
 
     List<Product> findProduct(String name);
+
+    List<Product> getProductByBrandIDs(List<Integer> brandIDs);
 }

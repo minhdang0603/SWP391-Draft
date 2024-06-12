@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,6 +71,20 @@ public class StoreController extends HttpServlet {
 
         // forward to category page
         req.getRequestDispatcher("customer/categories.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String[] brands = req.getParameter("brands").split(",");
+        List<Integer> brandIDs = new ArrayList<>();
+        try {
+            for(String brandID : brands) {
+                brandIDs.add(Integer.parseInt(brandID));
+            }
+        } catch (NumberFormatException e) {
+            throw new ServletException(e);
+        }
+        List<Product> products = productService.getProductByBrandIDs(brandIDs);
     }
 
     @Override
