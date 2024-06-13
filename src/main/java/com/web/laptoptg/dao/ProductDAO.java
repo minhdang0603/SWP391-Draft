@@ -15,7 +15,9 @@ public interface ProductDAO {
     void updateProduct(Product pro);
 
     //find product by its name
-    List<Product> findProductByName(String name);
+    public boolean findProductByName(String name);
+
+    List<Product> findProduct(String name);
 
     //find product by its category
     List<Product> getProductByCategory(int cateID);
@@ -25,7 +27,12 @@ public interface ProductDAO {
 
     //find by id
     Product findProductById(int id);
-    List<Product> getTop4ByCate(int cateID);
 
-    List<Product> getNext3Product(int amount);
+    List<Product> getProductByCateOrderBySoldUnit(int cateID, int max);
+
+    List<Product> getProductByCate(int cateID, int max);
+
+    List<Product> getNextProduct(int amount, int numberOfProduct);
+
+    List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID);
 }

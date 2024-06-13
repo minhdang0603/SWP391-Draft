@@ -5,6 +5,7 @@ import com.web.laptoptg.dao.ProductDAO;
 import com.web.laptoptg.model.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -35,8 +36,10 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public List<Product> getAllProduct() {
+        entityManager.clear();
         TypedQuery<Product> query = entityManager.createQuery("from Product p join fetch p.brand join fetch p.category", Product.class);
-        return query.getResultList();
+        List<Product> productList = query.getResultList();
+        return productList;
     }
 
     @Override
@@ -54,7 +57,26 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> findProductByName(String name) {
+    public boolean findProductByName(String name) {
+        boolean found = false;
+        try {
+            TypedQuery<Product> query = entityManager.createQuery(
+                    "SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.brand WHERE lower(p.productName)  = :name",
+                    Product.class
+            );
+            query.setParameter("name", name.toLowerCase());
+            List<Product> results = query.getResultList();
+            found = !results.isEmpty();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            found = false;
+        }
+
+        return found;
+    }
+
+    @Override
+    public List<Product> findProduct(String name){
         TypedQuery<Product> query = entityManager.createQuery("from Product p join fetch p.category join fetch p.brand where p.productName like :name", Product.class);
         query.setParameter("name", "%" + name + "%");
         return query.getResultList();
@@ -90,18 +112,35 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> getTop4ByCate(int cateID) {
-        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p WHERE p.category.id = :cateID", Product.class);
-        query.setMaxResults(4);  // Corrected to fetch top 3 as specified
+    public List<Product> getProductByCateOrderBySoldUnit(int cateID, int max) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category WHERE p.category.id = :cateID order by p.soldUnit desc", Product.class);
+        query.setMaxResults(max);  // Corrected to fetch top 3 as specified
         query.setParameter("cateID", cateID);
         return query.getResultList();
     }
 
     @Override
-    public List<Product> getNext3Product(int amount) {
-        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p ORDER BY p.id", Product.class);
+    public List<Product> getProductByCate(int cateID, int max) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category WHERE p.category.id = :cateID", Product.class);
+        query.setMaxResults(max);  // Corrected to fetch top 3 as specified
+        query.setParameter("cateID", cateID);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Product> getNextProduct(int amount, int numberOfProduct) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category", Product.class);
         query.setFirstResult(amount);
-        query.setMaxResults(3);
+        query.setMaxResults(numberOfProduct);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p join fetch p.category where p.category.id = :cateID", Product.class);
+        query.setParameter("cateID", cateID);
+        query.setFirstResult(amount);
+        query.setMaxResults(numberOfProduct);
         return query.getResultList();
     }
 }

@@ -8,7 +8,12 @@ import com.web.laptoptg.service.CategoryService;
 import java.util.List;
 
 public class CategoryServiceImpl implements CategoryService {
-    private CategoryDAO categoryDAO = new CategoryDAOImpl();
+    private CategoryDAO categoryDAO;
+
+    public CategoryServiceImpl() {
+        categoryDAO = new CategoryDAOImpl();
+    }
+
     @Override
     public Category getCategoryById(int id) {
         return categoryDAO.getCategoryById(id);

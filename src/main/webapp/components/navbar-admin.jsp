@@ -39,25 +39,27 @@
                     </li>
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="${contextPath}/profile">
-                            <span>User profile</span>
+                            <span>Thông tin tài khoản</span>
                         </a>
                     </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center"
-                           href="${contextPath}/admin/home">
-                            <span>Admin Dashboard</span>
-                        </a>
-                    </li>
+                    <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center"
+                               href="${contextPath}/admin/home">
+                                <span>Trang quản lý</span>
+                            </a>
+                        </li>
+                    </c:if>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
 
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="${contextPath}/logout">
-                            <span>Sign Out</span>
+                            <span>Đăng xuất</span>
                         </a>
                     </li>
 

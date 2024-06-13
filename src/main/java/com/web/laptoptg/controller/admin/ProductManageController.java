@@ -36,11 +36,17 @@ public class ProductManageController extends HttpServlet {
         List<Product> list = productService.getAllProducts();
         List<Category> listCate = categoryService.getAllCategory();
         List<Brand> listBrand = brandService.getAllBrands();
+
         req.setAttribute("listCate", listCate);
         req.setAttribute("list", list);
         req.setAttribute("listBrand", listBrand);
+
         req.getRequestDispatcher("product-manage.jsp").forward(req, resp);
 
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
+    }
 }

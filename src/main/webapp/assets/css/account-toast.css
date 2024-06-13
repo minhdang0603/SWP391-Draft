@@ -104,3 +104,29 @@
     opacity: 0;
     transform: translateY(-20px);
 }
+
+/* Back to Top Button Styles */
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    background-color: #D10024; /* Red background */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+#back-to-top:hover {
+    background-color: #c0392b; /* Darker red on hover */
+    color: white;
+}
+
+.fa-chevron-up {
+    font-size: 20px;
+}

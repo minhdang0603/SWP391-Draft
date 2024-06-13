@@ -3,7 +3,6 @@ package com.web.laptoptg.dao.impl;
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dao.CartDAO;
 import com.web.laptoptg.model.Cart;
-import com.web.laptoptg.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;

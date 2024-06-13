@@ -30,7 +30,7 @@
                     <div class="header-search">
                         <form>
                             <input class="input" placeholder="Search here" >
-                            <button class="search-btn">Search</button>
+                            <button class="search-btn">Tìm kiếm</button>
                         </form>
                     </div>
                 </div>
@@ -41,9 +41,9 @@
                     <div class="header-ctn">
                         <!-- Cart -->
                         <div class="cart" style="cursor: pointer">
-                            <a href="${contextPath}/cart?action=view" class="cart-container">
+                            <a href="${contextPath}/cart" class="cart-container">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Your Cart</span>
+                                <span>Giỏ hàng</span>
                                 <c:if test="${checkCart > 0}">
                                     <div class="qty check-cart">${checkCart}</div>
                                 </c:if>
@@ -65,7 +65,7 @@
                             <div class="dropdown" style="cursor: pointer">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-user-circle"></i>
-                                    My Account
+                                    Tài khoản
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -79,7 +79,7 @@
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center"
                                            href="${contextPath}/profile">
-                                            <span>User Profile</span>
+                                            <span>Thông tin tài khoản</span>
                                         </a>
                                     </li>
                                     <c:if test="${account.role == 'SALER' || account.role == 'ADMIN'}">
@@ -89,7 +89,7 @@
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center"
                                                href="${contextPath}/admin/home">
-                                                <span>Admin Dashboard</span>
+                                                <span>Trang quản lý</span>
                                             </a>
                                         </li>
                                     </c:if>
@@ -98,7 +98,7 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center" href="${contextPath}/logout">
-                                            <span class="text-center">Sign Out</span>
+                                            <span class="text-center">Đăng xuất</span>
                                         </a>
                                     </li>
                                 </ul><!-- End Profile Dropdown Items -->
@@ -106,14 +106,14 @@
                         </c:if>
                         <!-- /Login -->
 
-                        <!-- Menu Toogle -->
+                        <!-- Menu Toggle -->
                         <div class="menu-toggle">
                             <a href="#">
                                 <i class="fa fa-bars"></i>
                                 <span>Menu</span>
                             </a>
                         </div>
-                        <!-- /Menu Toogle -->
+                        <!-- /Menu Toggle -->
 
                     </div>
                 </div>
@@ -125,3 +125,4 @@
     </div>
     <!-- /MAIN HEADER -->
 </header>
+

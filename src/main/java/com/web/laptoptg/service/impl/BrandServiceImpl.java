@@ -9,7 +9,11 @@ import java.util.List;
 
 public class BrandServiceImpl implements BrandService {
 
-    private BrandDAO brandDAO = new BrandDAOImpl();
+    private BrandDAO brandDAO;
+
+    public BrandServiceImpl() {
+        brandDAO = new BrandDAOImpl();
+    }
 
     @Override
     public Brand getBrandById(int id) {

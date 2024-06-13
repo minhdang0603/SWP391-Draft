@@ -9,7 +9,11 @@ import java.util.List;
 
 public class CartDetailsServiceImpl implements CartDetailsService {
 
-    private CartDetailsDAO cartDetailsDAO = new CartDetailsDAOImpl();
+    private CartDetailsDAO cartDetailsDAO;
+
+    public CartDetailsServiceImpl() {
+        cartDetailsDAO = new CartDetailsDAOImpl();
+    }
 
     @Override
     public void saveCartDetails(CartDetails cartDetails) {

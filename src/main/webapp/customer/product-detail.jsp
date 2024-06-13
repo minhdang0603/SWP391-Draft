@@ -48,26 +48,6 @@
 
 <div id="toast-container" class="toast-container"></div>
 
-<!-- NAVIGATION -->
-<nav id="navigation">
-    <!-- container -->
-    <div class="container">
-        <!-- responsive-nav -->
-        <div id="responsive-nav">
-            <!-- NAV -->
-            <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="home">Trang Chủ</a></li>
-                <li><a href="#">Danh Mục</a></li>
-
-            </ul>
-            <!-- /NAV -->
-        </div>
-        <!-- /responsive-nav -->
-    </div>
-    <!-- /container -->
-</nav>
-<!-- /NAVIGATION -->
-
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">
     <!-- container -->
@@ -77,8 +57,8 @@
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
                     <li><a href="home">TRANG CHỦ</a></li>
-                    <li><a href="#">DANH MỤC</a></li>
-                    <li><a href="#">${proDetail.category.categoryName}</a></li>
+                    <li><a href="${contextPath}/store?id=0">DANH MỤC</a></li>
+                    <li><a href="${contextPath}/store?id=${proDetail.category.id}">${proDetail.category.categoryName}</a></li>
                     <li class="active">${proDetail.productName}</li>
                 </ul>
             </div>
@@ -121,8 +101,7 @@
                         <a class="review-link" href="#">10 Review(s) | Add your review</a>
                     </div>
                     <div>
-                        <h3 class="product-price" id="formattedMoney"></h3>
-                        <%--                        <span class="product-available">In Stock</span>--%>
+                        <h3 class="product-price" id="formattedMoney">${proDetail.unitPrice}</h3>
                     </div>
                     <p>${proDetail.description}</p>
                     <div class="add-to-cart">
@@ -419,136 +398,40 @@
             </div>
 
             <!-- product -->
-            <div class="col-md-3 col-xs-6">
-                <div class="product">
-                    <div class="product-img">
-                        <img src="${contextPath}/assets/home/img/product01.png" alt="">
-                    </div>
-                    <div class="product-body">
-                        <p class="product-category">Category</p>
-                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                        <h4 class="product-price">$980.00
-                            <del class="product-old-price">$990.00</del>
-                        </h4>
-                        <div class="product-rating">
+            <c:forEach items="${relatedProducts}" var="related">
+                <div class="col-md-3 col-xs-6">
+                    <div class="product">
+                        <div class="product-img">
+                            <img src="${contextPath}/assets/img/product-img/${related.image}" alt="">
                         </div>
-                        <div class="product-btns">
-                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span>
-                            </button>
-                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span>
-                            </button>
-                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span>
+                        <div class="product-body">
+                            <p class="product-category">${related.category.categoryName}</p>
+                            <h3 class="product-name"><a href="${contextPath}/product-detail?pid=${related.id}">${related.productName}</a></h3>
+                            <h4 class="product-price">
+                                ${related.unitPrice}
+                            </h4>
+                            <div class="product-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="add-to-cart">
+                            <button class="add-to-cart-btn"
+                                    data-servlet-url="cart"
+                                    data-product-id="${related.id}"
+                                    data-action="add">
+                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
                             </button>
                         </div>
-                    </div>
-                    <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                     </div>
                 </div>
-            </div>
-            <!-- /product -->
-
-            <!-- product -->
-            <div class="col-md-3 col-xs-6">
-                <div class="product">
-                    <div class="product-img">
-                        <img src="${contextPath}/assets/home/img/product02.png" alt="">
-                    </div>
-                    <div class="product-body">
-                        <p class="product-category">Category</p>
-                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                        <h4 class="product-price">$980.00
-                            <del class="product-old-price">$990.00</del>
-                        </h4>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-btns">
-                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span>
-                            </button>
-                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span>
-                            </button>
-                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
             <!-- /product -->
 
             <div class="clearfix visible-sm visible-xs"></div>
-
-            <!-- product -->
-            <div class="col-md-3 col-xs-6">
-                <div class="product">
-                    <div class="product-img">
-                        <img src="${contextPath}/assets/home/img/product03.png" alt="">
-                    </div>
-                    <div class="product-body">
-                        <p class="product-category">Category</p>
-                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                        <h4 class="product-price">$980.00
-                            <del class="product-old-price">$990.00</del>
-                        </h4>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
-                        </div>
-                        <div class="product-btns">
-                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span>
-                            </button>
-                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span>
-                            </button>
-                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                    </div>
-                </div>
-            </div>
-            <!-- /product -->
-
-            <!-- product -->
-            <div class="col-md-3 col-xs-6">
-                <div class="product">
-                    <div class="product-img">
-                        <img src="${contextPath}/assets/home/img/product04.png" alt="">
-                    </div>
-                    <div class="product-body">
-                        <p class="product-category">Category</p>
-                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                        <h4 class="product-price">$980.00
-                            <del class="product-old-price">$990.00</del>
-                        </h4>
-                        <div class="product-rating">
-                        </div>
-                        <div class="product-btns">
-                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span>
-                            </button>
-                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span>
-                            </button>
-                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                    </div>
-                </div>
-            </div>
-            <!-- /product -->
 
         </div>
         <!-- /row -->
@@ -573,14 +456,14 @@
 <script>
     // Hàm định dạng số tiền VND
     function formatCurrency(amount) {
-        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    // Số tiền cần hiển thị, nhận từ JSP
-    var amount = ${proDetail.unitPrice};
-
-    // Định dạng số tiền và hiển thị lên trang
-    document.getElementById('formattedMoney').innerText = formatCurrency(amount) + ' đ';
+    // Iterate over each product to format the price
+    document.querySelectorAll('.product-price').forEach(function (element) {
+        var price = parseFloat(element.textContent.replace(/[^\d.-]/g, '')); // Extract the numerical value from the price element
+        element.innerText = formatCurrency(price) + ' đ'; // Format the price and set it back to the element
+    });
 </script>
 
 </body>

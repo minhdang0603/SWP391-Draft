@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.common;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.User;
 import com.web.laptoptg.service.UserService;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/profile")
@@ -33,7 +35,24 @@ public class ProfileController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/home");
             return;
         }
+        String passwordChangeSuccess = (String) session.getAttribute("passwordChangeSuccess");
+        String passwordChangeFailure = (String) session.getAttribute("passwordChangeFailure");
+        String updateSuccess = (String) session.getAttribute("updateSuccess");
 
+        if (passwordChangeSuccess != null) {
+            req.setAttribute("passwordChangeSuccess", passwordChangeSuccess);
+            session.removeAttribute("passwordChangeSuccess");
+        }
+
+        if (passwordChangeFailure != null) {
+            req.setAttribute("passwordChangeFailure", passwordChangeFailure);
+            session.removeAttribute("passwordChangeFailure");
+        }
+
+        if (updateSuccess != null) {
+            req.setAttribute("updateSuccess", updateSuccess);
+            session.removeAttribute("passwordChangeFailure");
+        }
         req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
     }
 
@@ -42,12 +61,11 @@ public class ProfileController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String formType = req.getParameter("formType");
         HttpSession session = req.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("account");
-
+        UserDTO account = (UserDTO) session.getAttribute("account");
         if ("form1".equals(formType)) {
-            handleProfileEdit(req, resp, userDTO,session);
+            handleProfileEdit(req, resp, account, session);
         } else if ("form2".equals(formType)) {
-            handleChangePassword(req, resp, userDTO,session);
+            handleChangePassword(req, resp, account, session);
         }
     }
 
@@ -61,60 +79,39 @@ public class ProfileController extends HttpServlet {
         userDTO.setUserName(fullName);
         userDTO.setAddress(address);
         userDTO.setPhoneNumber(phone);
-        if(checkEmailExit(email)){
-            userDTO.setEmail(email);
-        }
+        userDTO.setEmail(email);
 
         userService.updateUser(userDTO);
-        session.setAttribute("updateSuccess", "Cập nhật thông tin thành công!");
+        session.setAttribute("account", userDTO);
+        session.setAttribute("updateSuccess", "success");
         resp.sendRedirect(req.getContextPath() + "/profile");
-    }
-
-    public boolean checkEmailExit(String email){
-        List<User> list = userService.findAllUsers();
-        for(User user : list){
-            if(user.getEmail().equals(email)){
-                return false;
-            }
-        }
-        return true;
     }
 
 
     private void handleChangePassword(HttpServletRequest req, HttpServletResponse resp, UserDTO userDTO, HttpSession session) throws ServletException, IOException {
-        String password = req.getParameter("password");
-        String newPass = req.getParameter("newpassword");
-        String reNewPass = req.getParameter("renewpassword");
-
-        UserDTO account = (UserDTO) session.getAttribute("account");
-        // Lấy user từ db
-        User raw = userService.findUserByEmail(account.getEmail());
+        String password = req.getParameter("currentPassword");
+        String newPass = req.getParameter("newPassword");
 
         try {
-            if (PasswordUtils.verify(password, raw.getPassword())) {
+            if (PasswordUtils.verify(password, userDTO.getPassword())) {
                 String hashPass = PasswordUtils.hash(newPass);
-
                 userDTO.setPassword(hashPass);
-                userService.changePassword(userDTO, hashPass);
                 userService.updateUser(userDTO);
-
-                System.out.println(userDTO);
-                System.out.println(raw);
-
                 session.setAttribute("account", userDTO);
-                session.setAttribute("resetSuccess", "Đã thay đổi mật khẩu thành công!!!");
-                session.removeAttribute("resetFail"); // Xóa thông báo lỗi nếu có
+                session.setAttribute("passwordChangeSuccess", "success");
                 resp.sendRedirect(req.getContextPath() + "/profile");
-            } else {
-                session.setAttribute("resetFail", "Thay đổi mật khẩu không thành công!");
-                session.removeAttribute("resetSuccess"); // Xóa thông báo thành công nếu có
-                resp.sendRedirect(req.getContextPath() + "/profile");
+                return;
             }
+
+            session.setAttribute("passwordChangeFailure", "success");
+            resp.sendRedirect(req.getContextPath() + "/profile");
         } catch (Exception e) {
             System.err.println("Error during password change: " + e.getMessage());
-            session.setAttribute("resetFail", "Thay đổi mật khẩu không thành công!");
-            session.removeAttribute("resetSuccess"); // Xóa thông báo thành công nếu có
-            resp.sendRedirect(req.getContextPath() + "/profile");
         }
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

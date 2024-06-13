@@ -39,6 +39,9 @@
     <!-- Template Main CSS File -->
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
 
+    <!--Toastr-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <!-- =======================================================
     * Template Name: NiceAdmin
     * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -57,17 +60,17 @@
 <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">
     <jsp:include page="../components/sidebar.jsp"/>
 </c:if>
-<%--<c:choose>--%>
-<%--<c:when test="${account.role == 'ADMIN' || account.role == 'SALER'}">--%>
-<%--<main id="main" class="main">--%>
-<%--    </c:when>--%>
-<%--    <c:otherwise>--%>
-<%--    <main id="main" class="main" style="margin-left: 0px">--%>
-<%--        </c:otherwise>--%>
-<%--        </c:choose>--%>
+<c:choose>
+<c:when test="${account.role == 'ADMIN' || account.role == 'SALER'}">
 <main id="main" class="main">
+    </c:when>
+    <c:otherwise>
+    <main id="main" class="main" style="margin-left: 0px">
+        </c:otherwise>
+        </c:choose>
+
         <div class="pagetitle text-center">
-            <h1>User Profile</h1>
+            <h1>Thông tin tài khoản</h1>
         </div><!-- End Page Title -->
 
         <section class="section profile">
@@ -82,27 +85,27 @@
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab"
                                             data-bs-target="#profile-overview">
-                                        Overview
+                                        Tổng quan
                                     </button>
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit
-                                        Profile
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">
+                                        Thay đổi thông tin
                                     </button>
                                 </li>
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                             data-bs-target="#profile-change-password">
-                                        Change Password
+                                        Thay đổi mật khẩu
                                     </button>
                                 </li>
 
                                 <c:if test="${account.role == 'MEMBER'}">
                                     <li class="nav-item">
                                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-orders">
-                                            Orders
+                                            Đơn hàng
                                         </button>
                                     </li>
                                 </c:if>
@@ -111,28 +114,22 @@
                             <div class="tab-content pt-2">
 
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <h5 class="card-title">Profile Details</h5>
+                                    <h5 class="card-title">Thông tin chi tiết</h5>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label ">User Name</div>
+                                        <div class="col-lg-3 col-md-4 label ">Tên người dùng</div>
                                         <div class="col-lg-9 col-md-8">${account.userName}</div>
-                                        <c:if test="${not empty messName && messName eq 'Full Name cannot contain numbers.'}">
-                                            <small id="fullNameHelp" class="form-text text-danger">${messName}</small>
-                                        </c:if>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Address</div>
+                                        <div class="col-lg-3 col-md-4 label">Địa chỉ</div>
                                         <div class="col-lg-9 col-md-8">${account.address}</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Phone</div>
+                                        <div class="col-lg-3 col-md-4 label">Số điện thoại</div>
                                         <div class="col-lg-9 col-md-8">${account.phoneNumber}</div>
                                     </div>
-                                    <c:if test="${not empty messPhone && messPhone eq 'Phone number must be 9 or 10 digits.'}">
-                                        <small id="phoneHelp" class="form-text text-danger">${messPhone}</small>
-                                    </c:if>
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Email</div>
                                         <div class="col-lg-9 col-md-8">${account.email}</div>
@@ -146,8 +143,8 @@
                                     <form action="${contextPath}/profile" method="post">
                                         <input type="hidden" name="formType" value="form1">
                                         <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">User
-                                                Name</label>
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Tên người
+                                                dùng</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="fullName" type="text" class="form-control" id="fullName"
                                                        value="${account.userName}">
@@ -157,8 +154,8 @@
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Address"
-                                                   class="col-md-4 col-lg-3 col-form-label">Address</label>
+                                            <label for="Address" class="col-md-4 col-lg-3 col-form-label">Địa
+                                                chỉ</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="address" type="text" class="form-control" id="Address"
                                                        value="${account.address}">
@@ -166,7 +163,8 @@
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Số điện
+                                                thoại</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="phone" type="text" class="form-control" id="Phone"
                                                        value="${account.phoneNumber}">
@@ -179,14 +177,13 @@
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="email" type="email" class="form-control" id="Email"
-                                                       value="${account.email}">
+                                                       value="${account.email}" readonly>
                                             </div>
                                         </div>
 
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-primary" id="saveChangesBtn" disabled>
-                                                Save
-                                                Changes
+                                                Lưu thay đổi
                                             </button>
                                         </div>
                                     </form><!-- End Profile Edit Form -->
@@ -194,66 +191,49 @@
                                 </div>
                                 <!-- Change Password Form -->
                                 <div class="tab-pane fade profile-change-password pt-3" id="profile-change-password">
-                                    <form id="changePasswordForm" action="${contextPath}/profile" method="post">
+                                    <form action="${contextPath}/profile" method="post">
                                         <input type="hidden" name="formType" value="form2">
 
-                                        <!-- Success and Failure Messages -->
-                                        <c:if test="${not empty sessionScope.resetSuccess}">
-                                            <div class="alert alert-success" role="alert">
-                                                    ${sessionScope.resetSuccess}
-                                            </div>
-                                        </c:if>
-                                        <c:if test="${not empty sessionScope.resetFail}">
-                                            <div class="alert alert-danger" role="alert">
-                                                    ${sessionScope.resetFail}
-                                            </div>
-                                        </c:if>
-
                                         <div class="row mb-3">
-                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
-                                                Password</label>
+                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Mật
+                                                khẩu hiện tại</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control"
+                                                <input name="currentPassword" type="password" class="form-control"
                                                        id="currentPassword">
+                                                <small id="currentPasswordHelp" class="form-text text-danger"></small>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
-                                                Password</label>
+                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu
+                                                mới</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="newpassword" type="password" class="form-control"
+                                                <input name="newPassword" type="password" class="form-control"
                                                        id="newPassword">
-                                                <small id="newPasswordHelp" class="form-text text-danger"
-                                                       style="display: none;">New password cannot be the same as the
-                                                    current
-                                                    password.</small>
-                                                <small id="newPasswordValidation" class="form-text text-danger"
-                                                       style="display: none;">Password must be at least 8 characters
-                                                    long
-                                                    and contain at least one uppercase letter and one number.</small>
+                                                <small id="newPasswordHelp" class="form-text text-danger"></small>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter
-                                                New
-                                                Password</label>
+                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Nhập lại
+                                                mật khẩu mới</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control"
-                                                       id="renewPassword">
-                                                <small id="renewPasswordHelp" class="form-text text-danger"
-                                                       style="display: none;">Passwords do not match.</small>
+                                                <input type="password" class="form-control" id="renewPassword">
+                                                <small id="renewPasswordHelp" class="form-text text-danger"></small>
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Change Password</button>
+                                            <button type="submit" class="btn btn-primary" id="changePassbtn" disabled>
+                                                Lưu mật khẩu mới
+                                            </button>
                                         </div>
                                     </form>
-
-                                    <!-- End change password Form -->
                                 </div>
+
+
+                                <!-- End change password Form -->
+
 
                                 <div class="tab-pane fade pt-3 recent-sales overflow-auto" id="profile-orders">
                                     <!-- Orders Table -->
@@ -296,8 +276,7 @@
                                                 <th scope="row"><a href="#">#2147</a></th>
                                                 <td>Bridie Kessler</td>
                                                 <td><a href="#" class="text-primary">Blanditiis dolor omnis
-                                                    similique</a>
-                                                </td>
+                                                    similique</a></td>
                                                 <td>$47</td>
                                                 <td><span class="badge bg-warning">Pending</span></td>
                                             </tr>
@@ -335,10 +314,24 @@
                 </div>
             </div>
         </section>
-
     </main><!-- End #main -->
 
 
+    <c:if test="${updateSuccess != null}">
+        <a class="visually-hidden" id="updateSuccess">
+                ${updateSuccess}
+        </a>
+    </c:if>
+    <c:if test="${passwordChangeSuccess != null}">
+        <a class="visually-hidden" id="passwordChangeSuccess">
+                ${passwordChangeSuccess}
+        </a>
+    </c:if>
+    <c:if test="${passwordChangeFailure != null}">
+        <a class="visually-hidden" id="passwordChangeFailure">
+                ${passwordChangeFailure}
+        </a>
+    </c:if>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
@@ -357,6 +350,52 @@
 
     <script src="${contextPath}/assets/js/validation-profile.js"></script>
     <script src="${contextPath}/assets/js/validation-change-password.js"></script>
+
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const updateSuccess = document.getElementById('updateSuccess');
+                const passwordChangeSuccess = document.getElementById('passwordChangeSuccess');
+                const passwordChangeFailure = document.getElementById('passwordChangeFailure');
+
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "3000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+
+                if (updateSuccess) {
+                    toastr.success('Đã cập nhật thông tin thành công!', 'Thành công');
+                    updateSuccess.remove();
+                }
+
+                if (passwordChangeSuccess) {
+                    toastr.success('Đã thay đổi mật khẩu thành công!', 'Thành công');
+                    passwordChangeSuccess.remove();
+                }
+
+                if (passwordChangeFailure) {
+                    toastr.error('Mật khẩu cũ không đúng!', 'Lỗi');
+                    passwordChangeFailure.remove();
+                }
+            });
+        </script>
+
+
 </body>
 
 </html>
