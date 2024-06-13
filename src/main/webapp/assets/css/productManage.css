@@ -1,0 +1,36 @@
+.readonly {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+.large-textarea {
+    min-height: 200px;
+    padding: .75rem;
+}
+
+#myTable th, td {
+    text-align: center;
+    align-content: center;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.875em;
+}
+
+
+.notification {
+    background-color: rgba(76, 175, 80, 0.8); /* Màu nền với độ trong suốt */
+    color: white;
+    padding: 16px;
+    position: fixed;
+    top: 50px; /* Top sẽ giữ nguyên */
+    right: -300px; /* Ban đầu ẩn ngoài màn hình */
+    border-radius: 5px;
+    z-index: 1;
+    transition: right 0.5s ease-in-out; /* Hiệu ứng chuyển động */
+}
+
+.notification.show {
+    right: 20px; /* Hiển thị ở phía phải của màn hình */
+}
