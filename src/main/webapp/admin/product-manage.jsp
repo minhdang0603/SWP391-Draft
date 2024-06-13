@@ -42,45 +42,8 @@
 
     <!-- Template Main CSS File -->
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/productManage.css" rel="stylesheet">
 
-    <style>
-        .readonly {
-            background-color: #e9ecef;
-            opacity: 1;
-        }
-
-        .large-textarea {
-            min-height: 200px;
-            padding: .75rem;
-        }
-
-        #myTable th, td {
-            text-align: center;
-            align-content: center;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 0.875em;
-        }
-
-
-        .notification {
-            background-color: rgba(76, 175, 80, 0.8); /* Màu nền với độ trong suốt */
-            color: white;
-            padding: 16px;
-            position: fixed;
-            top: 50px; /* Top sẽ giữ nguyên */
-            right: -300px; /* Ban đầu ẩn ngoài màn hình */
-            border-radius: 5px;
-            z-index: 1;
-            transition: right 0.5s ease-in-out; /* Hiệu ứng chuyển động */
-        }
-
-        .notification.show {
-            right: 20px; /* Hiển thị ở phía phải của màn hình */
-        }
-    </style>
 </head>
 
 <body>
@@ -100,6 +63,7 @@
     </div>
     <div id="msg" class="notification">
         <h6 id="msgContent">${msg}</h6>
+        <c:remove var="msg" scope="session"/>
     </div>
     <!-- End Page Title -->
 
@@ -161,10 +125,6 @@
                                         <c:forEach var="pro" items="${list}">
                                             <tr>
                                                 <td class="align-middle text-center">${pro.id}</td>
-                                                    <%--                                                <td class="align-middle text-center"><img--%>
-                                                    <%--                                                        style="width: 100px; height: 100px"--%>
-                                                    <%--                                                        src="${contextPath}/assets/img/product-img/${pro.image}">--%>
-                                                    <%--                                                </td>--%>
                                                 <td class="align-middle text-center"
                                                     style="width: 50%">
                                                     <a href="#"
@@ -184,10 +144,39 @@
                                                     <i
                                                             class="bi bi-pencil-square"
                                                             style="font-size: 20px; color: deepskyblue"></i></a></td>
-                                                <td class="align-middle text-center text-sm mr-2"><i
+                                                <td class="align-middle text-center text-sm mr-2"><a href="#"
+                                                                                                     onclick="deleteModal('${pro.id}')"><i
                                                         class="bi bi-trash2-fill"
-                                                        style="font-size: 20px;color: red"></i></td>
+                                                        style="font-size: 20px;color: red"></i></a></td>
                                             </tr>
+                                            <!--Confirm Delete Modal-->
+                                            <div class="modal fade alert-primary" tabindex="-1"
+                                                 data-keyboard="false"
+                                                 id="myModal${pro.id}">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Xác Nhận</h5>
+                                                        </div>
+                                                        <div class="container"></div>
+                                                        <div class="modal-body">
+                                                            <p>Bạn có chắc chắn muốn chuyển sản phẩm này sang trạng thái
+                                                                "Ngừng bán" không?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a type="button"
+                                                               class="btn btn-secondary"
+                                                               data-dismiss="modal">Hủy
+                                                            </a>
+                                                            <a href="${contextPath}/admin/product-delete?id=${pro.id}"
+                                                               type="button" id="confirmDeleteBtn"
+                                                               class="btn btn-primary">Xác nhận
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!--end confirm delete modal-->
+
                                             <!-- Product Details Modal -->
                                             <div class="modal fade" id="productDetailsModal${pro.id}" tabindex="-1"
                                                  aria-labelledby="productDetailsModalLabel"
@@ -199,10 +188,9 @@
                                                                 Tiết Sản Phẩm</h5>
                                                             <button type="button" class="btn-close" data-dismiss="modal"
                                                                     aria-label="Close"></button>
-
                                                         </div>
                                                         <div class="modal-body">
-                                                            <div class="row">
+                                                            <div class="row mb-2">
                                                                 <div class="col-md-4">
                                                                     <img id="productImage"
                                                                          src="${contextPath}/assets/img/product-img/${pro.image}"
@@ -213,6 +201,9 @@
                                                                             id="modalID">${pro.id}</span></p>
                                                                     <p><strong>Tên sản phẩm:</strong> <span
                                                                             id="modalProductName">${pro.productName}</span>
+                                                                    </p>
+                                                                    <p><strong>Trạng thái:</strong> <span
+                                                                            id="modalProductStatus">${pro.status}</span>
                                                                     </p>
                                                                     <p><strong>Đơn giá:</strong> <span
                                                                             id="modalUnitPrice">${pro.unitPrice}</span>
@@ -267,7 +258,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div><!--end detail modal-->
 
                                             <!-- Product Update Modal -->
                                             <div class="modal" id="productUpdateModal${pro.id}" tabindex="-1"
@@ -282,10 +273,10 @@
                                                                 Sửa Chi Tiết Sản Phẩm</h5>
                                                             <button type="button" class="btn-close" data-dismiss="modal"
                                                                     aria-label="Close"></button>
-
                                                         </div>
                                                         <div class="modal-body">
                                                             <form id="updateProductForm"
+                                                                  onsubmit="return validateFileType()"
                                                                   action="${contextPath}/admin/product-update"
                                                                   method="post" enctype="multipart/form-data">
                                                                 <div class="row">
@@ -306,6 +297,17 @@
                                                                                    id="productNameUpdate"
                                                                                    name="productName"
                                                                                    value="${pro.productName}">
+                                                                        </div>
+                                                                        <div class="form-group mt-1">
+                                                                            <h6><strong>Trạng thái:</strong></h6>
+                                                                            <input type="radio" name="productStatus"
+                                                                                   id="activeProduct"
+                                                                                   value="active" ${(pro.status=="active"?"checked":"")} >
+                                                                            <label for="activeProduct" class="me-5">Active</label>
+                                                                            <input type="radio" name="productStatus"
+                                                                                   id="inactiveProduct"
+                                                                                   value="inactive" ${(pro.status=="inactive"?"checked":"")} >
+                                                                            <label for="inactiveProduct">Inactive</label>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="unitPriceUpdate"><strong>Đơn
@@ -335,14 +337,14 @@
                                                                             <label for="descriptionUpdate"><strong>Mô
                                                                                 tả:</strong></label>
                                                                             <textarea class="form-control"
-                                                                                      id="descriptionUpdate"
+                                                                                      id="descriptionUpdate" cols="10" rows="5"
                                                                                       name="description">${pro.description}</textarea>
                                                                         </div>
                                                                         <div class="form-group mt-1">
-                                                                            <label for="imageUpdate"><strong>Ảnh sản
+                                                                            <label for="fileUpload"><strong>Ảnh sản
                                                                                 phẩm:</strong></label>
                                                                             <input type="file" class="form-control-file"
-                                                                                   id="imageUpdate" name="image">
+                                                                                   id="fileUpload" accept=".jpg, .jpeg, .png, .img" name="image">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
@@ -435,37 +437,11 @@
                                                                     <button type="submit"
                                                                             class="btn btn-primary">Lưu
                                                                     </button>
-<%--                                                                    <a data-toggle="modal" href="#myModal2${pro.id}"--%>
-<%--                                                                       class="btn btn-primary">Lưu</a>--%>
+                                                                        <%--                                                                    <a data-toggle="modal" href="#myModal2${pro.id}"--%>
+                                                                        <%--                                                                       class="btn btn-primary">Lưu</a>--%>
 
-                                                                </div>
-                                                                <!-- Modal Confirm -->
-                                                                <div class="modal alert-primary" tabindex="-1"
-                                                                     data-keyboard="false"
-                                                                     data-backdrop="static" id="myModal2${pro.id}">
-                                                                    <div class="modal-dialog modal-dialog-centered">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title">Xác Nhận</h5>
-                                                                            </div>
-                                                                            <div class="container"></div>
-                                                                            <div class="modal-body">
-                                                                                <p>Bạn có chắc chắn muốn lưu các thay
-                                                                                    đổi không?</p>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button"
-                                                                                        class="btn btn-secondary"
-                                                                                        data-dismiss="modal">Hủy
-                                                                                </button>
-                                                                                <button type="submit" id="confirmBtn"
-                                                                                        class="btn btn-primary">Xác nhận
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!--end modal confirm-->
+                                                                </div><!--end update modal-->
+
                                                             </form>
                                                         </div>
                                                     </div>
@@ -484,7 +460,7 @@
                                 <!-- Create New Product Form -->
                                 <div class="container">
                                     <form id="productForm" method="post" action="${contextPath}/admin/product-add"
-                                          oninput="validateForm()">
+                                          onsubmit="return validateFileType()" oninput="validateForm()" enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row mb-3">
@@ -494,6 +470,23 @@
                                                         <input name="productName" type="text" class="form-control"
                                                                id="productName" required>
                                                         <div id="productNameError" class="error-message"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-form-label col-md-4">Trạng thái: </label>
+                                                    <div class="col-md-4">
+                                                        <input type="radio" name="productStatus"
+                                                               id="activeProductStatus"
+                                                               value="active" checked>
+                                                        <label for="activeProductStatus"
+                                                               class="col-form-label">Active</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="radio" name="productStatus"
+                                                               id="inactiveProductStatus"
+                                                               value="inactive">
+                                                        <label for="inactiveProductStatus" class="col-form-label">Inactive</label>
                                                     </div>
                                                 </div>
 
@@ -615,6 +608,14 @@
                   id="description"></textarea>
                                                     </div>
                                                 </div>
+                                                <div class="row mb-3">
+                                                    <label for="image" class="col-md-4 col-form-label">Ảnh minh
+                                                        họa:</label>
+                                                    <div class="col-md-8">
+                                                        <input type="file" class="form-control-file"
+                                                               id="image" name="image">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -659,96 +660,7 @@
 
 <!-- Template Main JS File -->
 <script src="${contextPath}/assets/js/main.js"></script>
-<script>
-
-    document.addEventListener("DOMContentLoaded", function () {
-        var msgDiv = document.getElementById('msg');
-        var msgContent = document.getElementById('msgContent');
-        // Kiểm tra nội dung của thẻ h1
-        if (msgContent.textContent.trim() !== "") {
-            msgDiv.classList.add('show');
-            setTimeout(function () {
-                msgDiv.classList.remove('show');
-                setTimeout(function () {
-                    msgDiv.style.display = 'none';
-                }, 600); // Chờ thời gian chuyển tiếp để hoàn thành
-            }, 3000); // Hiển thị thông báo trong 3 giây
-        }
-    });
-    $(document).ready(function () {
-        $('#myTable').DataTable({
-            columnDefs: [
-                {width: "50%", targets: 1} // Set width of second column (index 1) to 50%
-            ]
-        });
-    });
-    document.addEventListener('DOMContentLoaded', function () {
-        toggleFields();  // Initial check on page load
-    });
-
-    function validateForm() {
-        const productName = document.getElementById('productName').value;
-        const unitPrice = document.getElementById('unitPrice').value;
-        const createButton = document.getElementById('createButton');
-
-        let isValid = true;
-
-        // Validate Product Name
-        const productNameError = document.getElementById('productNameError');
-        if (productName.trim() === '') {
-            productNameError.textContent = 'Tên sản phẩm là bắt buộc.';
-            isValid = false;
-        } else {
-            productNameError.textContent = '';
-        }
-
-        // Validate Unit Price
-        const unitPriceError = document.getElementById('unitPriceError');
-        if (unitPrice.trim() === '' || isNaN(unitPrice) || parseInt(unitPrice) < 0 || !Number.isInteger(Number(unitPrice))) {
-            unitPriceError.textContent = 'Đơn giá phải là số nguyên không âm.';
-            isValid = false;
-        } else {
-            unitPriceError.textContent = '';
-        }
-
-        createButton.disabled = !isValid;
-    }
-
-    function toggleFields() {
-        const category = document.getElementById('productCategory').value;
-        const conditionalFields = document.getElementById('conditionalFields');
-        if (category === '1' || category === '2') {
-            conditionalFields.style.display = 'block';
-        } else {
-            conditionalFields.style.display = 'none';
-        }
-    }
-
-
-    function resetForm() {
-        document.getElementById('productForm').reset();
-        document.getElementById('createButton').disabled = true;
-        document.getElementById('productNameError').textContent = '';
-        document.getElementById('unitPriceError').textContent = '';
-        document.getElementById('conditionalFields').style.display = 'none';
-    }
-
-    function showProductDetails(categoryId, producID) {
-        var productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal' + producID));
-        productDetailsModal.show();
-    }
-
-    function editModal(categoryId, producID) {
-        var productUpdateModal = new bootstrap.Modal(document.getElementById('productUpdateModal' + producID));
-        productUpdateModal.show();
-    }
-
-    function confirmMod() {
-        var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-        confirmModal.show();
-    }
-
-</script>
+<script src="${contextPath}/assets/js/product-manage.js"></script>
 
 </body>
 
