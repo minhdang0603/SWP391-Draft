@@ -49,13 +49,13 @@ public class ProductUpdateController extends HttpServlet {
         int brandID = Integer.parseInt(req.getParameter("productBrand"));
         int cateID = Integer.parseInt(req.getParameter("productCategory"));
         int price = Integer.parseInt(req.getParameter("unitPrice"));
-        String os = req.getParameter("os");
+        String os = req.getParameter("operatingSystem");
         String cpu = req.getParameter("cpu");
         String ram = req.getParameter("ram");
-        String screen = req.getParameter("screen");
-        String battery = req.getParameter("battery");
+        String screen = req.getParameter("monitorScale");
+        String battery = req.getParameter("batteryVol");
         String design = req.getParameter("design");
-        String warranty = req.getParameter("warranty");
+        String warranty = req.getParameter("maintenance");
         String description = req.getParameter("description");
         int stockUnit = Integer.parseInt(req.getParameter("stockUnit"));
         int soldUnit = Integer.parseInt(req.getParameter("soldUnit"));
