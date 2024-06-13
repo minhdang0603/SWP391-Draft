@@ -30,11 +30,9 @@ public interface ProductService {
 
     List<Product> getProductByCateOrderBySoldUnit(int cateID, int max);
 
-    List<Product> getNextProduct(int amount, int numberOfProduct);
-
-    List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID);
+    List<Product> getNextProduct(List<Integer> brandIDs, String price, int cateID, int amount, int numberOfProduct);
 
     List<Product> findProduct(String name);
 
-    List<Product> getProductByBrandIDs(List<Integer> brandIDs);
+    List<Product> getProductBySorting(List<Integer> brandIDs, String priceType, int cateID);
 }

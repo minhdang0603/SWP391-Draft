@@ -66,7 +66,10 @@
                     <li><a href="home">TRANG CHỦ</a></li>
                     <li><a href="${contextPath}/store?id=0">DANH MỤC</a></li>
                     <c:if test="${thisCate != null}">
-                        <li><a href="${contextPath}/store?id=${thisCate.id}">${thisCate.categoryName}</a></li>
+                        <li>
+                            <a href="${contextPath}/store?id=${thisCate.id}">${thisCate.categoryName}</a>
+                            <span class="hide category-id">${thisCate.id}</span>
+                        </li>
                     </c:if>
                 </ul>
             </div>
@@ -94,10 +97,12 @@
                             <div class="input-radio">
                                 <c:choose>
                                     <c:when test="${thisCate.id == category.id}">
-                                        <input type="radio" name="id" checked id="category-${category.id}" value="${category.id}">
+                                        <input type="radio" name="id" checked id="category-${category.id}"
+                                               value="${category.id}">
                                     </c:when>
                                     <c:otherwise>
-                                        <input type="radio" name="id" id="category-${category.id}" value="${category.id}" onclick="submitForm()">
+                                        <input type="radio" name="id" id="category-${category.id}"
+                                               value="${category.id}" onclick="submitForm()">
                                     </c:otherwise>
                                 </c:choose>
                                 <label for="category-${category.id}" class="d-flex align-items-center">
@@ -112,31 +117,12 @@
 
                 <!-- aside Widget -->
                 <div class="aside">
-                    <h3 class="aside-title">Giá</h3>
-                    <div class="price-filter">
-                        <div id="price-slider"></div>
-                        <div class="input-number price-min">
-                            <input id="price-min" type="number">
-                            <span class="qty-up">+</span>
-                            <span class="qty-down">-</span>
-                        </div>
-                        <span>-</span>
-                        <div class="input-number price-max">
-                            <input id="price-max" type="number">
-                            <span class="qty-up">+</span>
-                            <span class="qty-down">-</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- /aside Widget -->
-
-                <!-- aside Widget -->
-                <div class="aside">
                     <h3 class="aside-title">Thương hiệu</h3>
                     <div class="checkbox-filter">
                         <c:forEach var="brand" items="${brands}">
                             <div class="input-checkbox">
-                                <input type="checkbox" id="brand-${brand.id}" class="brand-checkbox">
+                                <input type="checkbox" id="brand-${brand.id}"
+                                       class="brand-checkbox"/>
                                 <label for="brand-${brand.id}">
                                     <span></span>
                                         ${brand.brandName}
@@ -155,10 +141,11 @@
                 <div class="store-filter clearfix">
                     <div class="store-sort">
                         <label>
-                            Sort By:
+                            Sắp xếp:
                             <select class="input-select">
-                                <option value="0">Popular</option>
-                                <option value="1">Position</option>
+                                <option value="0" selected> Nổi bật nhất</option>
+                                <option value="1">Giá thấp -> cao</option>
+                                <option value="2">Giá cao -> thấp</option>
                             </select>
                         </label>
                     </div>
@@ -209,26 +196,25 @@
                 <!-- /store products -->
 
                 <!-- store bottom filter -->
-                <c:if test="${cnt >= 9}">
-                    <div class="store-filter clearfix">
-                        <div class="text-center">
-                            <c:choose>
-                                <c:when test="${thisCate != null}">
-                                    <button id="load-more-btn" data-cate-id="${thisCate.id}"
-                                            data-cate-name="${thisCate.categoryName}" class="btn-lg btn-outline-danger btn">
-                                        Xem thêm
-                                    </button>
-                                </c:when>
-                                <c:otherwise>
-                                    <button id="load-more-btn" data-cate-id="0"
-                                            data-cate-name="" class="btn-lg btn-outline-danger btn">
-                                        Xem thêm
-                                    </button>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
+                <div class="store-filter clearfix">
+                    <div class="text-center">
+                        <c:choose>
+                            <c:when test="${thisCate != null}">
+                                <button id="load-more-btn" data-cate-id="${thisCate.id}"
+                                        data-cate-name="${thisCate.categoryName}"
+                                        class="btn-lg btn-outline-danger btn">
+                                    Xem thêm
+                                </button>
+                            </c:when>
+                            <c:otherwise>
+                                <button id="load-more-btn" data-cate-id="0"
+                                        data-cate-name="" class="btn-lg btn-outline-danger btn">
+                                    Xem thêm
+                                </button>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
-                </c:if>
+                </div>
                 <!-- /store bottom filter -->
             </div>
             <!-- /STORE -->

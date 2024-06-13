@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Shopping Cart</title>
+    <title>Giỏ hàng</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,8 +22,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <title>Electro - HTML Ecommerce Template</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -170,7 +168,7 @@
     <section class="shopping-cart dark">
         <div class="container">
             <div class="block-heading">
-                <h2>Shopping Cart</h2>
+                <h2>Giỏ hàng</h2>
             </div>
             <div class="content">
                 <div class="row">
@@ -215,12 +213,12 @@
                                                                    data-product-id="${item.product.id}"
                                                                    data-servlet-url="cart"
                                                                    data-action="delete">
-                                                                    <i class="fa fa-trash"></i> Delete
+                                                                    <i class="fa fa-trash"></i> Xóa
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 quantity">
-                                                            <label for="quantity-${item.product.id}">Quantity:</label>
+                                                            <label for="quantity-${item.product.id}">Số lượng:</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-btn">
                                                                     <button class="btn btn-default btn-number"
@@ -266,11 +264,11 @@
 
                         <div class="col-md-12 col-lg-4">
                             <div class="summary">
-                                <h3>Summary</h3>
-                                <div class="summary-item"><span class="text">Total</span><span class="price"
+                                <h3>Tóm tắt</h3>
+                                <div class="summary-item"><span class="text">Tổng tiền</span><span class="price"
                                                                                                id="total">${total}</span>
                                 </div>
-                                <a type="button" class="btn btn-primary btn-lg btn-block" href="checkout.jsp">Checkout
+                                <a type="button" class="btn btn-primary btn-lg btn-block" href="checkout.jsp">Thanh toán
                                     <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>

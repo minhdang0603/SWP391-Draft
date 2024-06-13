@@ -49,20 +49,38 @@ function showToast(message) {
     }, 3000);
 }
 
-function submitForm(){
+function submitForm() {
     var form = document.querySelector(".category-form");
     form.submit();
 }
 
+function getSelectedBrands() {
+    let selectedBrands = [];
+    $('.brand-checkbox:checked').each(function () {
+        selectedBrands.push($(this).attr('id').split('-')[1]); // Lấy ID của thương hiệu
+    });
+    return selectedBrands.join(',');
+}
+
+function getSelectedPrice() {
+    return $('.input-select').val();
+}
+
+function getCategory() {
+    var spanElement = document.querySelector('.hide.category-id');
+    return spanElement ? spanElement.textContent : 0;
+}
+
 $(document).ready(function () {
     formatAllPrices();
+    controlLoadMoreButton();
     // Event delegation for "Add to Cart" button
     $('.product-list').on('click', '.add-to-cart-btn', function (event) {
         event.preventDefault();
-        var $button = $(this);
-        var productId = $button.data('product-id');
-        var servletUrl = $button.data('servlet-url');
-        var action = $button.data('action');
+        let $button = $(this);
+        let productId = $button.data('product-id');
+        let servletUrl = $button.data('servlet-url');
+        let action = $button.data('action');
 
         $.ajax({
             type: "POST",
@@ -82,9 +100,11 @@ $(document).ready(function () {
     $('#load-more-btn').click(function (event) {
         event.preventDefault();
 
-        var ammout = document.getElementsByClassName('product').length;
-        var cateId = $(this).data('cate-id');
-        var cateName = $(this).data('cate-name');
+        let ammout = document.getElementsByClassName('product').length;
+        let cateId = $(this).data('cate-id');
+        let cateName = $(this).data('cate-name');
+        let selectedBrands = getSelectedBrands();
+        let selectedPrice = getSelectedPrice();
 
         // Add your AJAX request or other logic here to load more products
         $.ajax({
@@ -92,19 +112,22 @@ $(document).ready(function () {
             method: 'GET',
             data: {
                 existedProduct: ammout,
-                cateId: cateId
+                cateId: cateId,
+                selectedPrice: selectedPrice,
+                selectedBrands: selectedBrands
             },
             success: function (data) {
                 var productList = $('.product-list');
-
-                if (data.trim() === '') {
-                    // Hide the Load More button and notify the user
+                var size = $(data).find('.product').length;
+                if (parseInt(size) % 3 !== 0 || parseInt(size) === 0) {
                     $('#load-more-btn').hide();
-                    showToast('LaptopTG đã hết sản phẩm ' + cateName);
                 } else {
-                    productList.append(data); // Append new products to the product list
-                    formatAllPrices();
+                    $('#load-more-btn').show();
                 }
+
+                productList.append(data);// Append new products to the product list
+                formatAllPrices();
+
             },
             error: function (error) {
                 console.log(error);
@@ -112,28 +135,60 @@ $(document).ready(function () {
         });
     });
 
-    $('.brand-checkbox').on('change', function() {
-        let selectedBrands = [];
-
-        // Collect all checked brand IDs
-        $('.brand-checkbox:checked').each(function() {
-            selectedBrands.push($(this).attr('id').split('-')[1]); // Extract the ID part
-        });
-
+    $('.brand-checkbox').on('change', function () {
+        let selectedBrands = getSelectedBrands();
+        let selectedValue = getSelectedPrice();
+        let category = getCategory();
         // Make AJAX request to get products by selected brands
+        loadProductsBySorting(selectedValue, selectedBrands, category);
+    });
+
+    $('.input-select').on('change', function () {
+        // Get the selected sorting option value
+        let selectedValue = getSelectedPrice();
+        let selectedBrands = getSelectedBrands();
+        let category = getCategory();
+        // Load products based on the selected sorting option
+        loadProductsBySorting(selectedValue, selectedBrands, category);
+    });
+
+    function loadProductsBySorting(price, brands, category) {
+        // Add your logic to load products based on the sorting option
+        // For example, make an AJAX request to the server to fetch sorted products
+        console.log(category);
         $.ajax({
-            url: 'store', // Your servlet URL
+            url: 'store', // Replace with your URL
             method: 'POST',
             data: {
-                brands: selectedBrands
+                brands: brands,
+                price: price,
+                category: category
             },
-            success: function(response) {
-                // Assuming response contains the HTML to display products
-                $('#product-container').html(response);
+            success: function (data) {
+
+                var size = $(data).find('.product').length;
+                if (parseInt(size) % 3 !== 0 || parseInt(size) === 0) {
+                    $('#load-more-btn').hide();
+                } else {
+                    $('#load-more-btn').show();
+                }
+
+                // Update the product list with the newly sorted products
+                $('.product-list').html(data);
+                formatAllPrices();
             },
-            error: function(error) {
-                console.error('Error fetching products:', error);
+            error: function (error) {
+                console.log(error);
             }
         });
-    });
+    }
+
+    function controlLoadMoreButton() {
+        let controller = $('.product').length;
+        if (parseInt(controller) % 3 !== 0) {
+            $('#load-more-btn').hide();
+        } else {
+            $('#load-more-btn').show();
+        }
+    }
 });
