@@ -97,7 +97,7 @@ public class ProductUpdateController extends HttpServlet {
         Product proNew = productService.findProductById(pid);
 
         msg = "Chỉnh Sửa Thành Công Sản Phẩm ID" + pro.getId();
-        req.setAttribute("msg", msg);
+        req.getSession().setAttribute("msg", msg);
         resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
     }
 }

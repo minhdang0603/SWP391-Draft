@@ -40,8 +40,8 @@ public class ProductDeleteController extends HttpServlet {
         product.setStatus(status);
         productService.updateProduct(product);
         msg = "Sản phẩm đã đổi trạng thái thành công!";
-        req.setAttribute("msg",msg);
-        req.getRequestDispatcher("../admin/product-manage").forward(req,resp);
+        req.getSession().setAttribute("msg", msg);
+        resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
     }
 
     @Override

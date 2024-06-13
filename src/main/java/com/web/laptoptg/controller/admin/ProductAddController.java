@@ -118,7 +118,8 @@ public class ProductAddController extends HttpServlet {
             }
 
             req.setAttribute("msg", msg);
-            doGet(req, resp);
+            req.getSession().setAttribute("msg", msg);
+            resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
         }
     }
 }

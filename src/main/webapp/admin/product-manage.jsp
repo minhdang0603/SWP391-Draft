@@ -63,6 +63,7 @@
     </div>
     <div id="msg" class="notification">
         <h6 id="msgContent">${msg}</h6>
+        <c:remove var="msg" scope="session"/>
     </div>
     <!-- End Page Title -->
 
@@ -301,11 +302,11 @@
                                                                             <h6><strong>Trạng thái:</strong></h6>
                                                                             <input type="radio" name="productStatus"
                                                                                    id="activeProduct"
-                                                                                   value="Active" ${(pro.status=="Active"?"checked":"")} >
+                                                                                   value="active" ${(pro.status=="active"?"checked":"")} >
                                                                             <label for="activeProduct" class="me-5">Active</label>
                                                                             <input type="radio" name="productStatus"
                                                                                    id="inactiveProduct"
-                                                                                   value="Inactive" ${(pro.status=="Inactive"?"checked":"")} >
+                                                                                   value="inactive" ${(pro.status=="inactive"?"checked":"")} >
                                                                             <label for="inactiveProduct">Inactive</label>
                                                                         </div>
                                                                         <div class="form-group">
@@ -477,14 +478,14 @@
                                                     <div class="col-md-4">
                                                         <input type="radio" name="productStatus"
                                                                id="activeProductStatus"
-                                                               value="Active" checked>
+                                                               value="active" checked>
                                                         <label for="activeProductStatus"
                                                                class="col-form-label">Active</label>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <input type="radio" name="productStatus"
                                                                id="inactiveProductStatus"
-                                                               value="Inactive">
+                                                               value="inactive">
                                                         <label for="inactiveProductStatus" class="col-form-label">Inactive</label>
                                                     </div>
                                                 </div>

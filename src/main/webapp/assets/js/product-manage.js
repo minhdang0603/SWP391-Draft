@@ -27,13 +27,15 @@ document.addEventListener("DOMContentLoaded", function () {
     var msgContent = document.getElementById('msgContent');
     // Kiểm tra nội dung của thẻ h1
     if (msgContent.textContent.trim() !== "") {
-        msgDiv.classList.add('show');
-        setTimeout(function () {
-            msgDiv.classList.remove('show');
+        setTimeout(function (){
+            msgDiv.classList.add('show');
             setTimeout(function () {
-                msgDiv.style.display = 'none';
-            }, 600); // Chờ thời gian chuyển tiếp để hoàn thành
-        }, 3000); // Hiển thị thông báo trong 3 giây
+                msgDiv.classList.remove('show');
+                setTimeout(function () {
+                    msgDiv.style.display = 'none';
+                }, 600); // Chờ thời gian chuyển tiếp để hoàn thành
+            }, 3000); // Hiển thị thông báo trong 3 giây
+        }, 2000);
     }
 });
 $(document).ready(function () {
