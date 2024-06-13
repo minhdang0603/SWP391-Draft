@@ -36,11 +36,6 @@ public class ProductUpdateController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("../admin/product-manage").forward(req, resp);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pname = req.getParameter("productName");
         System.out.print(pname);
@@ -103,7 +98,7 @@ public class ProductUpdateController extends HttpServlet {
 
         msg = "Chỉnh Sửa Thành Công Sản Phẩm ID" + pro.getId();
         req.setAttribute("msg", msg);
-        doGet(req,resp);
+        resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
     }
 }
 

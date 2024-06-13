@@ -336,15 +336,14 @@
                                                                         </div>
                                                                         <div class="form-group mt-1">
                                                                             <h6><strong>Trạng thái:</strong></h6>
-                                                                            <label for="activeProduct" class="mr-5">Active</label>
                                                                             <input type="radio" name="productStatus"
                                                                                    id="activeProduct"
                                                                                    value="Active" ${(pro.status=="Active"?"checked":"")} >
-                                                                            <label for="inactiveProduct">Inactive</label>
+                                                                            <label for="activeProduct" class="me-5">Active</label>
                                                                             <input type="radio" name="productStatus"
                                                                                    id="inactiveProduct"
                                                                                    value="Inactive" ${(pro.status=="Inactive"?"checked":"")} >
-
+                                                                            <label for="inactiveProduct">Inactive</label>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="unitPriceUpdate"><strong>Đơn
@@ -374,7 +373,7 @@
                                                                             <label for="descriptionUpdate"><strong>Mô
                                                                                 tả:</strong></label>
                                                                             <textarea class="form-control"
-                                                                                      id="descriptionUpdate"
+                                                                                      id="descriptionUpdate" cols="10" rows="5"
                                                                                       name="description">${pro.description}</textarea>
                                                                         </div>
                                                                         <div class="form-group mt-1">
@@ -513,17 +512,17 @@
                                                 <div class="row mb-3">
                                                     <label class="col-form-label col-md-4">Trạng thái: </label>
                                                     <div class="col-md-4">
-                                                        <label for="activeProductStatus"
-                                                               class="col-form-label">Active</label>
                                                         <input type="radio" name="productStatus"
                                                                id="activeProductStatus"
                                                                value="Active" checked>
+                                                        <label for="activeProductStatus"
+                                                               class="col-form-label">Active</label>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="inactiveProductStatus" class="col-form-label">Inactive</label>
                                                         <input type="radio" name="productStatus"
                                                                id="inactiveProductStatus"
                                                                value="Inactive">
+                                                        <label for="inactiveProductStatus" class="col-form-label">Inactive</label>
                                                     </div>
                                                 </div>
 
