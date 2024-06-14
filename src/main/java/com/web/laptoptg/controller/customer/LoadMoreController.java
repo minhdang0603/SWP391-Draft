@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/load")
 public class LoadMoreController extends HttpServlet {
@@ -31,16 +33,20 @@ public class LoadMoreController extends HttpServlet {
             // get number of product on page
             int existed = Integer.parseInt(req.getParameter("existedProduct"));
             int categoryId = Integer.parseInt(req.getParameter("cateId"));
+            String brands = req.getParameter("selectedBrands");
+            String price = req.getParameter("selectedPrice");
 
             List<Product> products = null;
-
-            if (categoryId == 0) {
-                // get next 6 product
-                products = productService.getNextProduct(existed, 6);
-            } else {
-                // get next 6 product by category
-                products = productService.getNextProductByCate(existed, 6, categoryId);
+            List<Integer> brandIDs = null; // list to save brand id
+            // check if user choose any brand
+            if (!brands.isEmpty() && !brands.isBlank()) {
+                brandIDs = new ArrayList<>();
+                String[] brandArray = brands.split(",");
+                for (String brandID : brandArray) {
+                    brandIDs.add(Integer.parseInt(brandID));
+                }
             }
+            products = productService.getNextProduct(brandIDs, price, categoryId, existed, 6);
 
             // response to client
             resp.setContentType("text/html");
@@ -54,15 +60,15 @@ public class LoadMoreController extends HttpServlet {
             for (Product product : products) {
                 cnt++;
                 // make the list layout follow the rule
-                if(cnt % 3 == 0) {
+                if (cnt % 3 == 0) {
                     out.println("<div class=\"col-md-4 col-xs-6\">\n" +
                             "                            <div class=\"product\">\n" +
                             "                                <div class=\"product-img\">\n" +
                             "                                    <img src=\"" + req.getContextPath() + "/assets/img/product-img/" + product.getImage() + "\"alt=\"\">\n" +
                             "                                </div>\n" +
                             "                                <div class=\"product-body\">\n" +
-                            "                                    <p class=\"product-category\">"+product.getCategory().getCategoryName()+"</p>\n" +
-                            "                                    <h3 class=\"product-name\"><a href=\""+req.getContextPath() + "/product-detail?pid="+ product.getId() +"\">" + product.getProductName() + "</a></h3>\n" +
+                            "                                    <p class=\"product-category\">" + product.getCategory().getCategoryName() + "</p>\n" +
+                            "                                    <h3 class=\"product-name\"><a href=\"" + req.getContextPath() + "/product-detail?pid=" + product.getId() + "\">" + product.getProductName() + "</a></h3>\n" +
                             "                                    <h4 class=\"product-price\">" + product.getUnitPrice() + "</h4>\n" +
                             "                                    <div class=\"product-rating\">\n" +
                             "                                        <i class=\"fa fa-star\"></i>\n" +
@@ -75,7 +81,7 @@ public class LoadMoreController extends HttpServlet {
                             "                                <div class=\"add-to-cart\">\n" +
                             "                                    <button class=\"add-to-cart-btn\"\n" +
                             "                                            data-servlet-url=\"cart\"\n" +
-                            "                                            data-product-id=\""+product.getId()+"\"\n" +
+                            "                                            data-product-id=\"" + product.getId() + "\"\n" +
                             "                                            data-action=\"add\">\n" +
                             "                                        <i class=\"fa fa-shopping-cart\"></i> Thêm vào giỏ hàng\n" +
                             "                                    </button>\n" +
@@ -90,8 +96,8 @@ public class LoadMoreController extends HttpServlet {
                             "                                    <img src=\"" + req.getContextPath() + "/assets/img/product-img/" + product.getImage() + "\"alt=\"\">\n" +
                             "                                </div>\n" +
                             "                                <div class=\"product-body\">\n" +
-                            "                                    <p class=\"product-category\">"+product.getCategory().getCategoryName()+"</p>\n" +
-                            "                                    <h3 class=\"product-name\"><a href=\""+req.getContextPath() + "/product-detail?pid="+ product.getId() +"\">" + product.getProductName() + "</a></h3>\n" +
+                            "                                    <p class=\"product-category\">" + product.getCategory().getCategoryName() + "</p>\n" +
+                            "                                    <h3 class=\"product-name\"><a href=\"" + req.getContextPath() + "/product-detail?pid=" + product.getId() + "\">" + product.getProductName() + "</a></h3>\n" +
                             "                                    <h4 class=\"product-price\">" + product.getUnitPrice() + "</h4>\n" +
                             "                                    <div class=\"product-rating\">\n" +
                             "                                        <i class=\"fa fa-star\"></i>\n" +
@@ -104,7 +110,7 @@ public class LoadMoreController extends HttpServlet {
                             "                                <div class=\"add-to-cart\">\n" +
                             "                                    <button class=\"add-to-cart-btn\"\n" +
                             "                                            data-servlet-url=\"cart\"\n" +
-                            "                                            data-product-id=\""+product.getId()+"\"\n" +
+                            "                                            data-product-id=\"" + product.getId() + "\"\n" +
                             "                                            data-action=\"add\">\n" +
                             "                                        <i class=\"fa fa-shopping-cart\"></i> Thêm vào giỏ hàng\n" +
                             "                                    </button>\n" +

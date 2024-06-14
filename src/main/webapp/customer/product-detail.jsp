@@ -101,8 +101,7 @@
                         <a class="review-link" href="#">10 Review(s) | Add your review</a>
                     </div>
                     <div>
-                        <h3 class="product-price" id="formattedMoney"></h3>
-                        <%--                        <span class="product-available">In Stock</span>--%>
+                        <h3 class="product-price" id="formattedMoney">${proDetail.unitPrice}</h3>
                     </div>
                     <p>${proDetail.description}</p>
                     <div class="add-to-cart">
@@ -460,11 +459,11 @@
         return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    // Số tiền cần hiển thị, nhận từ JSP
-    var amount = ${proDetail.unitPrice};
-
-    // Định dạng số tiền và hiển thị lên trang
-    document.getElementById('formattedMoney').innerText = formatCurrency(amount) + ' đ';
+    // Iterate over each product to format the price
+    document.querySelectorAll('.product-price').forEach(function (element) {
+        var price = parseFloat(element.textContent.replace(/[^\d.-]/g, '')); // Extract the numerical value from the price element
+        element.innerText = formatCurrency(price) + ' đ'; // Format the price and set it back to the element
+    });
 </script>
 
 </body>

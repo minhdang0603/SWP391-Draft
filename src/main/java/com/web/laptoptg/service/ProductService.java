@@ -16,7 +16,7 @@ public interface ProductService {
     List<Product> getAllProducts();
 
     //find product by its name
-    List<Product> findProductByName(String name);
+    public boolean findProductByName(String name);
 
     //find product by its category
     List<Product> getProductByCategory(int cateID);
@@ -30,7 +30,9 @@ public interface ProductService {
 
     List<Product> getProductByCateOrderBySoldUnit(int cateID, int max);
 
-    List<Product> getNextProduct(int amount, int numberOfProduct);
+    List<Product> getNextProduct(List<Integer> brandIDs, String price, int cateID, int amount, int numberOfProduct);
 
-    List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID);
+    List<Product> findProduct(String name);
+
+    List<Product> getProductBySorting(List<Integer> brandIDs, String priceType, int cateID);
 }

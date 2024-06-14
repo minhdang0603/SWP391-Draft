@@ -11,6 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -34,7 +35,9 @@ public class UserDAOImpl implements UserDAO {
             entityManager.persist(user);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
@@ -44,27 +47,16 @@ public class UserDAOImpl implements UserDAO {
         try {
             transaction.begin();
             entityManager.merge(user);
+            entityManager.flush();
+            entityManager.clear();
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
-
-//    public static void main(String[] args) {
-//        UserDAO u = new UserDAOImpl();
-//        // Tạo một đối tượng User mới
-//        User userToUpdate = new User();
-//        userToUpdate.setId(24); // Thay đổi id theo id của user cần cập nhật
-//        userToUpdate.setUserName("New Name");
-//        userToUpdate.setAddress("New Address");
-//        userToUpdate.setPhoneNumber("123456789");
-//        userToUpdate.setEmail("newemail123@example.com");
-//
-//        // Gọi phương thức updateUser để cập nhật thông tin của user
-//        u.updateUser(userToUpdate);
-//    }
-
 
     @Override
     public void deleteById(int id) {
@@ -78,7 +70,9 @@ public class UserDAOImpl implements UserDAO {
             }
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
@@ -96,14 +90,22 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public void addUser(User user) {
+
+    }
+
+    @Override
     public User findUserByEmail(String email) {
+        entityManager.clear();
+        User user = null;
         try {
-            TypedQuery<User> query = entityManager.createQuery("from User u join fetch u.role where u.email = :email", User.class);
+            TypedQuery<User> query = entityManager.createQuery("select u from User u join fetch u.role where u.email = :email", User.class);
             query.setParameter("email", email);
-            return query.getSingleResult();
+            user = query.getSingleResult();
         } catch (NoResultException e) {
-            return null;
+            e.printStackTrace();
         }
+        return user;
     }
 
     @Override
@@ -113,16 +115,6 @@ public class UserDAOImpl implements UserDAO {
         return query.getResultList();
     }
 
-    public void addUser(User user) {
-        try {
-            transaction.begin();
-            entityManager.merge(user);
-            transaction.commit();
-        } catch (Exception e) {
-            transaction.rollback();
-            e.printStackTrace();
-        }
-    }
     @Override
     public User findUserById(int id) {
         return entityManager.find(User.class, id);

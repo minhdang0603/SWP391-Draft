@@ -10,15 +10,23 @@ import com.web.laptoptg.service.impl.BrandServiceImpl;
 import com.web.laptoptg.service.impl.CategoryServiceImpl;
 import com.web.laptoptg.service.impl.ProductServiceImpl;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/admin/product-add")
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 11
+)
 public class ProductAddController extends HttpServlet {
 
     private ProductService productService;
@@ -30,8 +38,15 @@ public class ProductAddController extends HttpServlet {
         categoryService = new CategoryServiceImpl();
         brandService = new BrandServiceImpl();
     }
+
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("../admin/product-manage").forward(req, resp);
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //get parameters from request scope
         String pname = req.getParameter("productName");
         System.out.print(pname);
         int brandID = Integer.parseInt(req.getParameter("productBrand"));
@@ -45,39 +60,66 @@ public class ProductAddController extends HttpServlet {
         String design = req.getParameter("design");
         String warranty = req.getParameter("warranty");
         String description = req.getParameter("description");
+        String status = req.getParameter("productStatus");
         int stockUnit = Integer.parseInt(req.getParameter("stockUnit"));
-        boolean success = true;
-//        Product proCheck = productService.findProductByName("pname");
-//        if(proCheck != null){
-//            success = false;
-//            System.out.println(proCheck.getId());
-//            resp.setContentType("application/json");
-//            resp.setCharacterEncoding("UTF-8");
-//            resp.getWriter().write("{\"success\": " + success + "}");
-//        }
-        Brand brand = brandService.getBrandById(brandID);
-        Category category = categoryService.getCategoryById(cateID);
-        Product pro = new Product();
-        pro.setCpu(cpu);
-        pro.setUnitPrice(price);
-        pro.setSoldUnit(0);
-        pro.setStockUnit(stockUnit);
-        pro.setBatteryVol(battery);
-        pro.setOperatingSystem(os);
-        pro.setDescription(description);
-        pro.setMonitorScale(screen);
-        pro.setBrand(brand);
-        pro.setCategory(category);
-        pro.setRam(ram);
-        pro.setProductName(pname);
-        pro.setDesign(design);
-        pro.setMaintenance(warranty);
-        productService.saveProduct(pro);
-//        System.out.print("Added!");
-//        resp.setContentType("application/json");
-//        resp.setCharacterEncoding("UTF-8");
-//        resp.getWriter().write("{\"success\": " + success + "}");
-        resp.sendRedirect("../admin/product-manage");
-    }
 
+
+
+        //check whether product already exist or not
+        boolean proCheckExist = productService.findProductByName(pname);
+        String msg;
+        if (proCheckExist) {//if product already exists
+            msg = "Sản phẩm đã tồn tại! Thêm mới không thành công";
+            req.setAttribute("msg", msg);//send message back
+            doGet(req, resp);
+        } else {//if not exist
+            Brand brand = brandService.getBrandById(brandID);
+            Category category = categoryService.getCategoryById(cateID);
+            Product pro = new Product();
+            pro.setCpu(cpu);
+            pro.setStatus(status);
+            pro.setUnitPrice(price);
+            pro.setSoldUnit(0);
+            pro.setStockUnit(stockUnit);
+            pro.setBatteryVol(battery);
+            pro.setOperatingSystem(os);
+            pro.setDescription(description);
+            pro.setMonitorScale(screen);
+            pro.setBrand(brand);
+            pro.setCategory(category);
+            pro.setRam(ram);
+            pro.setProductName(pname);
+            pro.setDesign(design);
+            pro.setMaintenance(warranty);
+
+            //save the new product to database
+            productService.saveProduct(pro);
+            int pid = pro.getId();
+            pro.setImage(pid+".png");
+            String img = pro.getImage();
+            productService.saveProduct(pro);
+
+            String uploadPath = req.getServletContext().getRealPath("/assets/img/product-img");// set path
+            Part filePart = req.getPart("image");//get file from request
+            String filePath = uploadPath + File.separator + img;
+            System.out.println(filePath);
+            // Lưu tệp
+            try {
+                filePart.write(filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //check if saved to db or not yet
+            boolean list = productService.findProductByName(pname);
+            if (!list) {
+                msg = "Có lỗi! Thêm Không Thành Công!";
+            } else {
+                msg = "Thêm Thành Công!";
+            }
+
+            req.setAttribute("msg", msg);
+            req.getSession().setAttribute("msg", msg);
+            resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
+        }
+    }
 }

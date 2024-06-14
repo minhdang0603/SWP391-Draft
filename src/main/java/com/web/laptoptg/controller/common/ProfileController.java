@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.common;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.User;
 import com.web.laptoptg.service.UserService;
@@ -43,12 +44,11 @@ public class ProfileController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String formType = req.getParameter("formType");
         HttpSession session = req.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("account");
-
+        UserDTO account = (UserDTO) session.getAttribute("account");
         if ("form1".equals(formType)) {
-            handleProfileEdit(req, resp, userDTO, session);
+            handleProfileEdit(req, resp, account, session);
         } else if ("form2".equals(formType)) {
-            handleChangePassword(req, resp, userDTO, session);
+            handleChangePassword(req, resp, account, session);
         }
     }
 
@@ -59,6 +59,8 @@ public class ProfileController extends HttpServlet {
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
 
+
+
         userDTO.setUserName(fullName);
         userDTO.setAddress(address);
         userDTO.setPhoneNumber(phone);
@@ -66,67 +68,35 @@ public class ProfileController extends HttpServlet {
 
         userService.updateUser(userDTO);
         session.setAttribute("account", userDTO);
-
-        User raw = userService.findUserByEmail(email);
-
-
-        System.out.println(userDTO);
-
-        Enumeration<String> attributeNames = session.getAttributeNames();
-        while (attributeNames.hasMoreElements()) {
-            String attributeName = attributeNames.nextElement();
-            Object attributeValue = session.getAttribute(attributeName);
-            System.out.println(attributeName + ": " + attributeValue);
-        }
-
-        req.setAttribute("updateSuccess", true);
-        req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
+        session.setAttribute("updateSuccess", "success");
+        resp.sendRedirect(req.getContextPath() + "/profile");
     }
 
 
     private void handleChangePassword(HttpServletRequest req, HttpServletResponse resp, UserDTO userDTO, HttpSession session) throws ServletException, IOException {
         String password = req.getParameter("currentPassword");
-        String newPass = req.getParameter("newpassword");
-        String reNewPass = req.getParameter("renewpassword");
-
-        UserDTO account = (UserDTO) session.getAttribute("account");
-        // Lấy user từ db
-        User raw = userService.findUserByEmail(account.getEmail());
-
-        System.out.println("cu");
-        System.out.println(account);
-        System.out.println(raw);
+        String newPass = req.getParameter("newPassword");
 
         try {
-            if (PasswordUtils.verify(password, raw.getPassword())) {
+            if (PasswordUtils.verify(password, userDTO.getPassword())) {
                 String hashPass = PasswordUtils.hash(newPass);
-
                 userDTO.setPassword(hashPass);
-
-                userService.changePassFromProfile(userDTO);
+                userService.updateUser(userDTO);
                 session.setAttribute("account", userDTO);
-                System.out.println("moi");
-                System.out.println(userDTO);
-                System.out.println(raw);
-
-                session.setAttribute("account", userDTO);
-                System.out.println("phan session");
-                Enumeration<String> attributeNames = session.getAttributeNames();
-                while (attributeNames.hasMoreElements()) {
-                    String attributeName = attributeNames.nextElement();
-                    Object attributeValue = session.getAttribute(attributeName);
-                    System.out.println(attributeName + ": " + attributeValue);
-                }
-                req.setAttribute("passwordChangeSuccess", true);
-                req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
+                session.setAttribute("passwordChangeSuccess", "success");
+                resp.sendRedirect(req.getContextPath() + "/profile");
+                return;
             }
 
-            else{
-                req.setAttribute("passwordChangeFailure", true);
-                req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
-            }
+            session.setAttribute("passwordChangeFailure", "success");
+            resp.sendRedirect(req.getContextPath() + "/profile");
         } catch (Exception e) {
             System.err.println("Error during password change: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

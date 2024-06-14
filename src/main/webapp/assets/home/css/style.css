@@ -213,7 +213,7 @@ textarea.input {
 .input-radio input[type="radio"]+label span, .input-checkbox input[type="checkbox"]+label span {
   position: absolute;
   left: 0px;
-  top: 4px;
+  top: 2px;
   width: 14px;
   height: 14px;
   border: 2px solid #E4E7ED;
@@ -706,6 +706,42 @@ textarea.input {
   .main-nav>li>a {
     padding: 15px;
     color: #FFF;
+  }
+  .main-nav>li>a {
+    padding: 15px;
+    color: #FFF;
+  }
+  .dropdown-menu {
+    position: relative;
+    background: #15161D;
+    color: #FFFFFF;
+    border: none;
+    box-shadow: none;
+    width: 100%;
+  }
+  .dropdown-menu>li {
+    display: block;
+  }
+  .dropdown-menu>li>a {
+    padding: 15px;
+    color: #FFF;
+    display: block;
+    width: 100%;
+  }
+  .dropdown-menu>li>a:hover {
+    background-color: #FFFFFF;
+  }
+  .dropdown-toggle::after {
+    content: "\f0d7"; /* FontAwesome down arrow */
+    float: right;
+    margin-right: 10px;
+  }
+  .dropdown-menu {
+    display: none;
+  }
+  .dropdown:hover .dropdown-menu,
+  .dropdown-menu:hover {
+    display: block;
   }
 }
 

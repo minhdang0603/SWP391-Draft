@@ -1,7 +1,5 @@
 package com.web.laptoptg.controller.admin;
 
-import com.web.laptoptg.model.Brand;
-import com.web.laptoptg.model.Category;
 import com.web.laptoptg.model.Product;
 import com.web.laptoptg.service.BrandService;
 import com.web.laptoptg.service.CategoryService;
@@ -16,11 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet(urlPatterns = "/admin/product-manage")
-public class ProductManageController extends HttpServlet {
-
+@WebServlet(urlPatterns = "/admin/product-delete")
+public class ProductDeleteController extends HttpServlet {
     private ProductService productService;
     private CategoryService categoryService;
     private BrandService brandService;
@@ -33,20 +29,23 @@ public class ProductManageController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Product> list = productService.getAllProducts();
-        List<Category> listCate = categoryService.getAllCategory();
-        List<Brand> listBrand = brandService.getAllBrands();
-
-        req.setAttribute("listCate", listCate);
-        req.setAttribute("list", list);
-        req.setAttribute("listBrand", listBrand);
-
-        req.getRequestDispatcher("product-manage.jsp").forward(req, resp);
-
+        int id = Integer.parseInt(req.getParameter("id"));
+        Product product = productService.findProductById(id);
+        String status = product.getStatus();
+        String msg;
+        if(status.equals("Inactive")){
+            msg = "Sản phẩm đã ở trạng thái 'Ngừng bán'";
+        }
+        status = "Inactive";
+        product.setStatus(status);
+        productService.updateProduct(product);
+        msg = "Sản phẩm đã đổi trạng thái thành công!";
+        req.getSession().setAttribute("msg", msg);
+        resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req,resp);
+        super.doPost(req, resp);
     }
 }

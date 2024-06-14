@@ -26,7 +26,7 @@
 
         <!-- Profile Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/common/users-profile.jsp">
+            <a class="nav-link " href="${contextPath}/profile">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
             </a>
@@ -40,6 +40,23 @@
             </a>
         </li><!-- End Product Page Nav -->
 
+
+        <!-- Category Nav -->
+        <li class="nav-item">
+            <a class="nav-link " href="${contextPath}/#">
+                <i class="bi bi-card-list"></i>
+                <span>Danh Mục</span>
+            </a>
+        </li><!-- End Category Page Nav -->
+
+        <!-- Brand Nav -->
+        <li class="nav-item">
+            <a class="nav-link " href="${contextPath}/#">
+                <i class="bi bi-bank2"></i>
+                <span>Hãng sản phẩm</span>
+            </a>
+        </li><!-- End Brand Page Nav -->
+
         <!-- Orders Nav -->
         <li class="nav-item">
             <a class="nav-link " href="${contextPath}/#">
@@ -47,6 +64,7 @@
                 <span>Đơn hàng</span>
             </a>
         </li><!-- End Order Page Nav -->
+
 
         <!-- Show Account Nav if it's ADMIN -->
         <c:if test="${account.role == 'ADMIN'}">

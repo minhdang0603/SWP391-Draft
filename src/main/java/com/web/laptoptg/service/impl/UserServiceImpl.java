@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserDTO user) {
         User temp = userDAO.findUserByEmail(user.getEmail());
         if (temp != null) {
+            temp.setId(user.getId());
             temp.setUserName(user.getUserName());
             temp.setAddress(user.getAddress());
             temp.setPhoneNumber(user.getPhoneNumber());
@@ -66,6 +67,7 @@ public class UserServiceImpl implements UserService {
         User temp = userDAO.findUserByEmail(user.getEmail());
         if (temp != null) {
             temp.setPassword(user.getPassword());
+            temp.setRole(roleDAO.getRoleByRoleName(user.getRole()));
             userDAO.updateUser(temp);
         }
     }
@@ -104,8 +106,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(String email, String password) {
-        User user = this.findUserByEmail(email);
-        if (user != null && PasswordUtils.verify(password, user.getPassword())) {
+        User user = userDAO.findUserByEmail(email);
+        if (PasswordUtils.verify(password, user.getPassword())) {
             return user;
         }
         return null;

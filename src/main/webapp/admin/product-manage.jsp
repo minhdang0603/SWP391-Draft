@@ -42,30 +42,8 @@
 
     <!-- Template Main CSS File -->
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/productManage.css" rel="stylesheet">
 
-    <style>
-
-        .form-control-lg {
-            font-size: 1.25rem;
-            padding: .5rem 1rem;
-        }
-
-        .large-textarea {
-            min-height: 200px;
-            font-size: 1.25rem;
-            padding: .75rem;
-        }
-
-        #myTable th, td {
-            text-align: center;
-            align-content: center;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 0.875em;
-        }
-    </style>
 </head>
 
 <body>
@@ -77,11 +55,17 @@
     <jsp:include page="../components/sidebar.jsp"/>
 </c:if>
 
+
 <main id="main" class="main">
 
     <div class="pagetitle text-center">
         <h1>Quản Lý Sản Phẩm</h1>
-    </div><!-- End Page Title -->
+    </div>
+    <div id="msg" class="notification">
+        <h6 id="msgContent">${msg}</h6>
+        <c:remove var="msg" scope="session"/>
+    </div>
+    <!-- End Page Title -->
 
     <section class="section profile">
         <div class="row">
@@ -91,13 +75,14 @@
                     <div class="card-body pt-3">
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
-
+                            <%--                                <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">--%>
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">
                                     Danh Sách Sản Phẩm
                                 </button>
                             </li>
+                            <%--                                </c:if>--%>
 
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Tạo Mới
@@ -140,32 +125,11 @@
                                         <c:forEach var="pro" items="${list}">
                                             <tr>
                                                 <td class="align-middle text-center">${pro.id}</td>
-                                                    <%--                                                <td class="align-middle text-center"><img--%>
-                                                    <%--                                                        style="width: 100px; height: 100px"--%>
-                                                    <%--                                                        src="${contextPath}/assets/img/product-img/${pro.image}">--%>
-                                                    <%--                                                </td>--%>
                                                 <td class="align-middle text-center"
                                                     style="width: 50%">
                                                     <a href="#"
                                                        onclick="showProductDetails(
-                                                               '${pro.id}',
-                                                               '${pro.productName}',
-                                                               '${pro.category.categoryName}',
-                                                               '${pro.brand.brandName}',
-                                                               '${pro.description}',
-                                                               '${pro.unitPrice}',
-                                                               '${pro.stockUnit}',
-                                                               '${pro.operatingSystem}',
-                                                               '${pro.cpu}',
-                                                               '${pro.ram}',
-                                                               '${pro.monitorScale}',
-                                                               '${pro.batteryVol}',
-                                                               '${pro.design}',
-                                                               '${pro.maintenance}',
-                                                               '${pro.category.id}',
-                                                               '${pro.soldUnit}',
-
-                                                           <%--'${pro.image}'--%>
+                                                               '${pro.category.id}','${pro.id}'
                                                                )">
                                                             ${pro.productName}
                                                     </a>
@@ -175,13 +139,315 @@
                                                     style="padding-right: 30px">${pro.brand.brandName}</td>
                                                 <td class="align-middle text-sm"
                                                     style="padding-right: 50px">${pro.stockUnit}</td>
-                                                <td class="align-middle text-center text-sm mr-2"><i
-                                                        class="bi bi-pencil-square"
-                                                        style="font-size: 20px; color: deepskyblue"></i></td>
-                                                <td class="align-middle text-center text-sm mr-2"><i
+                                                <td class="align-middle text-center text-sm mr-2"><a href="#"
+                                                                                                     onclick="editModal('${pro.category.id}','${pro.id}')">
+                                                    <i
+                                                            class="bi bi-pencil-square"
+                                                            style="font-size: 20px; color: deepskyblue"></i></a></td>
+                                                <td class="align-middle text-center text-sm mr-2"><a href="#"
+                                                                                                     onclick="deleteModal('${pro.id}')"><i
                                                         class="bi bi-trash2-fill"
-                                                        style="font-size: 20px;color: red"></i></td>
+                                                        style="font-size: 20px;color: red"></i></a></td>
                                             </tr>
+                                            <!--Confirm Delete Modal-->
+                                            <div class="modal fade alert-primary" tabindex="-1"
+                                                 data-keyboard="false"
+                                                 id="myModal${pro.id}">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Xác Nhận</h5>
+                                                        </div>
+                                                        <div class="container"></div>
+                                                        <div class="modal-body">
+                                                            <p>Bạn có chắc chắn muốn chuyển sản phẩm này sang trạng thái
+                                                                "Ngừng bán" không?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a type="button"
+                                                               class="btn btn-secondary"
+                                                               data-dismiss="modal">Hủy
+                                                            </a>
+                                                            <a href="${contextPath}/admin/product-delete?id=${pro.id}"
+                                                               type="button" id="confirmDeleteBtn"
+                                                               class="btn btn-primary">Xác nhận
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!--end confirm delete modal-->
+
+                                            <!-- Product Details Modal -->
+                                            <div class="modal fade" id="productDetailsModal${pro.id}" tabindex="-1"
+                                                 aria-labelledby="productDetailsModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="productDetailsModalLabel">Chi
+                                                                Tiết Sản Phẩm</h5>
+                                                            <button type="button" class="btn-close" data-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row mb-2">
+                                                                <div class="col-md-4">
+                                                                    <img id="productImage"
+                                                                         src="${contextPath}/assets/img/product-img/${pro.image}"
+                                                                         class="img-fluid" alt="Product Image"/>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p><strong>Mã sản phẩm:</strong> <span
+                                                                            id="modalID">${pro.id}</span></p>
+                                                                    <p><strong>Tên sản phẩm:</strong> <span
+                                                                            id="modalProductName">${pro.productName}</span>
+                                                                    </p>
+                                                                    <p><strong>Trạng thái:</strong> <span
+                                                                            id="modalProductStatus">${pro.status}</span>
+                                                                    </p>
+                                                                    <p><strong>Đơn giá:</strong> <span
+                                                                            id="modalUnitPrice">${pro.unitPrice}</span>
+                                                                        VND</p>
+                                                                    <p><strong>Tồn kho:</strong> <span
+                                                                            id="modalStockUnit">${pro.stockUnit}</span>
+                                                                    </p>
+                                                                    <p><strong>Đã bán:</strong> <span
+                                                                            id="modalSoldUnit">${pro.soldUnit}</span>
+                                                                    </p>
+
+                                                                    <p><strong>Mô tả:</strong> <span
+                                                                            id="modalDescription">${pro.description}</span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <p><strong>Danh mục:</strong> <span
+                                                                            id="modalCategoryName">${pro.category.categoryName}</span>
+                                                                    </p>
+                                                                    <p><strong>Hãng:</strong> <span
+                                                                            id="modalBrandName">${pro.brand.brandName}</span>
+                                                                    </p>
+                                                                    <div id="technicalDetails"
+                                                                         style="display: ${(pro.category.id == 1 || pro.category.id == 2) ? 'block' : 'none'}">
+                                                                        <p><strong>Hệ điều hành:</strong> <span
+                                                                                id="modalOS">${pro.operatingSystem}</span>
+                                                                        </p>
+                                                                        <p><strong>CPU:</strong> <span
+                                                                                id="modalCPU">${pro.cpu}</span></p>
+                                                                        <p><strong>RAM:</strong><span
+                                                                                id="modalRAM">${pro.ram}</span></p>
+                                                                        <p><strong>Màn hình:</strong> <span
+                                                                                id="modalScreen">${pro.monitorScale}</span>
+                                                                        </p>
+                                                                        <p><strong>Pin:</strong> <span
+                                                                                id="modalBattery">${pro.batteryVol}</span>
+                                                                        </p>
+                                                                        <p><strong>Thiết kế:</strong> <span
+                                                                                id="modalDesign">${pro.design}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                    <p><strong>Bảo hành:</strong> <span
+                                                                            id="modalWarranty">${pro.maintenance}</span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Đóng
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!--end detail modal-->
+
+                                            <!-- Product Update Modal -->
+                                            <div class="modal" id="productUpdateModal${pro.id}" tabindex="-1"
+                                                 aria-labelledby="productUpdatesModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered"
+                                                     style="display: block;" data-keyboard="false"
+                                                     data-backdrop="static">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="productUpdatesModalLabel">Chỉnh
+                                                                Sửa Chi Tiết Sản Phẩm</h5>
+                                                            <button type="button" class="btn-close" data-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="updateProductForm"
+                                                                  onsubmit="return validateFileType()"
+                                                                  action="${contextPath}/admin/product-update"
+                                                                  method="post" enctype="multipart/form-data">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label for="productIDUpdate"><strong>Mã sản
+                                                                                phẩm:</strong></label>
+                                                                            <input type="text"
+                                                                                   class="form-control readonly"
+                                                                                   id="productIDUpdate" name="productID"
+                                                                                   value="${pro.id}" readonly>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="productNameUpdate"><strong>Tên
+                                                                                sản
+                                                                                phẩm:</strong></label>
+                                                                            <input type="text" class="form-control"
+                                                                                   id="productNameUpdate"
+                                                                                   name="productName"
+                                                                                   value="${pro.productName}">
+                                                                        </div>
+                                                                        <div class="form-group mt-1">
+                                                                            <h6><strong>Trạng thái:</strong></h6>
+                                                                            <input type="radio" name="productStatus"
+                                                                                   id="activeProduct"
+                                                                                   value="active" ${(pro.status=="active"?"checked":"")} >
+                                                                            <label for="activeProduct" class="me-5">Active</label>
+                                                                            <input type="radio" name="productStatus"
+                                                                                   id="inactiveProduct"
+                                                                                   value="inactive" ${(pro.status=="inactive"?"checked":"")} >
+                                                                            <label for="inactiveProduct">Inactive</label>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="unitPriceUpdate"><strong>Đơn
+                                                                                giá (VND):</strong></label>
+                                                                            <input type="number" class="form-control"
+                                                                                   id="unitPriceUpdate" min="0" step="1"
+                                                                                   name="unitPrice"
+                                                                                   value="${pro.unitPrice}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="stockUnitUpdate"><strong>Tồn
+                                                                                kho:</strong></label>
+                                                                            <input name="stockUnit" type="number"
+                                                                                   class="form-control"
+                                                                                   id="stockUnitUpdate" min="0" step="1"
+                                                                                   value="${pro.stockUnit}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="soldUnitUpdate"><strong>Đã
+                                                                                bán:</strong></label>
+                                                                            <input type="text" class="form-control"
+                                                                                   id="soldUnitUpdate" name="soldUnit"
+                                                                                   value="${pro.soldUnit}">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label for="descriptionUpdate"><strong>Mô
+                                                                                tả:</strong></label>
+                                                                            <textarea class="form-control"
+                                                                                      id="descriptionUpdate" cols="10" rows="5"
+                                                                                      name="description">${pro.description}</textarea>
+                                                                        </div>
+                                                                        <div class="form-group mt-1">
+                                                                            <label for="fileUpload"><strong>Ảnh sản
+                                                                                phẩm:</strong></label>
+                                                                            <input type="file" class="form-control-file"
+                                                                                   id="fileUpload" accept=".jpg, .jpeg, .png, .img" name="image">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label for="categoryNameUpdate"><strong>Danh
+                                                                                mục:</strong></label>
+                                                                            <select name="productCategory"
+                                                                                    class="form-control"
+                                                                                    id="categoryNameUpdate"
+                                                                                    onchange="toggleFields()" required>
+                                                                                <c:forEach items="${listCate}"
+                                                                                           var="category">
+                                                                                    <option value="${category.id}" ${category.id == pro.category.id ? 'selected' : ''}>
+                                                                                            ${category.categoryName}</option>
+                                                                                </c:forEach>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="brandNameUpdate"><strong>Hãng:</strong></label>
+                                                                            <select name="productBrand"
+                                                                                    class="form-control"
+                                                                                    id="brandNameUpdate" required>
+                                                                                <c:forEach items="${listBrand}"
+                                                                                           var="brand">
+                                                                                    <option value="${brand.id}" ${brand.id == pro.brand.id ? 'selected' : ''}>
+                                                                                            ${brand.brandName}</option>
+                                                                                </c:forEach>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div id="technicalDetailsUpdate">
+                                                                            <div class="form-group">
+                                                                                <label for="osUpdate"><strong>Hệ điều
+                                                                                    hành:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="osUpdate"
+                                                                                       name="operatingSystem"
+                                                                                       value="${pro.operatingSystem}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="cpuUpdate"><strong>CPU:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="cpuUpdate" name="cpu"
+                                                                                       value="${pro.cpu}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="ramUpdate"><strong>RAM:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="ramUpdate" name="ram"
+                                                                                       value="${pro.ram}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="screenUpdate"><strong>Màn
+                                                                                    hình:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="screenUpdate"
+                                                                                       name="monitorScale"
+                                                                                       value="${pro.monitorScale}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="batteryUpdate"><strong>Pin:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="batteryUpdate"
+                                                                                       name="batteryVol"
+                                                                                       value="${pro.batteryVol}">
+                                                                            </div>
+                                                                            <div class="form-group h-50">
+                                                                                <label for="designUpdate"><strong>Thiết
+                                                                                    kế:</strong></label>
+                                                                                <input type="text" class="form-control"
+                                                                                       id="designUpdate" name="design"
+                                                                                       value="${pro.design}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="warrantyUpdate"><strong>Bảo
+                                                                                hành:</strong></label>
+                                                                            <input type="text" class="form-control"
+                                                                                   id="warrantyUpdate"
+                                                                                   name="maintenance"
+                                                                                   value="${pro.maintenance}">
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Đóng
+                                                                    </button>
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary">Lưu
+                                                                    </button>
+                                                                        <%--                                                                    <a data-toggle="modal" href="#myModal2${pro.id}"--%>
+                                                                        <%--                                                                       class="btn btn-primary">Lưu</a>--%>
+
+                                                                </div><!--end update modal-->
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end form update-->
                                         </c:forEach>
                                         </tbody>
                                     </table>
@@ -193,8 +459,8 @@
 
                                 <!-- Create New Product Form -->
                                 <div class="container">
-                                    <form id="productForm" action="${contextPath}/admin/product-add" method="post"
-                                          oninput="validateForm()">
+                                    <form id="productForm" method="post" action="${contextPath}/admin/product-add"
+                                          onsubmit="return validateFileType()" oninput="validateForm()" enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row mb-3">
@@ -204,6 +470,23 @@
                                                         <input name="productName" type="text" class="form-control"
                                                                id="productName" required>
                                                         <div id="productNameError" class="error-message"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label class="col-form-label col-md-4">Trạng thái: </label>
+                                                    <div class="col-md-4">
+                                                        <input type="radio" name="productStatus"
+                                                               id="activeProductStatus"
+                                                               value="active" checked>
+                                                        <label for="activeProductStatus"
+                                                               class="col-form-label">Active</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="radio" name="productStatus"
+                                                               id="inactiveProductStatus"
+                                                               value="inactive">
+                                                        <label for="inactiveProductStatus" class="col-form-label">Inactive</label>
                                                     </div>
                                                 </div>
 
@@ -321,8 +604,16 @@
                                                     <label for="description" class="col-md-4 col-form-label">Mô tả sản
                                                         phẩm</label>
                                                     <div class="col-md-8">
-                                                        <textarea name="description" class="form-control large-textarea"
-                                                                  id="description"></textarea>
+        <textarea name="description" class="form-control large-textarea"
+                  id="description"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label for="image" class="col-md-4 col-form-label">Ảnh minh
+                                                        họa:</label>
+                                                    <div class="col-md-8">
+                                                        <input type="file" class="form-control-file"
+                                                               id="image" name="image">
                                                     </div>
                                                 </div>
                                             </div>
@@ -341,50 +632,15 @@
                 </div>
             </div>
         </div>
+
+
     </section>
 </main><!-- End #main -->
-
-<!-- Product Details Modal -->
-<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productDetailsModalLabel">Chi Tiết Sản Phẩm</h5>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <img id="productImage" src="" class="img-fluid" alt="Product Image">
-                    </div>
-                    <div class="col-md-6">
-                        <p><strong>Mã sản phẩm:</strong> <span id="modalID"></span></p>
-                        <p><strong>Tên sản phẩm:</strong> <span id="modalProductName"></span></p>
-                        <p><strong>Danh mục:</strong> <span id="modalCategoryName"></span></p>
-                        <p><strong>Hãng:</strong> <span id="modalBrandName"></span></p>
-                        <p><strong>Mô tả:</strong> <span id="modalDescription"></span></p>
-                        <p><strong>Đơn giá:</strong> <span id="modalUnitPrice"></span> VND</p>
-                        <p><strong>Tồn kho:</strong> <span id="modalStockUnit"></span></p>
-                        <p><strong>Đã bán:</strong> <span id="modalSoldUnit"></span></p>
-                        <div id="technicalDetails">
-                            <p><strong>Hệ điều hành:</strong> <span id="modalOS"></span></p>
-                            <p><strong>CPU:</strong> <span id="modalCPU"></span></p>
-                            <p><strong>RAM:</strong> <span id="modalRAM"></span></p>
-                            <p><strong>Màn hình:</strong> <span id="modalScreen"></span></p>
-                            <p><strong>Pin:</strong> <span id="modalBattery"></span></p>
-                            <p><strong>Thiết kế:</strong> <span id="modalDesign"></span></p>
-                        </div>
-                        <p><strong>Bảo hành:</strong> <span id="modalWarranty"></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
+
 
 <!-- Vendor JS Files -->
 <%--<script src="${contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>--%>
@@ -404,119 +660,7 @@
 
 <!-- Template Main JS File -->
 <script src="${contextPath}/assets/js/main.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#myTable').DataTable({
-            columnDefs: [
-                {width: "50%", targets: 1} // Set width of second column (index 1) to 50%
-            ]
-        });
-    });
-
-    function escapeHtml(unsafe) {
-        return unsafe.replace(/[&<>"'\/]/g, function (m) {
-            return {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;',
-                '/': '&#x2F;'
-            }[m];
-        });
-    }
-
-    function validateForm() {
-        const productName = document.getElementById('productName').value;
-        const unitPrice = document.getElementById('unitPrice').value;
-        const createButton = document.getElementById('createButton');
-
-        let isValid = true;
-
-        // Validate Product Name
-        const productNameError = document.getElementById('productNameError');
-        if (productName.trim() === '') {
-            productNameError.textContent = 'Tên sản phẩm là bắt buộc.';
-            isValid = false;
-        } else {
-            productNameError.textContent = '';
-        }
-
-        // Validate Unit Price
-        const unitPriceError = document.getElementById('unitPriceError');
-        if (unitPrice.trim() === '' || isNaN(unitPrice) || parseInt(unitPrice) < 0 || !Number.isInteger(Number(unitPrice))) {
-            unitPriceError.textContent = 'Đơn giá phải là số nguyên không âm.';
-            isValid = false;
-        } else {
-            unitPriceError.textContent = '';
-        }
-
-        createButton.disabled = !isValid;
-    }
-
-    function toggleFields() {
-        const category = document.getElementById('productCategory').value;
-        const conditionalFields = document.getElementById('conditionalFields');
-
-        if (category === '1' || category === '2') {
-            conditionalFields.style.display = 'block';
-        } else {
-            conditionalFields.style.display = 'none';
-        }
-    }
-
-
-    function resetForm() {
-        document.getElementById('productForm').reset();
-        document.getElementById('createButton').disabled = true;
-        document.getElementById('productNameError').textContent = '';
-        document.getElementById('unitPriceError').textContent = '';
-        document.getElementById('conditionalFields').style.display = 'none';
-    }
-
-    function removeControlCharacters(inputString) {
-        // Sử dụng biểu thức chính quy để tìm và thay thế các ký tự điều khiển
-        return inputString.replace(/[\x00-\x1F\x7F-\x9F]/g, '');
-    }
-
-    function removeSlash(input) {
-        return input.replace(/\//g, "");
-    }
-
-    function showProductDetails(id, productName, categoryName, brandName, description, unitPrice, stockUnit, operatingSystem, cpu, ram, monitorScale, batteryVol, design, maintenance, categoryId, soldUnit) {
-
-// Sử dụng hàm removeControlCharacters() để loại bỏ các ký tự điều khiển
-
-
-        document.getElementById('modalID').innerHTML = id;
-        document.getElementById('modalProductName').innerHTML = productName;
-        document.getElementById('modalCategoryName').innerHTML = categoryName;
-        document.getElementById('modalBrandName').innerHTML = brandName;
-        document.getElementById('modalDescription').innerHTML = description;
-        document.getElementById('modalUnitPrice').innerHTML = unitPrice;
-        document.getElementById('modalStockUnit').innerHTML = stockUnit;
-        document.getElementById('modalOS').innerHTML = operatingSystem;
-        document.getElementById('modalCPU').innerHTML = cpu;
-        document.getElementById('modalRAM').innerHTML = ram;
-        document.getElementById('modalScreen').innerHTML = monitorScale;
-        document.getElementById('modalBattery').innerHTML = batteryVol;
-        document.getElementById('modalDesign').innerHTML = design;
-        document.getElementById('modalWarranty').innerHTML = maintenance;
-        document.getElementById('modalSoldUnit').innerHTML = soldUnit;
-        console.log(description);
-
-        // Hiển thị hoặc ẩn các trường kỹ thuật dựa trên categoryId
-        const technicalDetails = document.getElementById('technicalDetails');
-        if (categoryId === '1' || categoryId === '2') {
-            technicalDetails.style.display = 'block';
-        } else {
-            technicalDetails.style.display = 'none';
-        }
-
-        var productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal'));
-        productDetailsModal.show();
-    }
-</script>
+<script src="${contextPath}/assets/js/product-manage.js"></script>
 
 </body>
 

@@ -1,11 +1,11 @@
 window.onload = function() {
-    var fullNameInput = document.getElementById('fullName');
-    var addressInput = document.getElementById('Address');
-    var phoneInput = document.getElementById('Phone');
-    var emailInput = document.getElementById('Email');
-    var fullNameHelp = document.getElementById('fullNameHelp');
-    var phoneHelp = document.getElementById('phoneHelp');
-    var saveChangesBtn = document.getElementById('saveChangesBtn');
+    const fullNameInput = document.getElementById('fullName');
+    const addressInput = document.getElementById('Address');
+    const phoneInput = document.getElementById('Phone');
+    const emailInput = document.getElementById('Email');
+    const fullNameHelp = document.getElementById('fullNameHelp');
+    const phoneHelp = document.getElementById('phoneHelp');
+    const saveChangesBtn = document.getElementById('saveChangesBtn');
 
     function validateForm() {
         var isValid = true;
@@ -18,10 +18,10 @@ window.onload = function() {
             fullNameHelp.textContent = '';
         }
 
-        // Check if phone number is 9 or 10 digits long
+        // Check if phone number starts with 0 and is 9 or 10 digits long, and contains only digits
         var phoneValue = phoneInput.value.replace(/\D/g, ''); // Remove all non-digit characters
-        if (phoneValue.length !== 0 && (phoneValue.length !== 9 && phoneValue.length !== 10)) {
-            phoneHelp.textContent = 'Số điện thoại phải có 9 hoặc 10 chữ số!';
+        if (phoneValue.length !== 0 && (!/^0\d{8,9}$/.test(phoneValue))) {
+            phoneHelp.textContent = 'Số điện thoại phải bắt đầu bằng số 0 và có 9 hoặc 10 chữ số!';
             isValid = false;
         } else {
             phoneHelp.textContent = '';
@@ -36,9 +36,14 @@ window.onload = function() {
         saveChangesBtn.disabled = !isValid;
     }
 
+    // Ensure phoneInput allows only digits
+    phoneInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[^\d]/g, ''); // Remove non-digit characters
+        validateForm();
+    });
+
     fullNameInput.addEventListener('input', validateForm);
     addressInput.addEventListener('input', validateForm);
-    phoneInput.addEventListener('input', validateForm);
     emailInput.addEventListener('input', validateForm);
 
     // Call validateForm initially to set the initial state of the save button

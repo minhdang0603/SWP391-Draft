@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findProductByName(String name) {
+    public boolean findProductByName(String name) {
         return productDAO.findProductByName(name);
     }
 
@@ -61,12 +61,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getNextProduct(int amount, int numberOfProduct) {
-        return productDAO.getNextProduct(amount, numberOfProduct);
+    public List<Product> getNextProduct(List<Integer> brandIDs, String price, int cateID, int amount, int numberOfProduct) {
+        // get next product by brand id or price or categor id
+        return productDAO.getNextProduct(brandIDs, price, cateID, amount, numberOfProduct);
     }
 
     @Override
-    public List<Product> getNextProductByCate(int amount, int numberOfProduct, int cateID){
-        return productDAO.getNextProductByCate(amount, numberOfProduct, cateID);
+    public List<Product> findProduct(String name) {
+        return productDAO.findProduct(name);
+    }
+
+    @Override
+    public List<Product> getProductBySorting(List<Integer> brandIDs, String priceType, int cateID) {
+        return productDAO.getProductsBySortingBrandsAndCategoryId(brandIDs, priceType, cateID);
     }
 }

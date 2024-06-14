@@ -109,6 +109,7 @@ public class LoginController extends HttpServlet {
         userDTO.setAddress(user.getAddress());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setRole(user.getRole().getRoleName());
+        userDTO.setPassword(user.getPassword());
         session.setAttribute("account", userDTO);
         resp.sendRedirect(req.getContextPath() + "/waiting");
     }
@@ -185,6 +186,7 @@ public class LoginController extends HttpServlet {
         userDTO.setAddress(user.getAddress());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         session.setAttribute("account", userDTO);
+        userDTO.setPassword(user.getPassword());
         resp.sendRedirect(req.getContextPath() + "/waiting");
     }
 
