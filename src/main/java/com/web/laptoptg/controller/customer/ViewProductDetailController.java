@@ -21,7 +21,6 @@ public class ViewProductDetailController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         productService = new ProductServiceImpl();
-
     }
 
     @Override
@@ -43,11 +42,6 @@ public class ViewProductDetailController extends HttpServlet {
             e.printStackTrace();
         }
 
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
     }
 
     @Override

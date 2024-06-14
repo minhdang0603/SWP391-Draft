@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `laptop_tg` /*!40100 DEFAULT CHARACTER SET utf8mb
 USE `laptop_tg`;
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: laptop_tg
+-- Host: 127.0.0.1    Database: laptop_tg
 -- ------------------------------------------------------
 -- Server version	8.0.37
 
@@ -84,7 +84,7 @@ CREATE TABLE `cart_details` (
   KEY `FKProduct_CartDetails` (`product_id`),
   CONSTRAINT `FKCart_CartDetails` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FKProduct_CartDetails` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `cart_details` (
 
 LOCK TABLES `cart_details` WRITE;
 /*!40000 ALTER TABLE `cart_details` DISABLE KEYS */;
-INSERT INTO `cart_details` VALUES (15,1,2,88),(16,1,2,85),(64,1,3,6),(65,1,3,5),(118,2,1,5),(119,1,1,52),(120,1,1,51),(121,1,1,49),(122,1,1,4);
+INSERT INTO `cart_details` VALUES (15,1,2,88),(16,1,2,85),(64,1,3,6),(65,1,3,5),(92,1,1,5);
 /*!40000 ALTER TABLE `cart_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,49 +117,18 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'Laptop'),(2,'PC ĐỒNG BỘ & PC GAMING'),(3,'TB NGHE NHÌN & GIẢI TRÍ'),(4,'LINH KIỆN MÁY TÍNH'),(5,'THIẾT BỊ LƯU TRỮ'),(6,'THIẾT BỊ MẠNG'),(7,'CAMERA QUAN SÁT'),(8,'PHỤ KIỆN CÁC LOẠI'),(9,'THIẾT BỊ VĂN PHÒNG');
+INSERT INTO `category` VALUES (1,'Laptop'),(2,'PC đồng bộ'),(3,'Thiết bị nghe nhìn'),(4,'Linh kiện máy tính'),(5,'Thiết bị lưu trữ'),(6,'Thiết bị mạng'),(7,'Camera'),(8,'Phụ kiện'),(9,'Thiết bị văn phòng');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `order_details`
+-- Table structure for table `order`
 --
 
-DROP TABLE IF EXISTS `order_details`;
+DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order_details` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `unit_price` bigint NOT NULL,
-  `quantity` int NOT NULL,
-  `order_id` bigint DEFAULT NULL,
-  `product_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKOrder_OrderDetails` (`order_id`),
-  KEY `FKProduct_OrderDetails` (`product_id`),
-  CONSTRAINT `FKOrder_OrderDetails` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FKProduct_OrderDetails` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `order_details`
---
-
-LOCK TABLES `order_details` WRITE;
-/*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
-INSERT INTO `order_details` VALUES (1,13980000,2,32,62),(2,25990000,1,32,57),(3,22490000,1,32,54);
-/*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `orders`
---
-
-DROP TABLE IF EXISTS `orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orders` (
+CREATE TABLE `order` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `address` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
@@ -180,13 +149,44 @@ CREATE TABLE `orders` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `orders`
+-- Dumping data for table `order`
 --
 
-LOCK TABLES `orders` WRITE;
-/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','Pending',NULL,NULL),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','created',2,NULL);
-/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+LOCK TABLES `order` WRITE;
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','Pending',NULL,NULL),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','created',2,NULL);
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_details`
+--
+
+DROP TABLE IF EXISTS `order_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_details` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `unit_price` bigint NOT NULL,
+  `quantity` int NOT NULL,
+  `order_id` bigint DEFAULT NULL,
+  `product_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKOrder_OrderDetails` (`order_id`),
+  KEY `FKProduct_OrderDetails` (`product_id`),
+  CONSTRAINT `FKOrder_OrderDetails` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FKProduct_OrderDetails` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_details`
+--
+
+LOCK TABLES `order_details` WRITE;
+/*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
+INSERT INTO `order_details` VALUES (1,13980000,2,32,62),(2,25990000,1,32,57),(3,22490000,1,32,54);
+/*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `product` (
   KEY `FKBrand_Product` (`brand_id`),
   CONSTRAINT `FKBrand_Product` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),
   CONSTRAINT `FKCategory_Product` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,7 +317,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Hà Nội','admin@gmail.com','Nguyễn Xuân Nam','$2a$10$3mIWjShzTyfEqzVoRwyUjOK4XlWk7TjcjrO3xaFcXjlfq6ES4bnD6','012345678',1,'active'),(2,'Hà Nội','member@gmail.com','Đăng','$2a$10$BXIy9ltJI67yi28TUPDV4.HwwZnhPw880zBNsanfc3k66UtNe5kVO','0366556380',3,'active'),(3,NULL,'saler@gmail.com',NULL,'$2a$10$1A2jZwaq02MViKmdEgSyou/1eBdLt9QdkJz10qUnApYDxqv3P5CKy',NULL,2,'active'),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$lHb9AJ4TSJpOMYmhsbpPKOF70JO.D0tuol8n0jMpy7qzAt842Xv/K','123456',3,'active'),(23,NULL,'dangtm1163@gmail.com','Minh Đăng','$2a$10$KEMTWcp/.K9tsbrrd6EUbeMG.LSpfiWcIsLhM6cTKMcq34LmuZnq2',NULL,3,'active'),(27,NULL,'ruabin1163@gmail.com','Tạ Minh Đăng','$2a$10$w1VC/kjDg8wUJ/aYy3i82.VjWKudrkKz3dinNRPX1nqePTJ.2oC5u',NULL,3,'active');
+INSERT INTO `user` VALUES (1,'Hà Nội','admin@gmail.com','Nguyễn Xuân Nam','$2a$10$3mIWjShzTyfEqzVoRwyUjOK4XlWk7TjcjrO3xaFcXjlfq6ES4bnD6','123456789',1,'active'),(2,NULL,'member@gmail.com',NULL,'$2a$10$Zk9MSaYLQzuR3AduX8jM2.z3otHgBpkVeQPjSkvL/XfP3e1xD0h5S',NULL,3,'active'),(3,NULL,'saler@gmail.com',NULL,'$2a$10$1A2jZwaq02MViKmdEgSyou/1eBdLt9QdkJz10qUnApYDxqv3P5CKy',NULL,2,'active'),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$lHb9AJ4TSJpOMYmhsbpPKOF70JO.D0tuol8n0jMpy7qzAt842Xv/K','123456',3,'active'),(23,NULL,'dangtm1163@gmail.com','Minh Đăng','$2a$10$X4HjBeEX.xwIJyHmrMUuSupw85BeBDNWLrhD6N8Xdf2f/yvuEqNhK',NULL,3,'active'),(27,NULL,'ruabin1163@gmail.com','Tạ Minh Đăng','$2a$10$w1VC/kjDg8wUJ/aYy3i82.VjWKudrkKz3dinNRPX1nqePTJ.2oC5u',NULL,3,'active');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -330,4 +330,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-13 23:46:38
+-- Dump completed on 2024-06-14  9:02:11

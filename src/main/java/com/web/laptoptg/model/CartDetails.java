@@ -21,14 +21,14 @@ public class CartDetails {
     private int quantity;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}
     )
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
     @ManyToOne(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}
     )
     @JoinColumn(name = "product_id")
