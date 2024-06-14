@@ -28,6 +28,9 @@
     <link href="assets/admin/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="assets/admin/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -103,7 +106,7 @@
                     <div class="input-group">
                         <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
                         <form action="search-account" method="post">  <input type="text" name="searchAcc" class="form-control" placeholder="Type here...">
-                        <input type="submit" value="search">
+                            <input type="submit" value="search">
                         </form>
 
                     </div>
@@ -134,57 +137,57 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-body px-0 pt-0 pb-2">
-                        <div class=table-responsive p-0">
-                            <table class="table align-items-center mb-0">
-                                <thead>
+                        <div class=table-responsive pb-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">ID</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User Name</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone Number</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="user" items="${listUser}">
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">ID</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User Name</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone Number</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">${user.id}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">${user.userName}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">${user.email}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">${user.address}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">${user.phoneNumber}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">${user.role.roleName}</p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">${user.status}</p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <a href="account-manage?update=${user.id}" class="badge badge-sm bg-gradient-success view-user" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#userModal">View</a>
+                                        <a href="#" class="badge badge-sm bg-gradient-danger delete-user" >Delete</a>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach var="user" items="${listUser}">
-                                    <tr>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">${user.id}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">${user.userName}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">${user.email}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">${user.address}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">${user.phoneNumber}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">${user.role.roleName}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">${user.status}</p>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <a href="account-manage?update=${user.id}" class="badge badge-sm bg-gradient-success view-user" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#userModal">View</a>
-                                            <a href="account-manage?aid=${user.id}" class="badge badge-sm bg-gradient-danger delete-user" >Delete</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
+                            </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -220,7 +223,7 @@
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="role" id="customer" value="customer" required>
-                                <label class="form-check-label" for="customer">Customer</label>
+                                <label class="form-check-label" for="customer">MEMBER</label>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -243,9 +246,6 @@
             </div>
         </div>
     </div>
-
-
-
 </main>
 <!--   Core JS Files   -->
 <script src="assets/admin/js/core/popper.min.js"></script>
@@ -256,6 +256,40 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="assets/admin/js/argon-dashboard.min.js?v=2.0.4"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-user');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const userId = this.getAttribute('data-id');
+
+                if (confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
+                    fetch(`account-manage?idDelete=${userId}`, {
+                        method: 'GET'
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                toastr.success('Đã xóa thành công!', 'Thông báo', { timeOut: 3000 });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 3000);
+                            } else {
+                                toastr.error('Xóa thất bại!', 'Lỗi', { timeOut: 3000 });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            toastr.error('Xóa thất bại!', 'Lỗi', { timeOut: 3000 });
+                        });
+                }
+            });
+        });
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

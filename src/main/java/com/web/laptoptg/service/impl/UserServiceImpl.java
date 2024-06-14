@@ -5,7 +5,10 @@ import com.web.laptoptg.dao.UserDAO;
 import com.web.laptoptg.dao.impl.RoleDAOImpl;
 import com.web.laptoptg.dao.impl.UserDAOImpl;
 import com.web.laptoptg.dto.UserDTO;
+import com.web.laptoptg.model.Cart;
+import com.web.laptoptg.model.Role;
 import com.web.laptoptg.model.User;
+import com.web.laptoptg.service.CartService;
 import com.web.laptoptg.service.UserService;
 import com.web.laptoptg.util.PasswordUtils;
 
@@ -44,6 +47,17 @@ public class UserServiceImpl implements UserService {
             temp.setAddress(user.getAddress());
             temp.setPhoneNumber(user.getPhoneNumber());
             temp.setEmail(user.getEmail());
+            // Lưu role_id
+            Role role = new Role();
+            if (user.getRole().equals("1")) {
+                role = new Role(1,"ADMIN");
+            } else if(user.getRole().equals("2")){
+                role = new Role(2,"SALER");
+            }else{
+                role = new Role(3,"MEMBER");
+            }
+            temp.setRole(role);
+            temp.setStatus(user.getStatus());
             userDAO.updateUser(temp);
         }
     }
@@ -55,6 +69,7 @@ public class UserServiceImpl implements UserService {
             userDAO.updateUser(temp);
         }
     }
+
 
     @Override
     public User findUserByEmail(String email) {
@@ -99,5 +114,34 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUsers() {
         return userDAO.findAllUsers();
+    }
+
+    public void addUser(UserDTO user){
+        User temp = new User();
+        CartService cartService = new CartServiceImpl();
+            temp.setUserName(user.getUserName());
+            temp.setAddress(user.getAddress());
+            temp.setPhoneNumber(user.getPhoneNumber());
+            temp.setEmail(user.getEmail());
+            temp.setPassword(user.getPassword());
+            // Lưu role_id
+            Role role = new Role();
+        if (user.getRole().equals("1")) {
+            role = new Role(1,"ADMIN");
+        } else if(user.getRole().equals("2")){
+            role = new Role(2,"SALER");
+        }else{
+            role = new Role(3,"MEMBER");
+        }
+            temp.setRole(role);
+            temp.setStatus(user.getStatus());
+
+            Cart cart = new Cart();
+            cart.setUser(temp);
+            cartService.saveCart(cart);
+
+            System.out.println(cart);
+
+            userDAO.addUser(temp);
     }
 }

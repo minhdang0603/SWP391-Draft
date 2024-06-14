@@ -1,5 +1,6 @@
 package com.web.laptoptg.dto;
 
+import com.web.laptoptg.model.Role;
 import com.web.laptoptg.model.User;
 import lombok.*;
 

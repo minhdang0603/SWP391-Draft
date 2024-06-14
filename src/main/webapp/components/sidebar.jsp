@@ -52,7 +52,7 @@
         <c:if test="${account.role == 'ADMIN'}">
             <!-- Accounts Nav -->
             <li class="nav-item">
-                <a class="nav-link " href="${contextPath}/#">
+                <a class="nav-link " href="${contextPath}/admin/account-manage">
                     <i class="bi bi-people"></i>
                     <span>Tài Khoản</span>
                 </a>

@@ -157,6 +157,8 @@ public class LoginController extends HttpServlet {
 
         // check email and password in database
         User user = userService.login(email, password);
+
+
         if (user == null) { // return error message if user not found in database
             alert = "Email hoặc mật khẩu sai. Xin vui lòng nhập lại!";
             req.setAttribute("accountError", alert);
@@ -164,6 +166,8 @@ public class LoginController extends HttpServlet {
             return;
         }
 
+        System.out.println("phan login");
+        System.out.println(user);
         // check account status
         if (user.getStatus().equals("inactive")) {
             alert = "Tài khoản của bạn đã bị khóa. Xin vui lòng liên hệ với LaptopTG store để khôi phục tài khoản!";

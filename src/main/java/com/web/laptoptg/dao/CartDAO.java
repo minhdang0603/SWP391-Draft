@@ -7,4 +7,7 @@ public interface CartDAO {
     Cart getCartByUserId(int userId);
     void saveCart(Cart cart);
     void updateCart(Cart cart);
+
+    void deleteCartByUserId(int userId); // Thêm phương thức này
+
 }

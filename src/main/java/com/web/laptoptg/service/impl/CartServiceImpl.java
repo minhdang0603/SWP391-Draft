@@ -27,4 +27,10 @@ public class CartServiceImpl implements CartService {
     public void updateCart(Cart cart) {
         cartDAO.updateCart(cart);
     }
+
+    @Override
+    public void deleteCartByUserId(int userId) {
+        // Xóa các bản ghi trong Cart dựa trên userId
+        cartDAO.deleteCartByUserId(userId);
+    }
 }

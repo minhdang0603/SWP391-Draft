@@ -67,14 +67,17 @@ public class ProfileController extends HttpServlet {
         userService.updateUser(userDTO);
         session.setAttribute("account", userDTO);
 
-//        System.out.println(userDTO);
-//
-//        Enumeration<String> attributeNames = session.getAttributeNames();
-//        while (attributeNames.hasMoreElements()) {
-//            String attributeName = attributeNames.nextElement();
-//            Object attributeValue = session.getAttribute(attributeName);
-//            System.out.println(attributeName + ": " + attributeValue);
-//        }
+        User raw = userService.findUserByEmail(email);
+
+
+        System.out.println(userDTO);
+
+        Enumeration<String> attributeNames = session.getAttributeNames();
+        while (attributeNames.hasMoreElements()) {
+            String attributeName = attributeNames.nextElement();
+            Object attributeValue = session.getAttribute(attributeName);
+            System.out.println(attributeName + ": " + attributeValue);
+        }
 
         req.setAttribute("updateSuccess", true);
         req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
@@ -90,24 +93,35 @@ public class ProfileController extends HttpServlet {
         // Lấy user từ db
         User raw = userService.findUserByEmail(account.getEmail());
 
-        //System.out.println(account);
+        System.out.println("cu");
+        System.out.println(account);
+        System.out.println(raw);
 
         try {
             if (PasswordUtils.verify(password, raw.getPassword())) {
                 String hashPass = PasswordUtils.hash(newPass);
+
                 userDTO.setPassword(hashPass);
 
                 userService.changePassFromProfile(userDTO);
                 session.setAttribute("account", userDTO);
-//              System.out.println(userDTO);
-//              System.out.println(raw);
+                System.out.println("moi");
+                System.out.println(userDTO);
+                System.out.println(raw);
 
-
+                session.setAttribute("account", userDTO);
+                System.out.println("phan session");
+                Enumeration<String> attributeNames = session.getAttributeNames();
+                while (attributeNames.hasMoreElements()) {
+                    String attributeName = attributeNames.nextElement();
+                    Object attributeValue = session.getAttribute(attributeName);
+                    System.out.println(attributeName + ": " + attributeValue);
+                }
                 req.setAttribute("passwordChangeSuccess", true);
                 req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
             }
 
-            if(!PasswordUtils.verify(password, raw.getPassword()) && password!=null){
+            else{
                 req.setAttribute("passwordChangeFailure", true);
                 req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
             }

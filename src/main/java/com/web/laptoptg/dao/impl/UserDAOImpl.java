@@ -4,6 +4,8 @@ import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dao.UserDAO;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.User;
+import com.web.laptoptg.service.CartService;
+import com.web.laptoptg.service.impl.CartServiceImpl;
 import com.web.laptoptg.service.impl.UserServiceImpl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -17,9 +19,12 @@ public class UserDAOImpl implements UserDAO {
     EntityManager entityManager;
     EntityTransaction transaction;
 
+    private CartService cartService;
+
     public UserDAOImpl() {
         entityManager = JPAConfig.getEntityManager();
         transaction = entityManager.getTransaction();
+        cartService = new CartServiceImpl();
     }
 
     @Override
@@ -65,6 +70,8 @@ public class UserDAOImpl implements UserDAO {
     public void deleteById(int id) {
         try {
             transaction.begin();
+            // Xóa các bản ghi trong Cart trước khi xóa User
+            cartService.deleteCartByUserId(id);
             User user = entityManager.find(User.class, id);
             if (user != null) {
                 entityManager.remove(user);
@@ -106,6 +113,16 @@ public class UserDAOImpl implements UserDAO {
         return query.getResultList();
     }
 
+    public void addUser(User user) {
+        try {
+            transaction.begin();
+            entityManager.merge(user);
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
+    }
     @Override
     public User findUserById(int id) {
         return entityManager.find(User.class, id);

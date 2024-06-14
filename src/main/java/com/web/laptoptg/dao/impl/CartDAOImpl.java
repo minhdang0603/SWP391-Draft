@@ -9,6 +9,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
+
 public class CartDAOImpl implements CartDAO {
 
     EntityManager entityManager;
@@ -58,6 +59,22 @@ public class CartDAOImpl implements CartDAO {
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteCartByUserId(int userId) {
+        try {
+            transaction.begin(); // Bắt đầu giao dịch
+            entityManager.createQuery("DELETE FROM Cart c WHERE c.user.id = :userId")
+                    .setParameter("userId", userId)
+                    .executeUpdate();
+            transaction.commit(); // Kết thúc giao dịch
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback(); // Rollback giao dịch nếu có lỗi
             }
             e.printStackTrace();
         }

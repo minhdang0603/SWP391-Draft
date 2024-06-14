@@ -7,4 +7,5 @@ public interface CartService {
     Cart getCartByUserId(int userId);
     void saveCart(Cart cart);
     void updateCart(Cart cart);
+    public void deleteCartByUserId(int userId);
 }
