@@ -122,6 +122,7 @@ public class AccountManagement extends HttpServlet {
         userDTO.setRole(role);
         userDTO.setStatus(status);
 
+        
         userService.updateUser(userDTO);
         HttpSession session = request.getSession();
         session.setAttribute("successMessage", "Sửa đổi thành công!");
