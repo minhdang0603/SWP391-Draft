@@ -144,6 +144,6 @@ public class UserServiceImpl implements UserService {
 
             System.out.println(cart);
 
-            userDAO.addUser(temp);
+            userDAO.saveUser(temp);
     }
 }

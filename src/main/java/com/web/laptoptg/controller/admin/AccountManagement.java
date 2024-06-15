@@ -32,15 +32,28 @@ public class AccountManagement extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("idDelete");
-        if (id != null) {
-            userService.deleteById(Integer.parseInt(id));
+        HttpSession session = req.getSession();
+        UserDTO account = (UserDTO) session.getAttribute("account");
+        //kiem tra admin da dang nhap chua
+        if (account != null && account.getRole().equals("ADMIN")) {
+            String id = req.getParameter("idDelete");
+            //xoa tai khoan
+            if (id != null) {
+                userService.deleteById(Integer.parseInt(id));
+                session.setAttribute("successMessage", "Xóa tài khoản thanh công!");
+            }
+            List<User> listUser = userService.findAllUsers();
+            req.setAttribute("listUser", listUser);
+            req.setAttribute("successMessage", session.getAttribute("successMessage"));
+            req.setAttribute("errorMessage", session.getAttribute("errorMessage"));
+            session.removeAttribute("successMessage");
+            session.removeAttribute("errorMessage");
+            req.getRequestDispatcher("account-manage.jsp").forward(req, resp);
+        }else {
+            resp.sendRedirect(req.getContextPath() + "/home");
         }
-        List<User> listUser = userService.findAllUsers();
-        //System.out.println(listUser);
-        req.setAttribute("listUser", listUser);
-        req.getRequestDispatcher("account-manage.jsp").forward(req, resp);
     }
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String formType = request.getParameter("formType");
@@ -63,30 +76,30 @@ public class AccountManagement extends HttpServlet {
         String status = request.getParameter("status");
         String repassword = request.getParameter("repassword");
 
+        HttpSession session = request.getSession();
+        if (checkEmailExit(email)) {
+            String hashPass = PasswordUtils.hash(password);
 
-        String hashPass = PasswordUtils.hash(password);
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUserName(userName);
+            userDTO.setEmail(email);
+            userDTO.setAddress(address);
+            userDTO.setPhoneNumber(phoneNumber);
+            userDTO.setRole(role);
+            userDTO.setPassword(hashPass);
+            userDTO.setStatus(status);
 
+            userService.addUser(userDTO);
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUserName(userName);
-        userDTO.setEmail(email);
-        userDTO.setAddress(address);
-        userDTO.setPhoneNumber(phoneNumber);
-        userDTO.setRole(role);
-        userDTO.setPassword(hashPass);
-        userDTO.setStatus(status);
+            User raw = userService.findUserByEmail(email);
+            Cart cart = new Cart();
+            cart.setUser(raw);
+            cartService.saveCart(cart);
 
-        //add vào data base
-        userService.addUser(userDTO);
-
-
-        User raw = userService.findUserByEmail(email);
-        Cart cart = new Cart();
-        cart.setUser(raw);
-        cartService.saveCart(cart);
-        System.out.println(raw);
-        System.out.println(userDTO);
-
+            session.setAttribute("successMessage", "Thêm tài khoản thành công!");
+        } else {
+            session.setAttribute("errorMessage", "Thêm tài khoản thất bại , email đã tông tại!");
+        }
         response.sendRedirect(request.getContextPath() + "/admin/account-manage");
     }
 
@@ -98,8 +111,10 @@ public class AccountManagement extends HttpServlet {
         String role = request.getParameter("role");
         String status = request.getParameter("status");
 
+        User raw = userService.findUserByEmail(email);
 
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(raw.getId());
         userDTO.setUserName(userName);
         userDTO.setAddress(address);
         userDTO.setEmail(email);
@@ -107,10 +122,20 @@ public class AccountManagement extends HttpServlet {
         userDTO.setRole(role);
         userDTO.setStatus(status);
 
-        System.out.println("Status: " + status);
-
         userService.updateUser(userDTO);
+        HttpSession session = request.getSession();
+        session.setAttribute("successMessage", "Sửa đổi thành công!");
         response.sendRedirect(request.getContextPath() + "/admin/account-manage");
+    }
+
+    //neu email chua ton tai thi true
+    public boolean checkEmailExit(String email){
+        User u = userService.findUserByEmail(email);
+        if(u == null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

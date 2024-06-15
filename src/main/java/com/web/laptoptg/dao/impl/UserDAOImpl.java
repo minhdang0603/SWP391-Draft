@@ -89,10 +89,6 @@ public class UserDAOImpl implements UserDAO {
         return users;
     }
 
-    @Override
-    public void addUser(User user) {
-
-    }
 
     @Override
     public User findUserByEmail(String email) {

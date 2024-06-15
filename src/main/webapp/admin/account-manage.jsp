@@ -38,6 +38,9 @@
     <!-- Your custom CSS -->
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
 
+    <!--Toastr-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <style>
         .form-control-lg {
             font-size: 1.25rem;
@@ -66,6 +69,15 @@
         .error-message {
             color: red;
             font-size: 0.875em;
+        }
+        .required-note {
+            font-size: 10px;  /* Kích thước chữ nhỏ */
+            color: gray;      /* Màu chữ xám */
+            font-style: italic; /* Chữ viết nghiêng */
+            margin-bottom: 5px;  /* Khoảng cách dưới dòng chữ */
+        }
+        .form-group {
+            margin-bottom: 15px; /* Khoảng cách giữa các nhóm form */
         }
     </style>
 </head>
@@ -151,10 +163,11 @@
                                                 <td>${user.email}</td>
                                                 <td>${user.address}</td>
                                                 <td>${user.phoneNumber}</td>
-                                                <td>${user.role.roleName}</td>
+                                                <td>${user.role.id}</td>
                                                 <td>${user.status}</td>
                                                 <td>
-                                                    <a href="javascript:void(0);" class="bi bi-pencil-square" style="font-size: 20px; color: deepskyblue" onclick="editUser('${user.id}', '${user.userName}', '${user.email}', '${user.address}', '${user.phoneNumber}', '${user.role.roleName}', '${user.status}')"></a>
+                                                    <a href="javascript:void(0);" class="bi bi-pencil-square" style="font-size: 20px; color: deepskyblue"
+                                                       onclick="editUser('${user.id}', '${user.userName}', '${user.email}', '${user.address}', '${user.phoneNumber}', '${user.role.id}', '${user.status}')"></a>
                                                 </td>
                                                 <td>
                                                     <a href="${contextPath}/admin/account-manage?idDelete=${user.id}"
@@ -182,7 +195,7 @@
                                                     <label for="userName" class="col-md-4 col-form-label">Tên người dùng</label>
                                                     <div class="col-md-8">
                                                         <input name="userName" type="text" class="form-control"
-                                                               id="userName" required>
+                                                               id="userName" placeholder="Nguyễn Văn A" >
                                                         <div id="userNameError" class="error-message"></div>
                                                     </div>
                                                 </div>
@@ -190,8 +203,9 @@
                                                 <div class="row mb-3">
                                                     <label for="email" class="col-md-4 col-form-label">Email</label>
                                                     <div class="col-md-8">
+                                                        <div class="required-note">*Thông tin bắt buộc</div>
                                                         <input name="email" type="email" class="form-control"
-                                                               id="email" required>
+                                                               id="email" placeholder="a@gmail.com"required>
                                                         <div id="emailError" class="error-message"></div>
                                                     </div>
                                                 </div>
@@ -199,6 +213,7 @@
                                                 <div class="row mb-3">
                                                     <label for="password" class="col-md-4 col-form-label">Mật khẩu</label>
                                                     <div class="col-md-8">
+                                                        <div class="required-note">*Thông tin bắt buộc</div>
                                                         <input name="password" type="password" class="form-control"
                                                                id="password" required>
                                                         <div id="passwordError" class="error-message"></div>
@@ -220,7 +235,7 @@
                                                     <label for="address" class="col-md-4 col-form-label">Địa chỉ</label>
                                                     <div class="col-md-8">
                                                         <input name="address" type="text" class="form-control"
-                                                               id="address" required>
+                                                               id="address" >
                                                         <div id="addressError" class="error-message"></div>
                                                     </div>
                                                 </div>
@@ -228,8 +243,9 @@
                                                 <div class="row mb-3">
                                                     <label for="phoneNumber" class="col-md-4 col-form-label">Số điện thoại</label>
                                                     <div class="col-md-8">
+                                                        <div class="required-note">*Thông tin bắt buộc</div>
                                                         <input name="phoneNumber" type="text" class="form-control"
-                                                               id="phoneNumber" required>
+                                                               id="phoneNumber" placeholder="0966977284" required>
                                                         <div id="phoneNumberError" class="error-message"></div>
                                                     </div>
                                                 </div>
@@ -239,6 +255,7 @@
                                                 <div class="row mb-3">
                                                     <label for="role" class="col-md-4 col-form-label">Vai trò</label>
                                                     <div class="col-md-8">
+                                                        <div class="required-note">*Thông tin bắt buộc</div>
                                                         <select name="role" class="form-control" id="role" required>
                                                             <option value="">Chọn vai trò</option>
                                                             <option value="1">Admin</option>
@@ -249,11 +266,10 @@
                                                     </div>
                                                 </div>
 
-
-
                                                 <div class="row mb-3">
                                                     <label for="status" class="col-md-4 col-form-label">Trạng thái</label>
                                                     <div class="col-md-8">
+                                                        <div class="required-note">*Thông tin bắt buộc</div>
                                                         <select name="status" class="form-control" id="status" required>
                                                             <option value="">Chọn trạng thái</option>
                                                             <option value="active">ACTIVE</option>
@@ -289,7 +305,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="editUserName" class="form-label">Tên người dùng</label>
-                                                    <input type="text" class="form-control" id="editUserName" name="userName" required>
+                                                    <input type="text" class="form-control" id="editUserName" name="userName" readonly>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -299,12 +315,12 @@
 
                                                 <div class="mb-3">
                                                     <label for="editAddress" class="form-label">Địa chỉ</label>
-                                                    <input type="text" class="form-control" id="editAddress" name="address" required>
+                                                    <input type="text" class="form-control" id="editAddress" name="address" readonly>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="editPhoneNumber" class="form-label">Điện thoại</label>
-                                                    <input type="text" class="form-control" id="editPhoneNumber" name="phoneNumber" required>
+                                                    <input type="text" class="form-control" id="editPhoneNumber" name="phoneNumber" readonly>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -312,8 +328,7 @@
                                                     <select class="form-control" id="editRole" name="role" required>
                                                         <option value="1">Admin</option>
                                                         <option value="2">Saler</option>
-                                                        <option value="3">MEMBER</option>
-                                                        <!-- Thêm các lựa chọn vai trò khác nếu cần -->
+                                                        <option value="3">Member</option>
                                                     </select>
                                                 </div>
 
@@ -362,15 +377,33 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    function editUser(id, userName, email, address, phoneNumber, roleName, status) {
+    function editUser(id, userName, email, address, phoneNumber, roleValue, status) {
         // Set the values in the modal form
         document.getElementById('editUserId').value = id;
         document.getElementById('editUserName').value = userName;
         document.getElementById('editEmail').value = email;
         document.getElementById('editAddress').value = address;
         document.getElementById('editPhoneNumber').value = phoneNumber;
-        document.getElementById('editRole').value = roleName;
-        document.getElementById('editStatus').value = status;
+
+        // Set the selected value for role
+        var roleSelect = document.getElementById('editRole');
+        for (var i = 0; i < roleSelect.options.length; i++) {
+            if (roleSelect.options[i].value == roleValue) {
+                roleSelect.options[i].selected = true;
+            } else {
+                roleSelect.options[i].selected = false; // Ensure other options are not selected
+            }
+        }
+
+        // Set the selected value for status
+        var statusSelect = document.getElementById('editStatus');
+        for (var i = 0; i < statusSelect.options.length; i++) {
+            if (statusSelect.options[i].value === status) {
+                statusSelect.options[i].selected = true;
+            } else {
+                statusSelect.options[i].selected = false; // Ensure other options are not selected
+            }
+        }
 
         // Show the modal
         var myModal = new bootstrap.Modal(document.getElementById('editUserModal'));
@@ -381,65 +414,9 @@
         $('#myTable').DataTable();
     });
 </script>
+
+
 <script>
-    // DataTable initialization
-    $(document).ready(function () {
-        $('#myTable').DataTable();
-    });
-
-    function validateForm() {
-        // Clear previous error messages
-        $('.error-message').text('');
-
-        let isValid = true;
-
-        const userName = document.getElementById('userName').value;
-        const email = document.getElementById('email').value;
-        const address = document.getElementById('address').value;
-        const phoneNumber = document.getElementById('phoneNumber').value;
-        const role = document.getElementById('role').value;
-        const password = document.getElementById('password').value;
-        const status = document.getElementById('status').value;
-
-        // Validation logic
-        if (!userName.trim()) {
-            document.getElementById('userNameError').textContent = 'Tên người dùng là bắt buộc';
-            isValid = false;
-        }
-        if (!email.trim()) {
-            document.getElementById('emailError').textContent = 'Email là bắt buộc';
-            isValid = false;
-        } else if (!validateEmail(email)) {
-            document.getElementById('emailError').textContent = 'Email không hợp lệ';
-            isValid = false;
-        }
-        // if (!address.trim()) {
-        //     document.getElementById('addressError').textContent = 'Địa chỉ là bắt buộc';
-        //     isValid = false;
-        // }
-        if (!phoneNumber.trim()) {
-            document.getElementById('phoneNumberError').textContent = 'Số điện thoại là bắt buộc';
-            isValid = false;
-        } else if (!validatePhoneNumber(phoneNumber)) {
-            document.getElementById('phoneNumberError').textContent = 'Số điện thoại không hợp lệ';
-            isValid = false;
-        }
-        // if (!role) {
-        //     document.getElementById('roleError').textContent = 'Vai trò là bắt buộc';
-        //     isValid = false;
-        // }
-        // if (!password.trim()) {
-        //     document.getElementById('passwordError').textContent = 'Mật khẩu là bắt buộc';
-        //     isValid = false;
-        // }
-        // if (!status) {
-        //     document.getElementById('statusError').textContent = 'Trạng thái là bắt buộc';
-        //     isValid = false;
-        // }
-
-        return isValid;
-    }
-
     function validateEmail(email) {
         // Simple email validation regex
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -463,6 +440,25 @@
         }
     }
 </script>
+
+<!-- Toastr -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    $(document).ready(function () {
+        <c:if test="${not empty successMessage}">
+        toastr.success('${successMessage}');
+        </c:if>
+        <c:if test="${not empty errorMessage}">
+        toastr.error('${errorMessage}');
+        </c:if>
+    });
+</script>
+
+
+<!-- Đoạn mã JSP để hiển thị nội dung của session attribute -->
+<%--<div id="addSuccess">${sessionScope.addSuccess}</div>--%>
+<%--<div id="addFail">${sessionScope.addFail}</div>--%>
 
 </body>
 
