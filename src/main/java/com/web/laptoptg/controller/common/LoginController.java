@@ -96,8 +96,8 @@ public class LoginController extends HttpServlet {
         // check account status
         if (user.getStatus().equals("inactive")) {
             String alert = "Tài khoản của bạn đã bị khóa. Xin vui lòng liên hệ với LaptopTG store để khôi phục tài khoản!";
-            req.setAttribute("accountError", alert);
-            req.getRequestDispatcher("common/login.jsp").forward(req, resp);
+            req.getSession().setAttribute("accountError", alert);
+            resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 
@@ -162,8 +162,8 @@ public class LoginController extends HttpServlet {
 
         if (user == null) { // return error message if user not found in database
             alert = "Email hoặc mật khẩu sai. Xin vui lòng nhập lại!";
-            req.setAttribute("accountError", alert);
-            req.getRequestDispatcher("common/login.jsp").forward(req, resp);
+            req.getSession().setAttribute("accountError", alert);
+            resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 
@@ -172,8 +172,8 @@ public class LoginController extends HttpServlet {
         // check account status
         if (user.getStatus().equals("inactive")) {
             alert = "Tài khoản của bạn đã bị khóa. Xin vui lòng liên hệ với LaptopTG store để khôi phục tài khoản!";
-            req.setAttribute("accountError", alert);
-            req.getRequestDispatcher("common/login.jsp").forward(req, resp);
+            req.getSession().setAttribute("accountError", alert);
+            resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 
