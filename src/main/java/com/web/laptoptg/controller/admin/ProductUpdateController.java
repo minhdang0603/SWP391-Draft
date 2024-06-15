@@ -38,7 +38,6 @@ public class ProductUpdateController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pname = req.getParameter("productName");
-        System.out.print(pname);
         String status = req.getParameter("productStatus");
         int pid = Integer.parseInt(req.getParameter("productID"));
         int brandID = Integer.parseInt(req.getParameter("productBrand"));
@@ -63,7 +62,6 @@ public class ProductUpdateController extends HttpServlet {
         String img = proOld.getId()+".png";
 
         String filePath = uploadPath + File.separator + img;
-        System.out.println(filePath);
         // Lưu tệp
         try {
             filePart.write(filePath);
