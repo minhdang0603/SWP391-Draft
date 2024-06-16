@@ -98,7 +98,7 @@ public class AccountManagement extends HttpServlet {
 
             session.setAttribute("successMessage", "Thêm tài khoản thành công!");
         } else {
-            session.setAttribute("errorMessage", "Thêm tài khoản thất bại , email đã tông tại!");
+            session.setAttribute("errorMessage", "Thêm tài khoản thất bại , email đã tồn tại!");
         }
         response.sendRedirect(request.getContextPath() + "/admin/account-manage");
     }

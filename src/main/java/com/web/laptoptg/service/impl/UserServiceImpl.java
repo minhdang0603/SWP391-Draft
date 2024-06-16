@@ -131,6 +131,7 @@ public class UserServiceImpl implements UserService {
         userDAO.saveUser(temp);
     }
 
+    
     private Role getRoleFromString(String roleString) {
         if (roleString.equals("1")) {
             return new Role(1, "ADMIN");
