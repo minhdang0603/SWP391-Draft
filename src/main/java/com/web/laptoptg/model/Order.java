@@ -48,7 +48,6 @@ public class Order {
     @Fetch(FetchMode.SELECT)
     private List<OrderDetails> orderDetails;
 
-
     @ManyToOne(optional = true, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "user_id")
     private User customer;
@@ -57,7 +56,7 @@ public class Order {
     @JoinColumn(name = "saler_id")
     private User saler;
 
-    @OneToOne(mappedBy = "order",fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "payment_id")
     private Payment payment;
 }
