@@ -18,9 +18,6 @@ public interface ProductService {
     //find product by its name
     public boolean findProductByName(String name);
 
-    //find product by its category
-    List<Product> getProductByCategory(int cateID);
-
     //delete a product by its id
     void deleteById(int id);
 

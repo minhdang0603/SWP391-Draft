@@ -49,13 +49,20 @@ public class HomeController extends HttpServlet {
         List<List<Product>> list = filteredCategories.stream()
                 .map(category -> products.stream()
                         .filter(product -> product.getCategory().equals(category))
-                        .limit(6)
+                        .limit(5)
                         .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+
+        // get 6 product order by sold unit
+        List<Product> topSelling = products.stream()
+                .sorted((p1, p2) -> Integer.compare(p2.getSoldUnit(), p1.getSoldUnit()))
+                .limit(5)
                 .collect(Collectors.toList());
 
         // send data to client and redirect to home page
         req.setAttribute("categories", categories);
         req.setAttribute("list", list);
+        req.setAttribute("listSoldUnit", topSelling);
         req.getSession().setAttribute("checkCart", items.size());
         req.getRequestDispatcher("common/home-index.jsp").forward(req, resp);
     }

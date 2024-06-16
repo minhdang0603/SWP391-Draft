@@ -8,4 +8,5 @@ public interface OrderDetailDAO {
     List<OrderDetails> getOrderDetailsByOrderId(int orderId);
     void saveOrderDetail(OrderDetails orderDetail);
     void updateOrderDetail(OrderDetails orderDetail);
+    List<OrderDetails> getAllOrderDetail();
 }

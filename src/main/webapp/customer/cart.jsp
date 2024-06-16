@@ -45,6 +45,8 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
 
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/css/account-toast.css"/>
+
     <style>
         .dropdown-menu {
             border-radius: 4px;
@@ -268,8 +270,12 @@
                                 <div class="summary-item"><span class="text">Tổng tiền</span><span class="price"
                                                                                                id="total">${total}</span>
                                 </div>
-                                <a type="button" class="btn btn-primary btn-lg btn-block" href="checkout.jsp">Thanh toán
-                                    <i class="fa fa-arrow-circle-right"></i></a>
+                                <form method="post" action="${contextPath}/checkout-page">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" href="${contextPath}/checkout">
+                                        Đặt hàng
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </c:if>
@@ -277,11 +283,18 @@
             </div>
         </div>
     </section>
-</main>
 
+    <a href="javascript:void(0);" id="back-to-top" class="btn btn-lg back-to-top" role="button"
+       title="Click to return on the top page" data-toggle="tooltip" data-placement="right">
+        <span class="fa fa-chevron-up"></span>
+    </a>
+</main>
 <!-- /Cart -->
 
-
+<c:if test="${quantityError != null}">
+    <p class="quantity-error hidden">${quantityError}</p>
+    <c:remove var="quantityError" scope="session"/>
+</c:if>
 <!-- FOOTER -->
 <jsp:include page="../components/footer.jsp"/>
 <!-- /FOOTER -->
@@ -294,6 +307,8 @@
 <script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
 <script src="${contextPath}/assets/home/js/main.js"></script>
 <script src="${contextPath}/assets/js/main.js"></script>
+<script src="${contextPath}/assets/js/cartAjax.js"></script>
+<script src="${contextPath}/assets/js/back-to-top-button.js"></script>
 <script>
     // Hàm định dạng số tiền VND
     function formatVND(n) {
@@ -305,121 +320,6 @@
     document.getElementById("price-${item.product.id}").innerText = formatVND(${item.product.unitPrice});
     </c:forEach>
     document.getElementById('total').innerHTML = formatVND(${total});
-</script>
-<script>
-    $(document).ready(function () {
-
-        function updateTotal() {
-            var total = 0;
-            $(".product").each(function () {
-                var quantity = parseInt($(this).find('.input-number').val());
-                var price = parseFloat($(this).find('.price').text().replace(/\./g, '').replace(' đ', ''));
-                total += quantity * price;
-            });
-            $("#total").text(formatVND(total));
-        }
-
-        function updateCheckCart() {
-            const checkCart = document.querySelector('.check-cart');
-            checkCart.textContent = parseInt(checkCart.textContent) - 1;
-            if (parseInt(checkCart.textContent) === 0) {
-                location.reload();
-            }
-        }
-
-        $(".btn-number").on('click', function () {
-            var $button = $(this);
-            var oldValue = $button.closest('.input-group').find("input").val();
-            var newVal = 0;
-            var productId = $button.data('product-id');
-            var servletUrl = $button.data('servlet-url');
-            var action = $button.data('action');
-            var productName = $button.closest('.product').find('.product-name-a').text();
-            var maxUnit = $button.data('max');
-            if(parseInt(oldValue) === maxUnit){
-                window.alert('Số lượng sản phẩm không đủ!')
-                return;
-            }
-
-            if ($button.data('type') === "minus") {
-                newVal = parseInt(oldValue) - 1;
-            } else if ($button.data('type') === "plus") {
-                newVal = parseInt(oldValue) + 1;
-            }
-
-            if (newVal < 1) {
-                var confirm = window.confirm("Bạn có muốn xóa sản phẩm '" + productName + "' không?");
-                if (!confirm) {
-                    newVal += 1;
-                }
-            }
-
-            if (confirm) {
-                $.ajax({
-                    type: "POST",
-                    url: servletUrl,
-                    data: {productId: productId, action: 'delete'},
-                    success: function (data) {
-                        // Remove the product element from the DOM
-                        $button.closest('.product').remove();
-                        updateTotal();
-                        updateCheckCart();
-                    },
-                    error: function () {
-                        // Handle error
-                        alert("An error occurred while processing the request.");
-                    }
-                });
-                return;
-            }
-            // Make AJAX request to servlet
-            $.ajax({
-                type: "POST",
-                url: servletUrl,
-                data: {productId: productId, quantity: newVal, action: action},
-                success: function (data) {
-                    $button.closest('.input-group').find("input").val(newVal);
-                    updateTotal();
-                },
-                error: function () {
-                    // Handle error
-                    alert("An error occurred while processing the request.");
-                }
-            });
-
-        });
-
-        $(".delete-item").click(function (event) {
-            event.preventDefault();
-            var $link = $(this);
-            var productId = $link.data('product-id');
-            var servletUrl = $link.data('servlet-url');
-            var productName = $link.closest('.product').find('.product-name-a').text();
-            var action = $link.data('action');
-
-            // Display a confirmation dialog
-            var confirmed = window.confirm("Bạn có muốn xóa sản phẩm '" + productName + "' không?");
-
-            if (confirmed) {
-                // Make AJAX request to delete item
-                $.ajax({
-                    type: "POST",
-                    url: servletUrl,
-                    data: {productId: productId, action: action},
-                    success: function (data) {
-                        // Remove the product element from the DOM
-                        $link.closest('.product').remove();
-                        updateTotal();
-                        updateCheckCart();
-                    },
-                    error: function () {
-                        // Handle error
-                        alert("An error occurred while processing the request.");
-                    }
-                });
-            }
-        });
-    });
 </script>
 </body>
 </html>

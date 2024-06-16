@@ -54,6 +54,9 @@ Table OF Contents
 /*----------------------------*\
 	Typography
 \*----------------------------*/
+html, body {
+  height: 100%;
+}
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -191,26 +194,27 @@ textarea.input {
 
 /*-- checkbox & radio input --*/
 
-.input-radio, .input-checkbox {
-  position: relative;
-  display: block;
-}
-
-.input-radio input[type="radio"]:not(:checked), .input-radio input[type="radio"]:checked, .input-checkbox input[type="checkbox"]:not(:checked), .input-checkbox input[type="checkbox"]:checked {
+.input-radio input[type="radio"]:not(:checked),
+.input-radio input[type="radio"]:checked,
+.input-checkbox input[type="checkbox"]:not(:checked),
+.input-checkbox input[type="checkbox"]:checked {
   position: absolute;
   margin-left: -9999px;
   visibility: hidden;
 }
 
-.input-radio label, .input-checkbox label {
+.input-radio label,
+.input-checkbox label {
   font-weight: 500;
   min-height: 20px;
   padding-left: 20px;
   margin-bottom: 5px;
   cursor: pointer;
+  position: relative; /* Make sure the span is positioned relative to the label */
 }
 
-.input-radio input[type="radio"]+label span, .input-checkbox input[type="checkbox"]+label span {
+.input-radio input[type="radio"]+label span,
+.input-checkbox input[type="checkbox"]+label span {
   position: absolute;
   left: 0px;
   top: 2px;
@@ -229,15 +233,12 @@ textarea.input {
   position: absolute;
   left: 50%;
   top: 50%;
-  -webkit-transform: translate(-50%, -50%) scale(0);
-  -ms-transform: translate(-50%, -50%) scale(0);
   transform: translate(-50%, -50%) scale(0);
   background-color: #FFF;
   width: 4px;
   height: 4px;
   border-radius: 50%;
   opacity: 0;
-  -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 

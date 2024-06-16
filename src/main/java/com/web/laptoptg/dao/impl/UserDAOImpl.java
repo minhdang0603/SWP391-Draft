@@ -106,8 +106,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> findUserByRole(String role) {
-        TypedQuery<User> query = entityManager.createQuery("from User u join fetch u.role where u.role = :role", User.class);
-        query.setParameter("role", role);
+        TypedQuery<User> query = entityManager.createQuery("from User u join fetch u.role where lower(u.role.roleName) = :role", User.class);
+        query.setParameter("role", role.toLowerCase());
         return query.getResultList();
     }
 

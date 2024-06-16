@@ -21,10 +21,6 @@ public class CartDTO {
         return null;
     }
 
-    private int getQuantityByID(int id) {
-        return getItemByID(id).getQuantity();
-    }
-
     public List<ItemDTO> getItems() {
         return items;
     }
@@ -35,13 +31,6 @@ public class CartDTO {
             temp.setQuantity(temp.getQuantity() + item.getQuantity());
         } else {
             items.add(item);
-        }
-    }
-
-    public void removeItem(int id) {
-        ItemDTO item = getItemByID(id);
-        if(item != null) {
-            items.remove(item);
         }
     }
 
