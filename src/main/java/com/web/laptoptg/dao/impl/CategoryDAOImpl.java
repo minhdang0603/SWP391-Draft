@@ -3,6 +3,7 @@ package com.web.laptoptg.dao.impl;
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dao.CategoryDAO;
 import com.web.laptoptg.model.Category;
+import com.web.laptoptg.model.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
@@ -72,6 +73,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public List<Category> getAll() {
+        entityManager.clear();
         TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c", Category.class);
         return query.getResultList();
 
@@ -81,5 +83,31 @@ public class CategoryDAOImpl implements CategoryDAO {
     public int getNumOfCategory() {
         TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c", Category.class);
         return query.getResultList().size();
+    }
+
+    @Override
+    public boolean findCategoryByName(String name) {
+        entityManager.clear();
+        boolean found = false;
+        try {
+            TypedQuery<Category> query = entityManager.createQuery(
+                    "SELECT cate FROM Category cate WHERE lower(cate.categoryName)  = :name",
+                    Category.class
+            );
+            query.setParameter("name", name.toLowerCase());
+            List<Category> results = query.getResultList();
+            found = !results.isEmpty();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            found = false;
+        }
+
+        return found;
+    }
+
+    @Override
+    public Category findCategoryById(int id) {
+        entityManager.clear();
+        return entityManager.find(Category.class, id);
     }
 }

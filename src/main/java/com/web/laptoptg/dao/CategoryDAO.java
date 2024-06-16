@@ -11,6 +11,9 @@ public interface CategoryDAO {
     void deleteCategory(Category category);
 
     List<Category> getAll();
-
+    //find product by its name
+    public boolean findCategoryByName(String name);
     int getNumOfCategory();
+
+    Category findCategoryById(int id);
 }

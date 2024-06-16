@@ -10,6 +10,9 @@ public interface CategoryService {
     void updateCategory(Category category);
     void deleteCategory(Category category);
     int getNumOfCategory();
+    public boolean findCategoryByName(String name);
+
+    Category findCategoryById(int id);
 
     List<Category> getAllCategory();
 }
