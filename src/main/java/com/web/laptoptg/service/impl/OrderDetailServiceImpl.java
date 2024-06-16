@@ -26,6 +26,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
+    public List<OrderDetails> getAllOrderDetail() {
+        return orderDetailDAO.getAllOrderDetail();
+    }
+
+    @Override
     public void saveOrderDetail(OrderDetails orderDetail) {
         orderDetailDAO.saveOrderDetail(orderDetail);
     }

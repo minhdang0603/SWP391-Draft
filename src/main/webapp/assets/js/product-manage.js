@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     msgDiv.style.display = 'none';
                 }, 600); // Chờ thời gian chuyển tiếp để hoàn thành
             }, 3000); // Hiển thị thông báo trong 3 giây
-        }, 2000);
+        }, 500);
     }
 });
 $(document).ready(function () {
