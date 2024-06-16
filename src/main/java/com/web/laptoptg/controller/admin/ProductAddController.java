@@ -39,7 +39,7 @@ public class ProductAddController extends HttpServlet {
         brandService = new BrandServiceImpl();
     }
 
-
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("../admin/product-manage").forward(req, resp);
     }
@@ -64,14 +64,13 @@ public class ProductAddController extends HttpServlet {
         int stockUnit = Integer.parseInt(req.getParameter("stockUnit"));
 
 
-
         //check whether product already exist or not
         boolean proCheckExist = productService.findProductByName(pname);
         String msg;
         if (proCheckExist) {//if product already exists
             msg = "Sản phẩm đã tồn tại! Thêm mới không thành công";
-            req.setAttribute("msg", msg);//send message back
-            doGet(req, resp);
+//            req.setAttribute("msg", msg);//send message back
+//            doGet(req, resp);
         } else {//if not exist
             Brand brand = brandService.getBrandById(brandID);
             Category category = categoryService.getCategoryById(cateID);
@@ -92,10 +91,11 @@ public class ProductAddController extends HttpServlet {
             pro.setDesign(design);
             pro.setMaintenance(warranty);
 
+
             //save the new product to database
             productService.saveProduct(pro);
             int pid = pro.getId();
-            pro.setImage(pid+".png");
+            pro.setImage(pid + ".png");
             String img = pro.getImage();
             productService.saveProduct(pro);
 
@@ -116,10 +116,10 @@ public class ProductAddController extends HttpServlet {
             } else {
                 msg = "Thêm Thành Công!";
             }
-
-            req.setAttribute("msg", msg);
-            req.getSession().setAttribute("msg", msg);
-            resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
         }
+//            req.setAttribute("msg", msg);
+        req.getSession().setAttribute("msg", msg);
+        resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
     }
 }
+

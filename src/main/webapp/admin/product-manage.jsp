@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 5/16/2024
-  Time: 6:02 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -374,7 +368,7 @@
                                                                                 </c:forEach>
                                                                             </select>
                                                                         </div>
-                                                                        <div id="technicalDetailsUpdate">
+                                                                        <div style="display: ${(pro.category.id == 1 || pro.category.id == 2) ? 'block' : 'none'}"  id="technicalDetailsUpdate">
                                                                             <div class="form-group">
                                                                                 <label for="osUpdate"><strong>Hệ điều
                                                                                     hành:</strong></label>
@@ -613,12 +607,11 @@
                                                         họa:</label>
                                                     <div class="col-md-8">
                                                         <input type="file" class="form-control-file"
-                                                               id="image" name="image">
+                                                               id="image" accept=".jpg, .jpeg, .png, .img" name="image">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-primary" id="createButton">Lưu</button>
                                             <button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset

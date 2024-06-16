@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     msgDiv.style.display = 'none';
                 }, 600); // Chờ thời gian chuyển tiếp để hoàn thành
             }, 3000); // Hiển thị thông báo trong 3 giây
-        }, 500);
+        }, 2000);
     }
 });
 $(document).ready(function () {
@@ -50,29 +50,29 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function validateForm() {
-    const productName = document.getElementById('productName').value;
+    const categoryName = document.getElementById('categoryName').value;
     const unitPrice = document.getElementById('unitPrice').value;
     const createButton = document.getElementById('createButton');
 
     let isValid = true;
 
     // Validate Product Name
-    const productNameError = document.getElementById('productNameError');
-    if (productName.trim() === '') {
-        productNameError.textContent = 'Tên sản phẩm là bắt buộc.';
+    const categoryNameError = document.getElementById('categoryNameError');
+    if (categoryName.trim() === '') {
+        categoryNameError.textContent = 'Tên sản phẩm là bắt buộc.';
         isValid = false;
     } else {
-        productNameError.textContent = '';
+        categoryNameError.textContent = '';
     }
 
     // Validate Unit Price
-    const unitPriceError = document.getElementById('unitPriceError');
-    if (unitPrice.trim() === '' || isNaN(unitPrice) || parseInt(unitPrice) < 0 || !Number.isInteger(Number(unitPrice))) {
-        unitPriceError.textContent = 'Đơn giá phải là số nguyên không âm.';
-        isValid = false;
-    } else {
-        unitPriceError.textContent = '';
-    }
+    // const unitPriceError = document.getElementById('unitPriceError');
+    // if (unitPrice.trim() === '' || isNaN(unitPrice) || parseInt(unitPrice) < 0 || !Number.isInteger(Number(unitPrice))) {
+    //     unitPriceError.textContent = 'Đơn giá phải là số nguyên không âm.';
+    //     isValid = false;
+    // } else {
+    //     unitPriceError.textContent = '';
+    // }
 
     createButton.disabled = !isValid;
 }
@@ -87,23 +87,22 @@ function toggleFields() {
     }
 }
 
-
 function resetForm() {
-    document.getElementById('productForm').reset();
+    document.getElementById('categoryForm').reset();
     document.getElementById('createButton').disabled = true;
-    document.getElementById('productNameError').textContent = '';
+    document.getElementById('categoryNameError').textContent = '';
     document.getElementById('unitPriceError').textContent = '';
     document.getElementById('conditionalFields').style.display = 'none';
 }
 
-function showProductDetails(categoryId, producID) {
-    var productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal' + producID));
-    productDetailsModal.show();
+function showCategoryDetails(categoryId) {
+    var categoryDetailsModal = new bootstrap.Modal(document.getElementById('categoryDetailsModal' + categoryId));
+    categoryDetailsModal.show();
 }
 
-function editModal(categoryId, producID) {
-    var productUpdateModal = new bootstrap.Modal(document.getElementById('productUpdateModal' + producID));
-    productUpdateModal.show();
+function editModal(categoryId) {
+    var categoryUpdateModal = new bootstrap.Modal(document.getElementById('categoryUpdateModal' + categoryId));
+    categoryUpdateModal.show();
 }
 
 function confirmMod() {
