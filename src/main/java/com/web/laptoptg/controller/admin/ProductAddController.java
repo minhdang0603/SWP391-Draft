@@ -39,7 +39,7 @@ public class ProductAddController extends HttpServlet {
         brandService = new BrandServiceImpl();
     }
 
-
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("../admin/product-manage").forward(req, resp);
     }
