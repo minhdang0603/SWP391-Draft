@@ -117,7 +117,14 @@
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Tạo Mới
                                 </button>
                             </li>
+
+                            <div>
+                                <input type="text" id="searchEmail" placeholder="Tìm kiếm bằng email" onkeyup="searchByEmail()">
+                            </div>
                         </ul>
+
+
+
                         <div class="tab-content">
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <!-- Account Table -->
@@ -453,6 +460,30 @@
         toastr.error('${errorMessage}');
         </c:if>
     });
+</script>
+
+<!--search by email -->
+<script>
+    function searchByEmail() {
+        // Lấy giá trị của ô input
+        var input = document.getElementById('searchEmail');
+        var filter = input.value.toLowerCase();
+        var table = document.getElementById('myTable');
+        var tr = table.getElementsByTagName('tr');
+
+        // Duyệt qua các hàng trong bảng, bỏ qua hàng tiêu đề
+        for (var i = 1; i < tr.length; i++) {
+            var td = tr[i].getElementsByTagName('td')[2]; // Cột email
+            if (td) {
+                var txtValue = td.textContent || td.innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = '';
+                } else {
+                    tr[i].style.display = 'none';
+                }
+            }
+        }
+    }
 </script>
 
 
