@@ -8,13 +8,13 @@ import org.hibernate.annotations.FetchMode;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Data //toString()
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Order {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +57,7 @@ public class Order {
     @JoinColumn(name = "saler_id")
     private User saler;
 
-    @OneToOne(mappedBy = "order",fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "payment_id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;
 }

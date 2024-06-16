@@ -28,7 +28,7 @@ public class OrderManageController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Order> listOrder = orderService.getAllOrders();
+        List<Orders> listOrder = orderService.getAllOrders();
         List<OrderDetails> orderDetailsList = orderDetails.getAllOrderDetail();
         List<User> salerList = userService.findUserByRole("SALER");
         req.setAttribute("list", listOrder);

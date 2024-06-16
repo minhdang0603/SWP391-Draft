@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function () {
     $('#myTable').DataTable({
         columnDefs: [
-            {width: "50%", targets: 1} // Set width of second column (index 1) to 50%
+            {width: "30%", targets: 1},
+            {width: "30%", targets: 2}// Set width of second column (index 1) to 50%
         ]
     });
 });
