@@ -121,6 +121,37 @@ INSERT INTO `category` VALUES (1,'Laptop'),(2,'PC đồng bộ'),(3,'Thiết b�
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `payment_method` varchar(255) Not NULL,
+  `amount` bigint NOT NULL,
+  `payment_status` varchar(255) Not NULL,
+  `payment_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES (3,"Thanh toán khi nhận hàng",53950000,"unpaid",null),(5,'Thanh toán online',25990000,"unpaid",null);
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+
 --
 -- Table structure for table `order`
 --
@@ -140,13 +171,16 @@ CREATE TABLE `order` (
   `order_status` varchar(255) DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   `saler_id` bigint DEFAULT NULL,
+  `payment_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UKPayment_Order` (`payment_id`), -- Ensure payment_id is unique
   KEY `FKUser_Order` (`user_id`),
   KEY `FKSaler_Order` (`saler_id`),
   CONSTRAINT `FKSaler_Order` FOREIGN KEY (`saler_id`) REFERENCES `user` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `FKUser_Order` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+  CONSTRAINT `FKUser_Order` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FKPayment_Order` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `order`
@@ -154,9 +188,10 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','Pending',NULL,NULL),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','created',2,NULL);
+INSERT INTO `order` VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','pending',2,NULL,5),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','processing',2,NULL,3);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
+
 
 --
 -- Table structure for table `order_details`
@@ -171,6 +206,9 @@ CREATE TABLE `order_details` (
   `quantity` int NOT NULL,
   `order_id` bigint DEFAULT NULL,
   `product_id` bigint DEFAULT NULL,
+  `product_name` varchar(255) DEFAULT NULL,
+  `maintenance` varchar(255) DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKOrder_OrderDetails` (`order_id`),
   KEY `FKProduct_OrderDetails` (`product_id`),
@@ -185,9 +223,11 @@ CREATE TABLE `order_details` (
 
 LOCK TABLES `order_details` WRITE;
 /*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
-INSERT INTO `order_details` VALUES (1,13980000,2,32,62),(2,25990000,1,32,57),(3,22490000,1,32,54);
+INSERT INTO `order_details` VALUES (1,13980000,2,32,62,'MSI GF63 8RC-203VN/I5-8300H','6 tháng','62.png'),(2,25990000,1,31,57,'MSI GF63 8RD-218VN/i7-8750H','12 tháng','57.png'),(3,22490000,1,32,54,'Masstel L133 Pro/Celeron N4100','12 tháng','54.png');
 /*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
 
 --
 -- Table structure for table `product`
@@ -217,8 +257,8 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`),
   KEY `FKCategory_Product` (`category_id`),
   KEY `FKBrand_Product` (`brand_id`),
-  CONSTRAINT `FKBrand_Product` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),
-  CONSTRAINT `FKCategory_Product` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+  CONSTRAINT `FKBrand_Product` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FKCategory_Product` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

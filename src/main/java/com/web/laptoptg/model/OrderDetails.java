@@ -29,4 +29,13 @@ public class OrderDetails {
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Column(name = "product_name")
+    private String productName;
+
+    @Column(name = "maintenance")
+    private String maintenance;
+
+    @Column(name = "image")
+    private String image;
 }
