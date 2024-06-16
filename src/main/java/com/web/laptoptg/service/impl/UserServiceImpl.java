@@ -48,7 +48,9 @@ public class UserServiceImpl implements UserService {
             temp.setAddress(user.getAddress());
             temp.setPhoneNumber(user.getPhoneNumber());
             temp.setEmail(user.getEmail());
-            temp.setRole(getRoleFromString(user.getRole()));
+            if(getRoleFromString(user.getRole())!=null){
+                temp.setRole(getRoleFromString(user.getRole()));
+            }
             if (user.getStatus() != null) {
                 temp.setStatus(user.getStatus());
             }
@@ -131,14 +133,15 @@ public class UserServiceImpl implements UserService {
         userDAO.saveUser(temp);
     }
 
-    
     private Role getRoleFromString(String roleString) {
         if (roleString.equals("1")) {
             return new Role(1, "ADMIN");
         } else if (roleString.equals("2")) {
             return new Role(2, "SALER");
-        } else {
+        } else if(roleString.equals("3")) {
             return new Role(3, "MEMBER");
+        }else{
+            return null;
         }
     }
 }
