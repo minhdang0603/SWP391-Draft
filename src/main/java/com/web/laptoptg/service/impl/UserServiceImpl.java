@@ -48,17 +48,10 @@ public class UserServiceImpl implements UserService {
             temp.setAddress(user.getAddress());
             temp.setPhoneNumber(user.getPhoneNumber());
             temp.setEmail(user.getEmail());
-            // Lưu role_id
-            Role role = new Role();
-            if (user.getRole().equals("1")) {
-                role = new Role(1,"ADMIN");
-            } else if(user.getRole().equals("2")){
-                role = new Role(2,"SALER");
-            }else{
-                role = new Role(3,"MEMBER");
+            temp.setRole(getRoleFromString(user.getRole()));
+            if (user.getStatus() != null) {
+                temp.setStatus(user.getStatus());
             }
-            temp.setRole(role);
-            temp.setStatus(user.getStatus());
             userDAO.updateUser(temp);
         }
     }
@@ -118,32 +111,33 @@ public class UserServiceImpl implements UserService {
         return userDAO.findAllUsers();
     }
 
-    public void addUser(UserDTO user){
+    public void addUser(UserDTO user) {
         User temp = new User();
         CartService cartService = new CartServiceImpl();
-            temp.setUserName(user.getUserName());
-            temp.setAddress(user.getAddress());
-            temp.setPhoneNumber(user.getPhoneNumber());
-            temp.setEmail(user.getEmail());
-            temp.setPassword(user.getPassword());
-            // Lưu role_id
-            Role role = new Role();
-        if (user.getRole().equals("1")) {
-            role = new Role(1,"ADMIN");
-        } else if(user.getRole().equals("2")){
-            role = new Role(2,"SALER");
-        }else{
-            role = new Role(3,"MEMBER");
+        temp.setUserName(user.getUserName());
+        temp.setAddress(user.getAddress());
+        temp.setPhoneNumber(user.getPhoneNumber());
+        temp.setEmail(user.getEmail());
+        temp.setPassword(user.getPassword());
+        temp.setRole(getRoleFromString(user.getRole())); // Sử dụng phương thức getRoleFromString
+        temp.setStatus(user.getStatus());
+
+        Cart cart = new Cart();
+        cart.setUser(temp);
+        cartService.saveCart(cart);
+
+        System.out.println(cart);
+
+        userDAO.saveUser(temp);
+    }
+
+    private Role getRoleFromString(String roleString) {
+        if (roleString.equals("1")) {
+            return new Role(1, "ADMIN");
+        } else if (roleString.equals("2")) {
+            return new Role(2, "SALER");
+        } else {
+            return new Role(3, "MEMBER");
         }
-            temp.setRole(role);
-            temp.setStatus(user.getStatus());
-
-            Cart cart = new Cart();
-            cart.setUser(temp);
-            cartService.saveCart(cart);
-
-            System.out.println(cart);
-
-            userDAO.saveUser(temp);
     }
 }

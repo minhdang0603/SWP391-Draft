@@ -79,6 +79,12 @@
         .form-group {
             margin-bottom: 15px; /* Khoảng cách giữa các nhóm form */
         }
+
+        #searchEmail {
+            width: 250px;
+            margin-top: 2px;
+            margin-left: 50px;
+        }
     </style>
 </head>
 
@@ -252,7 +258,7 @@
                                                     <div class="col-md-8">
                                                         <div class="required-note">*Thông tin bắt buộc</div>
                                                         <input name="phoneNumber" type="text" class="form-control"
-                                                               id="phoneNumber" placeholder="0966977284" required>
+                                                               id="phoneNumber" placeholder="123456789" required>
                                                         <div id="phoneNumberError" class="error-message"></div>
                                                     </div>
                                                 </div>
@@ -431,8 +437,8 @@
     }
 
     function validatePhoneNumber(phoneNumber) {
-        // Simple phone number validation regex (Vietnam phone number format)
-        const re = /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;
+        // Phone number validation regex: starts with 0, followed by 8 or 9 digits
+        const re = /^0\d{8,9}$/;
         return re.test(phoneNumber);
     }
 </script>
@@ -452,6 +458,23 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
     $(document).ready(function () {
         <c:if test="${not empty successMessage}">
         toastr.success('${successMessage}');
