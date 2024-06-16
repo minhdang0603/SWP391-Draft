@@ -87,7 +87,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>Cameras</h3>
-                        <a href="${contextPath}/store?id=4" class="cta-btn">Mua sắm ngay <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="${contextPath}/store?id=7" class="cta-btn">Mua sắm ngay <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
