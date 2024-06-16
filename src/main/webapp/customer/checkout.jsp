@@ -22,20 +22,20 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/bootstrap.min.css"/>
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/slick-theme.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick-theme.css"/>
 
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/nouislider.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/nouislider.min.css"/>
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="../assets/home/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextPath}/assets/home/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="../assets/home/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,10 +61,10 @@
         <!-- row -->
         <div class="row">
             <div class="col-md-12">
-                <h3 class="breadcrumb-header">Checkout</h3>
+                <h3 class="breadcrumb-header">Thanh toán</h3>
                 <ul class="breadcrumb-tree">
-                    <li><a href="#">Home</a></li>
-                    <li class="active">Checkout</li>
+                    <li><a href="${contextPath}/home">Trang chủ</a></li>
+                    <li class="active">Thanh toán</li>
                 </ul>
             </div>
         </div>
@@ -84,143 +84,77 @@
             <div class="col-md-7">
                 <!-- Billing Details -->
                 <div class="billing-details">
-                    <div class="section-title">
-                        <h3 class="title">Billing address</h3>
+                    <div class="section-title text-center">
+                        <h3 class="title">Địa chỉ giao hàng</h3>
                     </div>
                     <div class="form-group">
-                        <input class="input" type="text" name="first-name" placeholder="First Name">
+                        <input class="input" type="text" name="username" placeholder="Tên người nhận" value="${account.userName}">
                     </div>
                     <div class="form-group">
-                        <input class="input" type="text" name="last-name" placeholder="Last Name">
+                        <input class="input" type="email" name="email" placeholder="Email" value="${account.email}">
                     </div>
                     <div class="form-group">
-                        <input class="input" type="email" name="email" placeholder="Email">
+                        <input class="input" type="text" name="address" placeholder="Địa chỉ" value="${account.address}">
                     </div>
                     <div class="form-group">
-                        <input class="input" type="text" name="address" placeholder="Address">
+                        <input class="input" type="tel" name="tel" placeholder="Số điện thoại" value="${account.phoneNumber}">
                     </div>
-                    <div class="form-group">
-                        <input class="input" type="text" name="city" placeholder="City">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="text" name="country" placeholder="Country">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="tel" name="tel" placeholder="Telephone">
-                    </div>
-                    <div class="form-group">
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="create-account">
-                            <label for="create-account">
-                                <span></span>
-                                Create Account?
-                            </label>
-                            <div class="caption">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-                                <input class="input" type="password" name="password" placeholder="Enter Your Password">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Billing Details -->
+                    <!-- /Billing Details -->
 
-                <!-- Shiping Details -->
-                <div class="shiping-details">
-                    <div class="section-title">
-                        <h3 class="title">Shiping address</h3>
+                    <!-- Order notes -->
+                    <div class="order-notes">
+                        <textarea class="input" placeholder="Ghi chú"
+                                  style="min-height: 180px; resize: vertical;"></textarea>
                     </div>
-                    <div class="input-checkbox">
-                        <input type="checkbox" id="shiping-address">
-                        <label for="shiping-address">
-                            <span></span>
-                            Ship to a diffrent address?
-                        </label>
-                        <div class="caption">
-                            <div class="form-group">
-                                <input class="input" type="text" name="first-name" placeholder="First Name">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="last-name" placeholder="Last Name">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="email" name="email" placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="address" placeholder="Address">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="city" placeholder="City">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="country" placeholder="Country">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="tel" name="tel" placeholder="Telephone">
-                            </div>
-                        </div>
-                    </div>
+                    <!-- /Order notes -->
                 </div>
-                <!-- /Shiping Details -->
-
-                <!-- Order notes -->
-                <div class="order-notes">
-                    <textarea class="input" placeholder="Order Notes"></textarea>
-                </div>
-                <!-- /Order notes -->
             </div>
-
             <!-- Order Details -->
             <div class="col-md-5 order-details">
                 <div class="section-title text-center">
-                    <h3 class="title">Your Order</h3>
+                    <h3 class="title">Đơn hàng của bạn</h3>
                 </div>
                 <div class="order-summary">
                     <div class="order-col">
-                        <div><strong>PRODUCT</strong></div>
-                        <div><strong>TOTAL</strong></div>
+                        <div><strong>Sản phẩm</strong></div>
+                        <div><strong>Giá tiền</strong></div>
                     </div>
                     <div class="order-products">
-                        <div class="order-col">
-                            <div>1x Product Name Goes Here</div>
-                            <div>$980.00</div>
-                        </div>
-                        <div class="order-col">
-                            <div>2x Product Name Goes Here</div>
-                            <div>$980.00</div>
-                        </div>
+                        <c:forEach items="${cart}" var="item">
+                            <div class="order-col">
+                                <div>
+                                    ${item.product.productName}
+                                    <br>
+                                    Số lượng: ${item.quantity}
+                                </div>
+                                <div class="price">${item.product.unitPrice}</div>
+                            </div>
+                        </c:forEach>
                     </div>
                     <div class="order-col">
                         <div>Shiping</div>
-                        <div><strong>FREE</strong></div>
+                        <div><strong>Miễn phí</strong></div>
                     </div>
                     <div class="order-col">
-                        <div><strong>TOTAL</strong></div>
-                        <div><strong class="order-total">$2940.00</strong></div>
+                        <div><strong>Tổng tiền</strong></div>
+                        <div><strong class="order-total price" style="font-size: 20px">${total}</strong></div>
                     </div>
                 </div>
 
                 <div class="payment-method">
                     <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-1">
+                        <input type="radio" name="payment" id="payment-1" value="vnpay">
                         <label for="payment-1">
                             <span></span>
-                            Online Payment
+                            Thanh toán bằng VNPay
                         </label>
-
                     </div>
                     <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-2">
+                        <input type="radio" name="payment" id="payment-2" value="cash-on-delivery">
                         <label for="payment-2">
                             <span></span>
-                            Cash on Delivery
+                            Thanh toán khi nhận hàng
                         </label>
-
                     </div>
 
                 </div>
@@ -228,10 +162,10 @@
                     <input type="checkbox" id="terms">
                     <label for="terms">
                         <span></span>
-                        I've read and accept the <a href="#">terms & conditions</a>
+                        Tôi đã đọc và chấp nhận các <a href="#">điều khoản và điều kiện</a>
                     </label>
                 </div>
-                <a href="#" class="primary-btn order-submit">Place order</a>
+                <a href="#" class="primary-btn order-submit">Đặt hàng</a>
             </div>
             <!-- /Order Details -->
         </div>
@@ -246,12 +180,33 @@
 <!-- /FOOTER -->
 
 <!-- jQuery Plugins -->
-<script src="../assets/home/js/jquery.min.js"></script>
-<script src="../assets/home/js/bootstrap.min.js"></script>
-<script src="../assets/home/js/slick.min.js"></script>
-<script src="../assets/home/js/nouislider.min.js"></script>
-<script src="../assets/home/js/jquery.zoom.min.js"></script>
-<script src="../assets/home/js/main.js"></script>
+<script src="${contextPath}/assets/home/js/jquery.min.js"></script>
+<script src="${contextPath}/assets/home/js/bootstrap.min.js"></script>
+<script src="${contextPath}/assets/home/js/slick.min.js"></script>
+<script src="${contextPath}/assets/home/js/nouislider.min.js"></script>
+<script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
+<script src="${contextPath}/assets/home/js/main.js"></script>
+<script>
+    // Function to format number to Vietnamese Dong (VND) format
+    function formatVND(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
+    }
 
+    // Wait for the document to fully load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select all elements with class 'price'
+        const priceElements = document.querySelectorAll('.price');
+
+        // Format each price element
+        priceElements.forEach(function(element) {
+            let price = parseFloat(element.textContent.trim()); // Assuming the price is in numeric format
+
+            if (!isNaN(price)) {
+                // Format the price using the formatVND function
+                element.textContent = formatVND(price);
+            }
+        });
+    });
+</script>
 </body>
 </html>
