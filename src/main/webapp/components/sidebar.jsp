@@ -43,7 +43,7 @@
 
         <!-- Category Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/#">
+            <a class="nav-link " href="${contextPath}/admin/category-manage">
                 <i class="bi bi-card-list"></i>
                 <span>Danh Mục</span>
             </a>
@@ -51,7 +51,7 @@
 
         <!-- Brand Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/#">
+            <a class="nav-link " href="${contextPath}/admin/brand-manage">
                 <i class="bi bi-bank2"></i>
                 <span>Hãng sản phẩm</span>
             </a>

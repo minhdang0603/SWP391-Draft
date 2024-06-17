@@ -36,7 +36,38 @@
     <!-- Template Main CSS File -->
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
     <link href="${contextPath}/assets/css/productManage.css" rel="stylesheet">
+<style>
+    .product-table {
+        display: flex;
+        flex-direction: column;
+    }
 
+    .product-header, .product-row, .product-footer {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .product-cell {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .product-header {
+        font-weight: bold;
+        background-color: #f4f4f4;
+    }
+
+    .product-row:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .product-footer {
+        font-weight: bold;
+        background-color: #f4f4f4;
+    }
+</style>
 </head>
 
 <body>
@@ -70,9 +101,9 @@
                         <ul class="nav nav-tabs nav-tabs-bordered">
                             <%--                                <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">--%>
                             <li class="nav-item">
-                                <button class="nav-link active">
+                                <p class="nav-link active">
                                     Danh Sách Đơn Hàng
-                                </button>
+                                </p>
                             </li>
                             <%--                                </c:if>--%>
 
@@ -87,17 +118,14 @@
                                 <!-- Order Table -->
                                 <div class="table-responsive">
                                     <table id="myTable"
-                                           class="table-responsive table-striped datatable align-items-center mb-0">
+                                           class="table table-striped datatable align-items-center mb-0">
                                         <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0 text-center">
                                                 ID
                                             </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-1 text-center">
                                                 Người đặt hàng
-                                            </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
-                                                Nhân viên phụ trách
                                             </th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Ngày tạo
@@ -123,10 +151,6 @@
                                                 <td class="align-middle text-center"
                                                     style="width: 50%">
                                                         ${order.customer.userName}
-                                                </td>
-                                                <td class="align-middle text-center"
-                                                    style="width: 50%">
-                                                        ${order.saler.userName}
                                                 </td>
                                                 <td class="align-middle text-sm">${order.orderDate}</td>
                                                 <td class="align-middle text-sm"
@@ -192,7 +216,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="row mb-2">
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <p><strong>Mã đơn hàng:</strong> <span
                                                                             id="modalID">${order.id}</span></p>
                                                                     <p><strong>Trạng thái:</strong> <span
@@ -211,7 +235,7 @@
                                                                             id="modalReceiveDateDate">${order.receiveDate}</span>
                                                                     </p>
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                     <p><strong>Người đặt hàng:</strong> <span
                                                                             id="modalCustomerName">${order.customer.userName}</span>
                                                                     </p>
@@ -225,42 +249,37 @@
                                                                             id="modalNote">${order.note}</span>
                                                                     </p>
                                                                 </div>
-                                                                <div class="col-md-4">
-                                                                    <table class="table table-responsive">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th>Sản phẩm</th>
-                                                                            <th>Đơn giá</th>
-                                                                            <th>Số lượng</th>
-                                                                            <th>Thành tiền</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody id="productTableBody">
+                                                            </div>
+                                                            <div>
+                                                                <div class="product-table">
+                                                                    <div class="product-header">
+                                                                        <div class="product-cell">Sản phẩm</div>
+                                                                        <div class="product-cell">Đơn giá</div>
+                                                                        <div class="product-cell">Số lượng</div>
+                                                                        <div class="product-cell">Thành tiền</div>
+                                                                    </div>
+                                                                    <div id="productTableBody" class="product-body">
                                                                         <c:forEach items="${detailList}" var="detail">
-                                                                            <tr>
-                                                                                <c:if test="${detail.order.id == order.id}">
-                                                                                    <td>${detail.productName}</td>
-                                                                                    <td>${detail.unitPrice}</td>
-                                                                                    <td>${detail.quantity}</td>
-                                                                                    <td class="product-total">${detail.unitPrice * detail.quantity}</td>
-                                                                                </c:if>
-                                                                            </tr>
+                                                                            <c:if test="${detail.order.id == order.id}">
+                                                                                <div class="product-row">
+                                                                                    <div class="product-cell">${detail.productName}</div>
+                                                                                    <div class="product-cell">${detail.unitPrice}</div>
+                                                                                    <div class="product-cell">${detail.quantity}</div>
+                                                                                    <div class="product-cell product-total">${detail.unitPrice * detail.quantity}</div>
+                                                                                </div>
+                                                                            </c:if>
                                                                         </c:forEach>
-                                                                        </tbody>
-                                                                        <tfoot>
-                                                                        <tr>
-                                                                            <td colspan="3"><strong>Tổng tiền</strong>
-                                                                            </td>
-                                                                            <td id="totalPrice">0</td>
-                                                                        </tr>
-                                                                        </tfoot>
-                                                                    </table>
+                                                                    </div>
+                                                                    <div class="product-footer">
+                                                                        <div class="product-cell" colspan="3"><strong>Tổng tiền</strong></div>
+                                                                        <div class="product-cell" id="totalPrice">0</div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Đóng
-                                                                    </button>
-                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Đóng
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>

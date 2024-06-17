@@ -12,9 +12,10 @@
         <class>com.web.laptoptg.model.Product</class>
         <class>com.web.laptoptg.model.Brand</class>
         <class>com.web.laptoptg.model.Category</class>
-        <class>com.web.laptoptg.model.Order</class>
+        <class>com.web.laptoptg.model.Orders</class>
         <class>com.web.laptoptg.model.OrderDetails</class>
         <class>com.web.laptoptg.model.Payment</class>
+        <class>com.web.laptoptg.model.Rating</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
