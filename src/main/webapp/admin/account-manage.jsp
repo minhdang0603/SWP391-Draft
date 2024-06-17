@@ -154,16 +154,14 @@
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                                 <!-- Create New User Form -->
                                 <div class="container">
-                                    <form id="userAddForm" action="${contextPath}/admin/account-manage" method="post"
-                                          oninput="validateForm()">
+                                    <form id="userAddForm" action="${contextPath}/admin/account-manage" method="post" onsubmit="return validateForm()">
                                         <input type="hidden" name="formType" value="add"/>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row mb-3">
                                                     <label for="userName" class="col-md-4 col-form-label">Tên người dùng</label>
                                                     <div class="col-md-8">
-                                                        <input name="userName" type="text" class="form-control"
-                                                               id="userName" placeholder="Nguyễn Văn A" >
+                                                        <input name="userName" type="text" class="form-control" id="userName" placeholder="Nguyễn Văn A" >
                                                         <div id="userNameError" class="error-message"></div>
                                                     </div>
                                                 </div>
@@ -172,8 +170,7 @@
                                                     <label for="email" class="col-md-4 col-form-label">Email</label>
                                                     <div class="col-md-8">
                                                         <div class="required-note">*Thông tin bắt buộc</div>
-                                                        <input name="email" type="email" class="form-control"
-                                                               id="email" placeholder="a@gmail.com"required>
+                                                        <input name="email" type="email" class="form-control" id="email" placeholder="a@gmail.com" required>
                                                         <div id="emailError" class="error-message"></div>
                                                     </div>
                                                 </div>
@@ -182,8 +179,7 @@
                                                     <label for="password" class="col-md-4 col-form-label">Mật khẩu</label>
                                                     <div class="col-md-8">
                                                         <div class="required-note">*Thông tin bắt buộc</div>
-                                                        <input name="password" type="password" class="form-control"
-                                                               id="password" required>
+                                                        <input name="password" type="password" class="form-control" id="password" required>
                                                         <div id="passwordError" class="error-message"></div>
                                                         <small id="passwordValidation" class="form-text text-danger" style="display: none;">Mật khẩu phải có 8 ký tự trở lên, ít nhất 1 số và 1 chữ hoa.</small>
                                                     </div>
@@ -192,8 +188,7 @@
                                                 <div class="row mb-3">
                                                     <label for="repassword" class="col-md-4 col-form-label">Nhập lại </label>
                                                     <div class="col-md-8">
-                                                        <input name="repassword" type="password" class="form-control"
-                                                               id="repassword" required>
+                                                        <input name="repassword" type="password" class="form-control" id="repassword" required>
                                                         <div id="repasswordError" class="error-message"></div>
                                                         <small id="passwordHelp" class="form-text text-danger" style="display: none;">Nhập lại, không đúng với new password!!!.</small>
                                                     </div>
@@ -202,8 +197,7 @@
                                                 <div class="row mb-3">
                                                     <label for="address" class="col-md-4 col-form-label">Địa chỉ</label>
                                                     <div class="col-md-8">
-                                                        <input name="address" type="text" class="form-control"
-                                                               id="address" >
+                                                        <input name="address" type="text" class="form-control" id="address" >
                                                         <div id="addressError" class="error-message"></div>
                                                     </div>
                                                 </div>
@@ -211,9 +205,8 @@
                                                 <div class="row mb-3">
                                                     <label for="phoneNumber" class="col-md-4 col-form-label">Số điện thoại</label>
                                                     <div class="col-md-8">
-                                                        <input name="phoneNumber" type="text" class="form-control"
-                                                               id="phoneNumber" placeholder="123456789" >
-                                                        <div id="phoneNumberError" class="error-message"></div>
+                                                        <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="0123456789" >                                                        <div id="phoneNumberError" class="error-message"></div>
+                                                        <div id="phoneNumberErrora" class="error-message"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -254,6 +247,7 @@
                                             </div>
                                         </div>
                                     </form>
+
                                 </div>
                                 <!--End add user form -->
                             </div>
@@ -374,7 +368,5 @@
         </c:if>
     });
 </script>
-
-
 </body>
 </html>
