@@ -1,0 +1,43 @@
+.form-control-lg {
+    font-size: 1.25rem;
+    padding: .5rem 1rem;
+}
+
+.large-textarea {
+    min-height: 200px;
+    font-size: 1.25rem;
+    padding: .75rem;
+}
+
+#myTable th, td {
+    text-align: left;
+    align-content: center;
+}
+
+th, td {
+    padding: 12px 15px;
+}
+
+th {
+    background-color: #f8f9fa;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.875em;
+}
+.required-note {
+    font-size: 10px;  /* Kích thước chữ nhỏ */
+    color: gray;      /* Màu chữ xám */
+    font-style: italic; /* Chữ viết nghiêng */
+    margin-bottom: 5px;  /* Khoảng cách dưới dòng chữ */
+}
+.form-group {
+    margin-bottom: 15px; /* Khoảng cách giữa các nhóm form */
+}
+
+#searchEmail {
+    width: 250px;
+    margin-top: 2px;
+    margin-left: 50px;
+}
