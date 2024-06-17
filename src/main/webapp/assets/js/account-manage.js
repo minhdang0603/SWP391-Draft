@@ -72,3 +72,43 @@ function searchByEmail() {
         }
     }
 }
+
+function validateForm() {
+    let valid = true;
+
+    // Validate phone number
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    const phoneNumberError = document.getElementById('phoneNumberError');
+    const phonePattern = /^0\d{8,9}$/;
+    if (!phonePattern.test(phoneNumber)) {
+        phoneNumberError.textContent = 'Số điện thoại phải bắt đầu bằng số 0 và có 9 hoặc 10 chữ số.';
+        valid = false;
+    } else {
+        phoneNumberError.textContent = '';
+    }
+
+    // Validate passwords
+    const password = document.getElementById('password').value;
+    const repassword = document.getElementById('repassword').value;
+    const passwordError = document.getElementById('passwordError');
+    const repasswordError = document.getElementById('repasswordError');
+    const passwordHelp = document.getElementById('passwordHelp');
+    const passwordValidation = document.getElementById('passwordValidation');
+
+    const passwordPattern = /^(?=.*\d)(?=.*[A-Z]).{8,}$/;
+    if (!passwordPattern.test(password)) {
+        passwordValidation.style.display = 'block';
+        valid = false;
+    } else {
+        passwordValidation.style.display = 'none';
+    }
+
+    if (password !== repassword) {
+        passwordHelp.style.display = 'block';
+        valid = false;
+    } else {
+        passwordHelp.style.display = 'none';
+    }
+
+    return valid;
+}
