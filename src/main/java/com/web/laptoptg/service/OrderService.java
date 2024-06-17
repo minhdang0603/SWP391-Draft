@@ -1,14 +1,14 @@
 package com.web.laptoptg.service;
 
-import com.web.laptoptg.model.Order;
-import com.web.laptoptg.model.User;
+import com.web.laptoptg.model.Orders;
+
 import java.util.List;
 
 public interface OrderService {
-    Order getOrderById(int id);
-    List<Order> getAllOrders();
+    Orders getOrderById(int id);
+    List<Orders> getAllOrders();
     void deleteOrderById(int id);
-    List<Order> searchOrdersByPhone(String phoneNumber);
-    void updateOrder(Order order);
-    void saveOrder(Order order);
+    List<Orders> searchOrdersByPhone(String phoneNumber);
+    void updateOrder(Orders order);
+    void saveOrder(Orders order);
 }

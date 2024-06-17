@@ -156,10 +156,10 @@ UNLOCK TABLES;
 -- Table structure for table `order`
 --
 
-DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order` (
+CREATE TABLE `orders` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `address` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
@@ -183,13 +183,13 @@ CREATE TABLE `order` (
 
 
 --
--- Dumping data for table `order`
+-- Dumping data for table `orders`
 --
 
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','pending',2,NULL,5),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','processing',2,NULL,3);
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','pending',2,NULL,5),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','processing',2,NULL,3);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -357,7 +357,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Hà Nội','admin@gmail.com','Nguyễn Xuân Nam','$2a$10$3mIWjShzTyfEqzVoRwyUjOK4XlWk7TjcjrO3xaFcXjlfq6ES4bnD6','123456789',1,'active'),(2,NULL,'member@gmail.com',NULL,'$2a$10$Zk9MSaYLQzuR3AduX8jM2.z3otHgBpkVeQPjSkvL/XfP3e1xD0h5S',NULL,3,'active'),(3,NULL,'saler@gmail.com',NULL,'$2a$10$1A2jZwaq02MViKmdEgSyou/1eBdLt9QdkJz10qUnApYDxqv3P5CKy',NULL,2,'active'),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$lHb9AJ4TSJpOMYmhsbpPKOF70JO.D0tuol8n0jMpy7qzAt842Xv/K','123456',3,'active'),(23,NULL,'dangtm1163@gmail.com','Minh Đăng','$2a$10$X4HjBeEX.xwIJyHmrMUuSupw85BeBDNWLrhD6N8Xdf2f/yvuEqNhK',NULL,3,'active'),(27,NULL,'ruabin1163@gmail.com','Tạ Minh Đăng','$2a$10$w1VC/kjDg8wUJ/aYy3i82.VjWKudrkKz3dinNRPX1nqePTJ.2oC5u',NULL,3,'active');
+INSERT INTO `user` VALUES (1,'Hà Nội','admin@gmail.com','Nguyễn Xuân Nam','$2a$10$3mIWjShzTyfEqzVoRwyUjOK4XlWk7TjcjrO3xaFcXjlfq6ES4bnD6','123456789',1,'active'),(2,NULL,'member@gmail.com','Nombre Noir','$2a$10$Zk9MSaYLQzuR3AduX8jM2.z3otHgBpkVeQPjSkvL/XfP3e1xD0h5S',NULL,3,'active'),(3,NULL,'saler@gmail.com','Makima Tokizawa','$2a$10$1A2jZwaq02MViKmdEgSyou/1eBdLt9QdkJz10qUnApYDxqv3P5CKy',NULL,2,'active'),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$lHb9AJ4TSJpOMYmhsbpPKOF70JO.D0tuol8n0jMpy7qzAt842Xv/K','123456',3,'active'),(23,NULL,'dangtm1163@gmail.com','Minh Đăng','$2a$10$X4HjBeEX.xwIJyHmrMUuSupw85BeBDNWLrhD6N8Xdf2f/yvuEqNhK',NULL,2,'active'),(27,NULL,'ruabin1163@gmail.com','Tạ Minh Đăng','$2a$10$w1VC/kjDg8wUJ/aYy3i82.VjWKudrkKz3dinNRPX1nqePTJ.2oC5u',NULL,3,'active');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
