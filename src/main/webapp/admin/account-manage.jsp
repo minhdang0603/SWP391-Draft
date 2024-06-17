@@ -41,53 +41,12 @@
     <!--Toastr-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <style>
-        .form-control-lg {
-            font-size: 1.25rem;
-            padding: .5rem 1rem;
-        }
+    <!-- Template Main CSS File -->
+    <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/account-manage.css" rel="stylesheet">
 
-        .large-textarea {
-            min-height: 200px;
-            font-size: 1.25rem;
-            padding: .75rem;
-        }
 
-        #myTable th, td {
-            text-align: left;
-            align-content: center;
-        }
-
-        th, td {
-            padding: 12px 15px;
-        }
-
-        th {
-            background-color: #f8f9fa;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 0.875em;
-        }
-        .required-note {
-            font-size: 10px;  /* Kích thước chữ nhỏ */
-            color: gray;      /* Màu chữ xám */
-            font-style: italic; /* Chữ viết nghiêng */
-            margin-bottom: 5px;  /* Khoảng cách dưới dòng chữ */
-        }
-        .form-group {
-            margin-bottom: 15px; /* Khoảng cách giữa các nhóm form */
-        }
-
-        #searchEmail {
-            width: 250px;
-            margin-top: 2px;
-            margin-left: 50px;
-        }
-    </style>
 </head>
-
 <body>
 
 <!-- ======= Header ======= -->
@@ -123,10 +82,6 @@
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Tạo Mới
                                 </button>
                             </li>
-
-                            <div>
-                                <input type="text" id="searchEmail" placeholder="Tìm kiếm bằng email" onkeyup="searchByEmail()">
-                            </div>
                         </ul>
 
 
@@ -143,7 +98,7 @@
                                                 ID
                                             </th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                UserName
+                                                Tên người dùng
                                             </th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Email
@@ -176,11 +131,11 @@
                                                 <td>${user.email}</td>
                                                 <td>${user.address}</td>
                                                 <td>${user.phoneNumber}</td>
-                                                <td>${user.role.id}</td>
+                                                <td>${user.role.roleName}</td>
                                                 <td>${user.status}</td>
                                                 <td>
                                                     <a href="javascript:void(0);" class="bi bi-pencil-square" style="font-size: 20px; color: deepskyblue"
-                                                       onclick="editUser('${user.id}', '${user.userName}', '${user.email}', '${user.address}', '${user.phoneNumber}', '${user.role.id}', '${user.status}')"></a>
+                                                       onclick="editUser('${user.id}', '${user.userName}', '${user.email}', '${user.address}', '${user.phoneNumber}', '${user.role.roleName}', '${user.status}')"></a>
                                                 </td>
                                                 <td>
                                                     <a href="${contextPath}/admin/account-manage?idDelete=${user.id}"
@@ -256,9 +211,8 @@
                                                 <div class="row mb-3">
                                                     <label for="phoneNumber" class="col-md-4 col-form-label">Số điện thoại</label>
                                                     <div class="col-md-8">
-                                                        <div class="required-note">*Thông tin bắt buộc</div>
                                                         <input name="phoneNumber" type="text" class="form-control"
-                                                               id="phoneNumber" placeholder="123456789" required>
+                                                               id="phoneNumber" placeholder="123456789" >
                                                         <div id="phoneNumberError" class="error-message"></div>
                                                     </div>
                                                 </div>
@@ -303,6 +257,7 @@
                                 </div>
                                 <!--End add user form -->
                             </div>
+
                             <!-- Edit User Modal -->
                             <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -339,9 +294,9 @@
                                                 <div class="mb-3">
                                                     <label for="editRole" class="form-label">Vai trò</label>
                                                     <select class="form-control" id="editRole" name="role" required>
-                                                        <option value="1">Admin</option>
-                                                        <option value="2">Saler</option>
-                                                        <option value="3">Member</option>
+                                                        <option value="ADMIN">Admin</option>
+                                                        <option value="SALER">Saler</option>
+                                                        <option value="MEMBER">Member</option>
                                                     </select>
                                                 </div>
 
@@ -368,94 +323,29 @@
 </main><!-- End #main -->
 
 
-<!-- ======= Footer ======= -->
-<%--<jsp:include page="../components/footer.jsp"/>--%>
-<!-- End Footer -->
+
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 
+
+
 <!-- Vendor JS Files -->
-<script src="${contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>
 <script src="${contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
 <script src="${contextPath}/assets/vendor/echarts/echarts.min.js"></script>
-<script src="${contextPath}/assets/vendor/quill/quill.min.js"></script>
-<script src="${contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="${contextPath}/assets/vendor/quill/quill.js"></script>
 <script src="${contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="${contextPath}/assets/vendor/php-email-form/validate.js"></script>
-<script src="${contextPath}/assets/js/validation-password-add-user.js"></script>
-<script src="https://cdn.datatables.net/2.0.8/js/jquery.dataTables.js"></script>
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
-<script>
-    function editUser(id, userName, email, address, phoneNumber, roleValue, status) {
-        // Set the values in the modal form
-        document.getElementById('editUserId').value = id;
-        document.getElementById('editUserName').value = userName;
-        document.getElementById('editEmail').value = email;
-        document.getElementById('editAddress').value = address;
-        document.getElementById('editPhoneNumber').value = phoneNumber;
-
-        // Set the selected value for role
-        var roleSelect = document.getElementById('editRole');
-        for (var i = 0; i < roleSelect.options.length; i++) {
-            if (roleSelect.options[i].value == roleValue) {
-                roleSelect.options[i].selected = true;
-            } else {
-                roleSelect.options[i].selected = false; // Ensure other options are not selected
-            }
-        }
-
-        // Set the selected value for status
-        var statusSelect = document.getElementById('editStatus');
-        for (var i = 0; i < statusSelect.options.length; i++) {
-            if (statusSelect.options[i].value === status) {
-                statusSelect.options[i].selected = true;
-            } else {
-                statusSelect.options[i].selected = false; // Ensure other options are not selected
-            }
-        }
-
-        // Show the modal
-        var myModal = new bootstrap.Modal(document.getElementById('editUserModal'));
-        myModal.show();
-    }
-
-    $(document).ready(function () {
-        $('#myTable').DataTable();
-    });
-</script>
-
-
-<script>
-    function validateEmail(email) {
-        // Simple email validation regex
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    function validatePhoneNumber(phoneNumber) {
-        // Phone number validation regex: starts with 0, followed by 8 or 9 digits
-        const re = /^0\d{8,9}$/;
-        return re.test(phoneNumber);
-    }
-</script>
-
-<!--Alert xóa tài khoản-->
-<script>
-    function confirmDelete() {
-        if (confirm('Bạn có chắc chắn muốn xóa tài khoản này?')) {
-            return true; // Cho phép thực hiện hành động xóa
-        } else {
-            return false; // Ngăn không cho thực hiện hành động xóa
-        }
-    }
-</script>
+<!-- Template Main JS File -->
+<script src="${contextPath}/assets/js/main.js"></script>
+<script src="${contextPath}/assets/js/account-manage.js"></script>
 
 <!-- Toastr -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     toastr.options = {
@@ -485,35 +375,6 @@
     });
 </script>
 
-<!--search by email -->
-<script>
-    function searchByEmail() {
-        // Lấy giá trị của ô input
-        var input = document.getElementById('searchEmail');
-        var filter = input.value.toLowerCase();
-        var table = document.getElementById('myTable');
-        var tr = table.getElementsByTagName('tr');
-
-        // Duyệt qua các hàng trong bảng, bỏ qua hàng tiêu đề
-        for (var i = 1; i < tr.length; i++) {
-            var td = tr[i].getElementsByTagName('td')[2]; // Cột email
-            if (td) {
-                var txtValue = td.textContent || td.innerText;
-                if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                    tr[i].style.display = '';
-                } else {
-                    tr[i].style.display = 'none';
-                }
-            }
-        }
-    }
-</script>
-
-
-<!-- Đoạn mã JSP để hiển thị nội dung của session attribute -->
-<%--<div id="addSuccess">${sessionScope.addSuccess}</div>--%>
-<%--<div id="addFail">${sessionScope.addFail}</div>--%>
 
 </body>
-
 </html>
