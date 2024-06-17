@@ -80,94 +80,98 @@
     <div class="container">
         <!-- row -->
         <div class="row">
+            <form method="post" action="${contextPath}/checkout-process">
+                <div class="col-md-7">
+                    <!-- Billing Details -->
+                    <div class="billing-details">
+                        <div class="section-title text-center">
+                            <h3 class="title">Địa chỉ giao hàng</h3>
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="username" placeholder="Tên người nhận"
+                                   value="${account.userName}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="email" name="email" placeholder="Email" value="${account.email}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="address" placeholder="Địa chỉ"
+                                   value="${account.address}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="tel" name="tel" placeholder="Số điện thoại"
+                                   value="${account.phoneNumber}">
+                        </div>
+                        <!-- /Billing Details -->
 
-            <div class="col-md-7">
-                <!-- Billing Details -->
-                <div class="billing-details">
-                    <div class="section-title text-center">
-                        <h3 class="title">Địa chỉ giao hàng</h3>
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="text" name="username" placeholder="Tên người nhận" value="${account.userName}">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="email" name="email" placeholder="Email" value="${account.email}">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="text" name="address" placeholder="Địa chỉ" value="${account.address}">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="tel" name="tel" placeholder="Số điện thoại" value="${account.phoneNumber}">
-                    </div>
-                    <!-- /Billing Details -->
-
-                    <!-- Order notes -->
-                    <div class="order-notes">
+                        <!-- Order notes -->
+                        <div class="order-notes">
                         <textarea class="input" placeholder="Ghi chú"
                                   style="min-height: 180px; resize: vertical;"></textarea>
+                        </div>
+                        <!-- /Order notes -->
                     </div>
-                    <!-- /Order notes -->
                 </div>
-            </div>
-            <!-- Order Details -->
-            <div class="col-md-5 order-details">
-                <div class="section-title text-center">
-                    <h3 class="title">Đơn hàng của bạn</h3>
-                </div>
-                <div class="order-summary">
-                    <div class="order-col">
-                        <div><strong>Sản phẩm</strong></div>
-                        <div><strong>Giá tiền</strong></div>
+                <!-- Order Details -->
+                <div class="col-md-5 order-details">
+                    <div class="section-title text-center">
+                        <h3 class="title">Đơn hàng của bạn</h3>
                     </div>
-                    <div class="order-products">
-                        <c:forEach items="${cart}" var="item">
-                            <div class="order-col">
-                                <div>
-                                    ${item.product.productName}
-                                    <br>
-                                    Số lượng: ${item.quantity}
+                    <div class="order-summary">
+                        <div class="order-col">
+                            <div><strong>Sản phẩm</strong></div>
+                            <div><strong>Giá tiền</strong></div>
+                        </div>
+                        <div class="order-products">
+                            <c:forEach items="${cart}" var="item">
+                                <div class="order-col">
+                                    <div>
+                                            ${item.product.productName}
+                                        <br>
+                                        Số lượng: ${item.quantity}
+                                    </div>
+                                    <div class="price">${item.product.unitPrice}</div>
                                 </div>
-                                <div class="price">${item.product.unitPrice}</div>
-                            </div>
-                        </c:forEach>
-                    </div>
-                    <div class="order-col">
-                        <div>Shiping</div>
-                        <div><strong>Miễn phí</strong></div>
-                    </div>
-                    <div class="order-col">
-                        <div><strong>Tổng tiền</strong></div>
-                        <div><strong class="order-total price" style="font-size: 20px">${total}</strong></div>
-                    </div>
-                </div>
-
-                <div class="payment-method">
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-1" value="vnpay">
-                        <label for="payment-1">
-                            <span></span>
-                            Thanh toán bằng VNPay
-                        </label>
-                    </div>
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-2" value="cash-on-delivery">
-                        <label for="payment-2">
-                            <span></span>
-                            Thanh toán khi nhận hàng
-                        </label>
+                            </c:forEach>
+                        </div>
+                        <div class="order-col">
+                            <div>Shiping</div>
+                            <div><strong>Miễn phí</strong></div>
+                        </div>
+                        <div class="order-col">
+                            <div><strong>Tổng tiền</strong></div>
+                            <div><strong class="order-total price" style="font-size: 20px">${total}</strong></div>
+                        </div>
                     </div>
 
+                    <div class="payment-method">
+                        <div class="input-radio">
+                            <input type="radio" name="payment" id="payment-1" value="vnpay">
+                            <label for="payment-1">
+                                <span></span>
+                                Thanh toán bằng VNPay
+                            </label>
+                        </div>
+                        <div class="input-radio">
+                            <input type="radio" name="payment" id="payment-2" value="cash-on-delivery">
+                            <label for="payment-2">
+                                <span></span>
+                                Thanh toán khi nhận hàng
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="input-checkbox">
+                        <input type="checkbox" id="terms">
+                        <label for="terms">
+                            <span></span>
+                            Tôi đã đọc và chấp nhận các <a href="#">điều khoản và điều kiện</a>
+                        </label>
+                    </div>
+                    <a href="#" class="primary-btn order-submit">Đặt hàng</a>
                 </div>
-                <div class="input-checkbox">
-                    <input type="checkbox" id="terms">
-                    <label for="terms">
-                        <span></span>
-                        Tôi đã đọc và chấp nhận các <a href="#">điều khoản và điều kiện</a>
-                    </label>
-                </div>
-                <a href="#" class="primary-btn order-submit">Đặt hàng</a>
-            </div>
-            <!-- /Order Details -->
+                <!-- /Order Details -->
+            </form>
         </div>
         <!-- /row -->
     </div>
@@ -193,12 +197,12 @@
     }
 
     // Wait for the document to fully load
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Select all elements with class 'price'
         const priceElements = document.querySelectorAll('.price');
 
         // Format each price element
-        priceElements.forEach(function(element) {
+        priceElements.forEach(function (element) {
             let price = parseFloat(element.textContent.trim()); // Assuming the price is in numeric format
 
             if (!isNaN(price)) {
