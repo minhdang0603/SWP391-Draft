@@ -93,7 +93,7 @@ CREATE TABLE `cart_details` (
 
 LOCK TABLES `cart_details` WRITE;
 /*!40000 ALTER TABLE `cart_details` DISABLE KEYS */;
-INSERT INTO `cart_details` VALUES (15,1,2,88),(16,1,2,85),(64,1,3,6),(65,1,3,5),(92,1,1,5);
+INSERT INTO `cart_details` VALUES (15,1,2,88),(16,1,2,85),(64,1,3,6),(65,1,3,5);
 /*!40000 ALTER TABLE `cart_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,78 +121,6 @@ INSERT INTO `category` VALUES (1,'Laptop'),(2,'PC đồng bộ'),(3,'Thiết b�
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
---
--- Table structure for table `payment`
---
-
-DROP TABLE IF EXISTS `payment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `payment` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `payment_method` varchar(255) Not NULL,
-  `amount` bigint NOT NULL,
-  `payment_status` varchar(255) Not NULL,
-  `payment_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `payment`
---
-
-LOCK TABLES `payment` WRITE;
-/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (3,"Thanh toán khi nhận hàng",53950000,"unpaid",null),(5,'Thanh toán online',25990000,"unpaid",null);
-/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
-
---
--- Table structure for table `order`
---
-
-DROP TABLE IF EXISTS `orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orders` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) DEFAULT NULL,
-  `note` varchar(255) DEFAULT NULL,
-  `user_name` varchar(255) DEFAULT NULL,
-  `order_date` datetime DEFAULT NULL,
-  `deliver_date` datetime DEFAULT NULL,
-  `receive_date` datetime DEFAULT NULL,
-  `phone_number` varchar(255) DEFAULT NULL,
-  `order_status` varchar(255) DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  `saler_id` bigint DEFAULT NULL,
-  `payment_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UKPayment_Order` (`payment_id`), -- Ensure payment_id is unique
-  KEY `FKUser_Order` (`user_id`),
-  KEY `FKSaler_Order` (`saler_id`),
-  CONSTRAINT `FKSaler_Order` FOREIGN KEY (`saler_id`) REFERENCES `user` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `FKUser_Order` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FKPayment_Order` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3;
-
-
---
--- Dumping data for table `orders`
---
-
-LOCK TABLES `orders` WRITE;
-/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','pending',2,NULL,5),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','processing',2,NULL,3);
-/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 --
 -- Table structure for table `order_details`
 --
@@ -214,7 +142,7 @@ CREATE TABLE `order_details` (
   KEY `FKProduct_OrderDetails` (`product_id`),
   CONSTRAINT `FKOrders_OrderDetails` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FKProduct_OrderDetails` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +155,72 @@ INSERT INTO `order_details` VALUES (1,13980000,2,32,62,'MSI GF63 8RC-203VN/I5-83
 /*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `orders`
+--
 
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `user_name` varchar(255) DEFAULT NULL,
+  `order_date` datetime DEFAULT NULL,
+  `deliver_date` datetime DEFAULT NULL,
+  `receive_date` datetime DEFAULT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `order_status` varchar(255) DEFAULT NULL,
+  `user_id` bigint DEFAULT NULL,
+  `saler_id` bigint DEFAULT NULL,
+  `payment_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UKPayment_Order` (`payment_id`),
+  KEY `FKUser_Order` (`user_id`),
+  KEY `FKSaler_Order` (`saler_id`),
+  CONSTRAINT `FKPayment_Order` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FKSaler_Order` FOREIGN KEY (`saler_id`) REFERENCES `user` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `FKUser_Order` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','pending',2,NULL,5),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','processing',2,NULL,3);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `payment_method` varchar(255) NOT NULL,
+  `amount` bigint NOT NULL,
+  `payment_status` varchar(255) NOT NULL,
+  `payment_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES (3,'cod',53950000,'unpaid',NULL),(5,'online',25990000,'unpaid',NULL);
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `product`
@@ -370,4 +363,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-14  9:02:11
+-- Dump completed on 2024-06-18 20:05:22
