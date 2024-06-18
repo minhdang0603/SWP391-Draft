@@ -95,14 +95,15 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteProduct(Product pro) {
         try {
             transaction.begin();
-            Product pro = entityManager.find(Product.class, id);
-            if (pro != null) {
+            // Ensure the entity is managed before removing
+            if (!entityManager.contains(pro)) {
+                pro = entityManager.merge(pro);
+            }
                 entityManager.remove(pro);
                 transaction.commit();
-            }
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();

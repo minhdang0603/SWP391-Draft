@@ -141,7 +141,7 @@ CREATE TABLE `order_details` (
   KEY `FKOrder_OrderDetails` (`order_id`),
   KEY `FKProduct_OrderDetails` (`product_id`),
   CONSTRAINT `FKOrders_OrderDetails` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FKProduct_OrderDetails` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
+  CONSTRAINT `FKProduct_OrderDetails` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

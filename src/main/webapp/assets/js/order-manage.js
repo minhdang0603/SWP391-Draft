@@ -76,3 +76,14 @@ document.addEventListener('DOMContentLoaded', function() {
         receivedDateInput.value = '';
     }
 });
+function printModal() {
+    var printContents = document.querySelector('.modal-body').innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+    window.location.reload();  // Để tải lại trang và khôi phục nội dung ban đầu
+}

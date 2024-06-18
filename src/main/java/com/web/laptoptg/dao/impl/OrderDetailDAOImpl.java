@@ -27,14 +27,14 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     @Override
     public List<OrderDetails> getOrderDetailsByOrderId(int orderId) {
         TypedQuery<OrderDetails> query = entityManager.createQuery(
-                "SELECT od FROM OrderDetails od join fetch od.order WHERE od.order.id = :orderId", OrderDetails.class);
+                "SELECT od FROM OrderDetails od WHERE od.order.id = :orderId", OrderDetails.class);
         query.setParameter("orderId", orderId);
         return query.getResultList();
     }
     @Override
     public List<OrderDetails> getAllOrderDetail() {
         entityManager.clear();
-        TypedQuery<OrderDetails> query = entityManager.createQuery("from OrderDetails p join fetch p.product join fetch p.order", OrderDetails.class);
+        TypedQuery<OrderDetails> query = entityManager.createQuery("from OrderDetails p join fetch p.product", OrderDetails.class);
         List<OrderDetails> detailsList = query.getResultList();
         return detailsList;
     }

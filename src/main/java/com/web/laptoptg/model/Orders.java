@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Data //toString()
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

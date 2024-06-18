@@ -184,15 +184,14 @@
                                                         </div>
                                                         <div class="container"></div>
                                                         <div class="modal-body">
-                                                            <p>Bạn có chắc chắn muốn chuyển sản phẩm này sang trạng thái
-                                                                "Ngừng bán" không?</p>
+                                                            <p>Bạn có chắc chắn muốn xóa đơn hàng này không?</p>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <a type="button"
                                                                class="btn btn-secondary"
                                                                data-dismiss="modal">Hủy
                                                             </a>
-                                                            <a href="${contextPath}/admin/order-delete?id=${order.id}"
+                                                            <a href="${contextPath}/admin/order-delete?orderId=${order.id}"
                                                                type="button" id="confirmDeleteBtn"
                                                                class="btn btn-primary">Xác nhận
                                                             </a>
@@ -214,7 +213,7 @@
                                                             <button type="button" class="btn-close" data-dismiss="modal"
                                                                     aria-label="Close"></button>
                                                         </div>
-                                                        <div class="modal-body">
+                                                        <div id="toPrint${order.id}" class="modal-body">
                                                             <div class="row mb-2">
                                                                 <div class="col-md-6">
                                                                     <p><strong>Mã đơn hàng:</strong> <span
@@ -264,7 +263,16 @@
                                                                             id="modalNote">${order.note}</span>
                                                                     </p>
                                                                     <p><strong>Hình thức thanh toán:</strong> <span
-                                                                            id="modalMethod">${order.payment.method}</span>
+                                                                            id="modalMethod">
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.method == 'cod'}">
+                                                                                Thanh toán khi nhận hàng
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Thanh toán online
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
                                                                     </p>
                                                                     <p><strong>Trạng thái thanh toán:</strong>
                                                                         <span id="modalPaymentStatus">
@@ -289,15 +297,13 @@
                                                                         <div class="product-cell">Thành tiền</div>
                                                                     </div>
                                                                     <div id="productTableBody" class="product-body">
-                                                                        <c:forEach items="${detailList}" var="detail">
-                                                                            <c:if test="${detail.order.id == order.id}">
+                                                                        <c:forEach items="${order.orderDetails}" var="detail">
                                                                                 <div class="product-row">
                                                                                     <div class="product-cell">${detail.productName}</div>
                                                                                     <div class="product-cell pricevnd">${detail.unitPrice}</div>
                                                                                     <div class="product-cell">${detail.quantity}</div>
                                                                                     <div class="product-cell pricevnd">${detail.unitPrice * detail.quantity}</div>
                                                                                 </div>
-                                                                            </c:if>
                                                                         </c:forEach>
                                                                     </div>
                                                                     <div class="product-footer">
@@ -308,11 +314,13 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">Đóng
-                                                                </button>
-                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" onclick="printModal(${order.id})">In</button>
+
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Đóng
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -348,11 +356,11 @@
                                                                                    value="${order.id}" readonly>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="salerNameUpdate"><strong>Nhân
+                                                                            <label for="salerUpdate"><strong>Nhân
                                                                                 viên phụ trách:</strong></label>
-                                                                            <select name="salerName"
+                                                                            <select name="saler"
                                                                                     class="form-control"
-                                                                                    id="salerNameUpdate"
+                                                                                    id="salerUpdate"
                                                                                     required>
                                                                                 <c:forEach items="${salerList}"
                                                                                            var="saler">
@@ -381,21 +389,55 @@
                                                                                 </option>
                                                                             </select>
                                                                         </div>
+                                                                        <div class="form-group">
+                                                                            <label for="paymentStatusUpdate"><strong>Trạng
+                                                                                thái thanh toán:</strong></label>
+                                                                            <select name="paymentStatus"
+                                                                                    class="form-control"
+                                                                                    id="paymentStatusUpdate" required>
+                                                                                <option value="unpaid" ${order.payment.status == 'unpaid' ? 'selected' : ''}>
+                                                                                    Chưa thanh toán
+                                                                                </option>
+                                                                                <option value="paid" ${order.payment.status == 'paid' ? 'selected' : ''}>
+                                                                                    Đã thanh toán
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="paymentMethodUpdate"><strong>Hình thức thanh toán:</strong></label>
+                                                                            <select name="paymentMethod"
+                                                                                    class="form-control"
+                                                                                    id="paymentMethodUpdate" required>
+                                                                                <option value="cod" ${order.payment.method == 'cod' ? 'selected' : ''}>
+                                                                                    Thanh toán khi nhận hàng
+                                                                                </option>
+                                                                                <option value="online" ${order.payment.method == 'online' ? 'selected' : ''}>
+                                                                                    Thanh toán online
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
+
                                                                     <div class="col-lg-6">
                                                                         <div class="form-group">
                                                                             <label for="deliveryDate"><strong>Ngày giao
                                                                                 hàng:</strong></label>
                                                                             <input type="date" class="form-control"
                                                                                    id="deliveryDate" name="deliverDate"
-                                                                                   value="${order.deliverDate != null ? order.deliverDate : 'N/A'}">
+                                                                                   value="${order.deliverDate}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="receivedDate"><strong>Ngày nhận
                                                                                 hàng:</strong></label>
                                                                             <input type="date" class="form-control"
                                                                                    id="receivedDate" name="receiveDate"
-                                                                                   value="${order.receiveDate != null ? order.receiveDate : 'N/A'}">
+                                                                                   value="${order.receiveDate}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="paymentDate"><strong>Ngày thanh toán:</strong></label>
+                                                                            <input type="date" class="form-control"
+                                                                                   id="paymentDate" name="paymentDate"
+                                                                                   value="${order.receiveDate}">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -453,7 +495,19 @@
 <!-- Template Main JS File -->
 <script src="${contextPath}/assets/js/main.js"></script>
 <script src="${contextPath}/assets/js/order-manage.js"></script>
+<script>
+    function printModal(id) {
+        var printContents = document.querySelector('#toPrint'+id).innerHTML;
+        var originalContents = document.body.innerHTML;
 
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+        window.location.reload();  // Để tải lại trang và khôi phục nội dung ban đầu
+    }
+</script>
 </body>
 
 </html>

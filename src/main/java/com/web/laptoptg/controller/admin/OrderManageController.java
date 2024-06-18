@@ -17,23 +17,19 @@ public class OrderManageController extends HttpServlet {
 
     private OrderService orderService;
     private OrderDetailService orderDetails;
-    private PaymentService paymentService;
     private UserService userService;
 
     public void init() throws ServletException {
         orderService = new OrderServiceImpl();
         orderDetails = new OrderDetailServiceImpl();
         userService = new UserServiceImpl();
-        paymentService = new PaymentServiceImpl();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Orders> listOrder = orderService.getAllOrders();
-        List<OrderDetails> orderDetailsList = orderDetails.getAllOrderDetail();
         List<User> salerList = userService.findUserByRole("SALER");
         req.setAttribute("list", listOrder);
-        req.setAttribute("detailList",orderDetailsList);
         req.setAttribute("salerList",salerList);
         req.getRequestDispatcher("order-manage.jsp").forward(req, resp);
 
