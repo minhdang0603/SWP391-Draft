@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface CategoryService {
     Category getCategoryById(int id);
-    void saveCategory(Category category);
-    void updateCategory(Category category);
+    Category saveCategory(Category category);
+    Category updateCategory(Category category);
     void deleteCategory(Category category);
     int getNumOfCategory();
-    public boolean findCategoryByName(String name);
+    boolean findCategoryByName(String name);
 
     Category findCategoryById(int id);
 

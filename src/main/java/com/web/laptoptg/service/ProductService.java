@@ -7,16 +7,16 @@ import java.util.List;
 public interface ProductService {
 
     //insert a product to database
-    void saveProduct (Product pro);
+    Product saveProduct (Product pro);
 
     //update a product to database
-    void updateProduct(Product pro);
+    Product updateProduct(Product pro);
 
     //show all Products
     List<Product> getAllProducts();
 
     //find product by its name
-    public boolean findProductByName(String name);
+    boolean findProductByName(String name);
 
     //delete a product by its id
     void deleteById(int id);

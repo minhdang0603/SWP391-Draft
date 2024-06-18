@@ -19,13 +19,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void saveCart(Cart cart) {
-        cartDAO.saveCart(cart);
-    }
-
-    @Override
-    public void updateCart(Cart cart) {
-        cartDAO.updateCart(cart);
+    public Cart saveCart(Cart cart) {
+        return cartDAO.saveCart(cart);
     }
 
     @Override

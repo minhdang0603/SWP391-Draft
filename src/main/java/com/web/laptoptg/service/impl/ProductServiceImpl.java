@@ -16,13 +16,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveProduct(Product pro) {
-        productDAO.saveProduct(pro);
+    public Product saveProduct(Product pro) {
+        return productDAO.saveProduct(pro);
     }
 
     @Override
-    public void updateProduct(Product pro) {
-        productDAO.updateProduct(pro);
+    public Product updateProduct(Product pro) {
+        return productDAO.updateProduct(pro);
     }
 
     @Override

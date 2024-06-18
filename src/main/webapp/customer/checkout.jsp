@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -16,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>LaptopTG Store</title>
+    <title>Thanh toán</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -36,6 +35,19 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
+
+    <style>
+        .disabled-btn {
+            background-color: #ccc; /* Darker background color for disabled state */
+            cursor: not-allowed; /* Change cursor to indicate disabled state */
+        }
+
+        .msg{
+            color: #D10024;
+            font-style: italic;
+            font-size: 12px;
+        }
+    </style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -80,7 +92,7 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-            <form method="post" action="${contextPath}/checkout-process">
+            <form method="post" action="${contextPath}/order-process">
                 <div class="col-md-7">
                     <!-- Billing Details -->
                     <div class="billing-details">
@@ -88,25 +100,27 @@
                             <h3 class="title">Địa chỉ giao hàng</h3>
                         </div>
                         <div class="form-group">
-                            <input class="input" type="text" name="username" placeholder="Tên người nhận"
+                            <input class="input" type="text" required name="username" placeholder="Tên người nhận"
                                    value="${account.userName}">
                         </div>
                         <div class="form-group">
-                            <input class="input" type="email" name="email" placeholder="Email" value="${account.email}">
+                            <input class="input" type="email" required name="email" placeholder="Email"
+                                   value="${account.email}">
                         </div>
                         <div class="form-group">
-                            <input class="input" type="text" name="address" placeholder="Địa chỉ"
+                            <input class="input" type="text" required name="address" placeholder="Địa chỉ"
                                    value="${account.address}">
                         </div>
                         <div class="form-group">
-                            <input class="input" type="tel" name="tel" placeholder="Số điện thoại"
+                            <input class="input phone-number" type="tel" required name="phone" placeholder="Số điện thoại"
                                    value="${account.phoneNumber}">
+                            <p class="msg text-danger"></p>
                         </div>
                         <!-- /Billing Details -->
 
                         <!-- Order notes -->
                         <div class="order-notes">
-                        <textarea class="input" placeholder="Ghi chú"
+                        <textarea class="input" placeholder="Ghi chú" name="order-note"
                                   style="min-height: 180px; resize: vertical;"></textarea>
                         </div>
                         <!-- /Order notes -->
@@ -153,7 +167,7 @@
                             </label>
                         </div>
                         <div class="input-radio">
-                            <input type="radio" name="payment" id="payment-2" value="cash-on-delivery">
+                            <input type="radio" checked name="payment" id="payment-2" value="cash-on-delivery">
                             <label for="payment-2">
                                 <span></span>
                                 Thanh toán khi nhận hàng
@@ -162,13 +176,14 @@
 
                     </div>
                     <div class="input-checkbox">
-                        <input type="checkbox" id="terms">
+                        <input type="checkbox" name="terms" required id="terms">
                         <label for="terms">
                             <span></span>
-                            Tôi đã đọc và chấp nhận các <a href="#">điều khoản và điều kiện</a>
+                            Tôi đã đọc và chấp nhận các <a href="${contextPath}/terms-and-conditions" target="_blank">điều khoản và điều kiện</a>
                         </label>
                     </div>
-                    <a href="#" class="primary-btn order-submit">Đặt hàng</a>
+                    <input type="submit" class="primary-btn order-submit" value="Đặt hàng"
+                           style="width: 100%;" disabled/>
                 </div>
                 <!-- /Order Details -->
             </form>
@@ -190,27 +205,6 @@
 <script src="${contextPath}/assets/home/js/nouislider.min.js"></script>
 <script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
 <script src="${contextPath}/assets/home/js/main.js"></script>
-<script>
-    // Function to format number to Vietnamese Dong (VND) format
-    function formatVND(n) {
-        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
-    }
-
-    // Wait for the document to fully load
-    document.addEventListener('DOMContentLoaded', function () {
-        // Select all elements with class 'price'
-        const priceElements = document.querySelectorAll('.price');
-
-        // Format each price element
-        priceElements.forEach(function (element) {
-            let price = parseFloat(element.textContent.trim()); // Assuming the price is in numeric format
-
-            if (!isNaN(price)) {
-                // Format the price using the formatVND function
-                element.textContent = formatVND(price);
-            }
-        });
-    });
-</script>
+<script src="${contextPath}/assets/js/checkout.js"></script>
 </body>
 </html>

@@ -20,7 +20,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void saveProduct(Product pro) {
+    public Product saveProduct(Product pro) {
         try {
             transaction.begin();
             entityManager.persist(pro);
@@ -31,6 +31,7 @@ public class ProductDAOImpl implements ProductDAO {
             }
             e.printStackTrace();
         }
+        return pro;
     }
 
     @Override
@@ -42,10 +43,11 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void updateProduct(Product pro) {
+    public Product updateProduct(Product pro) {
         try {
             transaction.begin();
             entityManager.merge(pro);
+            entityManager.flush();
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -53,6 +55,7 @@ public class ProductDAOImpl implements ProductDAO {
             }
             e.printStackTrace();
         }
+        return pro;
     }
 
     @Override

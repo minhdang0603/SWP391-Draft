@@ -5,8 +5,8 @@ import com.web.laptoptg.model.User;
 
 public interface CartDAO {
     Cart getCartByUserId(int userId);
-    void saveCart(Cart cart);
-    void updateCart(Cart cart);
+    Cart saveCart(Cart cart);
+    Cart updateCart(Cart cart);
 
     void deleteCartByUserId(int userId); // Thêm phương thức này
 

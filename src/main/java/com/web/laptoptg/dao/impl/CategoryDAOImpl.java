@@ -26,7 +26,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public void saveCategory(Category category) {
+    public Category saveCategory(Category category) {
         try {
             transaction.begin();
             entityManager.persist(category);
@@ -37,10 +37,11 @@ public class CategoryDAOImpl implements CategoryDAO {
             }
             e.printStackTrace();
         }
+        return category;
     }
 
     @Override
-    public void updateCategory(Category category) {
+    public Category updateCategory(Category category) {
         try {
             transaction.begin();
             entityManager.merge(category);
@@ -51,6 +52,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             }
             e.printStackTrace();
         }
+        return category;
     }
 
     @Override

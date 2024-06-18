@@ -74,7 +74,6 @@ public class AccountManagement extends HttpServlet {
         String role = request.getParameter("role");
         String password = request.getParameter("password");
         String status = request.getParameter("status");
-        String repassword = request.getParameter("repassword");
 
         HttpSession session = request.getSession();
         if (checkEmailExit(email)) {

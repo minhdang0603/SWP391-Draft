@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface BrandService {
     Brand getBrandById(int id);
-    void saveBrand(Brand brand);
-    void updateBrand(Brand brand);
+    Brand saveBrand(Brand brand);
+    Brand updateBrand(Brand brand);
     void deleteBrand(Brand brand);
     List<Brand> getAllBrands();
     public boolean findBrandByName(String name);

@@ -23,7 +23,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         transaction = entityManager.getTransaction();
     }
     @Override
-    public void savePayment(Payment payment) {
+    public Payment savePayment(Payment payment) {
         try {
             transaction.begin();
             entityManager.persist(payment);
@@ -34,6 +34,7 @@ public class PaymentDAOImpl implements PaymentDAO {
             }
             e.printStackTrace();
         }
+        return payment;
     }
 
     @Override
@@ -45,10 +46,11 @@ public class PaymentDAOImpl implements PaymentDAO {
     }
 
     @Override
-    public void updatePayment(Payment payment) {
+    public Payment updatePayment(Payment payment) {
         try {
             transaction.begin();
             entityManager.merge(payment);
+            entityManager.flush();
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -56,6 +58,7 @@ public class PaymentDAOImpl implements PaymentDAO {
             }
             e.printStackTrace();
         }
+        return payment;
     }
 
     @Override

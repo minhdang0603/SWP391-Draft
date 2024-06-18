@@ -27,7 +27,7 @@ public class BrandDAOImpl implements BrandDAO {
     }
 
     @Override
-    public void saveBrand(Brand brand) {
+    public Brand saveBrand(Brand brand) {
         try {
             transaction.begin();
             entityManager.persist(brand);
@@ -38,13 +38,15 @@ public class BrandDAOImpl implements BrandDAO {
             }
             e.printStackTrace();
         }
+        return brand;
     }
 
     @Override
-    public void updateBrand(Brand brand) {
+    public Brand updateBrand(Brand brand) {
         try {
             transaction.begin();
             entityManager.merge(brand);
+            entityManager.flush();
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -52,6 +54,7 @@ public class BrandDAOImpl implements BrandDAO {
             }
             e.printStackTrace();
         }
+        return brand;
     }
 
     @Override

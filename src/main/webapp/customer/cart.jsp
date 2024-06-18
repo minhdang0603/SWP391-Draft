@@ -204,11 +204,11 @@
                                                     <div class="row">
                                                         <div class="col-md-4 product-name">
                                                             <div class="product-name">
-                                                                <a href="#"
+                                                                <a href="${contextPath}/product-detail?pid=${item.product.id}"
                                                                    class="product-name-a">${item.product.productName}</a>
                                                             </div>
                                                             <div class="product-info">
-                                                                <a href="#">${item.product.brand.brandName}</a>
+                                                                <a href="${contextPath}/store?id=${item.product.category.id}">${item.product.category.categoryName}</a>
                                                             </div>
                                                             <div class="product-info">
                                                                 <a class="delete-item btn-sm btn-danger"
@@ -233,8 +233,7 @@
                                                                     </button>
                                                                 </span>
                                                                 <input id="quantity-${item.product.id}" type="text"
-                                                                       readonly
-                                                                       name="quant[${item.product.id}]"
+                                                                       name="quant[${item.product.id}]" readonly
                                                                        class="text-center form-control input-number"
                                                                        value="${item.quantity}" min="1"
                                                                        max="${item.product.stockUnit}"/>

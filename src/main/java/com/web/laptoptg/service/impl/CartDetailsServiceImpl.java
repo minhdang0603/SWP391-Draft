@@ -16,8 +16,8 @@ public class CartDetailsServiceImpl implements CartDetailsService {
     }
 
     @Override
-    public void saveCartDetails(CartDetails cartDetails) {
-        cartDetailsDAO.saveCartDetails(cartDetails);
+    public CartDetails saveCartDetails(CartDetails cartDetails) {
+        return cartDetailsDAO.saveCartDetails(cartDetails);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class CartDetailsServiceImpl implements CartDetailsService {
     }
 
     @Override
-    public void updateCartDetails(CartDetails cartDetails) {
-        cartDetailsDAO.updateCartDetails(cartDetails);
+    public CartDetails updateCartDetails(CartDetails cartDetails) {
+        return cartDetailsDAO.updateCartDetails(cartDetails);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
 
     // Save CartDetails
     @Override
-    public void saveCartDetails(CartDetails cartDetails) {
+    public CartDetails saveCartDetails(CartDetails cartDetails) {
         try {
             transaction.begin();
             entityManager.persist(cartDetails);
@@ -33,6 +33,7 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
                 transaction.rollback();
             }
         }
+        return cartDetails;
     }
 
     // Delete CartDetails
@@ -80,10 +81,11 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
 
     // Update CartDetails
     @Override
-    public void updateCartDetails(CartDetails cartDetails) {
+    public CartDetails updateCartDetails(CartDetails cartDetails) {
         try {
             transaction.begin();
             entityManager.merge(cartDetails);
+            entityManager.flush();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,6 +93,7 @@ public class CartDetailsDAOImpl implements CartDetailsDAO {
                 transaction.rollback();
             }
         }
+        return cartDetails;
     }
 
     // Get CartDetails by cartId and productId

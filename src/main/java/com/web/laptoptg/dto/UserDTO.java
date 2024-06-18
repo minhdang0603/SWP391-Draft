@@ -2,6 +2,8 @@ package com.web.laptoptg.dto;
 
 import com.web.laptoptg.model.Role;
 import com.web.laptoptg.model.User;
+import com.web.laptoptg.service.RoleService;
+import com.web.laptoptg.service.impl.RoleServiceImpl;
 import lombok.*;
 
 @Data //toString()
@@ -32,11 +34,15 @@ public class UserDTO {
 
     public User toUser() {
         User user = new User();
+        RoleService roleService = new RoleServiceImpl();
+        user.setId(this.id);
         user.setUserName(this.userName);
         user.setAddress(this.address);
         user.setPhoneNumber(this.phoneNumber);
         user.setEmail(this.email);
         user.setPassword(this.password);
+        user.setStatus(this.status);
+        user.setRole(roleService.getRoleByRoleName(this.role));
         return user;
     }
 }

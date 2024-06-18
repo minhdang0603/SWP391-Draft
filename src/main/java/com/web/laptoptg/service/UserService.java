@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
     User register (UserDTO user); // use for register
-    void updateUser(UserDTO user); // use for update user information
+    User updateUser(UserDTO user); // use for update user information
     User findUserByEmail(String email); // find user by email
     List<User> findUserByRole(String role); // find user by role
     User findUserById(int id); // find user by id
@@ -16,5 +16,5 @@ public interface UserService {
     User login(String email, String password);
     List<User> findAllUsers();
     void changePassFromProfile(UserDTO user);
-    void addUser(UserDTO user);
+    User addUser(UserDTO user);
 }

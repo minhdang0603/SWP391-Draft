@@ -36,10 +36,10 @@ public class CheckoutController extends HttpServlet {
         HttpSession session = req.getSession();
 
         // check if the flow come from checkout button in cart page
-        Boolean fromCart = (Boolean) session.getAttribute("fromCart");
+        String fromCart = (String) session.getAttribute("fromCart");
 
         // redirect to cart page if not
-        if (fromCart == null || !fromCart) {
+        if (fromCart == null || !fromCart.equals("fromCart")) {
             resp.sendRedirect(req.getContextPath() + "/cart");
             return;
         }
@@ -84,7 +84,7 @@ public class CheckoutController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().setAttribute("fromCart", true);
+        req.getSession().setAttribute("fromCart", "fromCart");
         // validate user to avoid they go straight forward to checkout page
         resp.sendRedirect(req.getContextPath() + "/checkout-page");
     }

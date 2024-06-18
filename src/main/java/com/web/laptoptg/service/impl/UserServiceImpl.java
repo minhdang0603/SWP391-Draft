@@ -40,22 +40,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UserDTO user) {
-        User temp = userDAO.findUserByEmail(user.getEmail());
-        if (temp != null) {
-            temp.setId(user.getId());
-            temp.setUserName(user.getUserName());
-            temp.setAddress(user.getAddress());
-            temp.setPhoneNumber(user.getPhoneNumber());
-            temp.setEmail(user.getEmail());
-            if(getRoleFromString(user.getRole())!=null){
-                temp.setRole(getRoleFromString(user.getRole()));
-            }
-            if (user.getStatus() != null) {
-                temp.setStatus(user.getStatus());
-            }
-            userDAO.updateUser(temp);
+    public User updateUser(UserDTO user) {
+        User temp = userDAO.findUserById(user.getId());
+        temp.setId(user.getId());
+        temp.setUserName(user.getUserName());
+        temp.setAddress(user.getAddress());
+        temp.setPhoneNumber(user.getPhoneNumber());
+        temp.setEmail(user.getEmail());
+        temp.setRole(roleDAO.getRoleByRoleName(user.getRole()));
+        if (user.getStatus() != null) {
+            temp.setStatus(user.getStatus());
         }
+        return userDAO.updateUser(temp);
     }
 
     public void changePassFromProfile(UserDTO user) {
@@ -113,7 +109,7 @@ public class UserServiceImpl implements UserService {
         return userDAO.findAllUsers();
     }
 
-    public void addUser(UserDTO user) {
+    public User addUser(UserDTO user) {
         User temp = new User();
         CartService cartService = new CartServiceImpl();
         temp.setUserName(user.getUserName());
@@ -121,27 +117,12 @@ public class UserServiceImpl implements UserService {
         temp.setPhoneNumber(user.getPhoneNumber());
         temp.setEmail(user.getEmail());
         temp.setPassword(user.getPassword());
-        temp.setRole(getRoleFromString(user.getRole())); // Sử dụng phương thức getRoleFromString
+        temp.setRole(roleDAO.getRoleById(Integer.parseInt(user.getRole())));
         temp.setStatus(user.getStatus());
 
         Cart cart = new Cart();
         cart.setUser(temp);
         cartService.saveCart(cart);
-
-        System.out.println(cart);
-
-        userDAO.saveUser(temp);
-    }
-
-    private Role getRoleFromString(String roleString) {
-        if (roleString.equals("1")) {
-            return new Role(1, "ADMIN");
-        } else if (roleString.equals("2")) {
-            return new Role(2, "SALER");
-        } else if(roleString.equals("3")) {
-            return new Role(3, "MEMBER");
-        }else{
-            return null;
-        }
+        return userDAO.saveUser(temp);
     }
 }

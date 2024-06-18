@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface CategoryDAO {
     Category getCategoryById(int id);
-    void saveCategory(Category category);
-    void updateCategory(Category category);
+    Category saveCategory(Category category);
+    Category updateCategory(Category category);
     void deleteCategory(Category category);
 
     List<Category> getAll();
     //find product by its name
-    public boolean findCategoryByName(String name);
+    boolean findCategoryByName(String name);
     int getNumOfCategory();
 
     Category findCategoryById(int id);

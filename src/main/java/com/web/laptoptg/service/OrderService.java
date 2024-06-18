@@ -9,6 +9,6 @@ public interface OrderService {
     List<Orders> getAllOrders();
     void deleteOrderById(int id);
     List<Orders> searchOrdersByPhone(String phoneNumber);
-    void updateOrder(Orders order);
-    void saveOrder(Orders order);
+    Orders updateOrder(Orders order);
+    Orders saveOrder(Orders order);
 }

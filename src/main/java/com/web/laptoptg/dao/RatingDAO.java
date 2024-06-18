@@ -8,7 +8,7 @@ public interface RatingDAO {
     Rating findById(int id);
     List<Rating> getRatingByProductIDAndCreateTimeDesc(int productID);
     List<Rating> getRatingByUserIDAndCreateTimeDesc(int userID);
-    void addRating(Rating rating);
-    void updateRating(Rating rating);
+    Rating addRating(Rating rating);
+    Rating updateRating(Rating rating);
     void deleteRating(Rating rating);
 }

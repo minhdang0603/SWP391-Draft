@@ -35,7 +35,7 @@ public class CartDAOImpl implements CartDAO {
 
     // Save Cart when a new user is created
     @Override
-    public void saveCart(Cart cart) {
+    public Cart saveCart(Cart cart) {
         try {
             transaction.begin();
             entityManager.persist(cart);
@@ -46,14 +46,16 @@ public class CartDAOImpl implements CartDAO {
             }
             e.printStackTrace();
         }
+        return cart;
     }
 
     // Update Cart total amount
     @Override
-    public void updateCart(Cart cart) {
+    public Cart updateCart(Cart cart) {
         try {
             transaction.begin();
             entityManager.merge(cart);
+            entityManager.flush();
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -61,6 +63,7 @@ public class CartDAOImpl implements CartDAO {
             }
             e.printStackTrace();
         }
+        return cart;
     }
 
     @Override

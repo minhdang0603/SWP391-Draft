@@ -62,7 +62,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public void updateOrder(Orders order) {
+    public Orders updateOrder(Orders order) {
         try {
             transaction.begin();
             entityManager.merge(order);
@@ -73,10 +73,11 @@ public class OrderDAOImpl implements OrderDAO {
             }
             e.printStackTrace();
         }
+        return order;
     }
 
     @Override
-    public void saveOrder(Orders order) {
+    public Orders saveOrder(Orders order) {
         try {
             transaction.begin();
             entityManager.persist(order);
@@ -87,5 +88,6 @@ public class OrderDAOImpl implements OrderDAO {
             }
             e.printStackTrace();
         }
+        return order;
     }
 }

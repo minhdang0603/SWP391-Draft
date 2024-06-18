@@ -22,13 +22,13 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public void saveBrand(Brand brand) {
-        brandDAO.saveBrand(brand);
+    public Brand saveBrand(Brand brand) {
+        return brandDAO.saveBrand(brand);
     }
 
     @Override
-    public void updateBrand(Brand brand) {
-        brandDAO.updateBrand(brand);
+    public Brand updateBrand(Brand brand) {
+        return brandDAO.updateBrand(brand);
     }
 
     @Override

@@ -29,7 +29,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         try {
             transaction.begin();
             entityManager.persist(user);
@@ -40,15 +40,15 @@ public class UserDAOImpl implements UserDAO {
             }
             e.printStackTrace();
         }
+        return user;
     }
 
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
         try {
             transaction.begin();
             entityManager.merge(user);
             entityManager.flush();
-            entityManager.clear();
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -56,6 +56,7 @@ public class UserDAOImpl implements UserDAO {
             }
             e.printStackTrace();
         }
+        return user;
     }
 
     @Override

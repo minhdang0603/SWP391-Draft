@@ -6,7 +6,7 @@ import java.util.List;
 public interface OrderDetailDAO {
     OrderDetails getOrderDetailById(int id);
     List<OrderDetails> getOrderDetailsByOrderId(int orderId);
-    void saveOrderDetail(OrderDetails orderDetail);
-    void updateOrderDetail(OrderDetails orderDetail);
+    OrderDetails saveOrderDetail(OrderDetails orderDetail);
+    OrderDetails updateOrderDetail(OrderDetails orderDetail);
     List<OrderDetails> getAllOrderDetail();
 }

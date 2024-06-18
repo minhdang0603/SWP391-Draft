@@ -13,8 +13,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     public PaymentServiceImpl(){paymentDAO = new PaymentDAOImpl();}
     @Override
-    public void savePayment(Payment payment) {
-        paymentDAO.savePayment(payment);
+    public Payment savePayment(Payment payment) {
+        return paymentDAO.savePayment(payment);
     }
 
     @Override
@@ -23,8 +23,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void updatePayment(Payment payment) {
-        paymentDAO.updatePayment(payment);
+    public Payment updatePayment(Payment payment) {
+        return paymentDAO.updatePayment(payment);
     }
 
     @Override

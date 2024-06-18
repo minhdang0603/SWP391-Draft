@@ -52,7 +52,7 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
-    public void addRating(Rating rating) {
+    public Rating addRating(Rating rating) {
         try {
             transaction.begin();
             entityManager.persist(rating);
@@ -63,13 +63,15 @@ public class RatingDAOImpl implements RatingDAO {
             }
             e.printStackTrace();
         }
+        return rating;
     }
 
     @Override
-    public void updateRating(Rating rating) {
+    public Rating updateRating(Rating rating) {
         try {
             transaction.begin();
             entityManager.merge(rating);
+            entityManager.flush();
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -77,6 +79,7 @@ public class RatingDAOImpl implements RatingDAO {
             }
             e.printStackTrace();
         }
+        return rating;
     }
 
     @Override

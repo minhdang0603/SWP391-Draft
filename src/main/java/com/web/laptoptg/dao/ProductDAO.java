@@ -6,16 +6,16 @@ import java.util.List;
 
 public interface ProductDAO {
     //insert a product to database
-    void saveProduct (Product pro);
+    Product saveProduct (Product pro);
 
     //show all product
     List<Product> getAllProduct();
 
     //update a product to database
-    void updateProduct(Product pro);
+    Product updateProduct(Product pro);
 
     //find product by its name
-    public boolean findProductByName(String name);
+    boolean findProductByName(String name);
 
     List<Product> findProduct(String name);
 

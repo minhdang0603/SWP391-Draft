@@ -40,7 +40,7 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     }
 
     @Override
-    public void saveOrderDetail(OrderDetails orderDetail) {
+    public OrderDetails saveOrderDetail(OrderDetails orderDetail) {
         try {
             transaction.begin();
             entityManager.persist(orderDetail);
@@ -51,13 +51,15 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
             }
             e.printStackTrace();
         }
+        return orderDetail;
     }
 
     @Override
-    public void updateOrderDetail(OrderDetails orderDetail) {
+    public OrderDetails updateOrderDetail(OrderDetails orderDetail) {
         try {
             transaction.begin();
             entityManager.merge(orderDetail);
+            entityManager.flush();
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -65,5 +67,6 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
             }
             e.printStackTrace();
         }
+        return orderDetail;
     }
 }
