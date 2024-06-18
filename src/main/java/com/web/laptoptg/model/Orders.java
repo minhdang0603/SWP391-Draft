@@ -45,9 +45,7 @@ public class Orders {
     private String orderStatus;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @Fetch(FetchMode.SELECT)
     private List<OrderDetails> orderDetails;
-
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "user_id")
