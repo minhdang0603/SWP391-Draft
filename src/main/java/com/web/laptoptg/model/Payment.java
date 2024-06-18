@@ -19,7 +19,7 @@ public class Payment {
     private String method;
 
     @Column(name = "amount")
-    private String amount;
+    private long amount;
 
     @Column(name = "payment_status")
     private String status;
