@@ -59,7 +59,7 @@
 
         <!-- Orders Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/#">
+            <a class="nav-link " href="${contextPath}/admin/order-manage">
                 <i class="bi bi-file-post"></i>
                 <span>Đơn hàng</span>
             </a>

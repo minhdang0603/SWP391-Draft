@@ -17,13 +17,14 @@ public class OrderManageController extends HttpServlet {
 
     private OrderService orderService;
     private OrderDetailService orderDetails;
-
+    private PaymentService paymentService;
     private UserService userService;
 
     public void init() throws ServletException {
         orderService = new OrderServiceImpl();
         orderDetails = new OrderDetailServiceImpl();
         userService = new UserServiceImpl();
+        paymentService = new PaymentServiceImpl();
     }
 
     @Override

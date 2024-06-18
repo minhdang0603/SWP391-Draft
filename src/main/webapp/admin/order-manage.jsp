@@ -36,38 +36,38 @@
     <!-- Template Main CSS File -->
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
     <link href="${contextPath}/assets/css/productManage.css" rel="stylesheet">
-<style>
-    .product-table {
-        display: flex;
-        flex-direction: column;
-    }
+    <style>
+        .product-table {
+            display: flex;
+            flex-direction: column;
+        }
 
-    .product-header, .product-row, .product-footer {
-        display: flex;
-        flex-direction: row;
-    }
+        .product-header, .product-row, .product-footer {
+            display: flex;
+            flex-direction: row;
+        }
 
-    .product-cell {
-        flex: 1;
-        padding: 8px;
-        border: 1px solid #ddd;
-        text-align: left;
-    }
+        .product-cell {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
 
-    .product-header {
-        font-weight: bold;
-        background-color: #f4f4f4;
-    }
+        .product-header {
+            font-weight: bold;
+            background-color: #f4f4f4;
+        }
 
-    .product-row:nth-child(even) {
-        background-color: #f9f9f9;
-    }
+        .product-row:nth-child(even) {
+            background-color: #f9f9f9;
+        }
 
-    .product-footer {
-        font-weight: bold;
-        background-color: #f4f4f4;
-    }
-</style>
+        .product-footer {
+            font-weight: bold;
+            background-color: #f4f4f4;
+        }
+    </style>
 </head>
 
 <body>
@@ -220,7 +220,22 @@
                                                                     <p><strong>Mã đơn hàng:</strong> <span
                                                                             id="modalID">${order.id}</span></p>
                                                                     <p><strong>Trạng thái:</strong> <span
-                                                                            id="modalOrderStatus">${order.orderStatus}</span>
+                                                                            id="modalOrderStatus">
+                                                                        <c:choose>
+                                                                            <c:when test="${order.orderStatus == 'pending'}">
+                                                                                Đang chờ duyệt
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'processing'}">
+                                                                                Đang xử lý
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'received'}">
+                                                                                Đã nhận hàng
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'cancelled'}">
+                                                                                Đã hủy
+                                                                            </c:when>
+                                                                        </c:choose>
+                                                                    </span>
                                                                     </p>
                                                                     <p><strong>Nhân viên phụ trách:</strong> <span
                                                                             id="modalSalerName">${order.saler.userName}</span>
@@ -248,6 +263,21 @@
                                                                     <p><strong>Ghi chú:</strong> <span
                                                                             id="modalNote">${order.note}</span>
                                                                     </p>
+                                                                    <p><strong>Hình thức thanh toán:</strong> <span
+                                                                            id="modalMethod">${order.payment.method}</span>
+                                                                    </p>
+                                                                    <p><strong>Trạng thái thanh toán:</strong>
+                                                                        <span id="modalPaymentStatus">
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.status == 'unpaid'}">
+                                                                                Chưa thanh toán
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Đã thanh toán
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                             <div>
@@ -263,16 +293,18 @@
                                                                             <c:if test="${detail.order.id == order.id}">
                                                                                 <div class="product-row">
                                                                                     <div class="product-cell">${detail.productName}</div>
-                                                                                    <div class="product-cell">${detail.unitPrice}</div>
+                                                                                    <div class="product-cell pricevnd">${detail.unitPrice}</div>
                                                                                     <div class="product-cell">${detail.quantity}</div>
-                                                                                    <div class="product-cell product-total">${detail.unitPrice * detail.quantity}</div>
+                                                                                    <div class="product-cell pricevnd">${detail.unitPrice * detail.quantity}</div>
                                                                                 </div>
                                                                             </c:if>
                                                                         </c:forEach>
                                                                     </div>
                                                                     <div class="product-footer">
-                                                                        <div class="product-cell" colspan="3"><strong>Tổng tiền</strong></div>
-                                                                        <div class="product-cell" id="totalPrice">0</div>
+                                                                        <div class="product-cell" colspan="3"><strong>Tổng
+                                                                            tiền</strong></div>
+                                                                        <div class="product-cell pricevnd"
+                                                                             id="totalPrice">${order.payment.amount}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -321,7 +353,7 @@
                                                                             <select name="salerName"
                                                                                     class="form-control"
                                                                                     id="salerNameUpdate"
-                                                                                     required>
+                                                                                    required>
                                                                                 <c:forEach items="${salerList}"
                                                                                            var="saler">
                                                                                     <option value="${saler.id}" ${saler.id == order.saler.id ? 'selected' : ''}>
@@ -329,9 +361,42 @@
                                                                                 </c:forEach>
                                                                             </select>
                                                                         </div>
+                                                                        <div class="form-group">
+                                                                            <label for="orderStatusUpdate"><strong>Trạng
+                                                                                thái đơn hàng:</strong></label>
+                                                                            <select name="orderStatus"
+                                                                                    class="form-control"
+                                                                                    id="orderStatusUpdate" required>
+                                                                                <option value="pending" ${order.orderStatus == 'pending' ? 'selected' : ''}>
+                                                                                    Đang chờ duyệt
+                                                                                </option>
+                                                                                <option value="processing" ${order.orderStatus == 'processing' ? 'selected' : ''}>
+                                                                                    Đang xử lý
+                                                                                </option>
+                                                                                <option value="received" ${order.orderStatus == 'received' ? 'selected' : ''}>
+                                                                                    Đã nhận hàng
+                                                                                </option>
+                                                                                <option value="cancelled" ${order.orderStatus == 'cancelled' ? 'selected' : ''}>
+                                                                                    Đã hủy
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
-
+                                                                        <div class="form-group">
+                                                                            <label for="deliveryDate"><strong>Ngày giao
+                                                                                hàng:</strong></label>
+                                                                            <input type="date" class="form-control"
+                                                                                   id="deliveryDate" name="deliverDate"
+                                                                                   value="${order.deliverDate != null ? order.deliverDate : 'N/A'}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="receivedDate"><strong>Ngày nhận
+                                                                                hàng:</strong></label>
+                                                                            <input type="date" class="form-control"
+                                                                                   id="receivedDate" name="receiveDate"
+                                                                                   value="${order.receiveDate != null ? order.receiveDate : 'N/A'}">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
