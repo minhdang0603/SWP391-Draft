@@ -1,15 +1,15 @@
 package com.web.laptoptg.controller.customer;
 
 import com.web.laptoptg.config.JPAConfig;
+import com.web.laptoptg.config.Status;
 import com.web.laptoptg.dto.CartDTO;
 import com.web.laptoptg.dto.ItemDTO;
 import com.web.laptoptg.dto.UserDTO;
-import com.web.laptoptg.model.Orders;
-import com.web.laptoptg.model.Product;
-import com.web.laptoptg.model.User;
+import com.web.laptoptg.model.*;
 import com.web.laptoptg.service.*;
 import com.web.laptoptg.service.impl.*;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,15 +18,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
+@WebServlet(urlPatterns = "/order-process")
 public class OrderProcessController extends HttpServlet {
     private CartService cartService;
     private CartDetailsService cartDetailsService;
     private OrderService orderService;
     private OrderDetailService orderDetailService;
     private ProductService productService;
+    private PaymentService paymentService;
 
     @Override
     public void init() throws ServletException {
@@ -36,6 +37,7 @@ public class OrderProcessController extends HttpServlet {
         orderService = new OrderServiceImpl();
         orderDetailService = new OrderDetailServiceImpl();
         productService = new ProductServiceImpl();
+        paymentService = new PaymentServiceImpl();
     }
 
     @Override
@@ -63,21 +65,48 @@ public class OrderProcessController extends HttpServlet {
         UserDTO account = (UserDTO) req.getSession().getAttribute("account");
         User user = account.toUser();
 
+        //get user's cart
+        Cart cart = cartService.getCartByUserId(user.getId());
+
         // add to order
         Orders order = new Orders();
         order.setAddress(address);
         order.setNote(note);
         order.setUserName(username);
         order.setPhoneNumber(phone);
-        order.setOrderStatus("pending");
+        order.setOrderStatus(Status.PENDING);
         order.setOrderDate(getOrderDate());
         order.setCustomer(user);
-        
+        order = orderService.saveOrder(order);
 
-        String payment = req.getParameter("payment");
+        // add to order details
+        for (ItemDTO item : items) {
+            OrderDetails orderDetails = new OrderDetails();
+            orderDetails.setOrder(order);
+            orderDetails.setProduct(item.getProduct());
+            orderDetails.setQuantity(item.getQuantity());
+            orderDetails.setUnitPrice(item.getProduct().getUnitPrice());
+            orderDetails.setProductName(item.getProduct().getProductName());
+            orderDetails.setMaintenance(item.getProduct().getMaintenance());
+            orderDetails.setImage(item.getProduct().getImage());
+            orderDetailService.saveOrderDetail(orderDetails);
+        }
 
-        if(payment.equals("vnpay")) {
+        // delete cart details
+        cartDetailsService.deleteAll(cart.getId());
 
+        // check payment method
+        String paymentMethod = req.getParameter("payment");
+        Payment payment = new Payment();
+
+        // add payment and update order
+        if(paymentMethod.equals("cash-on-delivery")) {
+            payment.setAmount(cartDTO.getTotal());
+            payment.setStatus(Status.UNPAID);
+            payment.setMethod(Status.COD);
+            paymentService.savePayment(payment);
+        } else {
+            
         }
 
     }

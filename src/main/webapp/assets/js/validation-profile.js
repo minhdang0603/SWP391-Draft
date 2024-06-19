@@ -2,10 +2,26 @@ window.onload = function() {
     const fullNameInput = document.getElementById('fullName');
     const addressInput = document.getElementById('Address');
     const phoneInput = document.getElementById('Phone');
-    const emailInput = document.getElementById('Email');
     const fullNameHelp = document.getElementById('fullNameHelp');
     const phoneHelp = document.getElementById('phoneHelp');
     const saveChangesBtn = document.getElementById('saveChangesBtn');
+    // Select all elements with class 'price'
+    const priceElements = document.querySelectorAll('.price');
+
+    // Function to format number to Vietnamese Dong (VND) format
+    function formatVND(n) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' đ';
+    }
+
+    // Format each price element
+    priceElements.forEach(function (element) {
+        let price = parseFloat(element.textContent.trim()); // Assuming the price is in numeric format
+
+        if (!isNaN(price)) {
+            // Format the price using the formatVND function
+            element.textContent = formatVND(price);
+        }
+    });
 
     function validateForm() {
         var isValid = true;
@@ -27,11 +43,6 @@ window.onload = function() {
             phoneHelp.textContent = '';
         }
 
-        // Check if all fields are not empty
-        if (!fullNameInput.value.trim() || !addressInput.value.trim() || !phoneInput.value.trim() || !emailInput.value.trim()) {
-            isValid = false;
-        }
-
         // Update the disabled state of the save button
         saveChangesBtn.disabled = !isValid;
     }
@@ -44,7 +55,6 @@ window.onload = function() {
 
     fullNameInput.addEventListener('input', validateForm);
     addressInput.addEventListener('input', validateForm);
-    emailInput.addEventListener('input', validateForm);
 
     // Call validateForm initially to set the initial state of the save button
     validateForm();

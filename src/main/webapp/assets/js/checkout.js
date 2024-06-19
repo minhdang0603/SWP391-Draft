@@ -16,10 +16,6 @@ $(document).ready(function () {
         }
     }
 
-    function validatePhone(phoneNumber){
-
-    }
-
     // Format each price element
     priceElements.forEach(function (element) {
         let price = parseFloat(element.textContent.trim()); // Assuming the price is in numeric format

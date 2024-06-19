@@ -35,8 +35,7 @@ public class UserServiceImpl implements UserService {
         temp.setRole(roleDAO.getRoleByRoleName(user.getRole()));
         temp.setStatus(user.getStatus());
         temp.setPhoneNumber(user.getPhoneNumber());
-        userDAO.saveUser(temp);
-        return findUserByEmail(temp.getEmail());
+        return userDAO.saveUser(temp);
     }
 
     @Override
@@ -62,7 +61,6 @@ public class UserServiceImpl implements UserService {
             userDAO.updateUser(temp);
         }
     }
-
 
     @Override
     public User findUserByEmail(String email) {

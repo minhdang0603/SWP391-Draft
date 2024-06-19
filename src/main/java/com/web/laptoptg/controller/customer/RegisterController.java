@@ -1,6 +1,7 @@
 package com.web.laptoptg.controller.customer;
 
 import com.web.laptoptg.config.JPAConfig;
+import com.web.laptoptg.config.Status;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.Cart;
 import com.web.laptoptg.model.User;
@@ -153,7 +154,7 @@ public class RegisterController extends HttpServlet {
 
         // else redirect to home page and register successful
         user.setEmail(user.getEmail());
-        user.setStatus("active");
+        user.setStatus(Status.ACTIVE);
         User temp = userService.register(user);
         Cart cart = new Cart();
         cart.setUser(temp);
@@ -192,7 +193,7 @@ public class RegisterController extends HttpServlet {
         // encrypt the code to sha-256
         String code = PasswordUtils.generateOtp(6);
         userDTO.setCode(PasswordUtils.hash(code));
-        userDTO.setStatus("inactive");
+        userDTO.setStatus(Status.INACTIVE);
         userDTO.setRole("MEMBER");
         String title = "Email xác nhận đăng ký tài khoản";
         String content = getContent(code);

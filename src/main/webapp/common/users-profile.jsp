@@ -38,6 +38,7 @@
 
     <!-- Template Main CSS File -->
     <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
+    <link href="${contextPath}/assets/css/orders.css" rel="stylesheet">
 
     <!--Toastr-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -103,10 +104,50 @@
                                 </li>
 
                                 <c:if test="${account.role == 'MEMBER'}">
-                                    <li class="nav-item">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-orders">
-                                            Đơn hàng
-                                        </button>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                           role="button"
+                                           aria-expanded="false">Đơn hàng</a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <button class="dropdown-item" data-bs-toggle="tab"
+                                                        data-bs-target="#pending-orders">
+                                                    <i class="bx bx-time-five text-warning"></i>
+                                                    <span class="text-dark">Chờ xác nhận</span>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item" data-bs-toggle="tab"
+                                                        data-bs-target="#processing-orders">
+                                                    <i class="bx bx-loader-circle text-info"></i>
+                                                    <span class="text-dark">Đang xử lý</span>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item" data-bs-toggle="tab"
+                                                        data-bs-target="#received-orders">
+                                                    <i class="bx bx-check-circle text-success"></i>
+                                                    <span class="text-dark">Đã nhận</span>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item" data-bs-toggle="tab"
+                                                        data-bs-target="#cancelled-orders">
+                                                    <i class="bx bx-x-circle text-danger"></i>
+                                                    <span class="text-dark">Đã hủy</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+
                                     </li>
                                 </c:if>
 
@@ -182,13 +223,14 @@
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary" id="saveChangesBtn" disabled>
+                                            <button type="submit" class="btn btn-primary" id="saveChangesBtn">
                                                 Lưu thay đổi
                                             </button>
                                         </div>
                                     </form><!-- End Profile Edit Form -->
 
                                 </div>
+
                                 <!-- Change Password Form -->
                                 <div class="tab-pane fade profile-change-password pt-3" id="profile-change-password">
                                     <form action="${contextPath}/profile" method="post">
@@ -230,82 +272,203 @@
                                         </div>
                                     </form>
                                 </div>
-
-
                                 <!-- End change password Form -->
 
-
-                                <div class="tab-pane fade pt-3 recent-sales overflow-auto" id="profile-orders">
-                                    <!-- Orders Table -->
-                                    <div class="filter">
-                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                class="bi bi-three-dots"></i></a>
-                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                            <li class="dropdown-header text-start">
-                                                <h6>Filter</h6>
-                                            </li>
-
-                                            <li><a class="dropdown-item" href="#">Today</a></li>
-                                            <li><a class="dropdown-item" href="#">This Month</a></li>
-                                            <li><a class="dropdown-item" href="#">This Year</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="">
-                                        <h5 class="">Recent Sales <span>| Today</span></h5>
-
-                                        <table class="table table-borderless datatable">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Customer</th>
-                                                <th scope="col">Product</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Status</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2457</a></th>
-                                                <td>Brandon Jacob</td>
-                                                <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                                                <td>$64</td>
-                                                <td><span class="badge bg-success">Approved</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2147</a></th>
-                                                <td>Bridie Kessler</td>
-                                                <td><a href="#" class="text-primary">Blanditiis dolor omnis
-                                                    similique</a></td>
-                                                <td>$47</td>
-                                                <td><span class="badge bg-warning">Pending</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2049</a></th>
-                                                <td>Ashleigh Langosh</td>
-                                                <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                                                <td>$147</td>
-                                                <td><span class="badge bg-success">Approved</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2644</a></th>
-                                                <td>Angus Grady</td>
-                                                <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                                                <td>$67</td>
-                                                <td><span class="badge bg-danger">Rejected</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><a href="#">#2644</a></th>
-                                                <td>Raheem Lehner</td>
-                                                <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                                                <td>$165</td>
-                                                <td><span class="badge bg-success">Approved</span></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <!-- Pending orders -->
+                                <div class="tab-pane fade overflow-auto" id="pending-orders">
+                                    <c:choose>
+                                        <c:when test="${pendingOrders.size() == 0}">
+                                            <div class="no-order">
+                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png" class="no-order-img">
+                                                <p>Chưa có đơn hàng</p>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="orders">
+                                                <c:forEach var="order" items="${pendingOrders}">
+                                                    <div class="order">
+                                                        <div class="status pb-3">
+                                                            <i class="bx bx-time-five"></i>
+                                                            <span class="ml-2">Chờ xác nhận</span>
+                                                        </div>
+                                                        <c:forEach var="item" items="${order.orderDetails}">
+                                                            <div class="item d-flex flex-row">
+                                                                <div class="item-picture">
+                                                                    <img src="${contextPath}/assets/img/product-img/${item.image}"
+                                                                         alt="">
+                                                                </div>
+                                                                <div class="item-name">
+                                                                        ${item.productName} <br>
+                                                                    <span class="quantity">Số lượng: ${item.quantity}</span>
+                                                                </div>
+                                                                <div class="item-price price">
+                                                                        ${item.unitPrice}
+                                                                </div>
+                                                            </div>
+                                                        </c:forEach>
+                                                        <div class="order-footer">
+                                                            <a class="btn_5"
+                                                               href="${context}/view-order-detail?orderId=${order.id}">Chi
+                                                                tiết</a>
+                                                            <div class="order-total">
+                                                                Tổng tiền: <span
+                                                                    class="order-price price">${order.payment.amount}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
+                                <!-- End pending orders -->
 
+                                <!-- Processing orders -->
+                                <div class="tab-pane fade overflow-auto" id="processing-orders">
+                                    <c:choose>
+                                        <c:when test="${processingOrders.size() == 0}">
+                                            <div class="no-order">
+                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png" class="no-order-img">
+                                                <p>Chưa có đơn hàng</p>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="orders">
+                                                <c:forEach var="order" items="${processingOrders}">
+                                                    <div class="order">
+                                                        <div class="status pb-3">
+                                                            <i class="bx bx-time-five"></i>
+                                                            <span class="ml-2">Chờ xác nhận</span>
+                                                        </div>
+                                                        <c:forEach var="item" items="${order.orderDetails}">
+                                                            <div class="item d-flex flex-row">
+                                                                <div class="item-picture">
+                                                                    <img src="${contextPath}/assets/img/product-img/${item.image}"
+                                                                         alt="">
+                                                                </div>
+                                                                <div class="item-name">
+                                                                        ${item.productName} <br>
+                                                                    <span class="quantity">Số lượng: ${item.quantity}</span>
+                                                                </div>
+                                                                <div class="item-price price">
+                                                                        ${item.unitPrice}
+                                                                </div>
+                                                            </div>
+                                                        </c:forEach>
+                                                        <div class="order-footer">
+                                                            <a class="btn_5"
+                                                               href="${context}/view-order-detail?orderId=${order.id}">Chi
+                                                                tiết</a>
+                                                            <div class="order-total">
+                                                                Tổng tiền: <span
+                                                                    class="order-price price">${order.payment.amount}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <!-- End processing orders -->
+
+                                <!-- Received orders -->
+                                <div class="tab-pane fade overflow-auto" id="received-orders">
+                                    <c:choose>
+                                        <c:when test="${receivedOrders.size() == 0}">
+                                            <div class="no-order">
+                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png" class="no-order-img">
+                                                <p>Chưa có đơn hàng</p>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="orders">
+                                                <c:forEach var="order" items="${receivedOrders}">
+                                                    <div class="order">
+                                                        <div class="status pb-3">
+                                                            <i class="bx bx-time-five"></i>
+                                                            <span class="ml-2">Chờ xác nhận</span>
+                                                        </div>
+                                                        <c:forEach var="item" items="${order.orderDetails}">
+                                                            <div class="item d-flex flex-row">
+                                                                <div class="item-picture">
+                                                                    <img src="${contextPath}/assets/img/product-img/${item.image}"
+                                                                         alt="">
+                                                                </div>
+                                                                <div class="item-name">
+                                                                        ${item.productName} <br>
+                                                                    <span class="quantity">Số lượng: ${item.quantity}</span>
+                                                                </div>
+                                                                <div class="item-price price">
+                                                                        ${item.unitPrice}
+                                                                </div>
+                                                            </div>
+                                                        </c:forEach>
+                                                        <div class="order-footer">
+                                                            <a class="btn_5"
+                                                               href="${context}/view-order-detail?orderId=${order.id}">Chi
+                                                                tiết</a>
+                                                            <div class="order-total">
+                                                                Tổng tiền: <span
+                                                                    class="order-price price">${order.payment.amount}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <!-- End received orders -->
+
+                                <!-- Cancelled orders -->
+                                <div class="tab-pane fade recent-sales overflow-auto" id="cancelled-orders">
+                                    <c:choose>
+                                        <c:when test="${cancelledOrders.size() == 0}">
+                                            <div class="no-order">
+                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png" class="no-order-img">
+                                                <p>Chưa có đơn hàng</p>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="orders">
+                                                <c:forEach var="order" items="${cancelledOrders}">
+                                                    <div class="order">
+                                                        <div class="status pb-3">
+                                                            <i class="bx bx-time-five"></i>
+                                                            <span class="ml-2">Chờ xác nhận</span>
+                                                        </div>
+                                                        <c:forEach var="item" items="${order.orderDetails}">
+                                                            <div class="item d-flex flex-row">
+                                                                <div class="item-picture">
+                                                                    <img src="${contextPath}/assets/img/product-img/${item.image}"
+                                                                         alt="">
+                                                                </div>
+                                                                <div class="item-name">
+                                                                        ${item.productName} <br>
+                                                                    <span class="quantity">Số lượng: ${item.quantity}</span>
+                                                                </div>
+                                                                <div class="item-price price">
+                                                                        ${item.unitPrice}
+                                                                </div>
+                                                            </div>
+                                                        </c:forEach>
+                                                        <div class="order-footer">
+                                                            <a class="btn_5"
+                                                               href="${context}/view-order-detail?orderId=${order.id}">Chi
+                                                                tiết</a>
+                                                            <div class="order-total">
+                                                                Tổng tiền: <span
+                                                                    class="order-price price">${order.payment.amount}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <!-- End cancelled orders -->
                             </div>
 
 
@@ -318,21 +481,21 @@
 
 
     <c:if test="${updateSuccess != null}">
-        <a class="visually-hidden" id="updateSuccess">
-                ${updateSuccess}
-        </a>
+    <a class="visually-hidden" id="updateSuccess">
+            ${updateSuccess}
+    </a>
         <c:remove var="updateSuccess" scope="session"/>
     </c:if>
     <c:if test="${passwordChangeSuccess != null}">
-        <a class="visually-hidden" id="passwordChangeSuccess">
-                ${passwordChangeSuccess}
-        </a>
+    <a class="visually-hidden" id="passwordChangeSuccess">
+            ${passwordChangeSuccess}
+    </a>
         <c:remove var="passwordChangeSuccess" scope="session"/>
     </c:if>
     <c:if test="${passwordChangeFailure != null}">
-        <a class="visually-hidden" id="passwordChangeFailure">
-                ${passwordChangeFailure}
-        </a>
+    <a class="visually-hidden" id="passwordChangeFailure">
+            ${passwordChangeFailure}
+    </a>
         <c:remove var="passwordChangeFailure" scope="session"/>
     </c:if>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -352,53 +515,51 @@
     <script src="${contextPath}/assets/js/main.js"></script>
 
     <script src="${contextPath}/assets/js/validation-profile.js"></script>
-    <script src="${contextPath}/assets/js/validation-change-password.js"></script>
+    <script src="${contextPath}/assets/js/validation-change-pass.js"></script>
 
     <!-- Toastr -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const updateSuccess = document.getElementById('updateSuccess');
-                const passwordChangeSuccess = document.getElementById('passwordChangeSuccess');
-                const passwordChangeFailure = document.getElementById('passwordChangeFailure');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const updateSuccess = document.getElementById('updateSuccess');
+            const passwordChangeSuccess = document.getElementById('passwordChangeSuccess');
+            const passwordChangeFailure = document.getElementById('passwordChangeFailure');
 
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": true,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "3000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                };
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "3000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
 
-                if (updateSuccess) {
-                    toastr.success('Đã cập nhật thông tin thành công!', 'Thành công');
-                    updateSuccess.remove();
-                }
+            if (updateSuccess) {
+                toastr.success('Đã cập nhật thông tin thành công!', 'Thành công');
+                updateSuccess.remove();
+            }
 
-                if (passwordChangeSuccess) {
-                    toastr.success('Đã thay đổi mật khẩu thành công!', 'Thành công');
-                    passwordChangeSuccess.remove();
-                }
+            if (passwordChangeSuccess) {
+                toastr.success('Đã thay đổi mật khẩu thành công!', 'Thành công');
+                passwordChangeSuccess.remove();
+            }
 
-                if (passwordChangeFailure) {
-                    toastr.error('Mật khẩu cũ không đúng!', 'Lỗi');
-                    passwordChangeFailure.remove();
-                }
-            });
-        </script>
-
-
+            if (passwordChangeFailure) {
+                toastr.error('Mật khẩu cũ không đúng!', 'Lỗi');
+                passwordChangeFailure.remove();
+            }
+        });
+    </script>
 </body>
 
 </html>

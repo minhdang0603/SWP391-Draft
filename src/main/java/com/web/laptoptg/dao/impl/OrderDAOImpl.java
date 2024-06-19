@@ -5,6 +5,7 @@ import com.web.laptoptg.dao.OrderDAO;
 import com.web.laptoptg.model.Orders;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Orders getOrderById(int id) {
-            return entityManager.find(Orders.class, id);
+        return entityManager.find(Orders.class, id);
     }
 
     @Override
@@ -55,10 +56,10 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public List<Orders> searchOrdersByPhone(String phoneNumber) {
-            TypedQuery<Orders> query = entityManager.createQuery(
-                    "SELECT o FROM Orders o WHERE o.phoneNumber = :phoneNumber", Orders.class);
-            query.setParameter("phoneNumber", phoneNumber);
-            return query.getResultList();
+        TypedQuery<Orders> query = entityManager.createQuery(
+                "SELECT o FROM Orders o WHERE o.phoneNumber = :phoneNumber", Orders.class);
+        query.setParameter("phoneNumber", phoneNumber);
+        return query.getResultList();
     }
 
     @Override
@@ -89,5 +90,18 @@ public class OrderDAOImpl implements OrderDAO {
             e.printStackTrace();
         }
         return order;
+    }
+
+    @Override
+    public List<Orders> getOrderdByCustomerIDAndStatus(int cid, String status) {
+        try {
+            TypedQuery<Orders> orders = entityManager.createQuery("from Orders o join fetch o.orderDetails where o.customer.id = :cid and o.orderStatus = :status", Orders.class);
+            orders.setParameter("cid", cid);
+            orders.setParameter("status", status);
+            return orders.getResultList();
+        } catch (NoResultException ex){
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

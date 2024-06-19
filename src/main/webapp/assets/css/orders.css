@@ -1,0 +1,150 @@
+.orders {
+    max-height: 700px; /* Adjust this value as needed */
+    overflow-y: auto;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+/* Custom Scrollbar Styles for WebKit Browsers (Chrome, Safari, etc.) */
+.orders::-webkit-scrollbar {
+    width: 8px; /* Adjust the width of the scrollbar */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.orders::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.orders::-webkit-scrollbar-thumb {
+    background: #888; /* Thumb color */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.orders::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
+}
+
+/* Remove scrollbar arrows (both ends) in WebKit */
+.orders::-webkit-scrollbar-button {
+    display: none;
+}
+
+.order {
+    padding: 15px 20px;
+    background-color: #FFFFFF;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.19);
+}
+
+.status {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid #B08EAD78;
+    color: #4B3049;
+}
+
+.item {
+    padding: 15px 0;
+    border-bottom: 1px solid #B08EAD78;
+    display: flex;
+    align-items: center;
+}
+
+.item-picture {
+    width: 100px;
+    height: 100px;
+    margin-right: 15px;
+}
+
+.no-order{
+    text-align: center;
+}
+
+.no-order-img{
+    width: 180px;
+    height: 180px;
+}
+
+.no-order p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4f5867;
+}
+
+.item-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.item-name {
+    font-size: 16px;
+    flex-grow: 1;
+    margin-right: 30px;
+}
+
+.quantity {
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.item-price {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.order-footer {
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+.order-total {
+    font-size: 18px;
+    flex-grow: 1;
+    text-align: end;
+}
+
+.order-total > span {
+    font-weight: 500;
+}
+
+.btn_5 {
+    border: 1px solid #4B3049;
+    color: #4B3049;
+    padding: 7px 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: transparent;
+    font-weight: 500;
+    transition: 0.2s linear;
+    border-radius: 2px;
+}
+
+.btn_5:hover {
+    color: #fff;
+    background-color: #4B3049;
+}
+
+.btn_6 {
+    border: 1px solid #4B3049;
+    color: #4B3049;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: transparent;
+    font-weight: 500;
+    transition: 0.2s linear;
+    border-radius: 2px;
+}
+
+.btn_6:hover {
+    color: #fff;
+    background-color: #4B3049;
+}

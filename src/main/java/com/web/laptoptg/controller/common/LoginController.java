@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.web.laptoptg.config.Constrants;
 import com.web.laptoptg.config.JPAConfig;
+import com.web.laptoptg.config.Status;
 import com.web.laptoptg.dto.GoogleUserDTO;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.Cart;
@@ -78,7 +79,7 @@ public class LoginController extends HttpServlet {
         // create user in database if user is not existed
         if (user == null) {
             userDTO.setEmail(googleUserDTO.getEmail());
-            userDTO.setStatus("active");
+            userDTO.setStatus(Status.ACTIVE);
             userDTO.setRole("MEMBER");
             userDTO.setUserName(googleUserDTO.getName());
             String generatedPassword = PasswordUtils.generatePassword(8);
@@ -167,8 +168,6 @@ public class LoginController extends HttpServlet {
             return;
         }
 
-        System.out.println("phan login");
-        System.out.println(user);
         // check account status
         if (user.getStatus().equals("inactive")) {
             alert = "Tài khoản của bạn đã bị khóa. Xin vui lòng liên hệ với LaptopTG store để khôi phục tài khoản!";

@@ -32,7 +32,6 @@ public class LoginFilter implements Filter {
     private CartService cartService = new CartServiceImpl();
     private CartDetailsService cartDetailsService =  new CartDetailsServiceImpl();
     private ProductService productService = new ProductServiceImpl();
-    private UserService userService = new UserServiceImpl();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -125,7 +124,7 @@ public class LoginFilter implements Filter {
 
         // Update cart content with new product ID and quantity
         for (CartDetails cartDetails : cartDetailsList) {
-            if (cartContent.length() == 0) {
+            if (cartContent.isEmpty()) {
                 cartContent = new StringBuilder(cartDetails.getProduct().getId() + ":" + cartDetails.getQuantity()); // Use a separator to distinguish different products
             } else {
                 cartContent.append("/").append(cartDetails.getProduct().getId()).append(":").append(cartDetails.getQuantity());

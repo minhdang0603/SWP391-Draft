@@ -44,4 +44,9 @@ public class OrderServiceImpl implements OrderService {
     public Orders saveOrder(Orders order) {
         return orderDAO.saveOrder(order);
     }
+
+    @Override
+    public List<Orders> getOrdersByUserIDAndStatus(int cid, String status) {
+        return orderDAO.getOrderdByCustomerIDAndStatus(cid, status);
+    }
 }

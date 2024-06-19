@@ -11,4 +11,5 @@ public interface OrderDAO {
     List<Orders> searchOrdersByPhone(String phoneNumber);
     Orders updateOrder(Orders order);
     Orders saveOrder(Orders order);
+    List<Orders> getOrderdByCustomerIDAndStatus(int cid, String status);
 }

@@ -1,9 +1,16 @@
 package com.web.laptoptg.controller.common;
 
 import com.web.laptoptg.config.JPAConfig;
+import com.web.laptoptg.config.Status;
 import com.web.laptoptg.dto.UserDTO;
+import com.web.laptoptg.model.OrderDetails;
+import com.web.laptoptg.model.Orders;
 import com.web.laptoptg.model.User;
+import com.web.laptoptg.service.OrderDetailService;
+import com.web.laptoptg.service.OrderService;
 import com.web.laptoptg.service.UserService;
+import com.web.laptoptg.service.impl.OrderDetailServiceImpl;
+import com.web.laptoptg.service.impl.OrderServiceImpl;
 import com.web.laptoptg.service.impl.UserServiceImpl;
 import com.web.laptoptg.util.PasswordUtils;
 import jakarta.servlet.ServletException;
@@ -21,10 +28,13 @@ import java.util.List;
 public class ProfileController extends HttpServlet {
 
     private UserService userService;
+    private OrderService orderService;
+
 
     @Override
     public void init() throws ServletException {
         userService = new UserServiceImpl();
+        orderService = new OrderServiceImpl();
     }
 
     @Override
@@ -34,6 +44,17 @@ public class ProfileController extends HttpServlet {
         if (account == null) {
             resp.sendRedirect(req.getContextPath() + "/home");
             return;
+        }
+
+        if(account.getRole().equals("MEMBER")) {
+            List<Orders> pendingOrders = orderService.getOrdersByUserIDAndStatus(account.getId(), Status.PENDING);
+            List<Orders> processingOrders = orderService.getOrdersByUserIDAndStatus(account.getId(), Status.PROCESSING);
+            List<Orders> receivedOrders = orderService.getOrdersByUserIDAndStatus(account.getId(), Status.RECEIVED);
+            List<Orders> cancelledOrders = orderService.getOrdersByUserIDAndStatus(account.getId(), Status.CANCELLED);
+            req.setAttribute("pendingOrders", pendingOrders);
+            req.setAttribute("processingOrders", processingOrders);
+            req.setAttribute("receivedOrders", receivedOrders);
+            req.setAttribute("cancelledOrders", cancelledOrders);
         }
 
         req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);

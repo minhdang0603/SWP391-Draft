@@ -11,4 +11,5 @@ public interface OrderService {
     List<Orders> searchOrdersByPhone(String phoneNumber);
     Orders updateOrder(Orders order);
     Orders saveOrder(Orders order);
+    List<Orders> getOrdersByUserIDAndStatus(int cid, String status);
 }

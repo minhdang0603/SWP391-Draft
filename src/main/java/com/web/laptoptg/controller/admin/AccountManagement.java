@@ -109,8 +109,9 @@ public class AccountManagement extends HttpServlet {
         String phoneNumber = request.getParameter("phoneNumber");
         String role = request.getParameter("role");
         String status = request.getParameter("status");
+        String id = request.getParameter("userId");
 
-        User raw = userService.findUserByEmail(email);
+        User raw = userService.findUserById(Integer.parseInt(id));
 
         UserDTO userDTO = new UserDTO();
         userDTO.setId(raw.getId());
