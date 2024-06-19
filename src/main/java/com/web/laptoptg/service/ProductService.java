@@ -19,7 +19,7 @@ public interface ProductService {
     boolean findProductByName(String name);
 
     //delete a product by its id
-    void deleteById(int id);
+    void deleteProduct(Product product);
 
     Product findProductById(int id);
 

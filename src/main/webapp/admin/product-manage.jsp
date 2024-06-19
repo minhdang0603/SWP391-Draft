@@ -154,8 +154,7 @@
                                                         </div>
                                                         <div class="container"></div>
                                                         <div class="modal-body">
-                                                            <p>Bạn có chắc chắn muốn chuyển sản phẩm này sang trạng thái
-                                                                "Ngừng bán" không?</p>
+                                                            <p>Bạn có chắc chắn muốn xóa sản phẩm này không?</p>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <a type="button"

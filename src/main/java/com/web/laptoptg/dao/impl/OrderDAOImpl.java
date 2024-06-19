@@ -32,20 +32,21 @@ public class OrderDAOImpl implements OrderDAO {
                 "SELECT DISTINCT o FROM Orders o " +
                         "LEFT JOIN FETCH o.saler " +
                         "LEFT JOIN FETCH o.payment " +
-                        "LEFT JOIN FETCH o.orderDetails od " +
+                        //"LEFT JOIN FETCH o.orderDetails od " +
                         "LEFT JOIN FETCH o.customer", Orders.class);
         return query.getResultList();
     }
 
     @Override
-    public void deleteOrderById(int id) {
+    public void deleteOrder(Orders order) {
         try {
             transaction.begin();
-            Orders order = entityManager.find(Orders.class, id);
-            if (order != null) {
-                entityManager.remove(order);
+            // Ensure the entity is managed before removing
+            if (!entityManager.contains(order)) {
+                order = entityManager.merge(order);
             }
-            transaction.commit();
+                entityManager.remove(order);
+                transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();

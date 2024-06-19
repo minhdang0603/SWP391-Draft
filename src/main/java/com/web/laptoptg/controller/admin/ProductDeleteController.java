@@ -31,15 +31,9 @@ public class ProductDeleteController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         Product product = productService.findProductById(id);
-        String status = product.getStatus();
+        productService.deleteProduct(product);
         String msg;
-        if(status.equals("Inactive")){
-            msg = "Sản phẩm đã ở trạng thái 'Ngừng bán'";
-        }
-        status = "Inactive";
-        product.setStatus(status);
-        productService.updateProduct(product);
-        msg = "Sản phẩm đã đổi trạng thái thành công!";
+        msg = "Sản phẩm đã xóa thành công!";
         req.getSession().setAttribute("msg", msg);
         resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
     }

@@ -23,7 +23,7 @@ public interface ProductDAO {
     List<Product> getProductByCategory(int cateID);
 
     //delete a product by its id
-    void deleteById(int id);
+    void deleteProduct(Product product);
 
     //find by id
     Product findProductById(int id);
