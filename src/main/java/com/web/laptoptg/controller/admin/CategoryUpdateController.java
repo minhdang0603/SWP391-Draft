@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Category;
 import com.web.laptoptg.service.CategoryService;
 import com.web.laptoptg.service.impl.CategoryServiceImpl;
@@ -15,6 +16,8 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/admin/category-update")
 public class CategoryUpdateController extends HttpServlet {
     private CategoryService categoryService;
+
+    @Override
     public void init() throws ServletException {
         categoryService = new CategoryServiceImpl();
     }
@@ -36,5 +39,10 @@ public class CategoryUpdateController extends HttpServlet {
         req.getSession().setAttribute("msg", msg);
         resp.sendRedirect(req.getContextPath() + "/admin/category-manage");
 
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

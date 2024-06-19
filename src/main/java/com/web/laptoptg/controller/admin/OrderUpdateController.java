@@ -32,14 +32,14 @@ public class OrderUpdateController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       int orderID = Integer.parseInt(req.getParameter("orderId"));
+        int orderID = Integer.parseInt(req.getParameter("orderId"));
         int salerID = Integer.parseInt(req.getParameter("saler"));
-       String orderStatus = req.getParameter("orderStatus");
-       String paymentStatus = req.getParameter("paymentStatus");
-       String paymentMethod = req.getParameter("paymentMethod");
-        String deliverDateStr = req.getParameter("deliverDate");
-        String receiveDateStr = req.getParameter("receiveDate");
-        String paymentDateStr = req.getParameter("paymentDate");
+        String orderStatus = req.getParameter("orderStatus");
+        String paymentStatus = req.getParameter("paymentStatus");
+        String paymentMethod = req.getParameter("paymentMethod");
+        String deliverDateStr = req.getParameter("deliverDate").isEmpty() ? null : req.getParameter("deliverDate");
+        String receiveDateStr = req.getParameter("receiveDate").isEmpty() ? null : req.getParameter("receiveDate");
+        String paymentDateStr = req.getParameter("paymentDate").isEmpty() ? null : req.getParameter("paymentDate");
         Orders orderOld = orderService.getOrderById(orderID);
         orderOld.getPayment().setMethod(paymentMethod);
         orderOld.getPayment().setPayDate(paymentDateStr);

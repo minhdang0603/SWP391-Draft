@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.Cart;
 import com.web.laptoptg.model.User;
@@ -139,5 +140,8 @@ public class AccountManagement extends HttpServlet {
         }
     }
 
-
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
+    }
 }

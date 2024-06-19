@@ -62,7 +62,7 @@ public class LoginController extends HttpServlet {
         }
     }
 
-    public void googleLoginHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    private void googleLoginHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String error = req.getParameter("error");
         if (error != null && error.equals("access_denied")) {
             resp.sendRedirect(req.getContextPath() + "/login");
@@ -144,6 +144,12 @@ public class LoginController extends HttpServlet {
 
         // redirect login page
         req.getRequestDispatcher("common/login.jsp").forward(req, resp);
+        HttpSession session = req.getSession();
+        session.removeAttribute("accountError");
+        session.removeAttribute("emailAlert");
+        session.removeAttribute("resetSuccess");
+        session.removeAttribute("emailSuccess");
+        session.removeAttribute("registerSuccess");
     }
 
     @Override
@@ -184,8 +190,9 @@ public class LoginController extends HttpServlet {
         userDTO.setUserName(user.getUserName());
         userDTO.setAddress(user.getAddress());
         userDTO.setPhoneNumber(user.getPhoneNumber());
-        session.setAttribute("account", userDTO);
+        userDTO.setStatus(user.getStatus());
         userDTO.setPassword(user.getPassword());
+        session.setAttribute("account", userDTO);
         resp.sendRedirect(req.getContextPath() + "/waiting");
     }
 

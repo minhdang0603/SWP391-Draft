@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Category;
 import com.web.laptoptg.service.CategoryService;
 import com.web.laptoptg.service.impl.CategoryServiceImpl;
@@ -16,6 +17,7 @@ import java.util.List;
 public class CategoryManageController extends HttpServlet {
     private CategoryService categoryService;
 
+    @Override
     public void init() throws ServletException {
         categoryService = new CategoryServiceImpl();
     }
@@ -29,6 +31,11 @@ public class CategoryManageController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req,resp);
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }
 

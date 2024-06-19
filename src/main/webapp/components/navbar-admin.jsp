@@ -10,7 +10,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <header id="header" class="header fixed-top d-flex align-items-center">
 
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-around">
         <a href="${contextPath}/home" class="logo d-flex align-items-center">
             <img src="${contextPath}/assets/home/img/logo1.png" alt="">
             <span class="d-none d-lg-block">LaptopTG</span>

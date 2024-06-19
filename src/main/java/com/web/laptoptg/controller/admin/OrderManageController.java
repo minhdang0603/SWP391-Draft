@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.*;
 import com.web.laptoptg.service.*;
 import com.web.laptoptg.service.impl.*;
@@ -19,6 +20,7 @@ public class OrderManageController extends HttpServlet {
     private OrderDetailService orderDetails;
     private UserService userService;
 
+    @Override
     public void init() throws ServletException {
         orderService = new OrderServiceImpl();
         orderDetails = new OrderDetailServiceImpl();
@@ -38,5 +40,10 @@ public class OrderManageController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req,resp);
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

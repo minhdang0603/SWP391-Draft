@@ -91,34 +91,34 @@
                                 <!-- Account Table -->
                                 <div class="table-responsive">
                                     <table id="myTable"
-                                           class="table table-striped datatable align-items-center mb-0">
+                                           class="table table-striped datatable align-items-center mb-0" style="width: 100%;">
                                         <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                 ID
                                             </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Tên người dùng
                                             </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Email
                                             </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Địa chỉ
-                                            </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Điện thoại
-                                            </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+<%--                                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">--%>
+<%--                                                Địa chỉ--%>
+<%--                                            </th>--%>
+<%--                                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">--%>
+<%--                                                Điện thoại--%>
+<%--                                            </th>--%>
+                                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Vai trò
                                             </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Trạng thái
-                                            </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+<%--                                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">--%>
+<%--                                                Trạng thái--%>
+<%--                                            </th>--%>
+                                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Sửa
                                             </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Xóa
                                             </th>
                                         </tr>
@@ -126,18 +126,18 @@
                                         <tbody>
                                         <c:forEach var="user" items="${listUser}">
                                             <tr>
-                                                <td>${user.id}</td>
-                                                <td>${user.userName}</td>
-                                                <td>${user.email}</td>
-                                                <td>${user.address}</td>
-                                                <td>${user.phoneNumber}</td>
-                                                <td>${user.role.roleName}</td>
-                                                <td>${user.status}</td>
-                                                <td>
+                                                <td class="align-middle text-center">${user.id}</td>
+                                                <td class="align-middle text-center">${user.userName}</td>
+                                                <td class="align-middle text-center">${user.email}</td>
+<%--                                                <td class="align-middle text-center">${user.address}</td>--%>
+<%--                                                <td class="align-middle text-center">${user.phoneNumber}</td>--%>
+                                                <td class="align-middle text-sm text-center">${user.role.roleName}</td>
+<%--                                                <td class="align-middle text-sm text-center">${user.status}</td>--%>
+                                                <td class="align-middle text-center text-sm mr-2">
                                                     <a href="javascript:void(0);" class="bi bi-pencil-square" style="font-size: 20px; color: deepskyblue"
                                                        onclick="editUser('${user.id}', '${user.userName}', '${user.email}', '${user.address}', '${user.phoneNumber}', '${user.role.roleName}', '${user.status}')"></a>
                                                 </td>
-                                                <td>
+                                                <td class="align-middle text-center text-sm mr-2">
                                                     <a href="${contextPath}/admin/account-manage?idDelete=${user.id}"
                                                        onclick="return confirmDelete();"
                                                        class="bi bi-trash2-fill"

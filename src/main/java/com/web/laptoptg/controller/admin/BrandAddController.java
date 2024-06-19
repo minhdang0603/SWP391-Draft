@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Brand;
 import com.web.laptoptg.service.BrandService;
 import com.web.laptoptg.service.impl.BrandServiceImpl;
@@ -48,5 +49,10 @@ public class BrandAddController extends HttpServlet {
 //            req.setAttribute("msg", msg);
         req.getSession().setAttribute("msg", msg);
         resp.sendRedirect(req.getContextPath() + "/admin/brand-manage");
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

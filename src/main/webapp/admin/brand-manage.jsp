@@ -135,7 +135,7 @@
                                 <!-- Products Table -->
                                 <div class="table-responsive">
                                     <table id="myTable"
-                                           class="table-responsive table-striped datatable align-items-center mb-0">
+                                           class="table-responsive table-striped datatable align-items-center mb-0" style="width: 100%;">
                                         <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">

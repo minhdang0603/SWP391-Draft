@@ -8,7 +8,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -41,7 +40,6 @@
                         <c:if test="${accountError != null}">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <span style="font-size: 14px">${accountError}</span>
-                                <c:remove var="accountError" scope="request"/>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                         </c:if>
@@ -49,7 +47,6 @@
                         <c:if test="${emailAlert != null}">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <span style="font-size: 14px">${emailAlert}</span>
-                                <c:remove var="emailAlert" scope="session"/>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                         </c:if>
@@ -57,7 +54,6 @@
                         <c:if test="${resetSuccess != null}">
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <span style="font-size: 14px">${resetSuccess}</span>
-                                <c:remove var="resetSuccess" scope="session"/>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                         </c:if>
@@ -65,7 +61,6 @@
                         <c:if test="${emailSuccess != null}">
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <span style="font-size: 14px">${emailSuccess}</span>
-                                <c:remove var="emailSuccess" scope="session"/>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                         </c:if>
@@ -73,7 +68,6 @@
                         <c:if test="${registerSuccess != null}">
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <span style="font-size: 14px">${registerSuccess}</span>
-                                <c:remove var="registerSuccess" scope="session"/>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                         </c:if>

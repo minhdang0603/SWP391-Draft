@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Brand;
 import com.web.laptoptg.model.Category;
 import com.web.laptoptg.model.Product;
@@ -25,6 +26,7 @@ public class ProductManageController extends HttpServlet {
     private CategoryService categoryService;
     private BrandService brandService;
 
+    @Override
     public void init() throws ServletException {
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
@@ -47,5 +49,10 @@ public class ProductManageController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req,resp);
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

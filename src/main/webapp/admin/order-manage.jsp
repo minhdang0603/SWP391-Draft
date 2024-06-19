@@ -117,8 +117,7 @@
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <!-- Order Table -->
                                 <div class="table-responsive">
-                                    <table id="myTable"
-                                           class="table table-striped datatable align-items-center mb-0">
+                                    <table id="myTable" class="table table-striped datatable align-items-center mb-0" style="width: 100%">
                                         <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-0 text-center">
@@ -152,16 +151,15 @@
                                                     style="width: 50%">
                                                         ${order.customer.userName}
                                                 </td>
-                                                <td class="align-middle text-sm">${order.orderDate}</td>
+                                                <td class="align-middle text-sm" style="text-align: left">${order.orderDate}</td>
                                                 <td class="align-middle text-sm"
                                                     style="padding-right: 30px">${order.orderStatus}</td>
                                                 <td class="align-middle text-center text-sm mr-2"><a href="#"
                                                                                                      onclick="showOrderDetails(
                                                                                                              '${order.id}'
                                                                                                              )">
-                                                    <i
-                                                            class="bi bi-eye-fill"
-                                                            style="font-size: 20px; color: deepskyblue"></i></a></td>
+                                                    <i class="bi bi-eye-fill"
+                                                       style="font-size: 20px; color: deepskyblue"></i></a></td>
 
                                                 <td class="align-middle text-center text-sm mr-2"><a href="#"
                                                                                                      onclick="editModal('${order.id}')">
@@ -297,13 +295,14 @@
                                                                         <div class="product-cell">Thành tiền</div>
                                                                     </div>
                                                                     <div id="productTableBody" class="product-body">
-                                                                        <c:forEach items="${order.orderDetails}" var="detail">
-                                                                                <div class="product-row">
-                                                                                    <div class="product-cell">${detail.productName}</div>
-                                                                                    <div class="product-cell pricevnd">${detail.unitPrice}</div>
-                                                                                    <div class="product-cell">${detail.quantity}</div>
-                                                                                    <div class="product-cell pricevnd">${detail.unitPrice * detail.quantity}</div>
-                                                                                </div>
+                                                                        <c:forEach items="${order.orderDetails}"
+                                                                                   var="detail">
+                                                                            <div class="product-row">
+                                                                                <div class="product-cell">${detail.productName}</div>
+                                                                                <div class="product-cell pricevnd">${detail.unitPrice}</div>
+                                                                                <div class="product-cell">${detail.quantity}</div>
+                                                                                <div class="product-cell pricevnd">${detail.unitPrice * detail.quantity}</div>
+                                                                            </div>
                                                                         </c:forEach>
                                                                     </div>
                                                                     <div class="product-footer">
@@ -316,7 +315,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-primary" onclick="printModal(${order.id})">In</button>
+                                                            <button type="button" class="btn btn-primary"
+                                                                    onclick="printModal(${order.id})">In
+                                                            </button>
 
                                                             <button type="button" class="btn btn-secondary"
                                                                     data-dismiss="modal">Đóng
@@ -404,7 +405,8 @@
                                                                             </select>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="paymentMethodUpdate"><strong>Hình thức thanh toán:</strong></label>
+                                                                            <label for="paymentMethodUpdate"><strong>Hình
+                                                                                thức thanh toán:</strong></label>
                                                                             <select name="paymentMethod"
                                                                                     class="form-control"
                                                                                     id="paymentMethodUpdate" required>
@@ -434,7 +436,8 @@
                                                                                    value="${order.receiveDate}">
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="paymentDate"><strong>Ngày thanh toán:</strong></label>
+                                                                            <label for="paymentDate"><strong>Ngày thanh
+                                                                                toán:</strong></label>
                                                                             <input type="date" class="form-control"
                                                                                    id="paymentDate" name="paymentDate"
                                                                                    value="${order.receiveDate}">
@@ -497,7 +500,7 @@
 <script src="${contextPath}/assets/js/order-manage.js"></script>
 <script>
     function printModal(id) {
-        var printContents = document.querySelector('#toPrint'+id).innerHTML;
+        var printContents = document.querySelector('#toPrint' + id).innerHTML;
         var originalContents = document.body.innerHTML;
 
         document.body.innerHTML = printContents;

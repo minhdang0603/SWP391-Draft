@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Brand;
 import com.web.laptoptg.model.Category;
 import com.web.laptoptg.service.BrandService;
@@ -15,6 +16,8 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/admin/brand-update")
 public class BrandUpdateController extends HttpServlet {
     private BrandService brandService;
+
+    @Override
     public void init() throws ServletException {
         brandService = new BrandServiceImpl();
     }
@@ -34,5 +37,10 @@ public class BrandUpdateController extends HttpServlet {
         msg = "Chỉnh Sửa Thành Công Danh Mục ID" + brand.getId();
         req.getSession().setAttribute("msg", msg);
         resp.sendRedirect(req.getContextPath() + "/admin/brand-manage");
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

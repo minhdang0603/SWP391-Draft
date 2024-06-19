@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Category;
 import com.web.laptoptg.service.CategoryService;
 import com.web.laptoptg.service.impl.CategoryServiceImpl;
@@ -14,13 +15,17 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/admin/category-add")
 public class CategoryAddController extends HttpServlet {
     private CategoryService categoryService;
+
+    @Override
     public void init() throws ServletException {
         categoryService = new CategoryServiceImpl();
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("../admin/category-manage").forward(req, resp);
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String catename = req.getParameter("categoryName");
@@ -46,8 +51,13 @@ public class CategoryAddController extends HttpServlet {
         }
 
 //            req.setAttribute("msg", msg);
-            req.getSession().setAttribute("msg", msg);
-            resp.sendRedirect(req.getContextPath() + "/admin/category-manage");
-        }
+        req.getSession().setAttribute("msg", msg);
+        resp.sendRedirect(req.getContextPath() + "/admin/category-manage");
     }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
+    }
+}
 

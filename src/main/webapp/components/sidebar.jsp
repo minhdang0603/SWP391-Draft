@@ -26,7 +26,7 @@
 
         <!-- Profile Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/profile">
+            <a class="nav-link collapsed" href="${contextPath}/profile">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
             </a>
@@ -34,7 +34,7 @@
 
         <!-- Products Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/admin/product-manage">
+            <a class="nav-link collapsed" href="${contextPath}/admin/product-manage">
                 <i class="bi bi-laptop"></i>
                 <span>Sản Phẩm</span>
             </a>
@@ -43,7 +43,7 @@
 
         <!-- Category Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/admin/category-manage">
+            <a class="nav-link collapsed" href="${contextPath}/admin/category-manage">
                 <i class="bi bi-card-list"></i>
                 <span>Danh Mục</span>
             </a>
@@ -51,7 +51,7 @@
 
         <!-- Brand Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/admin/brand-manage">
+            <a class="nav-link collapsed" href="${contextPath}/admin/brand-manage">
                 <i class="bi bi-bank2"></i>
                 <span>Hãng sản phẩm</span>
             </a>
@@ -59,7 +59,7 @@
 
         <!-- Orders Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/admin/order-manage">
+            <a class="nav-link collapsed" href="${contextPath}/admin/order-manage">
                 <i class="bi bi-file-post"></i>
                 <span>Đơn hàng</span>
             </a>
@@ -70,7 +70,7 @@
         <c:if test="${account.role == 'ADMIN'}">
             <!-- Accounts Nav -->
             <li class="nav-item">
-                <a class="nav-link " href="${contextPath}/admin/account-manage">
+                <a class="nav-link collapsed" href="${contextPath}/admin/account-manage">
                     <i class="bi bi-people"></i>
                     <span>Tài Khoản</span>
                 </a>
@@ -79,7 +79,7 @@
 
         <!-- Homepage Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="${contextPath}/home">
+            <a class="nav-link collapsed" href="${contextPath}/home">
                 <i class="bi bi-house"></i>
                 <span>Trang Chủ</span>
             </a>

@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Product;
 import com.web.laptoptg.service.BrandService;
 import com.web.laptoptg.service.CategoryService;
@@ -21,6 +22,7 @@ public class ProductDeleteController extends HttpServlet {
     private CategoryService categoryService;
     private BrandService brandService;
 
+    @Override
     public void init() throws ServletException {
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
@@ -41,5 +43,10 @@ public class ProductDeleteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

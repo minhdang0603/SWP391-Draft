@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Brand;
 import com.web.laptoptg.service.BrandService;
 import com.web.laptoptg.service.impl.BrandServiceImpl;
@@ -14,6 +15,8 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/admin/brand-delete")
 public class BrandDeleteController extends HttpServlet {
     private BrandService brandService;
+
+    @Override
     public void init() throws ServletException {
         brandService = new BrandServiceImpl();
     }
@@ -31,5 +34,10 @@ public class BrandDeleteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req,resp);
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Brand;
 import com.web.laptoptg.model.Category;
 import com.web.laptoptg.service.CategoryService;
@@ -16,6 +17,8 @@ import java.util.List;
 @WebServlet(urlPatterns = "/admin/category-delete")
 public class CategoryDeleteController extends HttpServlet {
     private CategoryService categoryService;
+
+    @Override
     public void init() throws ServletException {
         categoryService = new CategoryServiceImpl();
     }
@@ -33,5 +36,10 @@ public class CategoryDeleteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req,resp);
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

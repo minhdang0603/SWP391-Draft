@@ -11,16 +11,8 @@ function validateFileType() {
         return false;
     }
 
-    // if (!allowedExtensions.exec(addFile)) {
-    //     alert('Vui lòng upload file có định dạng .jpg, .jpeg, .png, hoặc .img');
-    //     fileInput.value = '';
-    //     return false;
-    // }
-
     return true;
 }
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     var msgDiv = document.getElementById('msg');

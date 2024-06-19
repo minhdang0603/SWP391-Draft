@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -89,7 +88,7 @@
                                 <!-- Products Table -->
                                 <div class="table-responsive">
                                     <table id="myTable"
-                                           class="table-responsive table-striped datatable align-items-center mb-0">
+                                           class="table-responsive table-striped datatable align-items-center mb-0" style="width: 100%;">
                                         <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">

@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Orders;
 import com.web.laptoptg.model.Payment;
 import com.web.laptoptg.service.OrderService;
@@ -18,6 +19,8 @@ import java.io.IOException;
 public class OrderDeleteController extends HttpServlet {
     private OrderService orderService;
     private PaymentService paymentService;
+
+    @Override
     public void init() throws ServletException{
         orderService = new OrderServiceImpl();
         paymentService = new PaymentServiceImpl();
@@ -38,5 +41,10 @@ public class OrderDeleteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }

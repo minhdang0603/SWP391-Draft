@@ -1,5 +1,6 @@
 package com.web.laptoptg.controller.admin;
 
+import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.model.Brand;
 import com.web.laptoptg.model.Category;
 import com.web.laptoptg.model.Product;
@@ -29,6 +30,7 @@ public class ProductUpdateController extends HttpServlet {
     private CategoryService categoryService;
     private BrandService brandService;
 
+    @Override
     public void init() throws ServletException {
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
@@ -97,6 +99,11 @@ public class ProductUpdateController extends HttpServlet {
         msg = "Chỉnh Sửa Thành Công Sản Phẩm ID" + pro.getId();
         req.getSession().setAttribute("msg", msg);
         resp.sendRedirect(req.getContextPath() + "/admin/product-manage");
+    }
+
+    @Override
+    public void destroy() {
+        JPAConfig.shutdown();
     }
 }
 
