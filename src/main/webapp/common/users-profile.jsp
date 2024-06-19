@@ -279,7 +279,8 @@
                                     <c:choose>
                                         <c:when test="${pendingOrders.size() == 0}">
                                             <div class="no-order">
-                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png" class="no-order-img">
+                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png"
+                                                     class="no-order-img">
                                                 <p>Chưa có đơn hàng</p>
                                             </div>
                                         </c:when>
@@ -308,8 +309,43 @@
                                                         </c:forEach>
                                                         <div class="order-footer">
                                                             <a class="btn_5"
-                                                               href="${context}/view-order-detail?orderId=${order.id}">Chi
+                                                               href="${contextPath}/view-order-detail?orderId=${order.id}">Chi
                                                                 tiết</a>
+                                                            <c:if test="${order.payment.status == 'unpaid'}">
+                                                                <a class="btn_6 ms-3"
+                                                                   onclick="deleteModal('${order.id}')">Hủy đơn hàng</a>
+                                                                <div class="modal fade alert-primary" tabindex="-1"
+                                                                     data-keyboard="false"
+                                                                     id="myModal${order.id}">
+                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">Xác Nhận</h5>
+                                                                            </div>
+                                                                            <div class="container"></div>
+                                                                            <div class="modal-body">
+                                                                                <p>Bạn có chắc chắn muốn hủy đơn hàng
+                                                                                    này không?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <a type="button"
+                                                                                   class="btn btn-secondary"
+                                                                                   data-dismiss="modal">Hủy
+                                                                                </a>
+                                                                                <a href="${contextPath}/order-process?orderId=${order.id}"
+                                                                                   type="button" id="confirmDeleteBtn"
+                                                                                   class="btn btn-primary">Xác nhận
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:if>
+                                                            <c:if test="${order.payment.method == 'online' && order.payment.status == 'unpaid'}">
+                                                                <a class="btn_6 ms-3"
+                                                                   href="${contextPath}/online-payment?orderId=${order.id}">Thanh
+                                                                    toán</a>
+                                                            </c:if>
                                                             <div class="order-total">
                                                                 Tổng tiền: <span
                                                                     class="order-price price">${order.payment.amount}</span>
@@ -328,7 +364,8 @@
                                     <c:choose>
                                         <c:when test="${processingOrders.size() == 0}">
                                             <div class="no-order">
-                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png" class="no-order-img">
+                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png"
+                                                     class="no-order-img">
                                                 <p>Chưa có đơn hàng</p>
                                             </div>
                                         </c:when>
@@ -337,8 +374,8 @@
                                                 <c:forEach var="order" items="${processingOrders}">
                                                     <div class="order">
                                                         <div class="status pb-3">
-                                                            <i class="bx bx-time-five"></i>
-                                                            <span class="ml-2">Chờ xác nhận</span>
+                                                            <i class="bx bx-loader-circle"></i>
+                                                            <span class="ml-2">Đang xử lý</span>
                                                         </div>
                                                         <c:forEach var="item" items="${order.orderDetails}">
                                                             <div class="item d-flex flex-row">
@@ -357,7 +394,7 @@
                                                         </c:forEach>
                                                         <div class="order-footer">
                                                             <a class="btn_5"
-                                                               href="${context}/view-order-detail?orderId=${order.id}">Chi
+                                                               href="${contextPath}/view-order-detail?orderId=${order.id}">Chi
                                                                 tiết</a>
                                                             <div class="order-total">
                                                                 Tổng tiền: <span
@@ -377,7 +414,8 @@
                                     <c:choose>
                                         <c:when test="${receivedOrders.size() == 0}">
                                             <div class="no-order">
-                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png" class="no-order-img">
+                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png"
+                                                     class="no-order-img">
                                                 <p>Chưa có đơn hàng</p>
                                             </div>
                                         </c:when>
@@ -386,8 +424,8 @@
                                                 <c:forEach var="order" items="${receivedOrders}">
                                                     <div class="order">
                                                         <div class="status pb-3">
-                                                            <i class="bx bx-time-five"></i>
-                                                            <span class="ml-2">Chờ xác nhận</span>
+                                                            <i class="bx bx-check-circle"></i>
+                                                            <span class="ml-2">Đã nhận</span>
                                                         </div>
                                                         <c:forEach var="item" items="${order.orderDetails}">
                                                             <div class="item d-flex flex-row">
@@ -406,7 +444,7 @@
                                                         </c:forEach>
                                                         <div class="order-footer">
                                                             <a class="btn_5"
-                                                               href="${context}/view-order-detail?orderId=${order.id}">Chi
+                                                               href="${contextPath}/view-order-detail?orderId=${order.id}">Chi
                                                                 tiết</a>
                                                             <div class="order-total">
                                                                 Tổng tiền: <span
@@ -426,7 +464,8 @@
                                     <c:choose>
                                         <c:when test="${cancelledOrders.size() == 0}">
                                             <div class="no-order">
-                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png" class="no-order-img">
+                                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png"
+                                                     class="no-order-img">
                                                 <p>Chưa có đơn hàng</p>
                                             </div>
                                         </c:when>
@@ -435,8 +474,8 @@
                                                 <c:forEach var="order" items="${cancelledOrders}">
                                                     <div class="order">
                                                         <div class="status pb-3">
-                                                            <i class="bx bx-time-five"></i>
-                                                            <span class="ml-2">Chờ xác nhận</span>
+                                                            <i class="bx bx-x-circle"></i>
+                                                            <span class="ml-2">Đã hủy</span>
                                                         </div>
                                                         <c:forEach var="item" items="${order.orderDetails}">
                                                             <div class="item d-flex flex-row">
@@ -455,7 +494,7 @@
                                                         </c:forEach>
                                                         <div class="order-footer">
                                                             <a class="btn_5"
-                                                               href="${context}/view-order-detail?orderId=${order.id}">Chi
+                                                               href="${contextPath}/view-order-detail?orderId=${order.id}">Chi
                                                                 tiết</a>
                                                             <div class="order-total">
                                                                 Tổng tiền: <span
@@ -481,22 +520,19 @@
 
 
     <c:if test="${updateSuccess != null}">
-    <a class="visually-hidden" id="updateSuccess">
-            ${updateSuccess}
-    </a>
-        <c:remove var="updateSuccess" scope="session"/>
+    <a class="visually-hidden" id="updateSuccess">${updateSuccess}</a>
     </c:if>
     <c:if test="${passwordChangeSuccess != null}">
-    <a class="visually-hidden" id="passwordChangeSuccess">
-            ${passwordChangeSuccess}
-    </a>
-        <c:remove var="passwordChangeSuccess" scope="session"/>
+    <a class="visually-hidden" id="passwordChangeSuccess">${passwordChangeSuccess}</a>
     </c:if>
     <c:if test="${passwordChangeFailure != null}">
-    <a class="visually-hidden" id="passwordChangeFailure">
-            ${passwordChangeFailure}
-    </a>
-        <c:remove var="passwordChangeFailure" scope="session"/>
+    <a class="visually-hidden" id="passwordChangeFailure">${passwordChangeFailure}</a>
+    </c:if>
+    <c:if test="${cancelError != null}">
+    <a class="visually-hidden" id="cancelError">${cancelError}</a>
+    </c:if>
+    <c:if test="${cancelSuccess != null}">
+    <a class="visually-hidden" id="cancelSuccess">${cancelSuccess}</a>
     </c:if>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
@@ -513,18 +549,20 @@
 
     <!-- Template Main JS File -->
     <script src="${contextPath}/assets/js/main.js"></script>
-
     <script src="${contextPath}/assets/js/validation-profile.js"></script>
     <script src="${contextPath}/assets/js/validation-change-pass.js"></script>
 
     <!-- Toastr -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const updateSuccess = document.getElementById('updateSuccess');
             const passwordChangeSuccess = document.getElementById('passwordChangeSuccess');
             const passwordChangeFailure = document.getElementById('passwordChangeFailure');
+            const cancelError = document.getElementById('cancelError');
+            const cancelSuccess = document.getElementById('cancelSuccess');
 
             toastr.options = {
                 "closeButton": true,
@@ -554,11 +592,26 @@
                 passwordChangeSuccess.remove();
             }
 
+            if (cancelSuccess) {
+                toastr.success(cancelSuccess.textContent, 'Thành công');
+                cancelSuccess.remove();
+            }
+
             if (passwordChangeFailure) {
                 toastr.error('Mật khẩu cũ không đúng!', 'Lỗi');
                 passwordChangeFailure.remove();
             }
+
+            if (cancelError) {
+                toastr.error(cancelError.textContent, 'Lỗi');
+                cancelError.remove();
+            }
         });
+
+        function deleteModal(id) {
+            var deleteModal = new bootstrap.Modal(document.getElementById('myModal' + id));
+            deleteModal.show();
+        }
     </script>
 </body>
 

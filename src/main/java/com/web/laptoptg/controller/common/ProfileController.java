@@ -58,6 +58,12 @@ public class ProfileController extends HttpServlet {
         }
 
         req.getRequestDispatcher("common/users-profile.jsp").forward(req, resp);
+        // remove error session
+        session.removeAttribute("updateSuccess");
+        session.removeAttribute("passwordChangeSuccess");
+        session.removeAttribute("passwordChangeFailure");
+        session.removeAttribute("cancelSuccess");
+        session.removeAttribute("cancelError");
     }
 
 
@@ -79,8 +85,6 @@ public class ProfileController extends HttpServlet {
         String address = req.getParameter("address");
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
-
-
 
         userDTO.setUserName(fullName);
         userDTO.setAddress(address);

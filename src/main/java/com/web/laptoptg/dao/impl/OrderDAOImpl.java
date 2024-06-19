@@ -57,6 +57,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public List<Orders> searchOrdersByPhone(String phoneNumber) {
+        entityManager.clear();
         TypedQuery<Orders> query = entityManager.createQuery(
                 "SELECT o FROM Orders o WHERE o.phoneNumber = :phoneNumber", Orders.class);
         query.setParameter("phoneNumber", phoneNumber);
@@ -95,8 +96,9 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public List<Orders> getOrderdByCustomerIDAndStatus(int cid, String status) {
+        entityManager.clear();
         try {
-            TypedQuery<Orders> orders = entityManager.createQuery("from Orders o join fetch o.orderDetails where o.customer.id = :cid and o.orderStatus = :status", Orders.class);
+            TypedQuery<Orders> orders = entityManager.createQuery("from Orders o join fetch o.orderDetails where o.customer.id = :cid and o.orderStatus = :status order by o.orderDate desc", Orders.class);
             orders.setParameter("cid", cid);
             orders.setParameter("status", status);
             return orders.getResultList();

@@ -11,10 +11,7 @@ import com.web.laptoptg.service.*;
 import com.web.laptoptg.service.impl.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -46,7 +43,40 @@ public class OrderProcessController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        // do cancel order
+        HttpSession session = req.getSession();
+        UserDTO account = (UserDTO) session.getAttribute("account");
+        String orderId = req.getParameter("orderId");
+        Orders order = orderService.getOrderById(Integer.parseInt(orderId));
+
+        //  check payment status and redirect to profile page
+        if(order.getPayment().getStatus().equals(Status.PAID)) {
+            session.setAttribute("cancelError", "Không thể hủy đơn hàng đã thanh toán!");
+            resp.sendRedirect(req.getContextPath() + "/profile");
+            return;
+        }
+
+        // check order status
+        if(order.getOrderStatus().equals(Status.PROCESSING) || order.getOrderStatus().equals(Status.RECEIVED)) {
+            session.setAttribute("cancelError", "Không thể hủy đơn hàng đã được xác nhận!");
+            resp.sendRedirect(req.getContextPath() + "/profile");
+            return;
+        }
+
+        // check order owner and redirect to profile page
+        if(order.getCustomer().getId() != account.getId()){
+            session.setAttribute("cancelError", "Đơn hàng không tồn tại!");
+            resp.sendRedirect(req.getContextPath() + "/profile");
+            return;
+        }
+
+        // change order's status to cancel
+        order.setOrderStatus(Status.CANCELLED);
+        orderService.updateOrder(order);
+
+        // send success message to profile page
+        session.setAttribute("cancelSuccess", "Hủy đơn hàng thành công!");
+        resp.sendRedirect(req.getContextPath() + "/profile");
     }
 
     @Override
@@ -123,8 +153,10 @@ public class OrderProcessController extends HttpServlet {
         order.setPayment(payment);
         order = orderService.updateOrder(order);
         String url = paymentUrl(order, req);
-        req.getSession().setAttribute("order", order);
-        resp.sendRedirect(url);
+        HttpSession session = req.getSession();
+        session.setAttribute("order", order);
+
+        resp.sendRedirect(req.getContextPath() + "/online-payment");
     }
 
     // get payment url

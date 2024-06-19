@@ -74,7 +74,7 @@ public class OrderSuccessController extends HttpServlet {
             return;
         }
 
-        req.setAttribute("paymentError", "Thanh toán đơn hàng thất bại. Xin vui lòng kiểm tra đơn hàng và thực hiện thanh toán.");
+        req.setAttribute("paymentError", "Thanh toán đơn hàng thất bại. <br/>Xin vui lòng kiểm tra đơn hàng và thực hiện thanh toán lại trong vòng 15 phút.");
         req.getRequestDispatcher("customer/order-success.jsp").forward(req, resp);
         req.removeAttribute("paymentError");
     }
