@@ -65,34 +65,4 @@ public class RatingDAOImpl implements RatingDAO {
         }
         return rating;
     }
-
-    @Override
-    public Rating updateRating(Rating rating) {
-        try {
-            transaction.begin();
-            entityManager.merge(rating);
-            entityManager.flush();
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-        return rating;
-    }
-
-    @Override
-    public void deleteRating(Rating rating) {
-        try {
-            transaction.begin();
-            entityManager.remove(entityManager.merge(rating));
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
 }

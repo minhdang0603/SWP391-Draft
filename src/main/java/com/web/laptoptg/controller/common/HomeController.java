@@ -1,6 +1,7 @@
 package com.web.laptoptg.controller.common;
 
 import com.web.laptoptg.config.JPAConfig;
+import com.web.laptoptg.config.Status;
 import com.web.laptoptg.dto.CartDTO;
 import com.web.laptoptg.dto.ItemDTO;
 import com.web.laptoptg.model.Category;
@@ -45,10 +46,11 @@ public class HomeController extends HttpServlet {
                 .filter(category -> targetCategoryIds.contains(category.getId()))
                 .collect(Collectors.toList());
 
-        // filter products by filtered categories
+        // filter products by filtered categories and status
         List<List<Product>> list = filteredCategories.stream()
                 .map(category -> products.stream()
                         .filter(product -> product.getCategory().equals(category))
+                        .filter(product -> product.getStatus().equals(Status.ACTIVE))
                         .limit(5)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());

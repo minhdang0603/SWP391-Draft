@@ -1,12 +1,13 @@
-package com.web.laptoptg.dao;
+package com.web.laptoptg.service;
 
 import com.web.laptoptg.model.Rating;
 
 import java.util.List;
 
-public interface RatingDAO {
-    Rating findById(int id);
-    List<Rating> getRatingByProductIDAndCreateTimeDesc(int productID);
-    List<Rating> getRatingByUserIDAndCreateTimeDesc(int userID);
+public interface RatingService {
     Rating addRating(Rating rating);
+
+    List<Rating> getRatingByProductIDAndCreateTimeDesc(int productID);
+
+    List<Rating> getRatingByUserIDAndCreateTimeDesc(int userID);
 }

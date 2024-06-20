@@ -130,3 +130,79 @@
 .fa-chevron-up {
     font-size: 20px;
 }
+
+.product .add-to-cart .disabled-btn {
+    position: relative;
+    border: 2px solid transparent;
+    height: 40px;
+    padding: 0 30px;
+    background-color: grey;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 40px;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+}
+
+.product .add-to-cart .disabled-btn:hover {
+    background-color: #FFF;
+    color: grey;
+    border-color: grey;
+    padding: 0px 30px 0px 50px;
+}
+
+.product .add-to-cart .disabled-btn>i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 38px;
+    color: grey;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.product .add-to-cart .disabled-btn:hover>i {
+    opacity: 1;
+    visibility: visible;
+}
+
+.product-details .add-to-cart .disabled-btn {
+    position: relative;
+    border: 2px solid transparent;
+    height: 40px;
+    padding: 0 30px;
+    background-color: grey;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 40px;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+}
+
+.product-details .add-to-cart .disabled-btn:hover {
+    background-color: #FFF;
+    color: grey;
+    border-color: grey;
+    padding: 0px 30px 0px 50px;
+}
+
+.product-details .add-to-cart .disabled-btn>i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 38px;
+    color: grey;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.product-details .add-to-cart .disabled-btn:hover>i {
+    opacity: 1;
+    visibility: visible;
+}

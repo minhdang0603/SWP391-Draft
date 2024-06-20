@@ -2,12 +2,18 @@ package com.web.laptoptg.controller.customer;
 
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.config.Status;
+import com.web.laptoptg.model.OrderDetails;
 import com.web.laptoptg.model.Orders;
 import com.web.laptoptg.model.Payment;
+import com.web.laptoptg.model.Product;
+import com.web.laptoptg.service.OrderDetailService;
 import com.web.laptoptg.service.OrderService;
 import com.web.laptoptg.service.PaymentService;
+import com.web.laptoptg.service.ProductService;
+import com.web.laptoptg.service.impl.OrderDetailServiceImpl;
 import com.web.laptoptg.service.impl.OrderServiceImpl;
 import com.web.laptoptg.service.impl.PaymentServiceImpl;
+import com.web.laptoptg.service.impl.ProductServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,18 +24,21 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/complete-order")
 public class OrderSuccessController extends HttpServlet {
 
-    private OrderService orderService;
     private PaymentService paymentService;
+    private ProductService productService;
+    private OrderDetailService orderDetailService;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        orderService = new OrderServiceImpl();
         paymentService = new PaymentServiceImpl();
+        productService = new ProductServiceImpl();
+        orderDetailService = new OrderDetailServiceImpl();
     }
 
     @Override
@@ -65,9 +74,18 @@ public class OrderSuccessController extends HttpServlet {
             Payment payment = paymentService.findPaymentByID(order.getPayment().getId());
             payment.setStatus(Status.PAID);
             payment.setPayDate(getPayDate());
-            payment = paymentService.updatePayment(payment);
-            order.setPayment(payment);
-            orderService.updateOrder(order);
+
+            // update payment
+            paymentService.updatePayment(payment);
+
+            // update unit stock and sold unit of product
+            List<OrderDetails> odsList = orderDetailService.getOrderDetailsByOrderId(order.getId());
+            for (OrderDetails ods : odsList) {
+                Product product = productService.findProductById(ods.getProduct().getId());
+                product.setStockUnit(product.getStockUnit() - ods.getQuantity());
+                product.setSoldUnit(product.getSoldUnit() + ods.getQuantity());
+                productService.updateProduct(product);
+            }
             req.setAttribute("orderSuccess", "Đơn hàng " + order.getId() + " đã được thanh toán thành công! Xin vui lòng kiểm tra lại đơn hàng");
             req.getRequestDispatcher("customer/order-success.jsp").forward(req, resp);
             req.removeAttribute("orderSuccess");

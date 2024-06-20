@@ -19,9 +19,6 @@ public interface ProductDAO {
 
     List<Product> findProduct(String name);
 
-    //find product by its category
-    List<Product> getProductByCategory(int cateID);
-
     //delete a product by its id
     void deleteProduct(Product product);
 

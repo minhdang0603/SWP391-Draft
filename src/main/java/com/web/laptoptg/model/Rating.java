@@ -3,6 +3,9 @@ package com.web.laptoptg.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Table(name = "rating")
 @Data
@@ -31,8 +34,12 @@ public class Rating {
     private String content;
 
     @Column(name = "create_time")
-    private String createTime;
+    private LocalDateTime createTime;
 
     @Column(name = "rating_score")
     private int ratingScore;
+
+    public String getFormattedCreateTime() {
+        return createTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    }
 }

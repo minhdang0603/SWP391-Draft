@@ -70,8 +70,4 @@ public class Product {
 
     @Column(name = "status")
     private String status;
-
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @Fetch(FetchMode.SELECT)
-    private List<Rating> ratings;
 }

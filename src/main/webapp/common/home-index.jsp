@@ -59,7 +59,8 @@
                     </div>
                     <div class="shop-body">
                         <h3>Laptop</h3>
-                        <a href="${contextPath}/store?id=1" class="cta-btn">Mua sắm ngay <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="${contextPath}/store?id=1" class="cta-btn">Mua sắm ngay <i
+                                class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -73,7 +74,8 @@
                     </div>
                     <div class="shop-body">
                         <h3>Thiết bị<br>Nghe nhìn</h3>
-                        <a href="${contextPath}/store?id=3" class="cta-btn">Mua sắm ngay <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="${contextPath}/store?id=3" class="cta-btn">Mua sắm ngay <i
+                                class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -87,7 +89,8 @@
                     </div>
                     <div class="shop-body">
                         <h3>Cameras</h3>
-                        <a href="${contextPath}/store?id=7" class="cta-btn">Mua sắm ngay <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="${contextPath}/store?id=7" class="cta-btn">Mua sắm ngay <i
+                                class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -130,25 +133,27 @@
                                                  alt="">
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="${contextPath}/product-detail?pid=${product.id}">${product.productName}</a></h3>
+                                            <h3 class="product-name"><a
+                                                    href="${contextPath}/product-detail?pid=${product.id}">${product.productName}</a>
+                                            </h3>
                                             <h4 class="product-price">${product.unitPrice}</h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <a href="${contextPath}/cart?id=${product.id}&action=add">
-                                                <button class="add-to-cart-btn"
-                                                        data-servlet-url="cart"
-                                                        data-product-id="${product.id}"
-                                                        data-action="add">
-                                                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
-                                                </button>
-                                            </a>
+                                            <c:choose>
+                                                <c:when test="${product.stockUnit == 0}">
+                                                    <button class="disabled-btn" disabled>
+                                                        <i class="fa fa-phone"></i> Liên hệ cửa hàng
+                                                    </button>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <button class="add-to-cart-btn"
+                                                            data-servlet-url="cart"
+                                                            data-product-id="${product.id}"
+                                                            data-action="add">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                    </button>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
 
@@ -204,21 +209,23 @@
                                                 href="${contextPath}/product-detail?pid=${product.id}">${product.productName}</a>
                                         </h3>
                                         <h4 class="product-price">${product.unitPrice}</h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
                                     </div>
                                     <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"
-                                                data-servlet-url="cart"
-                                                data-product-id="${product.id}"
-                                                data-action="add">
-                                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
-                                        </button>
+                                        <c:choose>
+                                            <c:when test="${product.stockUnit == 0}">
+                                                <button class="disabled-btn" disabled>
+                                                    <i class="fa fa-phone"></i> Liên hệ cửa hàng
+                                                </button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button class="add-to-cart-btn"
+                                                        data-servlet-url="cart"
+                                                        data-product-id="${product.id}"
+                                                        data-action="add">
+                                                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                </button>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                                 <!-- /product -->

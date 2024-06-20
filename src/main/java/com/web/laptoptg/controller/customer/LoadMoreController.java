@@ -61,62 +61,89 @@ public class LoadMoreController extends HttpServlet {
                 cnt++;
                 // make the list layout follow the rule
                 if (cnt % 3 == 0) {
-                    out.println("<div class=\"col-md-4 col-xs-6\">\n" +
-                            "                            <div class=\"product\">\n" +
-                            "                                <div class=\"product-img\">\n" +
-                            "                                    <img src=\"" + req.getContextPath() + "/assets/img/product-img/" + product.getImage() + "\"alt=\"\">\n" +
-                            "                                </div>\n" +
-                            "                                <div class=\"product-body\">\n" +
-                            "                                    <p class=\"product-category\">" + product.getCategory().getCategoryName() + "</p>\n" +
-                            "                                    <h3 class=\"product-name\"><a href=\"" + req.getContextPath() + "/product-detail?pid=" + product.getId() + "\">" + product.getProductName() + "</a></h3>\n" +
-                            "                                    <h4 class=\"product-price\">" + product.getUnitPrice() + "</h4>\n" +
-                            "                                    <div class=\"product-rating\">\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                    </div>\n" +
-                            "                                </div>\n" +
-                            "                                <div class=\"add-to-cart\">\n" +
-                            "                                    <button class=\"add-to-cart-btn\"\n" +
-                            "                                            data-servlet-url=\"cart\"\n" +
-                            "                                            data-product-id=\"" + product.getId() + "\"\n" +
-                            "                                            data-action=\"add\">\n" +
-                            "                                        <i class=\"fa fa-shopping-cart\"></i> Thêm vào giỏ hàng\n" +
-                            "                                    </button>\n" +
-                            "                                </div>\n" +
-                            "                            </div>\n" +
-                            "                        </div>" +
-                            "<div class=\"clearfix\"></div>");
+                    if (product.getStockUnit() == 0) {
+                        out.println("<div class=\"col-md-4 col-xs-6\">\n" +
+                                "                            <div class=\"product\">\n" +
+                                "                                <div class=\"product-img\">\n" +
+                                "                                    <img src=\"" + req.getContextPath() + "/assets/img/product-img/" + product.getImage() + "\"alt=\"\">\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"product-body\">\n" +
+                                "                                    <p class=\"product-category\">" + product.getCategory().getCategoryName() + "</p>\n" +
+                                "                                    <h3 class=\"product-name\"><a href=\"" + req.getContextPath() + "/product-detail?pid=" + product.getId() + "\">" + product.getProductName() + "</a></h3>\n" +
+                                "                                    <h4 class=\"product-price\">" + product.getUnitPrice() + "</h4>\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"add-to-cart\">\n" +
+                                "                                    <button class=\"disabled-btn\" disabled>\n" +
+                                "                                        <i class=\"fa fa-phone\"></i> Liên hệ cửa hàng\n" +
+                                "                                    </button>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </div>" +
+                                "<div class=\"clearfix\"></div>");
+                    } else {
+                        out.println("<div class=\"col-md-4 col-xs-6\">\n" +
+                                "                            <div class=\"product\">\n" +
+                                "                                <div class=\"product-img\">\n" +
+                                "                                    <img src=\"" + req.getContextPath() + "/assets/img/product-img/" + product.getImage() + "\"alt=\"\">\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"product-body\">\n" +
+                                "                                    <p class=\"product-category\">" + product.getCategory().getCategoryName() + "</p>\n" +
+                                "                                    <h3 class=\"product-name\"><a href=\"" + req.getContextPath() + "/product-detail?pid=" + product.getId() + "\">" + product.getProductName() + "</a></h3>\n" +
+                                "                                    <h4 class=\"product-price\">" + product.getUnitPrice() + "</h4>\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"add-to-cart\">\n" +
+                                "                                    <button class=\"add-to-cart-btn\"\n" +
+                                "                                            data-servlet-url=\"cart\"\n" +
+                                "                                            data-product-id=\"" + product.getId() + "\"\n" +
+                                "                                            data-action=\"add\">\n" +
+                                "                                        <i class=\"fa fa-shopping-cart\"></i> Thêm vào giỏ hàng\n" +
+                                "                                    </button>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </div>" +
+                                "<div class=\"clearfix\"></div>");
+                    }
                 } else {
-                    out.println("<div class=\"col-md-4 col-xs-6\">\n" +
-                            "                            <div class=\"product\">\n" +
-                            "                                <div class=\"product-img\">\n" +
-                            "                                    <img src=\"" + req.getContextPath() + "/assets/img/product-img/" + product.getImage() + "\"alt=\"\">\n" +
-                            "                                </div>\n" +
-                            "                                <div class=\"product-body\">\n" +
-                            "                                    <p class=\"product-category\">" + product.getCategory().getCategoryName() + "</p>\n" +
-                            "                                    <h3 class=\"product-name\"><a href=\"" + req.getContextPath() + "/product-detail?pid=" + product.getId() + "\">" + product.getProductName() + "</a></h3>\n" +
-                            "                                    <h4 class=\"product-price\">" + product.getUnitPrice() + "</h4>\n" +
-                            "                                    <div class=\"product-rating\">\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                        <i class=\"fa fa-star\"></i>\n" +
-                            "                                    </div>\n" +
-                            "                                </div>\n" +
-                            "                                <div class=\"add-to-cart\">\n" +
-                            "                                    <button class=\"add-to-cart-btn\"\n" +
-                            "                                            data-servlet-url=\"cart\"\n" +
-                            "                                            data-product-id=\"" + product.getId() + "\"\n" +
-                            "                                            data-action=\"add\">\n" +
-                            "                                        <i class=\"fa fa-shopping-cart\"></i> Thêm vào giỏ hàng\n" +
-                            "                                    </button>\n" +
-                            "                                </div>\n" +
-                            "                            </div>\n" +
-                            "                        </div>");
+                    if (product.getStockUnit() == 0) {
+                        out.println("<div class=\"col-md-4 col-xs-6\">\n" +
+                                "                            <div class=\"product\">\n" +
+                                "                                <div class=\"product-img\">\n" +
+                                "                                    <img src=\"" + req.getContextPath() + "/assets/img/product-img/" + product.getImage() + "\"alt=\"\">\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"product-body\">\n" +
+                                "                                    <p class=\"product-category\">" + product.getCategory().getCategoryName() + "</p>\n" +
+                                "                                    <h3 class=\"product-name\"><a href=\"" + req.getContextPath() + "/product-detail?pid=" + product.getId() + "\">" + product.getProductName() + "</a></h3>\n" +
+                                "                                    <h4 class=\"product-price\">" + product.getUnitPrice() + "</h4>\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"add-to-cart\">\n" +
+                                "                                    <button class=\"disabled-btn\" disabled>\n" +
+                                "                                        <i class=\"fa fa-phone\"></i> Liên hệ cửa hàng\n" +
+                                "                                    </button>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </div>");
+                    } else {
+                        out.println("<div class=\"col-md-4 col-xs-6\">\n" +
+                                "                            <div class=\"product\">\n" +
+                                "                                <div class=\"product-img\">\n" +
+                                "                                    <img src=\"" + req.getContextPath() + "/assets/img/product-img/" + product.getImage() + "\"alt=\"\">\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"product-body\">\n" +
+                                "                                    <p class=\"product-category\">" + product.getCategory().getCategoryName() + "</p>\n" +
+                                "                                    <h3 class=\"product-name\"><a href=\"" + req.getContextPath() + "/product-detail?pid=" + product.getId() + "\">" + product.getProductName() + "</a></h3>\n" +
+                                "                                    <h4 class=\"product-price\">" + product.getUnitPrice() + "</h4>\n" +
+                                "                                </div>\n" +
+                                "                                <div class=\"add-to-cart\">\n" +
+                                "                                    <button class=\"add-to-cart-btn\"\n" +
+                                "                                            data-servlet-url=\"cart\"\n" +
+                                "                                            data-product-id=\"" + product.getId() + "\"\n" +
+                                "                                            data-action=\"add\">\n" +
+                                "                                        <i class=\"fa fa-shopping-cart\"></i> Thêm vào giỏ hàng\n" +
+                                "                                    </button>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </div>");
+                    }
                 }
             }
 
