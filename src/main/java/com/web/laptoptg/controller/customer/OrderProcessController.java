@@ -43,6 +43,56 @@ public class OrderProcessController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+        if (action == null) {
+            resp.sendRedirect(req.getContextPath() + "/home");
+            return;
+        }
+
+        if (action.equals("cancel")) {
+            // do cancel order
+            doCancel(req, resp);
+        } else if(action.equals("receive")){
+            // do update order status
+            doUpdateStatus(req, resp);
+        } else {
+            // back to profile page
+            resp.sendRedirect(req.getContextPath() + "/profile");
+        }
+
+    }
+
+    private void doUpdateStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        // do update order
+        HttpSession session = req.getSession();
+        UserDTO account = (UserDTO) session.getAttribute("account");
+        String orderId = req.getParameter("orderId");
+        Orders order = orderService.getOrderById(Integer.parseInt(orderId));
+
+        // check order status
+        if(!order.getOrderStatus().equals(Status.PROCESSING)) {
+            session.setAttribute("error", "Đơn hàng không trong trạng thái giao hàng!");
+            resp.sendRedirect(req.getContextPath() + "/profile");
+            return;
+        }
+
+        // check order owner and redirect to profile page
+        if(order.getCustomer().getId() != account.getId()){
+            session.setAttribute("error", "Đơn hàng không tồn tại!");
+            resp.sendRedirect(req.getContextPath() + "/profile");
+            return;
+        }
+
+        // change order's status to receiced
+        order.setOrderStatus(Status.RECEIVED);
+        orderService.updateOrder(order);
+
+        // send success message to profile page
+        session.setAttribute("success", "Xin cảm ơn vì đã sử dụng dịch vụ của chúng tôi!");
+        resp.sendRedirect(req.getContextPath() + "/profile");
+    }
+
+    private void doCancel(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // do cancel order
         HttpSession session = req.getSession();
         UserDTO account = (UserDTO) session.getAttribute("account");
@@ -51,21 +101,21 @@ public class OrderProcessController extends HttpServlet {
 
         //  check payment status and redirect to profile page
         if(order.getPayment().getStatus().equals(Status.PAID)) {
-            session.setAttribute("cancelError", "Không thể hủy đơn hàng đã thanh toán!");
+            session.setAttribute("error", "Không thể hủy đơn hàng đã thanh toán!");
             resp.sendRedirect(req.getContextPath() + "/profile");
             return;
         }
 
         // check order status
         if(order.getOrderStatus().equals(Status.PROCESSING) || order.getOrderStatus().equals(Status.RECEIVED)) {
-            session.setAttribute("cancelError", "Không thể hủy đơn hàng đã được xác nhận!");
+            session.setAttribute("error", "Không thể hủy đơn hàng đã được xác nhận!");
             resp.sendRedirect(req.getContextPath() + "/profile");
             return;
         }
 
         // check order owner and redirect to profile page
         if(order.getCustomer().getId() != account.getId()){
-            session.setAttribute("cancelError", "Đơn hàng không tồn tại!");
+            session.setAttribute("error", "Đơn hàng không tồn tại!");
             resp.sendRedirect(req.getContextPath() + "/profile");
             return;
         }
@@ -75,7 +125,7 @@ public class OrderProcessController extends HttpServlet {
         orderService.updateOrder(order);
 
         // send success message to profile page
-        session.setAttribute("cancelSuccess", "Hủy đơn hàng thành công!");
+        session.setAttribute("success", "Hủy đơn hàng thành công!");
         resp.sendRedirect(req.getContextPath() + "/profile");
     }
 
@@ -116,6 +166,7 @@ public class OrderProcessController extends HttpServlet {
         // add to order details
         for (ItemDTO item : items) {
             OrderDetails orderDetails = new OrderDetails();
+            orderDetails.setRated(false);
             orderDetails.setOrder(order);
             orderDetails.setProduct(item.getProduct());
             orderDetails.setQuantity(item.getQuantity());

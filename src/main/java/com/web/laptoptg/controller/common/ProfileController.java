@@ -62,8 +62,9 @@ public class ProfileController extends HttpServlet {
         session.removeAttribute("updateSuccess");
         session.removeAttribute("passwordChangeSuccess");
         session.removeAttribute("passwordChangeFailure");
-        session.removeAttribute("cancelSuccess");
-        session.removeAttribute("cancelError");
+        session.removeAttribute("ratingSuccess");
+        session.removeAttribute("error");
+        session.removeAttribute("success");
     }
 
 

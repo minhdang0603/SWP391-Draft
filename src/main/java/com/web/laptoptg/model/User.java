@@ -40,7 +40,4 @@ public class User {
 
     @Column(name = "status")
     private String status;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Rating> ratings;
 }

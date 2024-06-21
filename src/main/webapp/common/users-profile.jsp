@@ -332,7 +332,7 @@
                                                                                    class="btn btn-secondary"
                                                                                    data-dismiss="modal">Hủy
                                                                                 </a>
-                                                                                <a href="${contextPath}/order-process?orderId=${order.id}"
+                                                                                <a href="${contextPath}/order-process?orderId=${order.id}&action=cancel"
                                                                                    type="button" id="confirmDeleteBtn"
                                                                                    class="btn btn-primary">Xác nhận
                                                                                 </a>
@@ -396,6 +396,8 @@
                                                             <a class="btn_5"
                                                                href="${contextPath}/view-order-detail?orderId=${order.id}">Chi
                                                                 tiết</a>
+                                                            <a class="btn_5 ms-3"
+                                                               href="${contextPath}/order-process?orderId=${order.id}&action=receive">Đã nhận hàng</a>
                                                             <div class="order-total">
                                                                 Tổng tiền: <span
                                                                     class="order-price price">${order.payment.amount}</span>
@@ -437,9 +439,110 @@
                                                                         ${item.productName} <br>
                                                                     <span class="quantity">Số lượng: ${item.quantity}</span>
                                                                 </div>
-                                                                <div class="item-price price">
-                                                                        ${item.unitPrice}
+                                                                <div class="flex-column justify-content-start">
+                                                                    <div class="item-price price">
+                                                                            ${item.unitPrice}
+                                                                    </div>
+                                                                    <c:if test="${!item.rated}">
+                                                                        <a class="btn_7"
+                                                                           onclick="ratingModal(${item.product.id})">Đánh
+                                                                            giá</a>
+                                                                    </c:if>
                                                                 </div>
+                                                                <div class="modal fade alert-primary" tabindex="-1"
+                                                                     data-keyboard="false"
+                                                                     id="ratingModal${item.product.id}">
+                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">Đánh giá</h5>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="review-form">
+                                                                                    <form action="${contextPath}/rating-process"
+                                                                                          method="post"
+                                                                                          onsubmit="return validateForm()">
+                                                                                        <input type="hidden"
+                                                                                               name="productId"
+                                                                                               value="${item.product.id}">
+                                                                                        <input type="hidden"
+                                                                                               name="orderDetailId"
+                                                                                               value="${item.id}">
+                                                                                        <div class="form-group">
+                                                                                            <input class="form-control input"
+                                                                                                   type="text" readonly
+                                                                                                   placeholder="Tên người dùng"
+                                                                                                   value="${account.userName}">
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <input class="form-control input"
+                                                                                                   type="email" readonly
+                                                                                                   placeholder="Email"
+                                                                                                   value="${account.email}">
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <textarea
+                                                                                                    class="form-control input"
+                                                                                                    id="review-text${item.product.id}"
+                                                                                                    name="review"
+                                                                                                    rows="4"
+                                                                                                    maxlength="500"
+                                                                                                    placeholder="Bình luận"
+                                                                                                    style="resize: none"></textarea>
+                                                                                        </div>
+                                                                                        <div class="form-group input-rating">
+                                                                                            <span>Đánh giá: </span>
+                                                                                            <div class="stars">
+                                                                                                <input id="star5${item.product.id}"
+                                                                                                       name="rating"
+                                                                                                       value="5"
+                                                                                                       type="radio">
+                                                                                                <label for="star5${item.product.id}"
+                                                                                                       class="bx bxs-star"></label>
+                                                                                                <input id="star4${item.product.id}"
+                                                                                                       name="rating"
+                                                                                                       value="4"
+                                                                                                       type="radio">
+                                                                                                <label for="star4${item.product.id}"
+                                                                                                       class="bx bxs-star"></label>
+                                                                                                <input id="star3${item.product.id}"
+                                                                                                       name="rating"
+                                                                                                       value="3"
+                                                                                                       type="radio">
+                                                                                                <label for="star3${item.product.id}"
+                                                                                                       class="bx bxs-star"></label>
+                                                                                                <input id="star2${item.product.id}"
+                                                                                                       name="rating"
+                                                                                                       value="2"
+                                                                                                       type="radio">
+                                                                                                <label for="star2${item.product.id}"
+                                                                                                       class="bx bxs-star"></label>
+                                                                                                <input id="star1${item.product.id}"
+                                                                                                       name="rating"
+                                                                                                       value="1"
+                                                                                                       type="radio">
+                                                                                                <label for="star1${item.product.id}"
+                                                                                                       class="bx bxs-star"></label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-secondary"
+                                                                                                    data-dismiss="modal">
+                                                                                                Hủy
+                                                                                            </button>
+                                                                                            <button type="submit"
+                                                                                                    class="btn btn-primary">
+                                                                                                Gửi đánh giá
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                         </c:forEach>
                                                         <div class="order-footer">
@@ -528,11 +631,14 @@
     <c:if test="${passwordChangeFailure != null}">
     <a class="visually-hidden" id="passwordChangeFailure">${passwordChangeFailure}</a>
     </c:if>
-    <c:if test="${cancelError != null}">
-    <a class="visually-hidden" id="cancelError">${cancelError}</a>
+    <c:if test="${error != null}">
+    <a class="visually-hidden" id="error">${error}</a>
     </c:if>
-    <c:if test="${cancelSuccess != null}">
-    <a class="visually-hidden" id="cancelSuccess">${cancelSuccess}</a>
+    <c:if test="${success != null}">
+    <a class="visually-hidden" id="success">${success}</a>
+    </c:if>
+    <c:if test="${ratingSuccess != null}">
+    <a class="visually-hidden" id="ratingSuccess">${ratingSuccess}</a>
     </c:if>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
@@ -551,68 +657,11 @@
     <script src="${contextPath}/assets/js/main.js"></script>
     <script src="${contextPath}/assets/js/validation-profile.js"></script>
     <script src="${contextPath}/assets/js/validation-change-pass.js"></script>
+    <script src="${contextPath}/assets/js/profile-modal.js"></script>
 
     <!-- Toastr -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const updateSuccess = document.getElementById('updateSuccess');
-            const passwordChangeSuccess = document.getElementById('passwordChangeSuccess');
-            const passwordChangeFailure = document.getElementById('passwordChangeFailure');
-            const cancelError = document.getElementById('cancelError');
-            const cancelSuccess = document.getElementById('cancelSuccess');
-
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": true,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "3000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-
-            if (updateSuccess) {
-                toastr.success('Đã cập nhật thông tin thành công!', 'Thành công');
-                updateSuccess.remove();
-            }
-
-            if (passwordChangeSuccess) {
-                toastr.success('Đã thay đổi mật khẩu thành công!', 'Thành công');
-                passwordChangeSuccess.remove();
-            }
-
-            if (cancelSuccess) {
-                toastr.success(cancelSuccess.textContent, 'Thành công');
-                cancelSuccess.remove();
-            }
-
-            if (passwordChangeFailure) {
-                toastr.error('Mật khẩu cũ không đúng!', 'Lỗi');
-                passwordChangeFailure.remove();
-            }
-
-            if (cancelError) {
-                toastr.error(cancelError.textContent, 'Lỗi');
-                cancelError.remove();
-            }
-        });
-
-        function deleteModal(id) {
-            var deleteModal = new bootstrap.Modal(document.getElementById('myModal' + id));
-            deleteModal.show();
-        }
-    </script>
 </body>
-
 </html>

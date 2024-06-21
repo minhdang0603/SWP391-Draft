@@ -38,4 +38,7 @@ public class OrderDetails {
 
     @Column(name = "image")
     private String image;
+
+    @Column(name = "rated_status")
+    private boolean isRated;
 }
