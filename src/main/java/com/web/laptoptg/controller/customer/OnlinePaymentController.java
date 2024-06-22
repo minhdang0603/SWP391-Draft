@@ -36,6 +36,7 @@ public class OnlinePaymentController extends HttpServlet {
             order = orderService.getOrderById(Integer.parseInt(orderId));
             req.getSession().setAttribute("order", order);
         }
+
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";

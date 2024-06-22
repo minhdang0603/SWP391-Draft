@@ -35,6 +35,7 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="${contextPath}/assets/css/account-toast.css"/>
 
     <style>
         .disabled-btn {
@@ -205,6 +206,7 @@
 <script src="${contextPath}/assets/home/js/nouislider.min.js"></script>
 <script src="${contextPath}/assets/home/js/jquery.zoom.min.js"></script>
 <script src="${contextPath}/assets/home/js/main.js"></script>
+<script src="${contextPath}/assets/js/main.js"></script>
 <script src="${contextPath}/assets/js/checkout.js"></script>
 </body>
 </html>
