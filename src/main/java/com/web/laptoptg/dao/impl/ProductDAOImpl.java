@@ -74,7 +74,6 @@ public class ProductDAOImpl implements ProductDAO {
             found = !results.isEmpty();
         } catch (Exception ex) {
             ex.printStackTrace();
-            found = false;
         }
 
         return found;
@@ -83,9 +82,14 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> findProduct(String name){
         entityManager.clear();
-        TypedQuery<Product> query = entityManager.createQuery("from Product p join fetch p.category join fetch p.brand where p.productName like :name", Product.class);
-        query.setParameter("name", "%" + name + "%");
-        return query.getResultList();
+        try {
+            TypedQuery<Product> query = entityManager.createQuery("from Product p where p.productName like :name", Product.class);
+            query.setParameter("name", "%" + name + "%");
+            return query.getResultList();
+        } catch (NoResultException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

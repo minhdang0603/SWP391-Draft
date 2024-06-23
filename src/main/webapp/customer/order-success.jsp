@@ -23,9 +23,6 @@
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/css/account-toast.css"/>
     <style>
-        body {
-            font-family: 'Varela Round', sans-serif;
-        }
         .confirmation-message {
             margin: 30px auto;
             padding: 50px;
