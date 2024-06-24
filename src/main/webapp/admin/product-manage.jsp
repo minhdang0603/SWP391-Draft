@@ -290,7 +290,7 @@
                                                                                    name="productName"
                                                                                    value="${pro.productName}">
                                                                         </div>
-                                                                        <div class="form-group mt-1">
+                                                                        <div class="form-group mt-1" >
                                                                             <h6><strong>Trạng thái:</strong></h6>
                                                                             <input type="radio" name="productStatus"
                                                                                    id="activeProduct"
@@ -317,11 +317,11 @@
                                                                                    id="stockUnitUpdate" min="0" step="1"
                                                                                    value="${pro.stockUnit}">
                                                                         </div>
-                                                                        <div class="form-group">
+                                                                        <div class="form-group" >
                                                                             <label for="soldUnitUpdate"><strong>Đã
                                                                                 bán:</strong></label>
-                                                                            <input type="text" class="form-control"
-                                                                                   id="soldUnitUpdate" name="soldUnit"
+                                                                            <input type="number" class="form-control"
+                                                                                   id="soldUnitUpdate" name="soldUnit" min="0" step="1"
                                                                                    value="${pro.soldUnit}">
                                                                         </div>
 
@@ -332,7 +332,7 @@
                                                                                       id="descriptionUpdate" cols="10" rows="5"
                                                                                       name="description">${pro.description}</textarea>
                                                                         </div>
-                                                                        <div class="form-group mt-1">
+                                                                        <div class="form-group mt-1" >
                                                                             <label for="fileUpload"><strong>Ảnh sản
                                                                                 phẩm:</strong></label>
                                                                             <input type="file" class="form-control-file"
@@ -340,7 +340,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group" >
                                                                             <label for="categoryNameUpdate"><strong>Danh
                                                                                 mục:</strong></label>
                                                                             <select name="productCategory"
@@ -354,7 +354,7 @@
                                                                                 </c:forEach>
                                                                             </select>
                                                                         </div>
-                                                                        <div class="form-group">
+                                                                        <div class="form-group" style="display: none;">
                                                                             <label for="brandNameUpdate"><strong>Hãng:</strong></label>
                                                                             <select name="productBrand"
                                                                                     class="form-control"
@@ -395,14 +395,14 @@
                                                                                        name="monitorScale"
                                                                                        value="${pro.monitorScale}">
                                                                             </div>
-                                                                            <div class="form-group">
+                                                                            <div class="form-group" >
                                                                                 <label for="batteryUpdate"><strong>Pin:</strong></label>
                                                                                 <input type="text" class="form-control"
                                                                                        id="batteryUpdate"
                                                                                        name="batteryVol"
                                                                                        value="${pro.batteryVol}">
                                                                             </div>
-                                                                            <div class="form-group h-50">
+                                                                            <div class="form-group h-50" >
                                                                                 <label for="designUpdate"><strong>Thiết
                                                                                     kế:</strong></label>
                                                                                 <input type="text" class="form-control"
@@ -410,7 +410,7 @@
                                                                                        value="${pro.design}">
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group">
+                                                                        <div class="form-group" >
                                                                             <label for="warrantyUpdate"><strong>Bảo
                                                                                 hành:</strong></label>
                                                                             <input type="text" class="form-control"

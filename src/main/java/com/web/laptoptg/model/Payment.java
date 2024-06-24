@@ -3,6 +3,9 @@ package com.web.laptoptg.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Table(name = "payment")
 @Data //toString()
@@ -25,5 +28,9 @@ public class Payment {
     private String status;
 
     @Column(name = "payment_date")
-    private String payDate;
+    private LocalDateTime payDate;
+
+    public String getFormattedPayDate() {
+        return payDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    }
 }

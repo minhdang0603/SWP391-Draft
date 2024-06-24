@@ -73,7 +73,7 @@ public class OrderSuccessController extends HttpServlet {
         if(tranStatus.equals("00") && respCode.equals("00")) {
             Payment payment = paymentService.findPaymentByID(order.getPayment().getId());
             payment.setStatus(Status.PAID);
-            payment.setPayDate(getPayDate());
+            payment.setPayDate(LocalDateTime.now());
 
             // update payment
             paymentService.updatePayment(payment);
@@ -97,12 +97,6 @@ public class OrderSuccessController extends HttpServlet {
         req.removeAttribute("paymentError");
     }
 
-    // get order date time
-    private String getPayDate() {
-        LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return date.format(formatter);
-    }
 
     @Override
     public void destroy() {

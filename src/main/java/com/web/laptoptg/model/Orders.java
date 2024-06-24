@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -31,13 +33,13 @@ public class Orders {
     private String userName;
 
     @Column(name = "order_date")
-    private String orderDate;
+    private LocalDateTime orderDate;
 
     @Column(name = "deliver_date")
-    private String deliverDate;
+    private LocalDateTime deliverDate;//local datetime
 
     @Column(name = "receive_date")
-    private String receiveDate;
+    private LocalDateTime receiveDate;//local datetime
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -59,4 +61,16 @@ public class Orders {
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "payment_id")
     private Payment payment;
+
+    public String getFormattedDeliverDate() {
+        return deliverDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    }
+
+    public String getFormattedReceiveDate() {
+        return receiveDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    }
+
+    public String getFormattedOrderDate() {
+        return orderDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    }
 }

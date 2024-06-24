@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 
 @WebServlet(urlPatterns = "/admin/order-update")
@@ -42,12 +43,12 @@ public class OrderUpdateController extends HttpServlet {
         String paymentDateStr = req.getParameter("paymentDate").isEmpty() ? null : req.getParameter("paymentDate");
         Orders orderOld = orderService.getOrderById(orderID);
         orderOld.getPayment().setMethod(paymentMethod);
-        orderOld.getPayment().setPayDate(paymentDateStr);
+        orderOld.getPayment().setPayDate(LocalDateTime.parse(paymentDateStr));
         orderOld.getPayment().setStatus(paymentStatus);
         orderOld.setSaler(userService.findUserById(salerID));
         orderOld.setOrderStatus(orderStatus);
-        orderOld.setDeliverDate(deliverDateStr);
-        orderOld.setReceiveDate(receiveDateStr);
+        orderOld.setDeliverDate(LocalDateTime.parse(deliverDateStr));
+        orderOld.setReceiveDate(LocalDateTime.parse(receiveDateStr));
         orderOld = orderService.updateOrder(orderOld);
         String msg;
         msg = "Chỉnh Sửa Thành Công Đơn Hàng ID" + orderOld.getId();
