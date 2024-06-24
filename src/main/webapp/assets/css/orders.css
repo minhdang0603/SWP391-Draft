@@ -204,4 +204,35 @@
     color: #D10024;
 }
 
+.product-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-header, .product-row, .product-footer {
+    display: flex;
+    flex-direction: row;
+}
+
+.product-cell {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.product-header {
+    font-weight: bold;
+    background-color: #f4f4f4;
+}
+
+.product-row:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.product-footer {
+    font-weight: bold;
+    background-color: #f4f4f4;
+}
+
 

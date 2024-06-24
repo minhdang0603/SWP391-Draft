@@ -28,9 +28,9 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
-                            <input class="input" placeholder="Search here" >
-                            <button class="search-btn">Tìm kiếm</button>
+                        <form method="get" action="${contextPath}/search">
+                            <input class="input" required name="keyword" placeholder="Tìm kiếm sản phẩm" value="${keyword}">
+                            <button type="submit" class="search-btn">Tìm kiếm</button>
                         </form>
                     </div>
                 </div>

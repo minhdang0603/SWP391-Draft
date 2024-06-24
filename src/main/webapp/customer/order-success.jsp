@@ -15,16 +15,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap Simple Success Confirmation</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/style.css"/>
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/css/account-toast.css"/>
     <style>
-        body {
-            font-family: 'Varela Round', sans-serif;
-        }
         .confirmation-message {
             margin: 30px auto;
             padding: 50px;
