@@ -63,11 +63,21 @@ public class Orders {
     private Payment payment;
 
     public String getFormattedDeliverDate() {
-        return deliverDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        String date ="";
+        if(deliverDate==null){
+            return date;
+        }
+        date = deliverDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        return date ;
     }
 
     public String getFormattedReceiveDate() {
-        return receiveDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        String date ="";
+        if(receiveDate==null){
+            return date;
+        }
+        date = receiveDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        return date ;
     }
 
     public String getFormattedOrderDate() {

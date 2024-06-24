@@ -31,6 +31,9 @@ public class Payment {
     private LocalDateTime payDate;
 
     public String getFormattedPayDate() {
+        if(payDate==null){
+            return "";
+        }
         return payDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
     }
 }

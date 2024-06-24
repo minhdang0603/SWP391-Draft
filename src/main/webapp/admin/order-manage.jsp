@@ -151,7 +151,7 @@
                                                     style="width: 50%">
                                                         ${order.customer.userName}
                                                 </td>
-                                                <td class="align-middle text-sm" style="text-align: left">${order.orderDate}</td>
+                                                <td class="align-middle text-sm" style="text-align: left">${order.getFormattedOrderDate()}</td>
                                                 <td class="align-middle text-sm"
                                                     style="padding-right: 30px">${order.orderStatus}</td>
                                                 <td class="align-middle text-center text-sm mr-2"><a href="#"
@@ -238,13 +238,13 @@
                                                                             id="modalSalerName">${order.saler.userName}</span>
                                                                     </p>
                                                                     <p><strong>Ngày đặt hàng:</strong> <span
-                                                                            id="modalOrderDate">${order.orderDate}</span>
+                                                                            id="modalOrderDate">${order.getFormattedOrderDate()}</span>
                                                                     </p>
                                                                     <p><strong>Ngày giao hàng:</strong> <span
-                                                                            id="modalDeliveryDate">${order.deliverDate}</span>
+                                                                            id="modalDeliveryDate">${order.getFormattedDeliverDate()}</span>
                                                                     </p>
                                                                     <p><strong>Ngày nhận hàng:</strong> <span
-                                                                            id="modalReceiveDateDate">${order.receiveDate}</span>
+                                                                            id="modalReceiveDateDate">${order.getFormattedReceiveDate()}</span>
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-md-6">
@@ -279,7 +279,7 @@
                                                                                 Chưa thanh toán
                                                                             </c:when>
                                                                             <c:otherwise>
-                                                                                Đã thanh toán
+                                                                                Đã thanh toán ${order.payment.getFormattedPayDate()}
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                     </span>
@@ -440,7 +440,7 @@
                                                                                 toán:</strong></label>
                                                                             <input type="date" class="form-control"
                                                                                    id="paymentDate" name="paymentDate"
-                                                                                   value="${order.receiveDate}">
+                                                                                   value="${order.payment.payDate}">
                                                                         </div>
                                                                     </div>
                                                                 </div>
