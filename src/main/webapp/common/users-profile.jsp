@@ -309,8 +309,146 @@
                                                         </c:forEach>
                                                         <div class="order-footer">
                                                             <a class="btn_5"
-                                                               href="${contextPath}/view-order-detail?orderId=${order.id}">Chi
+                                                               href="#" onclick="showOrderDetails(${order.id})">Chi
                                                                 tiết</a>
+                                                            <!-- Order detail modal-->
+                                                            <div class="modal fade" id="orderDetailsModal${order.id}"
+                                                                 tabindex="-1"
+                                                                 aria-labelledby="orderDetailsModalLabel"
+                                                                 aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="orderDetailsModalLabel${order.id}">
+                                                                                Chi Tiết Đơn Hàng</h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-md-6">
+                                                                                    <p><strong>Mã đơn hàng:</strong>
+                                                                                        <span>${order.id}</span></p>
+                                                                                    <p><strong>Trạng thái:</strong>
+                                                                                        <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.orderStatus == 'pending'}">
+                                                                                Đang chờ duyệt
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'processing'}">
+                                                                                Đang xử lý
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'received'}">
+                                                                                Đã nhận hàng
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'cancelled'}">
+                                                                                Đã hủy
+                                                                            </c:when>
+                                                                        </c:choose>
+                                                                    </span></p>
+                                                                                    <p><strong>Ngày đặt hàng:</strong>
+                                                                                        <span>${order.orderDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày giao hàng:</strong>
+                                                                                        <span>${order.deliverDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày nhận hàng:</strong>
+                                                                                        <span>${order.receiveDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày thanh toán:</strong>
+                                                                                        <span>${order.payment.payDate}</span>
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <p><strong>Người đặt hàng:</strong>
+                                                                                        <span>${order.customer.userName}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Số điện thoại:</strong>
+                                                                                        <span>${order.phoneNumber}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Địa chỉ giao
+                                                                                        hàng:</strong>
+                                                                                        <span>${order.address}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ghi chú:</strong>
+                                                                                        <span>${order.note}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Hình thức thanh
+                                                                                        toán:</strong> <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.method == 'cod'}">
+                                                                                Thanh toán khi nhận hàng
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Thanh toán online
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                                    </p>
+                                                                                    <p><strong>Trạng thái thanh
+                                                                                        toán:</strong>
+                                                                                        <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.status == 'unpaid'}">
+                                                                                Chưa thanh toán
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Đã thanh toán
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <div class="product-table">
+                                                                                    <div class="product-header">
+                                                                                        <div class="product-cell">Sản
+                                                                                            phẩm
+                                                                                        </div>
+                                                                                        <div class="product-cell">Đơn
+                                                                                            giá
+                                                                                        </div>
+                                                                                        <div class="product-cell">Số
+                                                                                            lượng
+                                                                                        </div>
+                                                                                        <div class="product-cell">Thành
+                                                                                            tiền
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="product-body">
+                                                                                        <c:forEach
+                                                                                                items="${order.orderDetails}"
+                                                                                                var="detail">
+                                                                                            <div class="product-row">
+                                                                                                <div class="product-cell">${detail.productName}</div>
+                                                                                                <div class="product-cell price">${detail.unitPrice}</div>
+                                                                                                <div class="product-cell">${detail.quantity}</div>
+                                                                                                <div class="product-cell price">${detail.unitPrice * detail.quantity}</div>
+                                                                                            </div>
+                                                                                        </c:forEach>
+                                                                                    </div>
+                                                                                    <div class="product-footer">
+                                                                                        <div class="product-cell"
+                                                                                             colspan="3"><strong>Tổng
+                                                                                            tiền</strong></div>
+                                                                                        <div class="product-cell price">${order.payment.amount}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Đóng
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end modal -->
                                                             <c:if test="${order.payment.status == 'unpaid'}">
                                                                 <a class="btn_6 ms-3"
                                                                    onclick="deleteModal('${order.id}')">Hủy đơn hàng</a>
@@ -394,10 +532,149 @@
                                                         </c:forEach>
                                                         <div class="order-footer">
                                                             <a class="btn_5"
-                                                               href="${contextPath}/view-order-detail?orderId=${order.id}">Chi
-                                                                tiết</a>
+                                                               href="#" onclick="showOrderDetails(${order.id})">Chi tiết</a>
+                                                            <!-- Order detail modal-->
+                                                            <div class="modal fade" id="orderDetailsModal${order.id}"
+                                                                 tabindex="-1"
+                                                                 aria-labelledby="orderDetailsModalLabel"
+                                                                 aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title">Chi
+                                                                                Tiết Đơn Hàng</h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-md-6">
+                                                                                    <p><strong>Mã đơn hàng:</strong>
+                                                                                        <span>${order.id}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Trạng thái:</strong>
+                                                                                        <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.orderStatus == 'pending'}">
+                                                                                Đang chờ duyệt
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'processing'}">
+                                                                                Đang xử lý
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'received'}">
+                                                                                Đã nhận hàng
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'cancelled'}">
+                                                                                Đã hủy
+                                                                            </c:when>
+                                                                        </c:choose>
+                                                                    </span></p>
+                                                                                    <p><strong>Ngày đặt hàng:</strong>
+                                                                                        <span>${order.orderDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày giao hàng:</strong>
+                                                                                        <span>${order.deliverDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày nhận hàng:</strong>
+                                                                                        <span>${order.receiveDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày thanh toán:</strong>
+                                                                                        <span>${order.payment.payDate}</span>
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <p><strong>Người đặt hàng:</strong>
+                                                                                        <span>${order.customer.userName}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Số điện thoại:</strong>
+                                                                                        <span>${order.phoneNumber}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Địa chỉ giao
+                                                                                        hàng:</strong>
+                                                                                        <span>${order.address}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ghi chú:</strong>
+                                                                                        <span>${order.note}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Hình thức thanh
+                                                                                        toán:</strong> <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.method == 'cod'}">
+                                                                                Thanh toán khi nhận hàng
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Thanh toán online
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                                    </p>
+                                                                                    <p><strong>Trạng thái thanh
+                                                                                        toán:</strong>
+                                                                                        <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.status == 'unpaid'}">
+                                                                                Chưa thanh toán
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Đã thanh toán
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <div class="product-table">
+                                                                                    <div class="product-header">
+                                                                                        <div class="product-cell">Sản
+                                                                                            phẩm
+                                                                                        </div>
+                                                                                        <div class="product-cell">Đơn
+                                                                                            giá
+                                                                                        </div>
+                                                                                        <div class="product-cell">Số
+                                                                                            lượng
+                                                                                        </div>
+                                                                                        <div class="product-cell">Thành
+                                                                                            tiền
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="product-body">
+                                                                                        <c:forEach
+                                                                                                items="${order.orderDetails}"
+                                                                                                var="detail">
+                                                                                            <div class="product-row">
+                                                                                                <div class="product-cell">${detail.productName}</div>
+                                                                                                <div class="product-cell price">${detail.unitPrice}</div>
+                                                                                                <div class="product-cell">${detail.quantity}</div>
+                                                                                                <div class="product-cell price">${detail.unitPrice * detail.quantity}</div>
+                                                                                            </div>
+                                                                                        </c:forEach>
+                                                                                    </div>
+                                                                                    <div class="product-footer">
+                                                                                        <div class="product-cell"
+                                                                                             colspan="3"><strong>Tổng
+                                                                                            tiền</strong></div>
+                                                                                        <div class="product-cell price">${order.payment.amount}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+
+                                                                            <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Đóng
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end modal -->
                                                             <a class="btn_5 ms-3"
-                                                               href="${contextPath}/order-process?orderId=${order.id}&action=receive">Đã nhận hàng</a>
+                                                               href="${contextPath}/order-process?orderId=${order.id}&action=receive">Đã
+                                                                nhận hàng</a>
                                                             <div class="order-total">
                                                                 Tổng tiền: <span
                                                                     class="order-price price">${order.payment.amount}</span>
@@ -445,10 +722,10 @@
                                                                     </div>
                                                                     <c:if test="${!item.rated}">
                                                                         <a class="btn_7"
-                                                                           onclick="ratingModal(${item.product.id})">Đánh
-                                                                            giá</a>
+                                                                           onclick="ratingModal(${item.product.id})">Đánh giá</a>
                                                                     </c:if>
                                                                 </div>
+                                                                <!-- Rating modal -->
                                                                 <div class="modal fade alert-primary" tabindex="-1"
                                                                      data-keyboard="false"
                                                                      id="ratingModal${item.product.id}">
@@ -542,13 +819,155 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
+                                                                <!-- en model -->
                                                             </div>
                                                         </c:forEach>
                                                         <div class="order-footer">
                                                             <a class="btn_5"
-                                                               href="${contextPath}/view-order-detail?orderId=${order.id}">Chi
-                                                                tiết</a>
+                                                               href="#" onclick="showOrderDetails(${order.id})">Chi tiết</a>
+                                                            <!-- Order detail modal-->
+                                                            <div class="modal fade" id="orderDetailsModal${order.id}"
+                                                                 tabindex="-1"
+                                                                 aria-labelledby="orderDetailsModalLabel"
+                                                                 aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title">Chi Tiết Đơn Hàng</h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div id="toPrint${order.id}" class="modal-body">
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-md-6">
+                                                                                    <p><strong>Mã đơn hàng:</strong>
+                                                                                        <span>${order.id}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Trạng thái:</strong>
+                                                                                        <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.orderStatus == 'pending'}">
+                                                                                Đang chờ duyệt
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'processing'}">
+                                                                                Đang xử lý
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'received'}">
+                                                                                Đã nhận hàng
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'cancelled'}">
+                                                                                Đã hủy
+                                                                            </c:when>
+                                                                        </c:choose>
+                                                                    </span></p>
+                                                                                    <p><strong>Nhân viên phụ
+                                                                                        trách:</strong> <span>${order.saler.userName}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày đặt hàng:</strong>
+                                                                                        <span>${order.orderDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày giao hàng:</strong>
+                                                                                        <span>${order.deliverDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày nhận hàng:</strong>
+                                                                                        <span>${order.receiveDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày thanh toán:</strong>
+                                                                                        <span>${order.payment.payDate}</span>
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <p><strong>Người đặt hàng:</strong>
+                                                                                        <span>${order.customer.userName}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Số điện thoại:</strong>
+                                                                                        <span>${order.phoneNumber}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Địa chỉ giao
+                                                                                        hàng:</strong> <span>${order.address}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ghi chú:</strong> <span>${order.note}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Hình thức thanh
+                                                                                        toán:</strong> <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.method == 'cod'}">
+                                                                                Thanh toán khi nhận hàng
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Thanh toán online
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                                    </p>
+                                                                                    <p><strong>Trạng thái thanh
+                                                                                        toán:</strong>
+                                                                                        <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.status == 'unpaid'}">
+                                                                                Chưa thanh toán
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Đã thanh toán
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <div class="product-table">
+                                                                                    <div class="product-header">
+                                                                                        <div class="product-cell">Sản
+                                                                                            phẩm
+                                                                                        </div>
+                                                                                        <div class="product-cell">Đơn
+                                                                                            giá
+                                                                                        </div>
+                                                                                        <div class="product-cell">Số
+                                                                                            lượng
+                                                                                        </div>
+                                                                                        <div class="product-cell">Thành
+                                                                                            tiền
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="product-body">
+                                                                                        <c:forEach
+                                                                                                items="${order.orderDetails}"
+                                                                                                var="detail">
+                                                                                            <div class="product-row">
+                                                                                                <div class="product-cell">${detail.productName}</div>
+                                                                                                <div class="product-cell price">${detail.unitPrice}</div>
+                                                                                                <div class="product-cell">${detail.quantity}</div>
+                                                                                                <div class="product-cell price">${detail.unitPrice * detail.quantity}</div>
+                                                                                            </div>
+                                                                                        </c:forEach>
+                                                                                    </div>
+                                                                                    <div class="product-footer">
+                                                                                        <div class="product-cell"
+                                                                                             colspan="3"><strong>Tổng
+                                                                                            tiền</strong></div>
+                                                                                        <div class="product-cell price">${order.payment.amount}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                    class="btn btn-primary"
+                                                                                    onclick="printModal(${order.id})">In
+                                                                            </button>
+
+                                                                            <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Đóng
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end modal -->
                                                             <div class="order-total">
                                                                 Tổng tiền: <span
                                                                     class="order-price price">${order.payment.amount}</span>
@@ -596,9 +1015,138 @@
                                                             </div>
                                                         </c:forEach>
                                                         <div class="order-footer">
-                                                            <a class="btn_5"
-                                                               href="${contextPath}/view-order-detail?orderId=${order.id}">Chi
-                                                                tiết</a>
+                                                            <a class="btn_5" href="#" onclick="showOrderDetails(${order.id})">Chi tiết</a>
+                                                            <!-- Order detail modal-->
+                                                            <div class="modal fade" id="orderDetailsModal${order.id}"
+                                                                 tabindex="-1"
+                                                                 aria-labelledby="orderDetailsModalLabel"
+                                                                 aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title">Chi Tiết Đơn Hàng</h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row mb-2">
+                                                                                <div class="col-md-6">
+                                                                                    <p><strong>Mã đơn hàng:</strong>
+                                                                                        <span>${order.id}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Trạng thái:</strong>
+                                                                                        <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.orderStatus == 'pending'}">
+                                                                                Đang chờ duyệt
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'processing'}">
+                                                                                Đang xử lý
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'received'}">
+                                                                                Đã nhận hàng
+                                                                            </c:when>
+                                                                            <c:when test="${order.orderStatus == 'cancelled'}">
+                                                                                Đã hủy
+                                                                            </c:when>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                                    </p>
+                                                                                    <p><strong>Nhân viên phụ trách:</strong>
+                                                                                        <span>${order.saler.userName}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày đặt hàng:</strong>
+                                                                                        <span>${order.orderDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày giao hàng:</strong>
+                                                                                        <span>${order.deliverDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày nhận hàng:</strong>
+                                                                                        <span>${order.receiveDate}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ngày thanh toán:</strong>
+                                                                                        <span>${order.payment.payDate}</span>
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <p><strong>Người đặt hàng:</strong>
+                                                                                        <span>${order.customer.userName}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Số điện thoại:</strong>
+                                                                                        <span>${order.phoneNumber}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Địa chỉ giao
+                                                                                        hàng:</strong> <span>${order.address}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Ghi chú:</strong> <span>${order.note}</span>
+                                                                                    </p>
+                                                                                    <p><strong>Hình thức thanh
+                                                                                        toán:</strong> <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.method == 'cod'}">
+                                                                                Thanh toán khi nhận hàng
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Thanh toán online
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                                    </p>
+                                                                                    <p><strong>Trạng thái thanh
+                                                                                        toán:</strong>
+                                                                                        <span>
+                                                                        <c:choose>
+                                                                            <c:when test="${order.payment.status == 'unpaid'}">
+                                                                                Chưa thanh toán
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                Đã thanh toán
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </span>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <div class="product-table">
+                                                                                    <div class="product-header">
+                                                                                        <div class="product-cell">Sản phẩm</div>
+                                                                                        <div class="product-cell">Đơn giá</div>
+                                                                                        <div class="product-cell">Số lượng </div>
+                                                                                        <div class="product-cell">Thành tiền</div>
+                                                                                    </div>
+                                                                                    <div class="product-body">
+                                                                                        <c:forEach
+                                                                                                items="${order.orderDetails}"
+                                                                                                var="detail">
+                                                                                            <div class="product-row">
+                                                                                                <div class="product-cell">${detail.productName}</div>
+                                                                                                <div class="product-cell price">${detail.unitPrice}</div>
+                                                                                                <div class="product-cell">${detail.quantity}</div>
+                                                                                                <div class="product-cell price">${detail.unitPrice * detail.quantity}</div>
+                                                                                            </div>
+                                                                                        </c:forEach>
+                                                                                    </div>
+                                                                                    <div class="product-footer">
+                                                                                        <div class="product-cell"><strong>Tổng tiền</strong></div>
+                                                                                        <div class="product-cell price"
+                                                                                             id="totalPrice">${order.payment.amount}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+
+                                                                            <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Đóng
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end modal -->
                                                             <div class="order-total">
                                                                 Tổng tiền: <span
                                                                     class="order-price price">${order.payment.amount}</span>
@@ -619,7 +1167,7 @@
                 </div>
             </div>
         </section>
-    </main><!-- End #main -->
+    </main><!-- End main -->
 
 
     <c:if test="${updateSuccess != null}">
