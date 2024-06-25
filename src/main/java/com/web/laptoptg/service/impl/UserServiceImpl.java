@@ -46,6 +46,9 @@ public class UserServiceImpl implements UserService {
         temp.setAddress(user.getAddress());
         temp.setPhoneNumber(user.getPhoneNumber());
         temp.setEmail(user.getEmail());
+        if(user.getPassword()!=null){
+            temp.setPassword(user.getPassword());
+        }
         temp.setRole(roleDAO.getRoleByRoleName(user.getRole()));
         if (user.getStatus() != null) {
             temp.setStatus(user.getStatus());
