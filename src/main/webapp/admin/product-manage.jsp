@@ -288,7 +288,7 @@
                                                                             <input type="text" class="form-control"
                                                                                    id="productNameUpdate"
                                                                                    name="productName"
-                                                                                   value="${pro.productName}">
+                                                                                   value="${pro.productName}" required>
                                                                         </div>
                                                                         <div class="form-group mt-1" >
                                                                             <h6><strong>Trạng thái:</strong></h6>
@@ -307,7 +307,7 @@
                                                                             <input type="number" class="form-control"
                                                                                    id="unitPriceUpdate" min="0" step="1"
                                                                                    name="unitPrice"
-                                                                                   value="${pro.unitPrice}">
+                                                                                   value="${pro.unitPrice}" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="stockUnitUpdate"><strong>Tồn
@@ -315,14 +315,14 @@
                                                                             <input name="stockUnit" type="number"
                                                                                    class="form-control"
                                                                                    id="stockUnitUpdate" min="0" step="1"
-                                                                                   value="${pro.stockUnit}">
+                                                                                   value="${pro.stockUnit}" required>
                                                                         </div>
                                                                         <div class="form-group" >
                                                                             <label for="soldUnitUpdate"><strong>Đã
                                                                                 bán:</strong></label>
                                                                             <input type="number" class="form-control"
                                                                                    id="soldUnitUpdate" name="soldUnit" min="0" step="1"
-                                                                                   value="${pro.soldUnit}">
+                                                                                   value="${pro.soldUnit}" required>
                                                                         </div>
 
                                                                         <div class="form-group">
@@ -606,6 +606,7 @@
                                                     <div class="col-md-8">
                                                         <input type="file" class="form-control-file"
                                                                id="image" accept=".jpg, .jpeg, .png, .img" name="image">
+                                                        <div id="imageError" class="error-message"></div>
                                                     </div>
                                                 </div>
                                             </div>
