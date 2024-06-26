@@ -44,10 +44,6 @@ public class OrderProcessController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        if (action == null) {
-            resp.sendRedirect(req.getContextPath() + "/home");
-            return;
-        }
 
         if (action.equals("cancel")) {
             // do cancel order
@@ -59,7 +55,6 @@ public class OrderProcessController extends HttpServlet {
             // back to profile page
             resp.sendRedirect(req.getContextPath() + "/profile");
         }
-
     }
 
     private void doUpdateStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {

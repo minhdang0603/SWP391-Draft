@@ -41,10 +41,6 @@ public class ProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         UserDTO account = (UserDTO) session.getAttribute("account");
-        if (account == null) {
-            resp.sendRedirect(req.getContextPath() + "/home");
-            return;
-        }
 
         if(account.getRole().equals("MEMBER")) {
             List<Orders> pendingOrders = orderService.getOrdersByUserIDAndStatus(account.getId(), Status.PENDING);

@@ -11,13 +11,21 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-around">
-        <a href="${contextPath}/home" class="logo d-flex align-items-center">
-            <img src="${contextPath}/assets/home/img/logo1.png" alt="">
-            <span class="d-none d-lg-block">LaptopTG</span>
-        </a>
-        <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">
-            <i class="bi bi-list toggle-sidebar-btn"></i>
-        </c:if>
+        <c:choose>
+            <c:when test="${account.role == 'ADMIN'|| account.role == 'SALER'}">
+                <a href="${contextPath}/admin/home" class="logo d-flex align-items-center">
+                    <img src="${contextPath}/assets/home/img/logo1.png" alt="">
+                    <span class="d-none d-lg-block">LaptopTG</span>
+                </a>
+                <i class="bi bi-list toggle-sidebar-btn"></i>
+            </c:when>
+            <c:otherwise>
+                <a href="${contextPath}/home" class="logo d-flex align-items-center">
+                    <img src="${contextPath}/assets/home/img/logo1.png" alt="">
+                    <span class="d-none d-lg-block">LaptopTG</span>
+                </a>
+            </c:otherwise>
+        </c:choose>
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
@@ -56,17 +64,6 @@
                             <span>Thông tin tài khoản</span>
                         </a>
                     </li>
-                    <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center"
-                               href="${contextPath}/admin/home">
-                                <span>Trang quản lý</span>
-                            </a>
-                        </li>
-                    </c:if>
                     <li>
                         <hr class="dropdown-divider">
                     </li>

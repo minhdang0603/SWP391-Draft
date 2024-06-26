@@ -349,16 +349,16 @@
                                                                         </c:choose>
                                                                     </span></p>
                                                                                     <p><strong>Ngày đặt hàng:</strong>
-                                                                                        <span>${order.orderDate}</span>
+                                                                                        <span>${order.getFormattedOrderDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày giao hàng:</strong>
-                                                                                        <span>${order.deliverDate}</span>
+                                                                                        <span>${order.getFormattedDeliverDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày nhận hàng:</strong>
-                                                                                        <span>${order.receiveDate}</span>
+                                                                                        <span>${order.getFormattedReceiveDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày thanh toán:</strong>
-                                                                                        <span>${order.payment.payDate}</span>
+                                                                                        <span>${order.payment.getFormattedPayDate()}</span>
                                                                                     </p>
                                                                                 </div>
                                                                                 <div class="col-md-6">
@@ -532,7 +532,8 @@
                                                         </c:forEach>
                                                         <div class="order-footer">
                                                             <a class="btn_5"
-                                                               href="#" onclick="showOrderDetails(${order.id})">Chi tiết</a>
+                                                               href="#" onclick="showOrderDetails(${order.id})">Chi
+                                                                tiết</a>
                                                             <!-- Order detail modal-->
                                                             <div class="modal fade" id="orderDetailsModal${order.id}"
                                                                  tabindex="-1"
@@ -571,16 +572,16 @@
                                                                         </c:choose>
                                                                     </span></p>
                                                                                     <p><strong>Ngày đặt hàng:</strong>
-                                                                                        <span>${order.orderDate}</span>
+                                                                                        <span>${order.getFormattedOrderDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày giao hàng:</strong>
-                                                                                        <span>${order.deliverDate}</span>
+                                                                                        <span>${order.getFormattedDeliverDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày nhận hàng:</strong>
-                                                                                        <span>${order.receiveDate}</span>
+                                                                                        <span>${order.getFormattedReceiveDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày thanh toán:</strong>
-                                                                                        <span>${order.payment.payDate}</span>
+                                                                                        <span>${order.payment.getFormattedPayDate()}</span>
                                                                                     </p>
                                                                                 </div>
                                                                                 <div class="col-md-6">
@@ -722,7 +723,8 @@
                                                                     </div>
                                                                     <c:if test="${!item.rated}">
                                                                         <a class="btn_7"
-                                                                           onclick="ratingModal(${item.product.id})">Đánh giá</a>
+                                                                           onclick="ratingModal(${item.product.id})">Đánh
+                                                                            giá</a>
                                                                     </c:if>
                                                                 </div>
                                                                 <!-- Rating modal -->
@@ -824,7 +826,8 @@
                                                         </c:forEach>
                                                         <div class="order-footer">
                                                             <a class="btn_5"
-                                                               href="#" onclick="showOrderDetails(${order.id})">Chi tiết</a>
+                                                               href="#" onclick="showOrderDetails(${order.id})">Chi
+                                                                tiết</a>
                                                             <!-- Order detail modal-->
                                                             <div class="modal fade" id="orderDetailsModal${order.id}"
                                                                  tabindex="-1"
@@ -833,12 +836,13 @@
                                                                 <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
-                                                                            <h5 class="modal-title">Chi Tiết Đơn Hàng</h5>
+                                                                            <h5 class="modal-title">Chi Tiết Đơn
+                                                                                Hàng</h5>
                                                                             <button type="button" class="btn-close"
                                                                                     data-dismiss="modal"
                                                                                     aria-label="Close"></button>
                                                                         </div>
-                                                                        <div id="toPrint${order.id}" class="modal-body">
+                                                                        <div class="modal-body">
                                                                             <div class="row mb-2">
                                                                                 <div class="col-md-6">
                                                                                     <p><strong>Mã đơn hàng:</strong>
@@ -861,20 +865,17 @@
                                                                             </c:when>
                                                                         </c:choose>
                                                                     </span></p>
-                                                                                    <p><strong>Nhân viên phụ
-                                                                                        trách:</strong> <span>${order.saler.userName}</span>
-                                                                                    </p>
                                                                                     <p><strong>Ngày đặt hàng:</strong>
-                                                                                        <span>${order.orderDate}</span>
+                                                                                        <span>${order.getFormattedOrderDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày giao hàng:</strong>
-                                                                                        <span>${order.deliverDate}</span>
+                                                                                        <span>${order.getFormattedDeliverDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày nhận hàng:</strong>
-                                                                                        <span>${order.receiveDate}</span>
+                                                                                        <span>${order.getFormattedReceiveDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày thanh toán:</strong>
-                                                                                        <span>${order.payment.payDate}</span>
+                                                                                        <span>${order.payment.getFormattedPayDate()}</span>
                                                                                     </p>
                                                                                 </div>
                                                                                 <div class="col-md-6">
@@ -885,9 +886,11 @@
                                                                                         <span>${order.phoneNumber}</span>
                                                                                     </p>
                                                                                     <p><strong>Địa chỉ giao
-                                                                                        hàng:</strong> <span>${order.address}</span>
+                                                                                        hàng:</strong>
+                                                                                        <span>${order.address}</span>
                                                                                     </p>
-                                                                                    <p><strong>Ghi chú:</strong> <span>${order.note}</span>
+                                                                                    <p><strong>Ghi chú:</strong>
+                                                                                        <span>${order.note}</span>
                                                                                     </p>
                                                                                     <p><strong>Hình thức thanh
                                                                                         toán:</strong> <span>
@@ -955,11 +958,6 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button"
-                                                                                    class="btn btn-primary"
-                                                                                    onclick="printModal(${order.id})">In
-                                                                            </button>
-
-                                                                            <button type="button"
                                                                                     class="btn btn-secondary"
                                                                                     data-dismiss="modal">Đóng
                                                                             </button>
@@ -1015,7 +1013,8 @@
                                                             </div>
                                                         </c:forEach>
                                                         <div class="order-footer">
-                                                            <a class="btn_5" href="#" onclick="showOrderDetails(${order.id})">Chi tiết</a>
+                                                            <a class="btn_5" href="#"
+                                                               onclick="showOrderDetails(${order.id})">Chi tiết</a>
                                                             <!-- Order detail modal-->
                                                             <div class="modal fade" id="orderDetailsModal${order.id}"
                                                                  tabindex="-1"
@@ -1024,7 +1023,8 @@
                                                                 <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
-                                                                            <h5 class="modal-title">Chi Tiết Đơn Hàng</h5>
+                                                                            <h5 class="modal-title">Chi Tiết Đơn
+                                                                                Hàng</h5>
                                                                             <button type="button" class="btn-close"
                                                                                     data-dismiss="modal"
                                                                                     aria-label="Close"></button>
@@ -1051,22 +1051,18 @@
                                                                                 Đã hủy
                                                                             </c:when>
                                                                         </c:choose>
-                                                                    </span>
-                                                                                    </p>
-                                                                                    <p><strong>Nhân viên phụ trách:</strong>
-                                                                                        <span>${order.saler.userName}</span>
-                                                                                    </p>
+                                                                    </span></p>
                                                                                     <p><strong>Ngày đặt hàng:</strong>
-                                                                                        <span>${order.orderDate}</span>
+                                                                                        <span>${order.getFormattedOrderDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày giao hàng:</strong>
-                                                                                        <span>${order.deliverDate}</span>
+                                                                                        <span>${order.getFormattedDeliverDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày nhận hàng:</strong>
-                                                                                        <span>${order.receiveDate}</span>
+                                                                                        <span>${order.getFormattedReceiveDate()}</span>
                                                                                     </p>
                                                                                     <p><strong>Ngày thanh toán:</strong>
-                                                                                        <span>${order.payment.payDate}</span>
+                                                                                        <span>${order.payment.getFormattedPayDate()}</span>
                                                                                     </p>
                                                                                 </div>
                                                                                 <div class="col-md-6">
@@ -1077,9 +1073,11 @@
                                                                                         <span>${order.phoneNumber}</span>
                                                                                     </p>
                                                                                     <p><strong>Địa chỉ giao
-                                                                                        hàng:</strong> <span>${order.address}</span>
+                                                                                        hàng:</strong>
+                                                                                        <span>${order.address}</span>
                                                                                     </p>
-                                                                                    <p><strong>Ghi chú:</strong> <span>${order.note}</span>
+                                                                                    <p><strong>Ghi chú:</strong>
+                                                                                        <span>${order.note}</span>
                                                                                     </p>
                                                                                     <p><strong>Hình thức thanh
                                                                                         toán:</strong> <span>
@@ -1111,10 +1109,18 @@
                                                                             <div>
                                                                                 <div class="product-table">
                                                                                     <div class="product-header">
-                                                                                        <div class="product-cell">Sản phẩm</div>
-                                                                                        <div class="product-cell">Đơn giá</div>
-                                                                                        <div class="product-cell">Số lượng </div>
-                                                                                        <div class="product-cell">Thành tiền</div>
+                                                                                        <div class="product-cell">Sản
+                                                                                            phẩm
+                                                                                        </div>
+                                                                                        <div class="product-cell">Đơn
+                                                                                            giá
+                                                                                        </div>
+                                                                                        <div class="product-cell">Số
+                                                                                            lượng
+                                                                                        </div>
+                                                                                        <div class="product-cell">Thành
+                                                                                            tiền
+                                                                                        </div>
                                                                                     </div>
                                                                                     <div class="product-body">
                                                                                         <c:forEach
@@ -1129,7 +1135,9 @@
                                                                                         </c:forEach>
                                                                                     </div>
                                                                                     <div class="product-footer">
-                                                                                        <div class="product-cell"><strong>Tổng tiền</strong></div>
+                                                                                        <div class="product-cell">
+                                                                                            <strong>Tổng tiền</strong>
+                                                                                        </div>
                                                                                         <div class="product-cell price"
                                                                                              id="totalPrice">${order.payment.amount}</div>
                                                                                     </div>

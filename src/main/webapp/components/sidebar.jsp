@@ -76,14 +76,6 @@
                 </a>
             </li><!-- End Account Page Nav -->
         </c:if>
-
-        <!-- Homepage Nav -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="${contextPath}/home">
-                <i class="bi bi-house"></i>
-                <span>Trang Chủ</span>
-            </a>
-        </li>
     </ul>
 
 </aside><!-- End Sidebar-->

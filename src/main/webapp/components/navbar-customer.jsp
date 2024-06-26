@@ -82,17 +82,6 @@
                                             <span>Thông tin tài khoản</span>
                                         </a>
                                     </li>
-                                    <c:if test="${account.role == 'SALER' || account.role == 'ADMIN'}">
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item d-flex align-items-center"
-                                               href="${contextPath}/admin/home">
-                                                <span>Trang quản lý</span>
-                                            </a>
-                                        </li>
-                                    </c:if>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>

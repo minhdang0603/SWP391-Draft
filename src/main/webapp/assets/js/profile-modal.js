@@ -70,18 +70,6 @@ function showOrderDetails(orderID) {
     orderDetailsModal.show();
 }
 
-function printModal(orderId) {
-    var printContents = document.getElementById('toPrint' + orderId).innerHTML;
-    var originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-
-    window.print();
-
-    document.body.innerHTML = originalContents;
-    window.location.reload();  // Để tải lại trang và khôi phục nội dung ban đầu
-}
-
 function validateForm() {
     const reviewText = document.getElementById('review-text').value.trim();
     const rating = document.querySelector('input[name="rating"]:checked');

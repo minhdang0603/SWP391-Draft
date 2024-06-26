@@ -70,6 +70,13 @@ public class LoginController extends HttpServlet {
         }
 
         String code = req.getParameter("code");
+
+        // redirect to error page
+        if(code == null) {
+            req.getRequestDispatcher("common/page-error-404.jsp").forward(req, resp);
+            return;
+        }
+
         String accessToken = getToken(code);
         GoogleUserDTO googleUserDTO = getUserInfo(accessToken);
         User user = userService.findUserByEmail(googleUserDTO.getEmail());
@@ -89,7 +96,7 @@ public class LoginController extends HttpServlet {
             Cart cart = new Cart();
             cart.setUser(temp);
             cartService.saveCart(cart);
-            session.setAttribute("account", userDTO);
+            session.setAttribute("loginUser", userDTO);
             resp.sendRedirect(req.getContextPath() + "/waiting");
             return;
         }
@@ -111,7 +118,7 @@ public class LoginController extends HttpServlet {
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setRole(user.getRole().getRoleName());
         userDTO.setPassword(user.getPassword());
-        session.setAttribute("account", userDTO);
+        session.setAttribute("loginUser", userDTO);
         resp.sendRedirect(req.getContextPath() + "/waiting");
     }
 
@@ -192,7 +199,7 @@ public class LoginController extends HttpServlet {
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setStatus(user.getStatus());
         userDTO.setPassword(user.getPassword());
-        session.setAttribute("account", userDTO);
+        session.setAttribute("loginUser", userDTO);
         resp.sendRedirect(req.getContextPath() + "/waiting");
     }
 

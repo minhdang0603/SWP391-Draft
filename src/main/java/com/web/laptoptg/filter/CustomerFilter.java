@@ -7,8 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-public class LoginFilter implements Filter {
-
+public class CustomerFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         Filter.super.init(filterConfig);
@@ -20,9 +19,15 @@ public class LoginFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         UserDTO account = (UserDTO) req.getSession().getAttribute("account");
 
+        // skip filter
+        if(account == null) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
         // check user login
-        if (account == null) {
-            resp.sendRedirect(req.getContextPath() + "/login");
+        if (!account.getRole().equalsIgnoreCase("member")) {
+            resp.sendRedirect(req.getContextPath() + "/admin/home");
             return;
         }
 

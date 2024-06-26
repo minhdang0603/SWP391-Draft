@@ -92,9 +92,11 @@ public class AccountManagement extends HttpServlet {
             userService.addUser(userDTO);
 
             User raw = userService.findUserByEmail(email);
-            Cart cart = new Cart();
-            cart.setUser(raw);
-            cartService.saveCart(cart);
+            if(raw.getRole().getRoleName().equalsIgnoreCase("member")){
+                Cart cart = new Cart();
+                cart.setUser(raw);
+                cartService.saveCart(cart);
+            }
 
             session.setAttribute("successMessage", "Thêm tài khoản thành công!");
         } else {
