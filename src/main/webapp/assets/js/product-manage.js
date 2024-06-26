@@ -1,25 +1,130 @@
-function validateFileType() {
-    const fileInput = document.getElementById('fileUpload');
-    const fildAdd = document.getElementById('image');
-    const filePath = fileInput.value;
-    const addFile = fileAdd.value;
-    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.img)$/i;
+let isValid4 = true;
+let isValid5 = true;
+let isValid6 = true;
+let isValid7 = true;
+let isValid8 = true;
 
-    if (!allowedExtensions.exec(filePath)) {
-        alert('Vui lòng upload file có định dạng .jpg, .jpeg, .png, hoặc .img');
-        fileInput.value = '';
-        return false;
+function validateProductName(id) {
+    const productName = document.getElementById("productNameUpdate" + id).value.trim();
+    const updateButton = document.getElementById('updateButton' + id);
+    if (productName.length === 0) {
+        showError("productNameUpdateError" + id, "Tên sản phẩm không được để trống.");
+        isValid4 = false;
+    } else {
+        clearError("productNameUpdateError" + id);
+        isValid4 = true;
     }
-
-    return true;
+    checkIsValidUpdate(id);
 }
+
+function validateUnitPrice(id) {
+    const unitPrice = document.getElementById("unitPriceUpdate" + id).value;
+    const updateButton = document.getElementById('updateButton' + id);
+    if (unitPrice === "" || isNaN(unitPrice) || unitPrice < 0) {
+        showError("unitPriceUpdateError" + id, "Đơn giá phải là một số lớn hơn hoặc bằng 0.");
+        isValid5 = false;
+    } else {
+        clearError("unitPriceUpdateError" + id);
+        isValid5 = true;
+    }
+    checkIsValidUpdate(id);
+}
+
+function validateStockUnit(id) {
+    const stockUnit = document.getElementById("stockUnitUpdate" + id).value;
+    const updateButton = document.getElementById('updateButton' + id);
+
+    if (stockUnit === "" || isNaN(stockUnit) || stockUnit < 0) {
+        showError("stockUnitUpdateError" + id, "Tồn kho phải là một số lớn hơn hoặc bằng 0.");
+        isValid7 = false;
+
+    } else {
+        clearError("stockUnitUpdateError" + id);
+        isValid7 = true;
+
+    }
+    checkIsValidUpdate(id);
+}
+
+function validateSoldUnit(id) {
+    const soldUnit = document.getElementById("soldUnitUpdate" + id).value;
+    const updateButton = document.getElementById('updateButton' + id);
+
+    if (soldUnit === "" || isNaN(soldUnit) || soldUnit < 0) {
+        showError("soldUnitUpdateError" + id, "Đã bán phải là một số lớn hơn hoặc bằng 0.");
+        isValid6 = false;
+
+    } else {
+        clearError("soldUnitUpdateError" + id);
+        isValid6 = true;
+
+    }
+    checkIsValidUpdate(id);
+}
+
+function validateImage(id) {
+    const imageInput = document.getElementById("fileUpload" + id);
+    const imagePreview = document.getElementById("imagePreview" + id);
+    const updateButton = document.getElementById('updateButton' + id);
+    let currentImageSrc = "/laptop-tg/assets/img/product-img/" + id + ".png";
+
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.img)$/i;
+    const image = imageInput.value;
+
+
+    const file = imageInput.files[0];
+
+    // Kiểm tra định dạng file chỉ khi có sự thay đổi trong src của ảnh
+    if (imagePreview.src !== currentImageSrc) {
+        if (!allowedExtensions.test(file.name)) {
+            showError("imageUpdateError" + id, "Chỉ chấp nhận các định dạng file: .jpg, .jpeg, .png, .img.");
+            updateButton.disabled = true;
+            imagePreview.style.display = "none"; // Ẩn ảnh preview nếu file không hợp lệ
+        } else {
+            clearError("imageUpdateError" + id);
+            updateButton.disabled = false;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = "block"; // Hiển thị ảnh preview khi file hợp lệ
+            };
+            reader.readAsDataURL(file);
+        }
+    } else {
+        clearError("imageUpdateError" + id);
+        updateButton.disabled = false;
+    }
+}
+
+
+function showError(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    errorElement.textContent = message;
+    errorElement.style.display = "block";
+}
+
+function clearError(elementId) {
+    const errorElement = document.getElementById(elementId);
+    errorElement.textContent = "";
+    errorElement.style.display = "none";
+}
+
+function checkIsValidUpdate(id) {
+    const updateButton = document.getElementById("updateButton" + id);
+    if (isValid4 === true && isValid5 === true && isValid6 === true && isValid7 === true) {
+        updateButton.disabled = false;
+        return;
+    }
+    updateButton.disabled = true;
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
     var msgDiv = document.getElementById('msg');
     var msgContent = document.getElementById('msgContent');
     // Kiểm tra nội dung của thẻ h1
     if (msgContent.textContent.trim() !== "") {
-        setTimeout(function (){
+        setTimeout(function () {
             msgDiv.classList.add('show');
             setTimeout(function () {
                 msgDiv.classList.remove('show');
@@ -40,49 +145,73 @@ $(document).ready(function () {
 document.addEventListener('DOMContentLoaded', function () {
     toggleFields();  // Initial check on page load
 });
+const createButton = document.getElementById('createButton');
+const productName = document.getElementById('productName');
+const unitPrice = document.getElementById('unitPrice');
+const stockUnit = document.getElementById('stockUnit');
+const fileInput = document.getElementById('image');
+let isValid1 = false;
+let isValid2 = false;
+let isValid3 = false;
 
-function validateForm() {
-    const createButton = document.getElementById('createButton');
 
-    let isValid = true;
-
-    // Kiểm tra trường productName nếu đã nhập dữ liệu
-    var productName = document.getElementById('productName').value.trim();
-    if (productName === '') {
+/*
+    ------------- check valid add product ------------------------
+ */
+productName.addEventListener('input', () => {
+    const val1 = productName.value;
+    if (val1.trim().length === 0) {
         document.getElementById('productNameError').textContent = 'Vui lòng nhập tên sản phẩm.';
-        isValid = false;
+        isValid1 = false;
     } else {
         document.getElementById('productNameError').textContent = '';
+        isValid1 = true;
     }
+    checkIsValidCreate();
+});
 
-    // Kiểm tra trường unitPrice
-    var unitPrice = document.getElementById('unitPrice').value.trim();
-    if (unitPrice === '') {
+unitPrice.addEventListener('input', () => {
+    const val1 = unitPrice.value;
+    if (val1.length === 0) {
         document.getElementById('unitPriceError').textContent = 'Vui lòng nhập đơn giá.';
-        isValid = false;
-    } else if (isNaN(unitPrice) || unitPrice <= 0 || unitPrice.indexOf('.') !== -1) {
+        isValid2 = false;
+    } else if (isNaN(val1) || val1 <= 0 || val1.indexOf('.') !== -1) {
         document.getElementById('unitPriceError').textContent = 'Đơn giá phải là số nguyên lớn hơn 0.';
-        isValid = false;
+        isValid2 = false;
     } else {
         document.getElementById('unitPriceError').textContent = '';
+        isValid2 = true;
     }
-
-    // Kiểm tra trường stockUnit
-    var stockUnit = document.getElementById('stockUnit').value.trim();
-    if (stockUnit === '') {
-        document.getElementById('stockUnitError').textContent = 'Vui lòng nhập số lượng sản phẩm.';
-        isValid = false;
-    } else if (isNaN(stockUnit) || stockUnit <= 0 || stockUnit.indexOf('.') !== -1) {
-        document.getElementById('stockUnitError').textContent = 'Số lượng sản phẩm phải là số nguyên lớn hơn 0.';
-        isValid = false;
+    checkIsValidCreate();
+});
+stockUnit.addEventListener('input', () => {
+    const val1 = stockUnit.value;
+    if (val1.length === 0) {
+        document.getElementById('stockUnitError').textContent = 'Vui lòng nhập số lượng.';
+        isValid3 = false;
+    } else if (isNaN(val1) || val1 < 0 || val1.indexOf('.') !== -1) {
+        document.getElementById('stockUnitError').textContent = 'Vui lòng nhập số nguyên từ 0.';
+        isValid3 = false;
     } else {
         document.getElementById('stockUnitError').textContent = '';
+        isValid3 = true;
     }
+    checkIsValidCreate();
+});
 
+function checkIsValidCreate() {
+    if (isValid1 === true && isValid2 === true && isValid3 === true) {
+        createButton.disabled = false;
+        return;
+    }
+    createButton.disabled = true;
+}
+
+fileInput.addEventListener('input', () => {
+    let isValid = true;
     // Kiểm tra trường image (file) nếu đã chọn file
-    var fileInput = document.getElementById('image');
-    var filePath = fileInput.value;
-    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.img)$/i;
+    const filePath = fileInput.value;
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.img)$/i;
     if (filePath !== '') {
         if (!allowedExtensions.exec(filePath)) {
             document.getElementById('imageError').textContent = 'Định dạng file ảnh không hợp lệ. Chỉ chấp nhận các định dạng: .jpg, .jpeg, .png, .img.';
@@ -91,9 +220,13 @@ function validateForm() {
             document.getElementById('imageError').textContent = '';
         }
     }
-
     createButton.disabled = !isValid;
-}
+});
+
+/*
+    ------------- END check valid add product ------------------------
+ */
+
 
 function toggleFields() {
     const category = document.getElementById('productCategory').value;
