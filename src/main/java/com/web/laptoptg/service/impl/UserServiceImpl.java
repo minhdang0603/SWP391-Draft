@@ -56,15 +56,6 @@ public class UserServiceImpl implements UserService {
         return userDAO.updateUser(temp);
     }
 
-    public void changePassFromProfile(UserDTO user) {
-        User temp = userDAO.findUserByEmail(user.getEmail());
-        if (temp != null) {
-            temp.setPassword(user.getPassword());
-            temp.setRole(roleDAO.getRoleByRoleName(user.getRole()));
-            userDAO.updateUser(temp);
-        }
-    }
-
     @Override
     public User findUserByEmail(String email) {
         return userDAO.findUserByEmail(email);

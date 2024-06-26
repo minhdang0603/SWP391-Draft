@@ -15,6 +15,5 @@ public interface UserService {
     void changePassword(UserDTO user, String newPassword); // use for
     User login(String email, String password);
     List<User> findAllUsers();
-    void changePassFromProfile(UserDTO user);
     User addUser(UserDTO user);
 }
