@@ -68,7 +68,7 @@ public class Orders {
             return date;
         }
         date = deliverDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-        return date ;
+        return date;
     }
 
     public String getFormattedReceiveDate() {
@@ -77,7 +77,7 @@ public class Orders {
             return date;
         }
         date = receiveDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-        return date ;
+        return date;
     }
 
     public String getFormattedOrderDate() {

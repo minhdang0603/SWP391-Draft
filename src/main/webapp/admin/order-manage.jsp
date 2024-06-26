@@ -440,7 +440,7 @@
                                                                                 toán:</strong></label>
                                                                             <input type="date" class="form-control"
                                                                                    id="paymentDate" name="paymentDate"
-                                                                                   value="${order.payment.payDate}">
+                                                                                   value="${order.payment.getFormattedPayDate()}">
                                                                         </div>
                                                                     </div>
                                                                 </div>
