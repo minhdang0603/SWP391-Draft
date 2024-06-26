@@ -88,8 +88,7 @@
                                 <!-- Products Table -->
                                 <div class="table-responsive">
                                     <table id="myTable"
-                                           class="table-responsive table-striped datatable align-items-center mb-0"
-                                           style="width: 100%;">
+                                           class="table-responsive table-striped datatable align-items-center mb-0" style="width: 100%;">
                                         <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
@@ -168,8 +167,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!--end confirm delete modal-->
+                                            </div><!--end confirm delete modal-->
 
                                             <!-- Product Details Modal -->
                                             <div class="modal fade" id="productDetailsModal${pro.id}" tabindex="-1"
@@ -252,8 +250,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!--end detail modal-->
+                                            </div><!--end detail modal-->
 
                                             <!-- Product Update Modal -->
                                             <div class="modal" id="productUpdateModal${pro.id}" tabindex="-1"
@@ -636,8 +633,7 @@
                                                         họa:</label>
                                                     <div class="col-md-8">
                                                         <input type="file" class="form-control-file"
-                                                               id="image" accept=".jpg, .jpeg, .png, .img" name="image"
-                                                               required>
+                                                               id="image" accept=".jpg, .jpeg, .png, .img" name="image">
                                                         <div id="imageError" class="error-message"></div>
                                                     </div>
                                                 </div>

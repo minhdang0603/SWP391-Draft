@@ -69,8 +69,6 @@ function validateImage(id) {
     let currentImageSrc = "/laptop-tg/assets/img/product-img/" + id + ".png";
 
     const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.img)$/i;
-    const image = imageInput.value;
-
 
     const file = imageInput.files[0];
 
@@ -102,22 +100,6 @@ function showError(elementId, message) {
     errorElement.textContent = message;
     errorElement.style.display = "block";
 }
-
-function clearError(elementId) {
-    const errorElement = document.getElementById(elementId);
-    errorElement.textContent = "";
-    errorElement.style.display = "none";
-}
-
-function checkIsValidUpdate(id) {
-    const updateButton = document.getElementById("updateButton" + id);
-    if (isValid4 === true && isValid5 === true && isValid6 === true && isValid7 === true) {
-        updateButton.disabled = false;
-        return;
-    }
-    updateButton.disabled = true;
-}
-
 
 document.addEventListener("DOMContentLoaded", function () {
     var msgDiv = document.getElementById('msg');
@@ -170,99 +152,99 @@ productName.addEventListener('input', () => {
     checkIsValidCreate();
 });
 
-unitPrice.addEventListener('input', () => {
-    const val1 = unitPrice.value;
-    if (val1.length === 0) {
-        document.getElementById('unitPriceError').textContent = 'Vui lòng nhập đơn giá.';
-        isValid2 = false;
-    } else if (isNaN(val1) || val1 <= 0 || val1.indexOf('.') !== -1) {
-        document.getElementById('unitPriceError').textContent = 'Đơn giá phải là số nguyên lớn hơn 0.';
-        isValid2 = false;
-    } else {
-        document.getElementById('unitPriceError').textContent = '';
-        isValid2 = true;
-    }
-    checkIsValidCreate();
-});
-stockUnit.addEventListener('input', () => {
-    const val1 = stockUnit.value;
-    if (val1.length === 0) {
-        document.getElementById('stockUnitError').textContent = 'Vui lòng nhập số lượng.';
-        isValid3 = false;
-    } else if (isNaN(val1) || val1 < 0 || val1.indexOf('.') !== -1) {
-        document.getElementById('stockUnitError').textContent = 'Vui lòng nhập số nguyên từ 0.';
-        isValid3 = false;
-    } else {
-        document.getElementById('stockUnitError').textContent = '';
-        isValid3 = true;
-    }
-    checkIsValidCreate();
-});
+        unitPrice.addEventListener('input', () => {
+            const val1 = unitPrice.value;
+            if (val1.length === 0) {
+                document.getElementById('unitPriceError').textContent = 'Vui lòng nhập đơn giá.';
+                isValid2 = false;
+            } else if (isNaN(val1) || val1 <= 0 || val1.indexOf('.') !== -1) {
+                document.getElementById('unitPriceError').textContent = 'Đơn giá phải là số nguyên lớn hơn 0.';
+                isValid2 = false;
+            } else {
+                document.getElementById('unitPriceError').textContent = '';
+                isValid2 = true;
+            }
+            checkIsValidCreate();
+        });
+        stockUnit.addEventListener('input', () => {
+            const val1 = stockUnit.value;
+            if (val1.length === 0) {
+                document.getElementById('stockUnitError').textContent = 'Vui lòng nhập số lượng.';
+                isValid3 = false;
+            } else if (isNaN(val1) || val1 < 0 || val1.indexOf('.') !== -1) {
+                document.getElementById('stockUnitError').textContent = 'Vui lòng nhập số nguyên từ 0.';
+                isValid3 = false;
+            } else {
+                document.getElementById('stockUnitError').textContent = '';
+                isValid3 = true;
+            }
+            checkIsValidCreate();
+        });
 
-function checkIsValidCreate() {
-    if (isValid1 === true && isValid2 === true && isValid3 === true) {
-        createButton.disabled = false;
-        return;
-    }
-    createButton.disabled = true;
-}
-
-fileInput.addEventListener('input', () => {
-    let isValid = true;
-    // Kiểm tra trường image (file) nếu đã chọn file
-    const filePath = fileInput.value;
-    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.img)$/i;
-    if (filePath !== '') {
-        if (!allowedExtensions.exec(filePath)) {
-            document.getElementById('imageError').textContent = 'Định dạng file ảnh không hợp lệ. Chỉ chấp nhận các định dạng: .jpg, .jpeg, .png, .img.';
-            isValid = false;
-        } else {
-            document.getElementById('imageError').textContent = '';
+        function checkIsValidCreate() {
+            if (isValid1 === true && isValid2 === true && isValid3 === true) {
+                createButton.disabled = false;
+                return;
+            }
+            createButton.disabled = true;
         }
-    }
-    createButton.disabled = !isValid;
-});
 
-/*
-    ------------- END check valid add product ------------------------
- */
+        fileInput.addEventListener('input', () => {
+            let isValid = true;
+            // Kiểm tra trường image (file) nếu đã chọn file
+            const filePath = fileInput.value;
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.img)$/i;
+            if (filePath !== '') {
+                if (!allowedExtensions.exec(filePath)) {
+                    document.getElementById('imageError').textContent = 'Định dạng file ảnh không hợp lệ. Chỉ chấp nhận các định dạng: .jpg, .jpeg, .png, .img.';
+                    isValid = false;
+                } else {
+                    document.getElementById('imageError').textContent = '';
+                }
+            }
+            createButton.disabled = !isValid;
+        });
+
+        /*
+            ------------- END check valid add product ------------------------
+         */
 
 
-function toggleFields() {
-    const category = document.getElementById('productCategory').value;
-    const conditionalFields = document.getElementById('conditionalFields');
-    if (category === '1' || category === '2') {
-        conditionalFields.style.display = 'block';
-    } else {
-        conditionalFields.style.display = 'none';
-    }
-}
+        function toggleFields() {
+            const category = document.getElementById('productCategory').value;
+            const conditionalFields = document.getElementById('conditionalFields');
+            if (category === '1' || category === '2') {
+                conditionalFields.style.display = 'block';
+            } else {
+                conditionalFields.style.display = 'none';
+            }
+        }
 
 
-function resetForm() {
-    document.getElementById('productForm').reset();
-    document.getElementById('createButton').disabled = true;
-    document.getElementById('productNameError').textContent = '';
-    document.getElementById('unitPriceError').textContent = '';
-    document.getElementById('conditionalFields').style.display = 'none';
-}
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('createButton').disabled = true;
+            document.getElementById('productNameError').textContent = '';
+            document.getElementById('unitPriceError').textContent = '';
+            document.getElementById('conditionalFields').style.display = 'none';
+        }
 
-function showProductDetails(categoryId, producID) {
-    var productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal' + producID));
-    productDetailsModal.show();
-}
+        function showProductDetails(categoryId, producID) {
+            var productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal' + producID));
+            productDetailsModal.show();
+        }
 
-function editModal(categoryId, producID) {
-    var productUpdateModal = new bootstrap.Modal(document.getElementById('productUpdateModal' + producID));
-    productUpdateModal.show();
-}
+        function editModal(categoryId, producID) {
+            var productUpdateModal = new bootstrap.Modal(document.getElementById('productUpdateModal' + producID));
+            productUpdateModal.show();
+        }
 
-function confirmMod() {
-    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-    confirmModal.show();
-}
+        function confirmMod() {
+            var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+            confirmModal.show();
+        }
 
-function deleteModal(id) {
-    var deleteModal = new bootstrap.Modal(document.getElementById('myModal' + id));
-    deleteModal.show();
-}
+        function deleteModal(id) {
+            var deleteModal = new bootstrap.Modal(document.getElementById('myModal' + id));
+            deleteModal.show();
+        }

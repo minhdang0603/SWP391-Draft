@@ -92,7 +92,6 @@ public class ProductUpdateController extends HttpServlet {
         pro.setProductName(pname);
         pro.setDesign(design);
         pro.setMaintenance(warranty);
-
         pro.setImage(img);
         productService.updateProduct(pro);
         Product proNew = productService.findProductById(pid);
