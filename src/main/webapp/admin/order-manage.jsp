@@ -147,11 +147,10 @@
                                         <c:forEach var="order" items="${list}">
                                             <tr>
                                                 <td class="align-middle text-center">${order.id}</td>
-                                                <td class="align-middle text-center"
-                                                    style="width: 50%">
+                                                <td class="align-middle text-center">
                                                         ${order.customer.userName}
                                                 </td>
-                                                <td class="align-middle text-sm" style="text-align: left">${order.getFormattedOrderDate()}</td>
+                                                <td class="align-middle text-sm" style="text-align: center">${order.getFormattedOrderDate()}</td>
                                                 <td class="align-middle text-sm"
                                                     style="padding-right: 30px">${order.orderStatus}</td>
                                                 <td class="align-middle text-center text-sm mr-2"><a href="#"
