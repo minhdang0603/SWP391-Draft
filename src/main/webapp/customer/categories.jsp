@@ -44,9 +44,9 @@
         }
 
         #load-more-btn:hover {
-            background-color: #D10024;
+            background-color: #FF7F3E;
             color: #fff;
-            border-color: #D10024;
+            border-color: #FF7F3E;
         }
     </style>
 </head>
