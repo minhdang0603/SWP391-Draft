@@ -75,7 +75,7 @@
 }
 
 .shopping-cart .summary{
-    border-top: 2px solid #D10024;
+    border-top: 2px solid #FF7F3E;
     background-color: #f7fbff;
     height: 100%;
     padding: 30px;
@@ -107,7 +107,7 @@
 
 .shopping-cart .summary button{
     margin-top: 20px;
-    background: #D10024;
+    background: #FF7F3E;
 
 }
 
