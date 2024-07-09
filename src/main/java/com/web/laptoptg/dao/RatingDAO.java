@@ -9,4 +9,6 @@ public interface RatingDAO {
     List<Rating> getRatingByProductIDAndCreateTimeDesc(int productID);
     List<Rating> getRatingByUserIDAndCreateTimeDesc(int userID);
     Rating addRating(Rating rating);
+
+    List<Rating> getAllRatings();
 }

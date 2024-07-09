@@ -146,7 +146,7 @@
                     </div><!-- End Customers Card -->
 
 
-                    <!-- Recent Sales -->
+                    <!-- Recent Orders -->
                     <div class="col-12">
                         <div class="card recent-sales overflow-auto">
 
@@ -155,7 +155,8 @@
 
                                 <!-- Order Table -->
                                 <div class="table-responsive">
-                                    <table id="myTable" class="table table-striped datatable align-items-center mb-0"
+                                    <table id="myTable"
+                                           class="table table-striped datatable align-items-center mb-0 display"
                                            style="width: 100%">
                                         <thead>
                                         <tr>
@@ -186,7 +187,7 @@
                                                 <td class="align-middle text-sm"
                                                     style="text-align: center">${order.getFormattedOrderDate()}</td>
                                                 <td class="align-middle text-center text-sm payment-amount"
-                                                    style="padding-right: 30px" >${order.payment.amount}</td>
+                                                    style="padding-right: 30px">${order.payment.amount}</td>
                                                 <td class="align-middle text-sm"
                                                     style="padding-right: 30px">${order.orderStatus}</td>
 
@@ -199,6 +200,119 @@
 
                         </div>
                     </div><!-- End Recent Sales -->
+
+<%--                    <!-- Recent Ratings -->--%>
+<%--                    <div class="col-12">--%>
+<%--                        <div class="card recent-ratings overflow-auto">--%>
+
+<%--                            <div class="card-body">--%>
+<%--                                <h5 class="card-title">Đánh giá sản phẩm gần đây</h5>--%>
+
+<%--                                <!-- Rating Table -->--%>
+<%--                                <div class="table-responsive">--%>
+<%--                                    <table id="myRatingTable"--%>
+<%--                                           class="table table-striped datatable align-items-center mb-0 display"--%>
+<%--                                           style="width: 100%">--%>
+<%--                                        <thead>--%>
+<%--                                        <tr>--%>
+<%--                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-1 text-center">--%>
+<%--                                                Sản phẩm--%>
+<%--                                            </th>--%>
+<%--                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-1 text-center">--%>
+<%--                                                Người mua--%>
+<%--                                            </th>--%>
+<%--                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">--%>
+<%--                                                Nội dung bình luận--%>
+<%--                                            </th>--%>
+<%--                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">--%>
+<%--                                                Ngày tạo--%>
+<%--                                            </th>--%>
+<%--                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">--%>
+<%--                                                Điểm đánh giá--%>
+<%--                                            </th>--%>
+<%--                                        </tr>--%>
+<%--                                        </thead>--%>
+<%--                                        <tbody>--%>
+<%--                                        <c:forEach var="rate" items="${ratingList}">--%>
+<%--                                            <tr>--%>
+<%--                                                <td class="align-middle text-center">--%>
+<%--                                                        ${rate.product.productName}--%>
+<%--                                                </td>--%>
+<%--                                                <td class="align-middle text-center">--%>
+<%--                                                        ${rate.user.userName}--%>
+<%--                                                </td>--%>
+<%--                                                <td class="align-middle text-center">--%>
+<%--                                                        ${rate.content}--%>
+<%--                                                </td>--%>
+<%--                                                <td class="align-middle text-sm"--%>
+<%--                                                    style="text-align: center">${rate.getFormattedCreateTime()}</td>--%>
+<%--                                                <td class="align-middle text-sm"--%>
+<%--                                                    style="padding-right: 30px">${rate.ratingScore}</td>--%>
+
+<%--                                            </tr>--%>
+<%--                                        </c:forEach>--%>
+<%--                                        </tbody>--%>
+<%--                                    </table>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+
+<%--                        </div>--%>
+<%--                    </div><!-- End Recent Sales -->--%>
+
+                    <!-- Recent Ratings -->
+                    <div class="col-12">
+                        <div class="card recent-ratings overflow-auto">
+                            <div class="card-body">
+                                <h5 class="card-title">Đánh giá sản phẩm gần đây</h5>
+
+                                <!-- Search Box -->
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" id="searchScore" class="form-control" placeholder="Tìm kiếm theo Điểm đánh giá">
+                                    </div>
+                                    <div class="col">
+                                        <input type="date" id="searchDate" class="form-control" placeholder="Tìm kiếm theo Ngày tạo">
+                                    </div>
+                                </div>
+
+                                <!-- Rating Table -->
+                                <div class="table-responsive">
+                                    <table id="myRatingTable" class="table table-striped align-items-center mb-0" style="width: 100%">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-1 text-center">Sản phẩm</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-1 text-center">Người mua</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nội dung bình luận</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ngày tạo</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Điểm đánh giá</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="ratingBody">
+                                        <!-- Your rows will be here -->
+                                        <c:forEach var="rate" items="${ratingList}">
+                                            <tr>
+                                                <td class="align-middle text-center">${rate.product.productName}</td>
+                                                <td class="align-middle text-center">${rate.user.userName}</td>
+                                                <td class="align-middle text-center">${rate.content}</td>
+                                                <td class="align-middle text-sm text-center">${rate.getFormattedCreateTime()}</td>
+                                                <td class="align-middle text-sm text-center">${rate.ratingScore}</td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Pagination Controls -->
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        <div id="pagination" class="btn-group"></div>
+                                        <span id="pageInfo" class="ml-2"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
             </div><!-- End Left side columns -->

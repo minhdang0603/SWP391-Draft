@@ -6,12 +6,15 @@ import com.google.gson.JsonIOException;
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dto.UserDTO;
 import com.web.laptoptg.model.Orders;
+import com.web.laptoptg.model.Rating;
 import com.web.laptoptg.model.User;
 import com.web.laptoptg.service.OrderService;
 import com.web.laptoptg.service.PaymentService;
+import com.web.laptoptg.service.RatingService;
 import com.web.laptoptg.service.UserService;
 import com.web.laptoptg.service.impl.OrderServiceImpl;
 import com.web.laptoptg.service.impl.PaymentServiceImpl;
+import com.web.laptoptg.service.impl.RatingServiceImpl;
 import com.web.laptoptg.service.impl.UserServiceImpl;
 import com.web.laptoptg.util.LocalDateTimeDeserializer;
 import com.web.laptoptg.util.LocalDateTimeSerializer;
@@ -32,16 +35,16 @@ import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/admin/home")
 public class HomeServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
     private OrderService orderService;
     private UserService userService;
 
+    private RatingService ratingService;
 
     @Override
     public void init(){
         orderService = new OrderServiceImpl();
         userService = new UserServiceImpl();
+        ratingService = new RatingServiceImpl();
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,6 +54,7 @@ public class HomeServlet extends HttpServlet {
         List<Orders> ordersList = orderService.getAllOrders();
         List<Orders> ordersListforSaler = orderService.searchOrdersByCusID(user.getId());
         List<User> userList = userService.findUserByRole("MEMBER");
+        List<Rating> ratingList = ratingService.getAllRatings();
         int cusQuant = userList.size();
         System.out.println(filterType);
         LocalDate today = LocalDate.now();
@@ -65,7 +69,7 @@ public class HomeServlet extends HttpServlet {
         if (user.getRole().equals("SALER")){
             req.setAttribute("orderList", ordersListforSaler);
         } else req.setAttribute("orderList", ordersList);
-
+        req.setAttribute("ratingList",ratingList);
         req.setAttribute("cusQuant", cusQuant);
         req.setAttribute("sales",filteredOrders.size());
         req.setAttribute("totalRevenue", totalRevenue);
