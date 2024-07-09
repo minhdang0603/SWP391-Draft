@@ -324,13 +324,13 @@
                                                                                    id="orderIDUpdate" name="orderId"
                                                                                    value="${order.id}" readonly>
                                                                         </div>
-                                                                        <div class="form-group">
+                                                                        <div class="form-group" style="display: ${account.role == 'ADMIN' ? 'block' : 'none'}">
                                                                             <label for="salerUpdate"><strong>Nhân
                                                                                 viên phụ trách:</strong></label>
                                                                             <select name="saler"
                                                                                     class="form-control"
                                                                                     id="salerUpdate"
-                                                                                    required>
+                                                                                    required >
                                                                                 <c:forEach items="${salerList}"
                                                                                            var="saler">
                                                                                     <option value="${saler.id}" ${saler.id == order.saler.id ? 'selected' : ''}>
