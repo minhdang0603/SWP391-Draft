@@ -37,6 +37,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Orders> searchOrdersByCusID(int id) {return  orderDAO.searchOrdersByCusID(id);}
+
+    @Override
     public Orders updateOrder(Orders order) {
         return orderDAO.updateOrder(order);
     }

@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         temp.setAddress(user.getAddress());
         temp.setPhoneNumber(user.getPhoneNumber());
         temp.setEmail(user.getEmail());
-        if(user.getPassword()!=null){
+        if (user.getPassword() != null) {
             temp.setPassword(user.getPassword());
         }
         temp.setRole(roleDAO.getRoleByRoleName(user.getRole()));
@@ -90,6 +90,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String email, String password) {
         User user = userDAO.findUserByEmail(email);
+        if (user == null) return null;
         if (PasswordUtils.verify(password, user.getPassword())) {
             return user;
         }

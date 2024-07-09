@@ -101,6 +101,21 @@ function showError(elementId, message) {
     errorElement.style.display = "block";
 }
 
+function clearError(elementId) {
+    const errorElement = document.getElementById(elementId);
+    errorElement.textContent = "";
+    errorElement.style.display = "none";
+}
+
+function checkIsValidUpdate(id) {
+    const update = document.getElementById('updateButton' + id);
+    if (isValid4 === true && isValid5 === true && isValid6 === true && isValid7 === true) {
+        update.disabled = false;
+        return;
+    }
+    update.disabled = true;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     var msgDiv = document.getElementById('msg');
     var msgContent = document.getElementById('msgContent');
