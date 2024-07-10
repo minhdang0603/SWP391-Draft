@@ -2,6 +2,7 @@ package com.web.laptoptg.dao.impl;
 
 import com.web.laptoptg.config.JPAConfig;
 import com.web.laptoptg.dao.RatingDAO;
+import com.web.laptoptg.model.Orders;
 import com.web.laptoptg.model.Rating;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -49,6 +50,14 @@ public class RatingDAOImpl implements RatingDAO {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public List<Rating> getAllRatings(){
+        entityManager.clear();
+        TypedQuery<Rating> query = entityManager.createQuery(
+                "SELECT DISTINCT o FROM Rating o ", Rating.class);
+        return query.getResultList();
     }
 
     @Override

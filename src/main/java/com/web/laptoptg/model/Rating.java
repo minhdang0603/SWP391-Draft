@@ -40,6 +40,10 @@ public class Rating {
     private int ratingScore;
 
     public String getFormattedCreateTime() {
+        String date ="";
+        if(createTime==null){
+            return date;
+        }
         return createTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
     }
 }

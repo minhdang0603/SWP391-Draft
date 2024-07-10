@@ -138,13 +138,11 @@
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Sửa
                                             </th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Xóa
-                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach var="order" items="${list}">
+
                                             <tr>
                                                 <td class="align-middle text-center">${order.id}</td>
                                                 <td class="align-middle text-center">
@@ -165,38 +163,9 @@
                                                     <i
                                                             class="bi bi-pencil-square"
                                                             style="font-size: 20px; color: deepskyblue"></i></a></td>
-                                                <td class="align-middle text-center text-sm mr-2"><a href="#"
-                                                                                                     onclick="deleteModal('${order.id}')"><i
-                                                        class="bi bi-trash2-fill"
-                                                        style="font-size: 20px;color: red"></i></a></td>
+
                                             </tr>
-                                            <!--Confirm Delete Modal-->
-                                            <div class="modal fade alert-primary" tabindex="-1"
-                                                 data-keyboard="false"
-                                                 id="myModal${order.id}">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Xác Nhận</h5>
-                                                        </div>
-                                                        <div class="container"></div>
-                                                        <div class="modal-body">
-                                                            <p>Bạn có chắc chắn muốn xóa đơn hàng này không?</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <a type="button"
-                                                               class="btn btn-secondary"
-                                                               data-dismiss="modal">Hủy
-                                                            </a>
-                                                            <a href="${contextPath}/admin/order-delete?orderId=${order.id}"
-                                                               type="button" id="confirmDeleteBtn"
-                                                               class="btn btn-primary">Xác nhận
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end confirm delete modal-->
+
 
                                             <!-- Order Details Modal -->
                                             <div class="modal fade" id="orderDetailsModal${order.id}" tabindex="-1"
@@ -355,13 +324,13 @@
                                                                                    id="orderIDUpdate" name="orderId"
                                                                                    value="${order.id}" readonly>
                                                                         </div>
-                                                                        <div class="form-group">
+                                                                        <div class="form-group" style="display: ${account.role == 'ADMIN' ? 'block' : 'none'}">
                                                                             <label for="salerUpdate"><strong>Nhân
                                                                                 viên phụ trách:</strong></label>
                                                                             <select name="saler"
                                                                                     class="form-control"
                                                                                     id="salerUpdate"
-                                                                                    required>
+                                                                                    required >
                                                                                 <c:forEach items="${salerList}"
                                                                                            var="saler">
                                                                                     <option value="${saler.id}" ${saler.id == order.saler.id ? 'selected' : ''}>

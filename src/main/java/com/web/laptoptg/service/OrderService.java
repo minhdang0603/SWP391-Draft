@@ -13,4 +13,6 @@ public interface OrderService {
     Orders updateOrder(Orders order);
     Orders saveOrder(Orders order);
     List<Orders> getOrdersByUserIDAndStatus(int cid, String status);
+
+    List<Orders> searchOrdersByCusID(int id);
 }
