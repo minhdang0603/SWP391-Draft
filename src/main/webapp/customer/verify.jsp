@@ -13,7 +13,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận</title>
 
+    <link href="${contextPath}/assets/home/img/logo1.png" rel="icon">
     <!-- bootstrap 5 stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css"/>
     <!-- fontawesome 6 stylesheet -->

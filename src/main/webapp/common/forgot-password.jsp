@@ -17,7 +17,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/login.css" rel="stylesheet">
 
-    <title>Forgot password</title>
+    <title>Quên mật khẩu</title>
 </head>
 <body>
 <section class="form-02-main">
