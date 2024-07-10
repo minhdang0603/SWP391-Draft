@@ -10,7 +10,7 @@
     <!-- The above 3 meta tags must come first in the head; any other head content must come after these tags -->
 
     <title>LaptopTG Store</title>
-
+    <link href="${contextPath}/assets/home/img/logo1.png" rel="icon">
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 

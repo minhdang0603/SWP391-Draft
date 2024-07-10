@@ -279,18 +279,13 @@
 
 
 <!-- Vendor JS Files -->
-<%--<script src="${contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>--%>
 <script src="${contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="${contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
-<script src="${contextPath}/assets/vendor/echarts/echarts.min.js"></script>
 <script src="${contextPath}/assets/vendor/quill/quill.js"></script>
-<%--<script src="${contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>--%>
 <script src="${contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="${contextPath}/assets/vendor/php-email-form/validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
-<%--<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 

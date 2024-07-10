@@ -88,7 +88,8 @@
                                 <!-- Products Table -->
                                 <div class="table-responsive">
                                     <table id="myTable"
-                                           class="table-responsive table-striped datatable align-items-center mb-0" style="width: 100%;">
+                                           class="table-responsive table-striped datatable align-items-center mb-0"
+                                           style="width: 100%;">
                                         <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
@@ -118,16 +119,13 @@
                                         <c:forEach var="pro" items="${list}">
                                             <tr>
                                                 <td class="align-middle text-center">${pro.id}</td>
-                                                <td class="align-middle text-center"
-                                                    style="width: 50%">
+                                                <td>
                                                     <a href="#"
-                                                       onclick="showProductDetails(
-                                                               '${pro.category.id}','${pro.id}'
-                                                               )">
+                                                       onclick="showProductDetails('${pro.category.id}','${pro.id}')">
                                                             ${pro.productName}
                                                     </a>
                                                 </td>
-                                                <td class="align-middle text-sm">${pro.category.categoryName}</td>
+                                                <td class="text-sm">${pro.category.categoryName}</td>
                                                 <td class="align-middle text-sm"
                                                     style="padding-right: 30px">${pro.brand.brandName}</td>
                                                 <td class="align-middle text-sm"
@@ -167,7 +165,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div><!--end confirm delete modal-->
+                                            </div>
+                                            <!--end confirm delete modal-->
 
                                             <!-- Product Details Modal -->
                                             <div class="modal fade" id="productDetailsModal${pro.id}" tabindex="-1"
@@ -250,7 +249,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div><!--end detail modal-->
+                                            </div>
+                                            <!--end detail modal-->
 
                                             <!-- Product Update Modal -->
                                             <div class="modal" id="productUpdateModal${pro.id}" tabindex="-1"
@@ -362,7 +362,7 @@
                                                                             <img id="imagePreview${pro.id}"
                                                                                  src="${contextPath}/assets/img/product-img/${pro.image}"
                                                                                  alt="Image Preview"
-                                                                                 style="max-width: 100%; margin-top: 10px;">
+                                                                                 style="max-width: 50%; margin-top: 10px;">
 
                                                                         </div>
                                                                     </div>
@@ -663,12 +663,8 @@
 
 
 <!-- Vendor JS Files -->
-<%--<script src="${contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>--%>
 <script src="${contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="${contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
-<script src="${contextPath}/assets/vendor/echarts/echarts.min.js"></script>
 <script src="${contextPath}/assets/vendor/quill/quill.js"></script>
-<%--<script src="${contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>--%>
 <script src="${contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="${contextPath}/assets/vendor/php-email-form/validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

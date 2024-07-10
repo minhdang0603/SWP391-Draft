@@ -19,7 +19,7 @@
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
+    <link href="${contextPath}/assets/home/img/logo1.png" rel="icon">
     <!-- Bootstrap -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/bootstrap.min.css"/>
 

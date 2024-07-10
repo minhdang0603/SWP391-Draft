@@ -99,18 +99,11 @@
                     <div class="card-body pt-3">
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
-                            <%--                                <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">--%>
                             <li class="nav-item">
                                 <p class="nav-link active">
                                     Danh Sách Đơn Hàng
                                 </p>
                             </li>
-                            <%--                                </c:if>--%>
-
-                            <%--                            <li class="nav-item">--%>
-                            <%--                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Tạo Mới--%>
-                            <%--                                </button>--%>
-                            <%--                            </li>--%>
 
                         </ul>
                         <div class="tab-content">
@@ -419,8 +412,6 @@
                                                                     <button type="submit"
                                                                             class="btn btn-primary">Lưu
                                                                     </button>
-                                                                        <%--                                                                    <a data-toggle="modal" href="#myModal2${pro.id}"--%>
-                                                                        <%--                                                                       class="btn btn-primary">Lưu</a>--%>
                                                                 </div><!--end update modal-->
 
                                                             </form>
@@ -448,18 +439,13 @@
 
 
 <!-- Vendor JS Files -->
-<%--<script src="${contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>--%>
 <script src="${contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="${contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
-<script src="${contextPath}/assets/vendor/echarts/echarts.min.js"></script>
 <script src="${contextPath}/assets/vendor/quill/quill.js"></script>
-<%--<script src="${contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>--%>
 <script src="${contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="${contextPath}/assets/vendor/php-email-form/validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
-<%--<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 

@@ -275,12 +275,8 @@
 
 
 <!-- Vendor JS Files -->
-<%--<script src="${contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>--%>
 <script src="${contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="${contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
-<script src="${contextPath}/assets/vendor/echarts/echarts.min.js"></script>
 <script src="${contextPath}/assets/vendor/quill/quill.js"></script>
-<%--<script src="${contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>--%>
 <script src="${contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="${contextPath}/assets/vendor/php-email-form/validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

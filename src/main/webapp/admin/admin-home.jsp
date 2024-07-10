@@ -13,8 +13,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="../assets/img/favicon.png" rel="icon">
-    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="${contextPath}/assets/img/favicon.png" rel="icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -336,10 +335,7 @@
 <!-- Vendor JS Files -->
 
 <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="../assets/vendor/chart.js/chart.umd.js"></script>
-<script src="../assets/vendor/echarts/echarts.min.js"></script>
 <script src="../assets/vendor/quill/quill.js"></script>
-<%--<script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>--%>
 <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="../assets/vendor/php-email-form/validate.js"></script>
 
