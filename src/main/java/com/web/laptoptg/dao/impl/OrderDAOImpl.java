@@ -63,6 +63,22 @@ public class OrderDAOImpl implements OrderDAO {
         query.setParameter("phoneNumber", phoneNumber);
         return query.getResultList();
     }
+    @Override
+    public List<Orders> searchOrdersByCusID(int id) {
+        List<Orders> result;
+        try {
+            TypedQuery<Orders> query = entityManager.createQuery(
+                    "SELECT o FROM Orders o " +
+                            " JOIN fetch o.orderDetails"+
+                            " where o.saler.id = :id", Orders.class);
+            query.setParameter("id", id);
+            result = query.getResultList();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+            result = null;
+        }
+        return result;
+    }
 
     @Override
     public Orders updateOrder(Orders order) {

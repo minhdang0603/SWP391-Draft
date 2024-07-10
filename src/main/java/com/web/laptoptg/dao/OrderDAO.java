@@ -12,4 +12,6 @@ public interface OrderDAO {
     Orders updateOrder(Orders order);
     Orders saveOrder(Orders order);
     List<Orders> getOrderdByCustomerIDAndStatus(int cid, String status);
+
+    List<Orders> searchOrdersByCusID(int id);
 }

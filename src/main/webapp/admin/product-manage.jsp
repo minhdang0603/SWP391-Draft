@@ -88,7 +88,8 @@
                                 <!-- Products Table -->
                                 <div class="table-responsive">
                                     <table id="myTable"
-                                           class="table-responsive table-striped datatable align-items-center mb-0" style="width: 100%;">
+                                           class="table-responsive table-striped datatable align-items-center mb-0"
+                                           style="width: 100%;">
                                         <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
@@ -118,16 +119,13 @@
                                         <c:forEach var="pro" items="${list}">
                                             <tr>
                                                 <td class="align-middle text-center">${pro.id}</td>
-                                                <td class="align-middle text-center"
-                                                    style="width: 50%">
+                                                <td>
                                                     <a href="#"
-                                                       onclick="showProductDetails(
-                                                               '${pro.category.id}','${pro.id}'
-                                                               )">
+                                                       onclick="showProductDetails('${pro.category.id}','${pro.id}')">
                                                             ${pro.productName}
                                                     </a>
                                                 </td>
-                                                <td class="align-middle text-sm">${pro.category.categoryName}</td>
+                                                <td class="text-sm">${pro.category.categoryName}</td>
                                                 <td class="align-middle text-sm"
                                                     style="padding-right: 30px">${pro.brand.brandName}</td>
                                                 <td class="align-middle text-sm"
@@ -167,7 +165,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div><!--end confirm delete modal-->
+                                            </div>
+                                            <!--end confirm delete modal-->
 
                                             <!-- Product Details Modal -->
                                             <div class="modal fade" id="productDetailsModal${pro.id}" tabindex="-1"
@@ -250,7 +249,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div><!--end detail modal-->
+                                            </div>
+                                            <!--end detail modal-->
 
                                             <!-- Product Update Modal -->
                                             <div class="modal" id="productUpdateModal${pro.id}" tabindex="-1"
@@ -268,7 +268,6 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <form id="updateProductForm"
-                                                                  onsubmit="return validateFileType()"
                                                                   action="${contextPath}/admin/product-update"
                                                                   method="post" enctype="multipart/form-data">
                                                                 <div class="row">
@@ -282,15 +281,18 @@
                                                                                    value="${pro.id}" readonly>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="productNameUpdate"><strong>Tên
+                                                                            <label for="productNameUpdate${pro.id}"><strong>Tên
                                                                                 sản
                                                                                 phẩm:</strong></label>
                                                                             <input type="text" class="form-control"
-                                                                                   id="productNameUpdate"
+                                                                                   id="productNameUpdate${pro.id}"
                                                                                    name="productName"
-                                                                                   value="${pro.productName}" required>
+                                                                                   value="${pro.productName}" required
+                                                                                   oninput="validateProductName(${pro.id})">
+                                                                            <div id="productNameUpdateError${pro.id}"
+                                                                                 class="error-message"></div>
                                                                         </div>
-                                                                        <div class="form-group mt-1" >
+                                                                        <div class="form-group mt-1">
                                                                             <h6><strong>Trạng thái:</strong></h6>
                                                                             <input type="radio" name="productStatus"
                                                                                    id="activeProduct"
@@ -302,45 +304,70 @@
                                                                             <label for="inactiveProduct">Inactive</label>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="unitPriceUpdate"><strong>Đơn
+                                                                            <label for="unitPriceUpdate${pro.id}"><strong>Đơn
                                                                                 giá (VND):</strong></label>
                                                                             <input type="number" class="form-control"
-                                                                                   id="unitPriceUpdate" min="0" step="1"
+                                                                                   id="unitPriceUpdate${pro.id}" min="0"
+                                                                                   step="1"
                                                                                    name="unitPrice"
-                                                                                   value="${pro.unitPrice}" required>
+                                                                                   value="${pro.unitPrice}" required
+                                                                                   oninput="validateUnitPrice(${pro.id})">
+                                                                            <div id="unitPriceUpdateError${pro.id}"
+                                                                                 class="error-message"></div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="stockUnitUpdate"><strong>Tồn
+                                                                            <label for="stockUnitUpdate${pro.id}"><strong>Tồn
                                                                                 kho:</strong></label>
                                                                             <input name="stockUnit" type="number"
                                                                                    class="form-control"
-                                                                                   id="stockUnitUpdate" min="0" step="1"
-                                                                                   value="${pro.stockUnit}" required>
+                                                                                   id="stockUnitUpdate${pro.id}" min="0"
+                                                                                   step="1"
+                                                                                   value="${pro.stockUnit}" required
+                                                                                   oninput="validateStockUnit(${pro.id})">
+                                                                            <div id="stockUnitUpdateError${pro.id}"
+                                                                                 class="error-message"></div>
                                                                         </div>
-                                                                        <div class="form-group" >
-                                                                            <label for="soldUnitUpdate"><strong>Đã
+                                                                        <div class="form-group">
+                                                                            <label for="soldUnitUpdate${pro.id}"><strong>Đã
                                                                                 bán:</strong></label>
                                                                             <input type="number" class="form-control"
-                                                                                   id="soldUnitUpdate" name="soldUnit" min="0" step="1"
-                                                                                   value="${pro.soldUnit}" required>
+                                                                                   id="soldUnitUpdate${pro.id}"
+                                                                                   name="soldUnit"
+                                                                                   min="0" step="1"
+                                                                                   value="${pro.soldUnit}" required
+                                                                                   oninput="validateSoldUnit(${pro.id})">
+                                                                            <div id="soldUnitUpdateError${pro.id}"
+                                                                                 class="error-message"></div>
                                                                         </div>
 
                                                                         <div class="form-group">
                                                                             <label for="descriptionUpdate"><strong>Mô
                                                                                 tả:</strong></label>
                                                                             <textarea class="form-control"
-                                                                                      id="descriptionUpdate" cols="10" rows="5"
+                                                                                      id="descriptionUpdate" cols="10"
+                                                                                      rows="5"
                                                                                       name="description">${pro.description}</textarea>
                                                                         </div>
-                                                                        <div class="form-group mt-1" >
-                                                                            <label for="fileUpload"><strong>Ảnh sản
+                                                                        <div class="form-group mt-1">
+                                                                            <label for="fileUpload${pro.id}"><strong>Ảnh
+                                                                                sản
                                                                                 phẩm:</strong></label>
                                                                             <input type="file" class="form-control-file"
-                                                                                   id="fileUpload" accept=".jpg, .jpeg, .png, .img" name="image">
+                                                                                   id="fileUpload${pro.id}"
+                                                                                   accept=".jpg, .jpeg, .png, .img"
+                                                                                   name="image"
+                                                                                   oninput="validateImage(${pro.id})">
+                                                                            <div id="imageUpdateError${pro.id}"
+                                                                                 class="error-message"></div>
+                                                                            <img id="imagePreview${pro.id}"
+                                                                                 src="${contextPath}/assets/img/product-img/${pro.image}"
+                                                                                 alt="Image Preview"
+                                                                                 style="max-width: 50%; margin-top: 10px;">
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
-                                                                        <div class="form-group" >
+                                                                        <div class="form-group">
                                                                             <label for="categoryNameUpdate"><strong>Danh
                                                                                 mục:</strong></label>
                                                                             <select name="productCategory"
@@ -366,7 +393,8 @@
                                                                                 </c:forEach>
                                                                             </select>
                                                                         </div>
-                                                                        <div style="display: ${(pro.category.id == 1 || pro.category.id == 2) ? 'block' : 'none'}"  id="technicalDetailsUpdate">
+                                                                        <div style="display: ${(pro.category.id == 1 || pro.category.id == 2) ? 'block' : 'none'}"
+                                                                             id="technicalDetailsUpdate">
                                                                             <div class="form-group">
                                                                                 <label for="osUpdate"><strong>Hệ điều
                                                                                     hành:</strong></label>
@@ -395,14 +423,14 @@
                                                                                        name="monitorScale"
                                                                                        value="${pro.monitorScale}">
                                                                             </div>
-                                                                            <div class="form-group" >
+                                                                            <div class="form-group">
                                                                                 <label for="batteryUpdate"><strong>Pin:</strong></label>
                                                                                 <input type="text" class="form-control"
                                                                                        id="batteryUpdate"
                                                                                        name="batteryVol"
                                                                                        value="${pro.batteryVol}">
                                                                             </div>
-                                                                            <div class="form-group h-50" >
+                                                                            <div class="form-group h-50">
                                                                                 <label for="designUpdate"><strong>Thiết
                                                                                     kế:</strong></label>
                                                                                 <input type="text" class="form-control"
@@ -410,7 +438,7 @@
                                                                                        value="${pro.design}">
                                                                             </div>
                                                                         </div>
-                                                                        <div class="form-group" >
+                                                                        <div class="form-group">
                                                                             <label for="warrantyUpdate"><strong>Bảo
                                                                                 hành:</strong></label>
                                                                             <input type="text" class="form-control"
@@ -427,12 +455,12 @@
                                                                             data-dismiss="modal">Đóng
                                                                     </button>
                                                                     <button type="submit"
-                                                                            class="btn btn-primary">Lưu
+                                                                            class="btn btn-primary"
+                                                                            id="updateButton${pro.id}"
+                                                                    >Lưu
                                                                     </button>
-                                                                        <%--                                                                    <a data-toggle="modal" href="#myModal2${pro.id}"--%>
-                                                                        <%--                                                                       class="btn btn-primary">Lưu</a>--%>
 
-                                                                </div><!--end update modal-->
+                                                                </div>
 
                                                             </form>
                                                         </div>
@@ -452,7 +480,7 @@
                                 <!-- Create New Product Form -->
                                 <div class="container">
                                     <form id="productForm" method="post" action="${contextPath}/admin/product-add"
-                                          onsubmit="return validateFileType()" oninput="validateForm()" enctype="multipart/form-data">
+                                          enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row mb-3">
@@ -635,12 +663,8 @@
 
 
 <!-- Vendor JS Files -->
-<%--<script src="${contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>--%>
 <script src="${contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="${contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
-<script src="${contextPath}/assets/vendor/echarts/echarts.min.js"></script>
 <script src="${contextPath}/assets/vendor/quill/quill.js"></script>
-<%--<script src="${contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>--%>
 <script src="${contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="${contextPath}/assets/vendor/php-email-form/validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

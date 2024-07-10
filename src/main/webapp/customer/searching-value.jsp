@@ -22,7 +22,7 @@
 
     <!-- Bootstrap -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/bootstrap.min.css"/>
-
+    <link href="${contextPath}/assets/home/img/logo1.png" rel="icon">
     <!-- Slick -->
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick.css"/>
     <link type="text/css" rel="stylesheet" href="${contextPath}/assets/home/css/slick-theme.css"/>

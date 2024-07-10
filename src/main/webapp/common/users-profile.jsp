@@ -949,7 +949,7 @@
                                                                                     </div>
                                                                                     <div class="product-footer">
                                                                                         <div class="product-cell"
-                                                                                             colspan="3"><strong>Tổng
+                                                                                             colspan="3" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif"><strong>Tổng
                                                                                             tiền</strong></div>
                                                                                         <div class="product-cell price">${order.payment.amount}</div>
                                                                                     </div>

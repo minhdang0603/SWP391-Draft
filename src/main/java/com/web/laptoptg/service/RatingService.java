@@ -10,4 +10,6 @@ public interface RatingService {
     List<Rating> getRatingByProductIDAndCreateTimeDesc(int productID);
 
     List<Rating> getRatingByUserIDAndCreateTimeDesc(int userID);
+
+    List<Rating> getAllRatings();
 }

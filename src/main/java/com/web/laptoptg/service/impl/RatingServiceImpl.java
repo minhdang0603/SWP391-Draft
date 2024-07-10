@@ -25,6 +25,10 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    public List<Rating> getAllRatings(){
+        return ratingDAO.getAllRatings();
+    };
+    @Override
     public List<Rating> getRatingByUserIDAndCreateTimeDesc(int userID) {
         return ratingDAO.getRatingByUserIDAndCreateTimeDesc(userID);
     }

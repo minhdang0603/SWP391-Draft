@@ -43,12 +43,19 @@ public class OrderUpdateController extends HttpServlet {
         String paymentDateStr = req.getParameter("paymentDate").isEmpty() ? null : req.getParameter("paymentDate");
         Orders orderOld = orderService.getOrderById(orderID);
         orderOld.getPayment().setMethod(paymentMethod);
-        orderOld.getPayment().setPayDate(LocalDateTime.parse(paymentDateStr));
+        if(paymentDateStr != null && !paymentDateStr.isEmpty()){
+            orderOld.getPayment().setPayDate(LocalDateTime.parse(paymentDateStr));
+        }
+
         orderOld.getPayment().setStatus(paymentStatus);
         orderOld.setSaler(userService.findUserById(salerID));
         orderOld.setOrderStatus(orderStatus);
-        orderOld.setDeliverDate(LocalDateTime.parse(deliverDateStr));
-        orderOld.setReceiveDate(LocalDateTime.parse(receiveDateStr));
+        if(deliverDateStr != null && !deliverDateStr.isEmpty()){
+            orderOld.setDeliverDate(LocalDateTime.parse(deliverDateStr));
+        }
+        if(receiveDateStr != null && !receiveDateStr.isEmpty()){
+            orderOld.setReceiveDate(LocalDateTime.parse(receiveDateStr));
+        }
         orderOld = orderService.updateOrder(orderOld);
         String msg;
         msg = "Chỉnh Sửa Thành Công Đơn Hàng ID" + orderOld.getId();

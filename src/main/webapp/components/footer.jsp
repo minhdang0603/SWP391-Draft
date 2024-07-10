@@ -17,23 +17,22 @@
             <div class="row">
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
-                        <h3 class="footer-title">About Us</h3>
-                        <p>Dog is you</p>
+                        <h3 class="footer-title">Về chúng tôi</h3>
                         <ul class="footer-links">
-                            <li><a href="#"><i class="fa fa-map-marker"></i>FPT University Hanoi</a></li>
-                            <li><a href="#"><i class="fa fa-phone"></i>0858173562</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i>anhlvhhe182182@fpt.edu.vn</a></li>
+                            <li><a href="https://hanoi.fpt.edu.vn/tuyen-sinh-dai-hoc-fpt-2024/?utm_source=FGA&utm_medium=DHF&utm_campaign=FHL&utm_term=Ladi%202&gad_source=1&gclid=Cj0KCQjwv7O0BhDwARIsAC0sjWMd0uSa9Zdd09nTAqVuJBXR5J5hAgRrciOb3G9dCc5MrLZJ3HkDy4kaAqdAEALw_wcB"><i class="fa fa-map-marker"></i>FPT University Hanoi</a></li>
+                            <li><a><i class="fa fa-phone"></i>0858173562</a></li>
+                            <li><a><i class="fa fa-envelope-o"></i>anhlvhhe182182@fpt.edu.vn</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
-                        <h3 class="footer-title">Categories</h3>
+                        <h3 class="footer-title">Danh mục</h3>
                         <ul class="footer-links">
-                            <li><a href="#">Laptops</a></li>
-                            <li><a href="#">Cameras</a></li>
-                            <li><a href="#">Accessories</a></li>
+                            <li><a href="${contextPath}/store?id=1">Laptops</a></li>
+                            <li><a href="${contextPath}/store?id=7">Cameras</a></li>
+                            <li><a href="${contextPath}/store?id=9">Thiết bị văn phòng</a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,24 +41,19 @@
 
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
-                        <h3 class="footer-title">Information</h3>
+                        <h3 class="footer-title">Thông tin</h3>
                         <ul class="footer-links">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Orders and Returns</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="${contextPath}/terms-and-conditions">Điều khoản & Điều kiện</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
-                        <h3 class="footer-title">Service</h3>
+                        <h3 class="footer-title">Dịch vụ</h3>
                         <ul class="footer-links">
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">Wishlist</a></li>
+                            <li><a href="${contextPath}/profile">Tài khoản</a></li>
+                            <li><a href="${contextPath}/cart">Giỏ hàng</a></li>
                         </ul>
                     </div>
                 </div>
@@ -69,30 +63,4 @@
         <!-- /container -->
     </div>
     <!-- /top footer -->
-
-    <!-- bottom footer -->
-    <div id="bottom-footer" class="section">
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <ul class="footer-payments">
-                        <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-                        <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-                        <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-                        <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-                        <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-                        <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
-                    </ul>
-                    <span class="copyright">
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved LaptopTG
-							</span>
-                </div>
-            </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
-    </div>
-    <!-- /bottom footer -->
 </footer>

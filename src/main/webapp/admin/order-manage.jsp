@@ -99,18 +99,11 @@
                     <div class="card-body pt-3">
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
-                            <%--                                <c:if test="${account.role == 'ADMIN' || account.role == 'SALER'}">--%>
                             <li class="nav-item">
                                 <p class="nav-link active">
                                     Danh Sách Đơn Hàng
                                 </p>
                             </li>
-                            <%--                                </c:if>--%>
-
-                            <%--                            <li class="nav-item">--%>
-                            <%--                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Tạo Mới--%>
-                            <%--                                </button>--%>
-                            <%--                            </li>--%>
 
                         </ul>
                         <div class="tab-content">
@@ -138,13 +131,11 @@
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Sửa
                                             </th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Xóa
-                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach var="order" items="${list}">
+
                                             <tr>
                                                 <td class="align-middle text-center">${order.id}</td>
                                                 <td class="align-middle text-center">
@@ -165,38 +156,9 @@
                                                     <i
                                                             class="bi bi-pencil-square"
                                                             style="font-size: 20px; color: deepskyblue"></i></a></td>
-                                                <td class="align-middle text-center text-sm mr-2"><a href="#"
-                                                                                                     onclick="deleteModal('${order.id}')"><i
-                                                        class="bi bi-trash2-fill"
-                                                        style="font-size: 20px;color: red"></i></a></td>
+
                                             </tr>
-                                            <!--Confirm Delete Modal-->
-                                            <div class="modal fade alert-primary" tabindex="-1"
-                                                 data-keyboard="false"
-                                                 id="myModal${order.id}">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Xác Nhận</h5>
-                                                        </div>
-                                                        <div class="container"></div>
-                                                        <div class="modal-body">
-                                                            <p>Bạn có chắc chắn muốn xóa đơn hàng này không?</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <a type="button"
-                                                               class="btn btn-secondary"
-                                                               data-dismiss="modal">Hủy
-                                                            </a>
-                                                            <a href="${contextPath}/admin/order-delete?orderId=${order.id}"
-                                                               type="button" id="confirmDeleteBtn"
-                                                               class="btn btn-primary">Xác nhận
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end confirm delete modal-->
+
 
                                             <!-- Order Details Modal -->
                                             <div class="modal fade" id="orderDetailsModal${order.id}" tabindex="-1"
@@ -355,13 +317,13 @@
                                                                                    id="orderIDUpdate" name="orderId"
                                                                                    value="${order.id}" readonly>
                                                                         </div>
-                                                                        <div class="form-group">
+                                                                        <div class="form-group" style="display: ${account.role == 'ADMIN' ? 'block' : 'none'}">
                                                                             <label for="salerUpdate"><strong>Nhân
                                                                                 viên phụ trách:</strong></label>
                                                                             <select name="saler"
                                                                                     class="form-control"
                                                                                     id="salerUpdate"
-                                                                                    required>
+                                                                                    required >
                                                                                 <c:forEach items="${salerList}"
                                                                                            var="saler">
                                                                                     <option value="${saler.id}" ${saler.id == order.saler.id ? 'selected' : ''}>
@@ -450,8 +412,6 @@
                                                                     <button type="submit"
                                                                             class="btn btn-primary">Lưu
                                                                     </button>
-                                                                        <%--                                                                    <a data-toggle="modal" href="#myModal2${pro.id}"--%>
-                                                                        <%--                                                                       class="btn btn-primary">Lưu</a>--%>
                                                                 </div><!--end update modal-->
 
                                                             </form>
@@ -479,18 +439,13 @@
 
 
 <!-- Vendor JS Files -->
-<%--<script src="${contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>--%>
 <script src="${contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="${contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
-<script src="${contextPath}/assets/vendor/echarts/echarts.min.js"></script>
 <script src="${contextPath}/assets/vendor/quill/quill.js"></script>
-<%--<script src="${contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>--%>
 <script src="${contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="${contextPath}/assets/vendor/php-email-form/validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
-<%--<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
