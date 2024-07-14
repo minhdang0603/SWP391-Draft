@@ -66,7 +66,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input name="email" class="form-control _ge_de_ol" type="text" placeholder="* Nhập Email"
+                            <input name="email" class="form-control _ge_de_ol" type="email" placeholder="* Nhập Email"
                                    value="${email}" required="" aria-required="true">
                             <c:if test="${emailAlert != null}">
                                 <p class="text-danger font-italic" style="font-size: 14px">${emailAlert}</p>
