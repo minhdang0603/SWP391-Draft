@@ -107,7 +107,7 @@
                         </div>
 
                         <div class="form-group">
-                            <a href=""
+                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile&redirect_uri=http://localhost:8080/laptop-tg/google_login_handler&response_type=code&client_id=32505060570-372l4ubis8qcglvluejc3l6pffu3o9ts.apps.googleusercontent.com"
                                class="btn bsb-btn-xl btn-outline-dark rounded-0 d-flex align-items-center col-md-10 offset-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                      class="bi bi-google text-danger" viewBox="0 0 16 16">
