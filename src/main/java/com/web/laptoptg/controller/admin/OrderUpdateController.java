@@ -12,7 +12,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 
 @WebServlet(urlPatterns = "/admin/order-update")
@@ -44,17 +47,20 @@ public class OrderUpdateController extends HttpServlet {
         Orders orderOld = orderService.getOrderById(orderID);
         orderOld.getPayment().setMethod(paymentMethod);
         if(paymentDateStr != null && !paymentDateStr.isEmpty()){
-            orderOld.getPayment().setPayDate(LocalDateTime.parse(paymentDateStr));
+            LocalDate paymentDate = LocalDate.parse(paymentDateStr);
+            orderOld.getPayment().setPayDate(paymentDate.atStartOfDay());
         }
 
         orderOld.getPayment().setStatus(paymentStatus);
         orderOld.setSaler(userService.findUserById(salerID));
         orderOld.setOrderStatus(orderStatus);
         if(deliverDateStr != null && !deliverDateStr.isEmpty()){
-            orderOld.setDeliverDate(LocalDateTime.parse(deliverDateStr));
+            LocalDate deliverDate = LocalDate.parse(deliverDateStr);
+            orderOld.setDeliverDate(deliverDate.atStartOfDay());
         }
         if(receiveDateStr != null && !receiveDateStr.isEmpty()){
-            orderOld.setReceiveDate(LocalDateTime.parse(receiveDateStr));
+            LocalDate receiveDate = LocalDate.parse(receiveDateStr);
+            orderOld.setReceiveDate(receiveDate.atStartOfDay());
         }
         orderOld = orderService.updateOrder(orderOld);
         String msg;
