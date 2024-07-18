@@ -67,7 +67,7 @@ public class Orders {
         if(deliverDate==null){
             return date;
         }
-        date = deliverDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        date = deliverDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         return date;
     }
 
@@ -76,11 +76,11 @@ public class Orders {
         if(receiveDate==null){
             return date;
         }
-        date = receiveDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        date = receiveDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         return date;
     }
 
     public String getFormattedOrderDate() {
-        return orderDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        return orderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

@@ -387,14 +387,14 @@
                                                                                 hàng:</strong></label>
                                                                             <input type="date" class="form-control"
                                                                                    id="deliveryDate" name="deliverDate"
-                                                                                   value="${order.deliverDate}">
+                                                                                   value="${order.getFormattedDeliverDate()}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="receivedDate"><strong>Ngày nhận
                                                                                 hàng:</strong></label>
                                                                             <input type="date" class="form-control"
                                                                                    id="receivedDate" name="receiveDate"
-                                                                                   value="${order.receiveDate}">
+                                                                                   value="${order.getFormattedReceiveDate()}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label for="paymentDate"><strong>Ngày thanh
