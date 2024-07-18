@@ -95,7 +95,6 @@ public class ProductAddController extends HttpServlet {
 
 
             //save the new product to database
-            productService.saveProduct(pro);
             int pid = pro.getId();
             pro.setImage(pid + ".png");
             String img = pro.getImage();
@@ -104,7 +103,6 @@ public class ProductAddController extends HttpServlet {
             String uploadPath = req.getServletContext().getRealPath("/assets/img/product-img");// set path
             Part filePart = req.getPart("image");//get file from request
             String filePath = uploadPath + File.separator + img;
-            System.out.println(filePath);
             // Lưu tệp
             try {
                 filePart.write(filePath);
